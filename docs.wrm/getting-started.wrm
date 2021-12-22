@@ -60,7 +60,7 @@ $合约:  合约是一个运行在以太坊网络上表示现实中特定合约�
 | **Contract**     | $Contract      |
 
 
-_subsection: 连接: MetaMask @<getting-started--connecting>
+_subsection: 连接以太坊: MetaMask @<getting-started--connecting>
 
 在以太坊上去开发和测试的最快、最简单的方法是使用[[link-metamask]], 它是一个基于浏览器的扩展程序，提供了:
 
