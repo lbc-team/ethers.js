@@ -1,11 +1,8 @@
-_section: Events @<events>
+_section: 事件 @<events>
 
-_subsection: Logs and Filtering
+_subsection: 日志和过滤器（Logs and filtering）
 
-Logs and filtering are used quite often in blockchain applications,
-since they allow for efficient queries of indexed data and provide
-lower-cost data storage when the data is not required to be
-accessed on-chain.
+在区块链的应用程序中经常用到日志和过滤器，因为它可以对索引数据进行高效查询，并且针对不在链上的数据可以提供低成本的数据存储。
 
 These can be used in conjunction with the [Provider Events API](Provider--event-methods)
 and with the [Contract Events API](Contract--events).
