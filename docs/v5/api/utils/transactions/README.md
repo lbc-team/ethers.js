@@ -32,6 +32,16 @@ The gas limit for this transaction.
 The gas price for this transaction.
 
 
+#### *unsignedTransaction* . **maxFeePerGas** => *[BigNumberish](/v5/api/utils/bignumber/#BigNumberish)*
+
+The maximum fee per unit of gas for this transaction.
+
+
+#### *unsignedTransaction* . **maxPriorityFeePerGas** => *[BigNumberish](/v5/api/utils/bignumber/#BigNumberish)*
+
+The maximum priority fee per unit of gas for this transaction.
+
+
 #### *unsignedTransaction* . **data** => *[BytesLike](/v5/api/utils/bytes/#BytesLike)*
 
 The data for this transaction.
@@ -54,7 +64,7 @@ The chain ID for this transaction. If the chain ID is 0 or null, then [EIP-155](
 The transaction hash, which can be used as an identifier for *transaction*. This is the keccak256 of the serialized RLP encoded representation of *transaction*.
 
 
-#### *unsignedTransaction* . **to** => *string< [Address](/v5/api/utils/address/#address) >*
+#### *transaction* . **to** => *string< [Address](/v5/api/utils/address/#address) >*
 
 The address *transaction* is to.
 
@@ -74,9 +84,25 @@ The nonce for *transaction*. Each transaction sent to the network from an accoun
 The gas limit for *transaction*. An account must have enough ether to cover the gas (at the specified **gasPrice**). Any unused gas is refunded at the end of the transaction, and if there is insufficient gas to complete execution, the effects of the transaction are reverted, but the gas is **fully consumed** and an out-of-gas error occurs.
 
 
-#### *transaction* . **gasPrice** => *[BigNumber](/v5/api/utils/bignumber/)*
+#### *transaction* . **gasPrice** => *null | [BigNumber](/v5/api/utils/bignumber/)*
 
 The price (in wei) per unit of gas for *transaction*.
+
+For [EIP-1559](https://eips.ethereum.org/EIPS/eip-1559) transactions, this will be null.
+
+
+#### *transaction* . **maxFeePerGas** => *[BigNumber](/v5/api/utils/bignumber/)*
+
+The maximum price (in wei) per unit of gas for *transaction*.
+
+For transactions that are not [EIP-1559](https://eips.ethereum.org/EIPS/eip-1559) transactions, this will be null.
+
+
+#### *transaction* . **maxPriorityFeePerGas** => *[BigNumber](/v5/api/utils/bignumber/)*
+
+The priority fee price (in wei) per unit of gas for *transaction*.
+
+For transactions that are not [EIP-1559](https://eips.ethereum.org/EIPS/eip-1559) transactions, this will be null.
 
 
 #### *transaction* . **data** => *[BytesLike](/v5/api/utils/bytes/#BytesLike)*
@@ -115,6 +141,13 @@ The v portion of the elliptic curve signatures for *transaction*. This is used t
 
 Functions
 ---------
+
+#### *ethers* . *utils* . **accessListify**( anAcceslistish ) => *[AccessList](/v5/api/providers/types/#providers-AccessList)*
+
+Normalizes the [AccessListish](/v5/api/providers/types/#providers-AccessListish) *anAccessListish* into an [AccessList](/v5/api/providers/types/#providers-AccessList).
+
+This is useful for other utility functions which wish to remain flexible as to the input parameter for access lists, such as when creating a [Signer](/v5/api/signer/#Signer) which needs to manipulate a possibly typed transaction envelope.
+
 
 #### *ethers* . *utils* . **parseTransaction**( aBytesLike ) => *[Transaction](/v5/api/utils/transactions/#Transaction)*
 

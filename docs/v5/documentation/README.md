@@ -211,22 +211,19 @@ Code
 ```
 _code: Result of Code Example  @lang<javascript>
 
-// <hide>
-const url = require("url");
-// </hide>
+//_hide: const url = require("url");
 
+//_result:
 url.parse("https://www.ricmoo.com/").protocol
-//!
+//_log:
 
+//_throws:
 url.parse(45)
-//! error
+//_log:
 
 // You want to assign (doesn't emit eval) AND display the value
 const foo = 4 + 5;
-// <hide>
-foo
-// </hide>
-//!
+//_log: foo
 ```
 
 ```javascript

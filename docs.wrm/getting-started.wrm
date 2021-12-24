@@ -18,7 +18,7 @@ _code: node.js 是必须的 @lang<script>
 
 const { ethers } = require("ethers");
 
-_code: ES6 or TypeScript @lang<script>
+_code: ES6 或 TypeScript @lang<script>
 
 import { ethers } from "ethers";
 
@@ -30,7 +30,7 @@ _heading: Web 浏览器
 但对于想进行快速用例和原型展示，你可以将我们的CDN加载到你的web应用程序中。
 
 
-_code: ES6 in the 浏览器 @lang<html>
+_code: 在浏览器中通过ES6的方式 @lang<html>
 
 <script type="module">
     import { ethers } from "https://cdn.ethers.io/lib/ethers-5.2.esm.min.js";
@@ -38,7 +38,7 @@ _code: ES6 in the 浏览器 @lang<html>
 </script>
 
 
-_code: ES3 (UMD) in the Browser @lang<html>
+_code: 在浏览器中通过ES3 (UMD)的方式 @lang<html>
 
 <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"
         type="application/javascript"></script>
@@ -50,9 +50,9 @@ _subsection: 常见的术语 @<getting-started--glossary>
 
 _table: Common Terms
 
-$提供者:  提供者是一个用于连接以太坊网络的抽象类，提供了通过只读方式的来连接区块链网络和获取其状态的桥梁。
-$签名器:  签名器是(通常)以某种方式直接或间接访问私钥，它可以签名消息和在已授权网络中管理你的账户中的以太币来进行交易。
-$合约:  合约是一个运行在以太坊网络上表示现实中特定合约的抽象，应用可以像使用JavaScript对象一样使用它。
+$Provider:  Provider（提供者）是一个用于连接以太坊网络的抽象类，提供了通过只读方式的来连接区块链网络和获取其状态的桥梁。
+$Signer:  Signer（签名器）通常是以某种方式直接或间接访问私钥，它可以签名消息和在已授权网络中管理你的账户中的以太币来进行交易。
+$Contract:  Contract（合约）是一个运行在以太坊网络上表示现实中特定合约的抽象，应用可以像使用JavaScript对象一样使用它。
 
 
 | **Provider**     | $Provider      |
@@ -83,8 +83,8 @@ _subsection: 连接以太坊: RPC @<getting-started--connecting-rpc>
 [JSON-RPC API](link-jsonrpc) 另一种与以太坊交互的比较流行的方式，用在所有主要的以太坊节点
 (如 [[link-geth]] 和 [[link-parity]]) 以及许多第三方web服务 (如 [[link-infura]])。 它通常提供了:
 
-- 连接以太坊网络 ( a [[Provider]])
-- 保存你的私钥并且可以签名 ( a[[Signer]])
+- 连接以太坊网络 ([[Provider]])
+- 保存你的私钥并且可以签名 ([[Signer]])
 
 _code: 连接一个 RPC 客户端 @lang<script>
 
@@ -141,7 +141,7 @@ _subsection: 合约 @<getting-started--contracts>
 
 合约是基于以太坊区块链中程序代码的抽象。
 
-[[合约]]对象使得链上的合约可以简单地作为一个普通的JavaScript对象, 通过映射的方法来编码和解码数据。
+[合约](Contract)对象使得链上的合约可以简单地作为一个普通的JavaScript对象, 通过映射的方法来编码和解码数据。
 
 如果你熟悉数据库, 你会发现这与//对象关系映射器// (ORM)是相似的。
 

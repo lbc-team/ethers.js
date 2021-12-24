@@ -45,7 +45,7 @@ provider = new EtherscanProvider();
 provider = new EtherscanProvider("rinkeby");
 provider = new EtherscanProvider(4);
 
-const network = ethers.providers.getNetwork("rinkeby");
+network = ethers.providers.getNetwork("rinkeby");
 // {
 //   chainId: 4,
 //   ensAddress: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',

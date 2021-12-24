@@ -85,7 +85,13 @@ BigNumber.from(42n)
 
 // Numbers outside the safe range fail:
 BigNumber.from(Number.MAX_SAFE_INTEGER);
-// Error: overflow (fault="overflow", operation="BigNumber.from", value=9007199254740991, code=NUMERIC_FAULT, version=bignumber/5.0.14)
+// [Error: overflow] {
+//   code: 'NUMERIC_FAULT',
+//   fault: 'overflow',
+//   operation: 'BigNumber.from',
+//   reason: 'overflow',
+//   value: 9007199254740991
+// }
 ```
 
 Methods
@@ -178,6 +184,11 @@ Returns true if and only if the value of *BigNumber* is zero.
 
 
 ### Conversion
+
+#### *BigNumber* . **toBigInt**( ) => *bigint*
+
+Returns the value of *BigNumber* as a [JavScript BigInt](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt) value, on platforms which support them.
+
 
 #### *BigNumber* . **toNumber**( ) => *number*
 

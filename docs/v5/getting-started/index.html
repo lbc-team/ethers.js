@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html class="paged">
   <head>
-    <title>Getting Started</title>
+    <title>开始使用</title>
     <link rel="stylesheet" type="text/css" href="/v5/static/style.css">
-    <meta property="og:title" content="Getting Started"/>
+    <meta property="og:title" content="开始使用"/>
+    <meta charset="UTF-8">
     <meta property="og:description" content="Documentation for ethers, a complete, tiny and simple Ethereum library."/>
     
     <meta property="og:image" content="/v5/static/social.jpg"/>
@@ -12,53 +13,53 @@
   <body>
     <div class="sidebar">
       <div class="header">
-        <div class="logo"><a href="/v5/"><div class="image"></div><div class="name">ethers</div><div class="version">v5.0</div></a></div>
+        <div class="logo"><a href="/v5/"><div class="image"></div><div class="name">ethers</div><div class="version">v5.4</div></a></div>
         <div class="search"><form action="/v5/search/" method="GET"><input name="search" id="search" /></form><span class="search-icon">&#9906;</span></div>
       </div>
       <div class="toc"><div>
-        <div class="link title"><a href="/v5/">Documentation</a></div><div class="base myself ancestor ancestor show link depth-1"><a href="/v5/getting-started/">Getting Started</a></div><div class="link show child depth-2"><a href="#installing">Installing</a></div><div class="link show child depth-2"><a href="#importing">Importing</a></div><div class="link show child depth-2"><a href="#getting-started--glossary">Common Terminology</a></div><div class="link show child depth-2"><a href="#getting-started--connecting">Connecting to Ethereum: Metamask</a></div><div class="link show child depth-2"><a href="#getting-started--connecting-rpc">Connecting to Ethereum: RPC</a></div><div class="link show child depth-2"><a href="#getting-started--contracts">Contracts</a></div><div class="link show child depth-2"><a href="#getting-started--signing">Signing Messages</a></div><div class="base show link depth-1"><a href="/v5/concepts/">Ethereum Basics</a></div><div class="hide link depth-2"><a href="/v5/concepts/events/">Events</a></div><div class="hide link depth-2"><a href="/v5/concepts/gas/">Gas</a></div><div class="hide link depth-2"><a href="/v5/concepts/security/">Security</a></div><div class="hide link depth-2"><a href="/v5/concepts/best-practices/">Best Practices</a></div><div class="base show link depth-1"><a href="/v5/api-keys/">Provider API Keys</a></div><div class="base show link depth-1"><a href="/v5/api/">Application Programming Interface</a></div><div class="hide link depth-2"><a href="/v5/api/providers/">Providers</a></div><div class="hide link depth-3"><a href="/v5/api/providers/provider/">Provider</a></div><div class="hide link depth-3"><a href="/v5/api/providers/jsonrpc-provider/">JsonRpcProvider</a></div><div class="hide link depth-3"><a href="/v5/api/providers/api-providers/">API Providers</a></div><div class="hide link depth-3"><a href="/v5/api/providers/other/">Other Providers</a></div><div class="hide link depth-3"><a href="/v5/api/providers/types/">Types</a></div><div class="hide link depth-2"><a href="/v5/api/signer/">Signers</a></div><div class="hide link depth-2"><a href="/v5/api/contract/">Contract Interaction</a></div><div class="hide link depth-3"><a href="/v5/api/contract/contract/">Contract</a></div><div class="hide link depth-3"><a href="/v5/api/contract/contract-factory/">ContractFactory</a></div><div class="hide link depth-3"><a href="/v5/api/contract/example/">Example: ERC-20 Contract</a></div><div class="hide link depth-2"><a href="/v5/api/utils/">Utilities</a></div><div class="hide link depth-3"><a href="/v5/api/utils/abi/">Application Binary Interface</a></div><div class="hide link depth-4"><a href="/v5/api/utils/abi/coder/">AbiCoder</a></div><div class="hide link depth-4"><a href="/v5/api/utils/abi/formats/">ABI Formats</a></div><div class="hide link depth-4"><a href="/v5/api/utils/abi/fragments/">Fragments</a></div><div class="hide link depth-4"><a href="/v5/api/utils/abi/interface/">Interface</a></div><div class="hide link depth-3"><a href="/v5/api/utils/address/">Addresses</a></div><div class="hide link depth-3"><a href="/v5/api/utils/bignumber/">BigNumber</a></div><div class="hide link depth-3"><a href="/v5/api/utils/bytes/">Byte Manipulation</a></div><div class="hide link depth-3"><a href="/v5/api/utils/constants/">Constants</a></div><div class="hide link depth-3"><a href="/v5/api/utils/display-logic/">Display Logic and Input</a></div><div class="hide link depth-3"><a href="/v5/api/utils/encoding/">Encoding Utilities</a></div><div class="hide link depth-3"><a href="/v5/api/utils/fixednumber/">FixedNumber</a></div><div class="hide link depth-3"><a href="/v5/api/utils/hashing/">Hashing Algorithms</a></div><div class="hide link depth-3"><a href="/v5/api/utils/hdnode/">HD Wallet</a></div><div class="hide link depth-3"><a href="/v5/api/utils/logger/">Logging</a></div><div class="hide link depth-3"><a href="/v5/api/utils/properties/">Property Utilities</a></div><div class="hide link depth-3"><a href="/v5/api/utils/signing-key/">Signing Key</a></div><div class="hide link depth-3"><a href="/v5/api/utils/strings/">Strings</a></div><div class="hide link depth-3"><a href="/v5/api/utils/transactions/">Transactions</a></div><div class="hide link depth-3"><a href="/v5/api/utils/web/">Web Utilities</a></div><div class="hide link depth-3"><a href="/v5/api/utils/wordlists/">Wordlists</a></div><div class="hide link depth-2"><a href="/v5/api/other/">Other Libraries</a></div><div class="hide link depth-3"><a href="/v5/api/other/assembly/">Assembly</a></div><div class="hide link depth-4"><a href="/v5/api/other/assembly/dialect/">Ethers ASM Dialect</a></div><div class="hide link depth-4"><a href="/v5/api/other/assembly/api/">Utilities</a></div><div class="hide link depth-4"><a href="/v5/api/other/assembly/ast/">Abstract Syntax Tree</a></div><div class="hide link depth-3"><a href="/v5/api/other/hardware/">Hardware Wallets</a></div><div class="hide link depth-2"><a href="/v5/api/experimental/">Experimental</a></div><div class="base show link depth-1"><a href="/v5/cli/">Command Line Interfaces</a></div><div class="hide link depth-2"><a href="/v5/cli/ethers/">Sandbox Utility</a></div><div class="hide link depth-2"><a href="/v5/cli/asm/">Assembler</a></div><div class="hide link depth-2"><a href="/v5/cli/ens/">Ethereum Naming Service</a></div><div class="hide link depth-2"><a href="/v5/cli/typescript/">TypeScript</a></div><div class="hide link depth-2"><a href="/v5/cli/plugin/">Making Your Own</a></div><div class="base show link depth-1"><a href="/v5/cookbook/">Cookbook</a></div><div class="hide link depth-2"><a href="/v5/cookbook/react-native/">React Native (and ilk)</a></div><div class="base show link depth-1"><a href="/v5/migration/">Migration Guide</a></div><div class="hide link depth-2"><a href="/v5/migration/web3/">Migration: From Web3.js</a></div><div class="hide link depth-2"><a href="/v5/migration/ethers-v4/">Migration: From Ethers v4</a></div><div class="base show link depth-1"><a href="/v5/testing/">Testing</a></div><div class="base show link depth-1"><a href="/v5/contributing/">Contributing and Hacking</a></div><div class="base show link depth-1"><a href="/v5/other-resources/">Other Resources</a></div><div class="base show link depth-1"><a href="/v5/documentation/">Flatworm Docs</a></div><div class="base show link depth-1"><a href="/v5/license/">License and Copyright</a></div>
+        <div class="link title"><a href="/v5/">ethers.js中文文档</a></div><div class="base myself ancestor ancestor show link depth-1"><a href="/v5/getting-started/">开始使用</a></div><div class="link show child depth-2"><a href="#installing">安装</a></div><div class="link show child depth-2"><a href="#importing">导入</a></div><div class="link show child depth-2"><a href="#getting-started--glossary">常见的术语</a></div><div class="link show child depth-2"><a href="#getting-started--connecting">连接以太坊: MetaMask</a></div><div class="link show child depth-2"><a href="#getting-started--connecting-rpc">连接以太坊: RPC</a></div><div class="link show child depth-2"><a href="#getting-started--contracts">合约</a></div><div class="link show child depth-2"><a href="#getting-started--signing">签名消息</a></div><div class="base show link depth-1"><a href="/v5/concepts/">以太坊基础知识</a></div><div class="hide link depth-2"><a href="/v5/concepts/events/">事件</a></div><div class="hide link depth-2"><a href="/v5/concepts/gas/">Gas</a></div><div class="hide link depth-2"><a href="/v5/concepts/security/">Security</a></div><div class="hide link depth-2"><a href="/v5/concepts/best-practices/">Best Practices</a></div><div class="base show link depth-1"><a href="/v5/api-keys/">Provider API Keys</a></div><div class="base show link depth-1"><a href="/v5/api/">Application Programming Interface</a></div><div class="hide link depth-2"><a href="/v5/api/providers/">Providers</a></div><div class="hide link depth-3"><a href="/v5/api/providers/provider/">Provider</a></div><div class="hide link depth-3"><a href="/v5/api/providers/jsonrpc-provider/">JsonRpcProvider</a></div><div class="hide link depth-3"><a href="/v5/api/providers/api-providers/">API Providers</a></div><div class="hide link depth-3"><a href="/v5/api/providers/other/">Other Providers</a></div><div class="hide link depth-3"><a href="/v5/api/providers/types/">Types</a></div><div class="hide link depth-2"><a href="/v5/api/signer/">Signers</a></div><div class="hide link depth-2"><a href="/v5/api/contract/">Contract Interaction</a></div><div class="hide link depth-3"><a href="/v5/api/contract/contract/">Contract</a></div><div class="hide link depth-3"><a href="/v5/api/contract/contract-factory/">ContractFactory</a></div><div class="hide link depth-3"><a href="/v5/api/contract/example/">Example: ERC-20 Contract</a></div><div class="hide link depth-2"><a href="/v5/api/utils/">Utilities</a></div><div class="hide link depth-3"><a href="/v5/api/utils/abi/">Application Binary Interface</a></div><div class="hide link depth-4"><a href="/v5/api/utils/abi/coder/">AbiCoder</a></div><div class="hide link depth-4"><a href="/v5/api/utils/abi/formats/">ABI Formats</a></div><div class="hide link depth-4"><a href="/v5/api/utils/abi/fragments/">Fragments</a></div><div class="hide link depth-4"><a href="/v5/api/utils/abi/interface/">Interface</a></div><div class="hide link depth-3"><a href="/v5/api/utils/address/">Addresses</a></div><div class="hide link depth-3"><a href="/v5/api/utils/bignumber/">BigNumber</a></div><div class="hide link depth-3"><a href="/v5/api/utils/bytes/">Byte Manipulation</a></div><div class="hide link depth-3"><a href="/v5/api/utils/constants/">Constants</a></div><div class="hide link depth-3"><a href="/v5/api/utils/display-logic/">Display Logic and Input</a></div><div class="hide link depth-3"><a href="/v5/api/utils/encoding/">Encoding Utilities</a></div><div class="hide link depth-3"><a href="/v5/api/utils/fixednumber/">FixedNumber</a></div><div class="hide link depth-3"><a href="/v5/api/utils/hashing/">Hashing Algorithms</a></div><div class="hide link depth-3"><a href="/v5/api/utils/hdnode/">HD Wallet</a></div><div class="hide link depth-3"><a href="/v5/api/utils/logger/">Logging</a></div><div class="hide link depth-3"><a href="/v5/api/utils/properties/">Property Utilities</a></div><div class="hide link depth-3"><a href="/v5/api/utils/signing-key/">Signing Key</a></div><div class="hide link depth-3"><a href="/v5/api/utils/strings/">Strings</a></div><div class="hide link depth-3"><a href="/v5/api/utils/transactions/">Transactions</a></div><div class="hide link depth-3"><a href="/v5/api/utils/web/">Web Utilities</a></div><div class="hide link depth-3"><a href="/v5/api/utils/wordlists/">Wordlists</a></div><div class="hide link depth-2"><a href="/v5/api/other/">Other Libraries</a></div><div class="hide link depth-3"><a href="/v5/api/other/assembly/">Assembly</a></div><div class="hide link depth-4"><a href="/v5/api/other/assembly/dialect/">Ethers ASM Dialect</a></div><div class="hide link depth-4"><a href="/v5/api/other/assembly/api/">Utilities</a></div><div class="hide link depth-4"><a href="/v5/api/other/assembly/ast/">Abstract Syntax Tree</a></div><div class="hide link depth-3"><a href="/v5/api/other/hardware/">Hardware Wallets</a></div><div class="hide link depth-2"><a href="/v5/api/experimental/">Experimental</a></div><div class="base show link depth-1"><a href="/v5/cli/">Command Line Interfaces</a></div><div class="hide link depth-2"><a href="/v5/cli/ethers/">Sandbox Utility</a></div><div class="hide link depth-2"><a href="/v5/cli/asm/">Assembler</a></div><div class="hide link depth-2"><a href="/v5/cli/ens/">Ethereum Naming Service</a></div><div class="hide link depth-2"><a href="/v5/cli/typescript/">TypeScript</a></div><div class="hide link depth-2"><a href="/v5/cli/plugin/">Making Your Own</a></div><div class="base show link depth-1"><a href="/v5/cookbook/">Cookbook</a></div><div class="hide link depth-2"><a href="/v5/cookbook/react-native/">React Native (and ilk)</a></div><div class="hide link depth-2"><a href="/v5/cookbook/transactions/">Transactions</a></div><div class="base show link depth-1"><a href="/v5/migration/">Migration Guide</a></div><div class="hide link depth-2"><a href="/v5/migration/web3/">Migration: From Web3.js</a></div><div class="hide link depth-2"><a href="/v5/migration/ethers-v4/">Migration: From Ethers v4</a></div><div class="base show link depth-1"><a href="/v5/testing/">Testing</a></div><div class="base show link depth-1"><a href="/v5/contributing/">Contributing and Hacking</a></div><div class="base show link depth-1"><a href="/v5/other-resources/">Other Resources</a></div><div class="base show link depth-1"><a href="/v5/documentation/">Flatworm Docs</a></div><div class="base show link depth-1"><a href="/v5/license/">License and Copyright</a></div>
       </div></div>
       <div class="footer">
         <a href="/v5/single-page/">Single Page</a>
       </div>
     </div>
     <div class="content">
-      <div class="breadcrumbs"><a href="/v5/">Documentation</a>&nbsp;&nbsp;&raquo;&nbsp;&nbsp;<span class="current">Getting Started</span></div>
+      <div class="breadcrumbs"><a href="/v5/">ethers.js中文文档</a>&nbsp;&nbsp;&raquo;&nbsp;&nbsp;<span class="current">开始使用</span></div>
 
-<a name="getting-started"></a><a name="getting-started"></a><h1 class="show-anchors"><div>Getting Started<div class="anchors"><a class="self" href="/v5/getting-started/#getting-started"></a></div></div></h1>
-<a name="installing"></a><a name="getting-started--installing"></a><h2 class="show-anchors"><div>Installing<div class="anchors"><a class="self" href="/v5/getting-started/#installing"></a></div></div></h2><p>Ethers' various Classes and Functions are available to import manually from sub-packages under the <a href="https://www.npmjs.com/search?q=%40ethersproject%2F">@ethersproject</a> organization but for most projects, the umbrella package is the easiest way to get started.</p>
+<a name="getting-started"></a><a name="getting-started"></a><h1 class="show-anchors"><div>开始使用<div class="anchors"><a class="self" href="/v5/getting-started/#getting-started"></a></div></div></h1>
+<a name="installing"></a><a name="getting-started--installing"></a><h2 class="show-anchors"><div>安装<div class="anchors"><a class="self" href="/v5/getting-started/#installing"></a></div></div></h2><p>以太坊中各种类和函数都可以从<a href="https://www.npmjs.com/search?q=%40ethersproject%2F">@ethersproject</a>下的子库中手动进行导入，但对于大多数项目来说，用完整的总库是最简单的入门方式。</p>
 
-<div class="code">/home/ricmoo&gt; npm install --save ethers</div><a name="importing"></a><a name="getting-started--importing"></a><h2 class="show-anchors"><div>Importing<div class="anchors"><a class="self" href="/v5/getting-started/#importing"></a></div></div></h2>
+<div class="code">/home/ricmoo&gt; npm install --save ethers</div><a name="importing"></a><a name="getting-started--importing"></a><h2 class="show-anchors"><div>导入<div class="anchors"><a class="self" href="/v5/getting-started/#importing"></a></div></div></h2>
 <a name="getting-started--importing--node-js"></a><h3 class="show-anchors"><div>Node.js<div class="anchors"><a class="self" href="/v5/getting-started/#getting-started--importing--node-js"></a></div></div></h3>
-<div class="code-title"><div>node.js require</div></div><div class="code">const { ethers } = require("ethers");
-</div><div class="code-title"><div>ES6 or TypeScript</div></div><div class="code">import { ethers } from "ethers";
-</div><a name="getting-started--importing--web-browser"></a><h3 class="show-anchors"><div>Web Browser<div class="anchors"><a class="self" href="/v5/getting-started/#getting-started--importing--web-browser"></a></div></div></h3><p>It is generally better practice (for security reasons) to copy the <a href="https://cdn.ethers.io/lib/ethers-5.0.esm.min.js">ethers library</a> to your own webserver and serve it yourself.</p>
+<div class="code-title"><div>node.js 是必须的</div></div><div class="code">const { ethers } = require("ethers");
+</div><div class="code-title"><div>ES6 或 TypeScript</div></div><div class="code">import { ethers } from "ethers";
+</div><a name="getting-started--importing--web"></a><h3 class="show-anchors"><div>Web 浏览器<div class="anchors"><a class="self" href="/v5/getting-started/#getting-started--importing--web"></a></div></div></h3><p>出于安全，通常较好的方式是将这个库复制到你的web服务器中来进行各种操作。</p>
 
-<p>For quick demos or prototyping though, you can load it in your Web Applications from our CDN.</p>
+<p>但对于想进行快速用例和原型展示，你可以将我们的CDN加载到你的web应用程序中。</p>
 
-<div class="code-title"><div>ES6 in the Browser</div></div><div class="code">&lt;script type="module"&gt;
-    import { ethers } from "https://cdn.ethers.io/lib/ethers-5.0.esm.min.js";
+<div class="code-title"><div>在浏览器中通过ES6的方式</div></div><div class="code">&lt;script type="module"&gt;
+    import { ethers } from "https://cdn.ethers.io/lib/ethers-5.2.esm.min.js";
     // Your code here...
-&lt;/script&gt;</div><div class="code-title"><div>ES3 (UMD) in the Browser</div></div><div class="code">&lt;script src="https://cdn.ethers.io/lib/ethers-5.0.umd.min.js"
-        type="application/javascript"&gt;&lt;/script&gt;</div><a name="getting-started--glossary"></a><a name="getting-started--getting-started--glossary"></a><h2 class="show-anchors"><div>Common Terminology<div class="anchors"><a class="self" href="/v5/getting-started/#getting-started--glossary"></a></div></div></h2><p>This section needs work...</p>
+&lt;/script&gt;</div><div class="code-title"><div>在浏览器中通过ES3 (UMD)的方式</div></div><div class="code">&lt;script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"
+        type="application/javascript"&gt;&lt;/script&gt;</div><a name="getting-started--glossary"></a><a name="getting-started--getting-started--glossary"></a><h2 class="show-anchors"><div>常见的术语<div class="anchors"><a class="self" href="/v5/getting-started/#getting-started--glossary"></a></div></div></h2><p>这部分仍会不断地完善...</p>
 
-<table class="table minimal"><tr><td align="left"><b>Provider</b></td><td align="left">A Provider (in ethers) is a class which provides an abstraction for a connection to the Ethereum Network. It provides read-only access to the Blockchain and its status.</td><td class="fix">&nbsp;</td></tr><tr><td align="left"><b>Signer</b></td><td align="left">A Signer is a class which (usually) in some way directly or indirectly has access to a private key, which can sign messages and transactions to authorize the network to charge your account ether to perform operations.</td><td class="fix">&nbsp;</td></tr><tr><td align="left"><b>Contract</b></td><td align="left">A Contract is an abstraction which represents a connection to a specific contract on the Ethereum Network, so that applications can use it like a normal JavaScript object.</td><td class="fix">&nbsp;</td></tr><tr><td class="table-title" colspan="2">Common Terms</td><td class="fix">&nbsp;</td></tr></table><a name="getting-started--connecting"></a><a name="getting-started--getting-started--connecting"></a><h2 class="show-anchors"><div>Connecting to Ethereum: Metamask<div class="anchors"><a class="self" href="/v5/getting-started/#getting-started--connecting"></a></div></div></h2><p>The quickest and easiest way to experiment and begin developing on Ethereum is to use <a href="https://metamask.io/">Metamask</a>, which is a browser extension that provides:</p>
+<table class="table minimal"><tr><td align="left"><b>Provider</b></td><td align="left">Provider（提供者）是一个用于连接以太坊网络的抽象类，提供了通过只读方式的来连接区块链网络和获取其状态的桥梁。</td><td class="fix">&nbsp;</td></tr><tr><td align="left"><b>Signer</b></td><td align="left">Signer（签名器）通常是以某种方式直接或间接访问私钥，它可以签名消息和在已授权网络中管理你的账户中的以太币来进行交易。</td><td class="fix">&nbsp;</td></tr><tr><td align="left"><b>Contract</b></td><td align="left">Contract（合约）是一个运行在以太坊网络上表示现实中特定合约的抽象，应用可以像使用JavaScript对象一样使用它。</td><td class="fix">&nbsp;</td></tr><tr><td class="table-title" colspan="2">Common Terms</td><td class="fix">&nbsp;</td></tr></table><a name="getting-started--connecting"></a><a name="getting-started--getting-started--connecting"></a><h2 class="show-anchors"><div>连接以太坊: MetaMask<div class="anchors"><a class="self" href="/v5/getting-started/#getting-started--connecting"></a></div></div></h2><p>在以太坊上去开发和测试的最快、最简单的方法是使用<a href="https://metamask.io/">MetaMask</a>, 它是一个基于浏览器的扩展程序，提供了:</p>
 
-<p><ul><li>A connection to the Ethereum network (a <a href="/v5/api/providers/provider/">Provider</a>) </li><li>Holds your private key and can sign things (a <a href="/v5/api/signer/#Signer">Signer</a>) </li></ul></p>
+<p><ul><li>连接以太坊网络 (a <a href="/v5/api/providers/provider/">Provider</a>) </li><li>保存你的私钥并且可以签名 (a <a href="/v5/api/signer/#Signer">Signer</a>) </li></ul></p>
 
-<div class="code-title"><div>Connecting to Metamask</div></div><div class="code"><span class="comment">// A Web3Provider wraps a standard Web3 provider, which is
-</span><span class="comment">// what Metamask injects as window.ethereum into each page
+<div class="code-title"><div>连接 MetaMask</div></div><div class="code"><span class="comment">// A Web3Provider wraps a standard Web3 provider, which is
+</span><span class="comment">// what MetaMask injects as window.ethereum into each page
 </span>const provider = new ethers.providers.Web3Provider(window.ethereum)
 
-<span class="comment">// The Metamask plugin also allows signing transactions to
+<span class="comment">// The MetaMask plugin also allows signing transactions to
 </span><span class="comment">// send ether and pay to change state within the blockchain.
 </span><span class="comment">// For this, you need the account signer...
 </span>const signer = provider.getSigner()
-</div><a name="getting-started--connecting-rpc"></a><a name="getting-started--getting-started--connecting-rpc"></a><h2 class="show-anchors"><div>Connecting to Ethereum: RPC<div class="anchors"><a class="self" href="/v5/getting-started/#getting-started--connecting-rpc"></a></div></div></h2><p>The <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC">JSON-RPC API</a> is another popular method for interacting with Ethereum and is available in all major Ethereum node implementations (e.g. <a href="https://geth.ethereum.org">Geth</a> and <a href="https://www.parity.io">Parity</a>) as well as many third-party web services (e.g. <a href="https://infura.io">INFURA</a>). It typically provides:</p>
+</div><a name="getting-started--connecting-rpc"></a><a name="getting-started--getting-started--connecting-rpc"></a><h2 class="show-anchors"><div>连接以太坊: RPC<div class="anchors"><a class="self" href="/v5/getting-started/#getting-started--connecting-rpc"></a></div></div></h2><p><a href="https://github.com/ethereum/wiki/wiki/JSON-RPC">JSON-RPC API</a> 另一种与以太坊交互的比较流行的方式，用在所有主要的以太坊节点 (如 <a href="https://geth.ethereum.org">Geth</a> 和 <a href="https://www.parity.io">Parity</a>) 以及许多第三方web服务 (如 <a href="https://infura.io">INFURA</a>)。 它通常提供了:</p>
 
-<p><ul><li>A connection to the Ethereum network (a <a href="/v5/api/providers/provider/">Provider</a>) </li><li>Holds your private key and can sign thing (a <a href="/v5/api/signer/#Signer">Signer</a>) </li></ul></p>
+<p><ul><li>连接以太坊网络 (<a href="/v5/api/providers/provider/">Provider</a>) </li><li>保存你的私钥并且可以签名 (<a href="/v5/api/signer/#Signer">Signer</a>) </li></ul></p>
 
-<div class="code-title"><div>Connecting to an RPC client</div></div><div class="code"><span class="comment">// If you don't specify a //url//, Ethers connects to the default 
+<div class="code-title"><div>连接一个 RPC 客户端</div></div><div class="code"><span class="comment">// If you don't specify a //url//, Ethers connects to the default 
 </span><span class="comment">// (i.e. ``http:/\/localhost:8545``)
 </span>const provider = new ethers.providers.JsonRpcProvider();
 
@@ -66,46 +67,46 @@
 </span><span class="comment">// send ether and pay to change state within the blockchain.
 </span><span class="comment">// For this, we need the account signer...
 </span>const signer = provider.getSigner()
-</div><a name="getting-started--querying"></a><a name="getting-started--getting-started--connecting-rpc--getting-started--querying"></a><h3 class="show-anchors"><div>Querying the Blockchain<div class="anchors"><a class="self" href="/v5/getting-started/#getting-started--querying"></a></div></div></h3><p>Once you have a <a href="/v5/api/providers/provider/">Provider</a>, you have a read-only connection to the blockchain, which you can use to query the current state, fetch historic logs, look up deployed code and so on.</p>
+</div><a name="getting-started--querying"></a><a name="getting-started--getting-started--connecting-rpc--getting-started--querying"></a><h3 class="show-anchors"><div>查询区块链<div class="anchors"><a class="self" href="/v5/getting-started/#getting-started--querying"></a></div></div></h3><p>当你有了<a href="/v5/api/providers/provider/">Provider</a>之后, 你就可以通过只读的方式连接区块链, 此外，你还可以使用它来查询当前状态、获取历史日志、查找部署的代码等等。</p>
 
-<div class="code-title"><div>Basic Queries</div></div><div class="code"><span class="comment">// Look up the current block number
-</span>provider.getBlockNumber()
-<span class="result ok">// { Promise: 11817915 }
+<div class="code-title"><div>基础查询</div></div><div class="code"><span class="comment">// Look up the current block number
+</span>await provider.getBlockNumber()
+<span class="result ok">// 13866991
 </span>
 <span class="comment">// Get the balance of an account (by address or ENS name, if supported by network)
 </span>balance = await provider.getBalance("ethers.eth")
-<span class="result ok">// { BigNumber: "2337132817842795605" }
+<span class="result ok">// { BigNumber: "82826475815887608" }
 </span>
 <span class="comment">// Often you need to format the output to something more user-friendly,
 </span><span class="comment">// such as in ether (instead of wei)
 </span>ethers.utils.formatEther(balance)
-<span class="result ok">// '2.337132817842795605'
+<span class="result ok">// '0.082826475815887608'
 </span>
 <span class="comment">// If a user enters a string in an input field, you may need
 </span><span class="comment">// to convert it from ether (as a string) to wei (as a BigNumber)
 </span>ethers.utils.parseEther("1.0")
 <span class="result ok">// { BigNumber: "1000000000000000000" }
-</span></div><a name="getting-started--sending"></a><a name="getting-started--getting-started--connecting-rpc--getting-started--sending"></a><h3 class="show-anchors"><div>Writing to the Blockchain<div class="anchors"><a class="self" href="/v5/getting-started/#getting-started--sending"></a></div></div></h3>
-<div class="code-title"><div>Sending Ether</div></div><div class="code"><span class="comment">// Send 1 ether to an ens name.
+</span></div><a name="getting-started--sending"></a><a name="getting-started--getting-started--connecting-rpc--getting-started--sending"></a><h3 class="show-anchors"><div>写入区块链<div class="anchors"><a class="self" href="/v5/getting-started/#getting-started--sending"></a></div></div></h3>
+<div class="code-title"><div>发送 Ether</div></div><div class="code"><span class="comment">// Send 1 ether to an ens name.
 </span>const tx = signer.sendTransaction({
     to: "ricmoo.firefly.eth",
     value: ethers.utils.parseEther("1.0")
 });
-</div><a name="getting-started--contracts"></a><a name="getting-started--getting-started--contracts"></a><h2 class="show-anchors"><div>Contracts<div class="anchors"><a class="self" href="/v5/getting-started/#getting-started--contracts"></a></div></div></h2><p>A Contract is an abstraction of program code which lives on the Ethereum blockchain.</p>
+</div><a name="getting-started--contracts"></a><a name="getting-started--getting-started--contracts"></a><h2 class="show-anchors"><div>合约<div class="anchors"><a class="self" href="/v5/getting-started/#getting-started--contracts"></a></div></div></h2><p>合约是基于以太坊区块链中程序代码的抽象。</p>
 
-<p>The <a href="/v5/api/contract/contract/">Contract</a> object makes it easier to use an on-chain Contract as a normal JavaScript object, with the methods mapped to encoding and decoding data for you.</p>
+<p><a href="/v5/api/contract/contract/">合约</a>对象使得链上的合约可以简单地作为一个普通的JavaScript对象, 通过映射的方法来编码和解码数据。</p>
 
-<p>If you are familiar with Databases, this is similar to an <i>Object Relational Mapper</i> (ORM).</p>
+<p>如果你熟悉数据库, 你会发现这与<i>对象关系映射器</i> (ORM)是相似的。</p>
 
-<p>In order to communicate with the Contract on-chain, this class needs to know what methods are available and how to encode and decode the data, which is what the <i>Application Binary Interface</i> (ABI) provides.</p>
+<p>为了与链上的合约进行通信，这个类需要知道哪些方法是可用的，以及如何编码和解码数据，这些通过<i>应用程序二进制接口</i> (ABI)来提供。</p>
 
-<p>This class is a <i>meta-class</i>, which means its methods are constructed at runtime, and when you pass in the ABI to the constructor it uses it to determine which methods to add.</p>
+<p>这个类是一个 <i>元类（meta-class）</i>, 这意味着它的方法是在运行时构造的, 当你将ABI传递给构造函数时，它来确定要添加哪些方法。</p>
 
-<p>While an on-chain Contract may have many methods available, you can safely ignore any methods you don't need or use, providing a smaller subset of the ABI to the contract.</p>
+<p>尽管链上的合约有许多可用的方法，但是你可以安全地忽略你认为不需要或者不使用的方法，这样合约里面的ABI就是一个较小的子集。</p>
 
-<p>An ABI often comes from the Solidity or Vyper compiler, but you can use the Human-Readable ABI in code, which the following examples use.</p>
+<p>ABI通常来自于Solidity或Vyper编译器，但是你可以在代码中使用可读的ABI，如下例所示：</p>
 
-<div class="code-title"><div>Connecting to the DAI Contract</div></div><div class="code"><span class="comment">// You can also use an ENS name for the contract address
+<div class="code-title"><div>连接 DAI 合约</div></div><div class="code"><span class="comment">// You can also use an ENS name for the contract address
 </span>const daiAddress = "dai.tokens.ethers.eth";
 
 <span class="comment">// The ERC-20 Contract ABI, which is a common contract interface
@@ -127,24 +128,24 @@
 
 <span class="comment">// The Contract object
 </span>const daiContract = new ethers.Contract(daiAddress, daiAbi, provider);
-</div><a name="getting-started--reading"></a><a name="getting-started--getting-started--contracts--getting-started--reading"></a><h3 class="show-anchors"><div>Read-Only Methods<div class="anchors"><a class="self" href="/v5/getting-started/#getting-started--reading"></a></div></div></h3>
-<div class="code-title"><div>Querying the DAI Contract</div></div><div class="code"><span class="comment">// Get the ERC-20 token name
-</span>daiContract.name()
-<span class="result ok">// { Promise: 'Dai Stablecoin' }
+</div><a name="getting-started--reading"></a><a name="getting-started--getting-started--contracts--getting-started--reading"></a><h3 class="show-anchors"><div>只读方法<div class="anchors"><a class="self" href="/v5/getting-started/#getting-started--reading"></a></div></div></h3>
+<div class="code-title"><div>查询 DAI 合约</div></div><div class="code"><span class="comment">// Get the ERC-20 token name
+</span>await daiContract.name()
+<span class="result ok">// 'Dai Stablecoin'
 </span>
 <span class="comment">// Get the ERC-20 token symbol (for tickers and UIs)
-</span>daiContract.symbol()
-<span class="result ok">// { Promise: 'DAI' }
+</span>await daiContract.symbol()
+<span class="result ok">// 'DAI'
 </span>
 <span class="comment">// Get the balance of an address
 </span>balance = await daiContract.balanceOf("ricmoo.firefly.eth")
-<span class="result ok">// { BigNumber: "198172622063578627973" }
+<span class="result ok">// { BigNumber: "15575624174838529547383" }
 </span>
 <span class="comment">// Format the DAI for displaying to the user
 </span>ethers.utils.formatUnits(balance, 18)
-<span class="result ok">// '198.172622063578627973'
-</span></div><a name="getting-started--writing"></a><a name="getting-started--getting-started--contracts--getting-started--writing"></a><h3 class="show-anchors"><div>State Changing Methods<div class="anchors"><a class="self" href="/v5/getting-started/#getting-started--writing"></a></div></div></h3>
-<div class="code-title"><div>Sending DAI</div></div><div class="code"><span class="comment">// The DAI Contract is currently connected to the Provider,
+<span class="result ok">// '15575.624174838529547383'
+</span></div><a name="getting-started--writing"></a><a name="getting-started--getting-started--contracts--getting-started--writing"></a><h3 class="show-anchors"><div>改变状态的方法<div class="anchors"><a class="self" href="/v5/getting-started/#getting-started--writing"></a></div></div></h3>
+<div class="code-title"><div>发送 DAI</div></div><div class="code"><span class="comment">// The DAI Contract is currently connected to the Provider,
 </span><span class="comment">// which is read-only. You need to connect to a Signer, so
 </span><span class="comment">// that you can pay to send state-changing transactions.
 </span>const daiWithSigner = contract.connect(signer);
@@ -154,8 +155,8 @@
 
 <span class="comment">// Send 1 DAI to "ricmoo.firefly.eth"
 </span>tx = daiWithSigner.transfer("ricmoo.firefly.eth", dai);
-</div><a name="getting-started--events"></a><a name="getting-started--getting-started--contracts--getting-started--events"></a><h3 class="show-anchors"><div>Listening to Events<div class="anchors"><a class="self" href="/v5/getting-started/#getting-started--events"></a></div></div></h3>
-<div class="code-title"><div>Listening to Events</div></div><div class="code"><span class="comment">// Receive an event when ANY transfer occurs
+</div><a name="getting-started--events"></a><a name="getting-started--getting-started--contracts--getting-started--events"></a><h3 class="show-anchors"><div>监听事件<div class="anchors"><a class="self" href="/v5/getting-started/#getting-started--events"></a></div></div></h3>
+<div class="code-title"><div>监听事件</div></div><div class="code"><span class="comment">// Receive an event when ANY transfer occurs
 </span>daiContract.on("Transfer", (from, to, amount, event) =&gt; {
     console.log(`${ from } sent ${ formatEther(amount) } to ${ to}`);
 <span class="comment">    // The event object contains the verbatim log data, the
@@ -180,8 +181,8 @@ filter = daiContract.filters.Transfer(null, myAddress)
 <span class="comment">    // The to will always be "address"
 </span>    console.log(`I got ${ formatEther(amount) } from ${ from }.`);
 });
-</div><a name="getting-started--history"></a><a name="getting-started--getting-started--contracts--getting-started--history"></a><h3 class="show-anchors"><div>Query Historic Events<div class="anchors"><a class="self" href="/v5/getting-started/#getting-started--history"></a></div></div></h3>
-<div class="code-title"><div>Filtering Historic Events</div></div><div class="code"><span class="comment">// Get the address of the Signer
+</div><a name="getting-started--history"></a><a name="getting-started--getting-started--contracts--getting-started--history"></a><h3 class="show-anchors"><div>查询历史事件<div class="anchors"><a class="self" href="/v5/getting-started/#getting-started--history"></a></div></div></h3>
+<div class="code-title"><div>过滤历史事件</div></div><div class="code"><span class="comment">// Get the address of the Signer
 </span>myAddress = await signer.getAddress()
 <span class="result ok">// '0x8ba1f109551bD432803012645Ac136ddd64DBA72'
 </span>
@@ -207,14 +208,17 @@ filter = daiContract.filters.Transfer(null, myAddress)
 </span><span class="result ok">// }
 </span>
 <span class="comment">// List all transfers sent from me a specific block range
-</span>daiContract.queryFilter(filterFrom, 9843470, 9843480)
-<span class="result ok">// { Promise: [
+</span>await daiContract.queryFilter(filterFrom, 9843470, 9843480)
+<span class="result ok">// [
 </span><span class="result ok">//   {
 </span><span class="result ok">//     address: '0x6B175474E89094C44Da98b954EedeAC495271d0F',
 </span><span class="result ok">//     args: [
 </span><span class="result ok">//       '0x8ba1f109551bD432803012645Ac136ddd64DBA72',
 </span><span class="result ok">//       '0x8B3765eDA5207fB21690874B722ae276B96260E0',
-</span><span class="result ok">//       { BigNumber: "4750000000000000000" }
+</span><span class="result ok">//       { BigNumber: "4750000000000000000" },
+</span><span class="result ok">//       amount: { BigNumber: "4750000000000000000" },
+</span><span class="result ok">//       from: '0x8ba1f109551bD432803012645Ac136ddd64DBA72',
+</span><span class="result ok">//       to: '0x8B3765eDA5207fB21690874B722ae276B96260E0'
 </span><span class="result ok">//     ],
 </span><span class="result ok">//     blockHash: '0x8462eb2fbcef5aa4861266f59ad5f47b9aa6525d767d713920fdbdfb6b0c0b78',
 </span><span class="result ok">//     blockNumber: 9843476,
@@ -241,7 +245,10 @@ filter = daiContract.filters.Transfer(null, myAddress)
 </span><span class="result ok">//     args: [
 </span><span class="result ok">//       '0x8ba1f109551bD432803012645Ac136ddd64DBA72',
 </span><span class="result ok">//       '0x00De4B13153673BCAE2616b67bf822500d325Fc3',
-</span><span class="result ok">//       { BigNumber: "250000000000000000" }
+</span><span class="result ok">//       { BigNumber: "250000000000000000" },
+</span><span class="result ok">//       amount: { BigNumber: "250000000000000000" },
+</span><span class="result ok">//       from: '0x8ba1f109551bD432803012645Ac136ddd64DBA72',
+</span><span class="result ok">//       to: '0x00De4B13153673BCAE2616b67bf822500d325Fc3'
 </span><span class="result ok">//     ],
 </span><span class="result ok">//     blockHash: '0x8462eb2fbcef5aa4861266f59ad5f47b9aa6525d767d713920fdbdfb6b0c0b78',
 </span><span class="result ok">//     blockNumber: 9843476,
@@ -263,31 +270,31 @@ filter = daiContract.filters.Transfer(null, myAddress)
 </span><span class="result ok">//     transactionHash: '0x1be23554545030e1ce47391a41098a46ff426382ed740db62d63d7676ff6fcf1',
 </span><span class="result ok">//     transactionIndex: 81
 </span><span class="result ok">//   }
-</span><span class="result ok">// ] }
+</span><span class="result ok">// ]
 </span>
-//
-<span class="comment">// The following have had the results omitted due to the
+<span class="comment">//
+</span><span class="comment">// The following have had the results omitted due to the
 </span><span class="comment">// number of entries; but they provide some useful examples
-</span>//
-
+</span><span class="comment">//
+</span>
 <span class="comment">// List all transfers sent in the last 10,000 blocks
-</span>daiContract.queryFilter(filterFrom, -10000)
+</span>await daiContract.queryFilter(filterFrom, -10000)
 
 <span class="comment">// List all transfers ever sent to me
-</span>daiContract.queryFilter(filterTo)
-</div><a name="getting-started--signing"></a><a name="getting-started--getting-started--signing"></a><h2 class="show-anchors"><div>Signing Messages<div class="anchors"><a class="self" href="/v5/getting-started/#getting-started--signing"></a></div></div></h2>
-<div class="code-title"><div>Signing Messages</div></div><div class="code"><span class="comment">// To sign a simple string, which are used for
+</span>await daiContract.queryFilter(filterTo)
+</div><a name="getting-started--signing"></a><a name="getting-started--getting-started--signing"></a><h2 class="show-anchors"><div>签名消息<div class="anchors"><a class="self" href="/v5/getting-started/#getting-started--signing"></a></div></div></h2>
+<div class="code-title"><div>签名消息</div></div><div class="code"><span class="comment">// To sign a simple string, which are used for
 </span><span class="comment">// logging into a service, such as CryptoKitties,
 </span><span class="comment">// pass the string in.
 </span>signature = await signer.signMessage("Hello World");
-<span class="result ok">// '0x800d1d157d472b0cb567ec0d9e2825203aaa7e84db5a9b19169c0c85575f6e0761e99bd670ed82f71a346020cdec8326644132cdeffd8e327d888f94f21825e01b'
+<span class="result ok">// '0x50d74814ee14799d0d316468bebfa59518a0c48e5385b0277cecfb7d27c6e5070e50ad56f8da7698dbce7c6e6857f9863c9a89937cb4d1ea3444e498de5d1b531c'
 </span>
-//
-<span class="comment">// A common case is also signing a hash, which is 32
+<span class="comment">//
+</span><span class="comment">// A common case is also signing a hash, which is 32
 </span><span class="comment">// bytes. It is important to note, that to sign binary
 </span><span class="comment">// data it MUST be an Array (or TypedArray)
-</span>//
-
+</span><span class="comment">//
+</span>
 <span class="comment">// This string is 66 characters long
 </span>message = "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
 
@@ -297,14 +304,14 @@ filter = daiContract.filters.Transfer(null, myAddress)
 </span>
 <span class="comment">// To sign a hash, you most often want to sign the bytes
 </span>signature = await signer.signMessage(messageBytes)
-<span class="result ok">// '0x3ec3dca35ae2712e7f9bb1e2819f9b40c818c567b1a01586d3b0d0a73bad1c303b7f39d4471ac0c9eb900438bc6b6a4bf5b2c120a5cb31edc2cfab11ede409381b'
+<span class="result ok">// '0xf404f02c4c56c6bde05c0a1259c940768f707f631a61bd1e2d039ccdd70d2690757d1aab5361292fec2e7eea05b97fdced21b9d568eff3380771b6e819987be01b'
 </span></div>
 
       <div class="footer">
-        <div class="nav previous"><a href="/v5/"><span class="arrow">&larr;</span>Documentation</a></div>
-        <div class="nav next"><a href="/v5/concepts/">Ethereum Basics<span class="arrow">&rarr;</span></a></div>
+        <div class="nav previous"><a href="/v5/"><span class="arrow">&larr;</span>ethers.js中文文档</a></div>
+        <div class="nav next"><a href="/v5/concepts/">以太坊基础知识<span class="arrow">&rarr;</span></a></div>
       </div>
-      <div class="copyright">The content of this site is licensed under the <a href="https://choosealicense.com/licenses/cc-by-4.0/">Creative Commons License</a>. Generated on February 8, 2021, 3:25pm.</div>
+      <div class="copyright">The content of this site is licensed under the <a href="https://choosealicense.com/licenses/cc-by-4.0/">Creative Commons License</a>. Generated on December 24, 2021, 5:7pm.</div>
     </div>
     <script src="/v5/static/script.js" type="text/javascript"></script>
     <!--EXTRASCRIPT-->

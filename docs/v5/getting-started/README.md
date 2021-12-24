@@ -4,18 +4,18 @@ Documentation: [html](https://docs.ethers.io/)
 
 -----
 
-Getting Started
-===============
+开始使用
+====
 
-Installing
-----------
+安装
+--
 
 ```
 /home/ricmoo> npm install --save ethers
 ```
 
-Importing
----------
+导入
+--
 
 ### Node.js
 
@@ -27,43 +27,43 @@ const { ethers } = require("ethers");
 import { ethers } from "ethers";
 ```
 
-### Web Browser
+### Web 浏览器
 
 ```
 <script type="module">
-    import { ethers } from "https://cdn.ethers.io/lib/ethers-5.0.esm.min.js";
+    import { ethers } from "https://cdn.ethers.io/lib/ethers-5.2.esm.min.js";
     // Your code here...
 </script>
 ```
 
 ```
-<script src="https://cdn.ethers.io/lib/ethers-5.0.umd.min.js"
+<script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"
         type="application/javascript"></script>
 ```
 
-Common Terminology
-------------------
+常见的术语
+-----
 
 Common Terms
 
 
 
-Connecting to Ethereum: Metamask
---------------------------------
+连接以太坊: MetaMask
+---------------
 
 ```
 // A Web3Provider wraps a standard Web3 provider, which is
-// what Metamask injects as window.ethereum into each page
+// what MetaMask injects as window.ethereum into each page
 const provider = new ethers.providers.Web3Provider(window.ethereum)
 
-// The Metamask plugin also allows signing transactions to
+// The MetaMask plugin also allows signing transactions to
 // send ether and pay to change state within the blockchain.
 // For this, you need the account signer...
 const signer = provider.getSigner()
 ```
 
-Connecting to Ethereum: RPC
----------------------------
+连接以太坊: RPC
+----------
 
 ```
 // If you don't specify a //url//, Ethers connects to the default 
@@ -76,21 +76,21 @@ const provider = new ethers.providers.JsonRpcProvider();
 const signer = provider.getSigner()
 ```
 
-### Querying the Blockchain
+### 查询区块链
 
 ```javascript
 // Look up the current block number
-provider.getBlockNumber()
-// { Promise: 11817915 }
+await provider.getBlockNumber()
+// 13866991
 
 // Get the balance of an account (by address or ENS name, if supported by network)
 balance = await provider.getBalance("ethers.eth")
-// { BigNumber: "2337132817842795605" }
+// { BigNumber: "82826475815887608" }
 
 // Often you need to format the output to something more user-friendly,
 // such as in ether (instead of wei)
 ethers.utils.formatEther(balance)
-// '2.337132817842795605'
+// '0.082826475815887608'
 
 // If a user enters a string in an input field, you may need
 // to convert it from ether (as a string) to wei (as a BigNumber)
@@ -98,7 +98,7 @@ ethers.utils.parseEther("1.0")
 // { BigNumber: "1000000000000000000" }
 ```
 
-### Writing to the Blockchain
+### 写入区块链
 
 ```
 // Send 1 ether to an ens name.
@@ -108,8 +108,8 @@ const tx = signer.sendTransaction({
 });
 ```
 
-Contracts
----------
+合约
+--
 
 ```javascript
 // You can also use an ENS name for the contract address
@@ -136,27 +136,27 @@ const daiAbi = [
 const daiContract = new ethers.Contract(daiAddress, daiAbi, provider);
 ```
 
-### Read-Only Methods
+### 只读方法
 
 ```javascript
 // Get the ERC-20 token name
-daiContract.name()
-// { Promise: 'Dai Stablecoin' }
+await daiContract.name()
+// 'Dai Stablecoin'
 
 // Get the ERC-20 token symbol (for tickers and UIs)
-daiContract.symbol()
-// { Promise: 'DAI' }
+await daiContract.symbol()
+// 'DAI'
 
 // Get the balance of an address
 balance = await daiContract.balanceOf("ricmoo.firefly.eth")
-// { BigNumber: "198172622063578627973" }
+// { BigNumber: "15575624174838529547383" }
 
 // Format the DAI for displaying to the user
 ethers.utils.formatUnits(balance, 18)
-// '198.172622063578627973'
+// '15575.624174838529547383'
 ```
 
-### State Changing Methods
+### 改变状态的方法
 
 ```
 // The DAI Contract is currently connected to the Provider,
@@ -171,7 +171,7 @@ const dai = ethers.utils.parseUnits("1.0", 18);
 tx = daiWithSigner.transfer("ricmoo.firefly.eth", dai);
 ```
 
-### Listening to Events
+### 监听事件
 
 ```javascript
 // Receive an event when ANY transfer occurs
@@ -201,7 +201,7 @@ daiContract.on(filter, (from, to, amount, event) => {
 });
 ```
 
-### Query Historic Events
+### 查询历史事件
 
 ```javascript
 // Get the address of the Signer
@@ -230,14 +230,17 @@ filterTo = daiContract.filters.Transfer(null, myAddress);
 // }
 
 // List all transfers sent from me a specific block range
-daiContract.queryFilter(filterFrom, 9843470, 9843480)
-// { Promise: [
+await daiContract.queryFilter(filterFrom, 9843470, 9843480)
+// [
 //   {
 //     address: '0x6B175474E89094C44Da98b954EedeAC495271d0F',
 //     args: [
 //       '0x8ba1f109551bD432803012645Ac136ddd64DBA72',
 //       '0x8B3765eDA5207fB21690874B722ae276B96260E0',
-//       { BigNumber: "4750000000000000000" }
+//       { BigNumber: "4750000000000000000" },
+//       amount: { BigNumber: "4750000000000000000" },
+//       from: '0x8ba1f109551bD432803012645Ac136ddd64DBA72',
+//       to: '0x8B3765eDA5207fB21690874B722ae276B96260E0'
 //     ],
 //     blockHash: '0x8462eb2fbcef5aa4861266f59ad5f47b9aa6525d767d713920fdbdfb6b0c0b78',
 //     blockNumber: 9843476,
@@ -264,7 +267,10 @@ daiContract.queryFilter(filterFrom, 9843470, 9843480)
 //     args: [
 //       '0x8ba1f109551bD432803012645Ac136ddd64DBA72',
 //       '0x00De4B13153673BCAE2616b67bf822500d325Fc3',
-//       { BigNumber: "250000000000000000" }
+//       { BigNumber: "250000000000000000" },
+//       amount: { BigNumber: "250000000000000000" },
+//       from: '0x8ba1f109551bD432803012645Ac136ddd64DBA72',
+//       to: '0x00De4B13153673BCAE2616b67bf822500d325Fc3'
 //     ],
 //     blockHash: '0x8462eb2fbcef5aa4861266f59ad5f47b9aa6525d767d713920fdbdfb6b0c0b78',
 //     blockNumber: 9843476,
@@ -286,7 +292,7 @@ daiContract.queryFilter(filterFrom, 9843470, 9843480)
 //     transactionHash: '0x1be23554545030e1ce47391a41098a46ff426382ed740db62d63d7676ff6fcf1',
 //     transactionIndex: 81
 //   }
-// ] }
+// ]
 
 //
 // The following have had the results omitted due to the
@@ -294,21 +300,21 @@ daiContract.queryFilter(filterFrom, 9843470, 9843480)
 //
 
 // List all transfers sent in the last 10,000 blocks
-daiContract.queryFilter(filterFrom, -10000)
+await daiContract.queryFilter(filterFrom, -10000)
 
 // List all transfers ever sent to me
-daiContract.queryFilter(filterTo)
+await daiContract.queryFilter(filterTo)
 ```
 
-Signing Messages
-----------------
+签名消息
+----
 
 ```javascript
 // To sign a simple string, which are used for
 // logging into a service, such as CryptoKitties,
 // pass the string in.
 signature = await signer.signMessage("Hello World");
-// '0x800d1d157d472b0cb567ec0d9e2825203aaa7e84db5a9b19169c0c85575f6e0761e99bd670ed82f71a346020cdec8326644132cdeffd8e327d888f94f21825e01b'
+// '0x50d74814ee14799d0d316468bebfa59518a0c48e5385b0277cecfb7d27c6e5070e50ad56f8da7698dbce7c6e6857f9863c9a89937cb4d1ea3444e498de5d1b531c'
 
 //
 // A common case is also signing a hash, which is 32
@@ -325,6 +331,6 @@ messageBytes = ethers.utils.arrayify(message);
 
 // To sign a hash, you most often want to sign the bytes
 signature = await signer.signMessage(messageBytes)
-// '0x3ec3dca35ae2712e7f9bb1e2819f9b40c818c567b1a01586d3b0d0a73bad1c303b7f39d4471ac0c9eb900438bc6b6a4bf5b2c120a5cb31edc2cfab11ede409381b'
+// '0xf404f02c4c56c6bde05c0a1259c940768f707f631a61bd1e2d039ccdd70d2690757d1aab5361292fec2e7eea05b97fdced21b9d568eff3380771b6e819987be01b'
 ```
 

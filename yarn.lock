@@ -1438,10 +1438,10 @@ flatted@^2.0.1:
   resolved "https://registry.npmmirror.com/flatted/download/flatted-2.0.2.tgz?cache=0&sync_timestamp=1636473890680&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fflatted%2Fdownload%2Fflatted-2.0.2.tgz#4575b21e2bcee7434aa9be662f4b7b5f9c2b5138"
   integrity sha1-RXWyHivO50NKqb5mL0t7X5wrUTg=
 
-flatworm@0.0.2-beta.7:
-  version "0.0.2-beta.7"
-  resolved "https://registry.npmmirror.com/flatworm/download/flatworm-0.0.2-beta.7.tgz#bd71ab8d26074265abd1235d911ccc985d2bfbb8"
-  integrity sha1-vXGrjSYHQmWr0SNdkRzMmF0r+7g=
+flatworm@0.0.2-beta.8:
+  version "0.0.2-beta.8"
+  resolved "https://registry.npmmirror.com/flatworm/download/flatworm-0.0.2-beta.8.tgz#9327f64b920e2c69bb1d51bfb8c7eb594d188e76"
+  integrity sha512-RJvpy7WTtYTPfbh1rBALeqny2RNcjCxO8yQ2SSHtjHd7HQQPRhxbR9J8EsoV+h7Ag068wfy3FiVk5JO0eJdkvA==
 
 follow-redirects@^1.0.0, follow-redirects@^1.12.1:
   version "1.14.5"

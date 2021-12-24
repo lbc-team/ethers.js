@@ -37,12 +37,37 @@ Some services also provide additional paid features, which are only available wh
 Networks
 --------
 
+#### *ethers* . *providers* . **getNetwork**( aNetworkish ) => *[Network](/v5/api/providers/types/#providers-Network)*
+
+Returns the full [Network](/v5/api/providers/types/#providers-Network) for the given standard *aNetworkish* [Networkish](/v5/api/providers/types/#providers-Networkish).
+
+This is useful for functions and classes which wish to accept [Networkish](/v5/api/providers/types/#providers-Networkish) as an input parameter.
+
+
+```javascript
+// By Chain Name
+getNetwork("homestead");
+// {
+//   chainId: 1,
+//   ensAddress: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+//   name: 'homestead'
+// }
+
+// By Chain ID
+getNetwork(1);
+// {
+//   chainId: 1,
+//   ensAddress: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+//   name: 'homestead'
+// }
+```
+
 ### Custom ENS Contract
 
 ```
 const network = {
     name: "dev",
-    chianId: 1337,
+    chainId: 1337,
     ensAddress: customEnsAddress
 };
 ```
@@ -63,6 +88,7 @@ Provider Documentation
 * [JsonRpcProvider](jsonrpc-provider)
   * [JsonRpcSigner](jsonrpc-provider)
   * [JsonRpcUncheckedSigner](jsonrpc-provider)
+  * [StaticJsonRpcProvider](jsonrpc-provider)
   * [Node-Specific Methods](jsonrpc-provider)
 * [API Providers](api-providers)
   * [EtherscanProvider](api-providers)
@@ -79,7 +105,9 @@ Provider Documentation
   * [BlockTag](types)
   * [Networkish](types)
   * [Network](types)
+  * [FeeData](types)
   * [Block](types)
   * [Events and Logs](types)
   * [Transactions](types)
+  * [Access Lists](types)
 

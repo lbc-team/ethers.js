@@ -4,6 +4,7 @@
     <title>Interface</title>
     <link rel="stylesheet" type="text/css" href="/v5/static/style.css">
     <meta property="og:title" content="Interface"/>
+    <meta charset="UTF-8">
     <meta property="og:description" content="Documentation for ethers, a complete, tiny and simple Ethereum library."/>
     
     <meta property="og:image" content="/v5/static/social.jpg"/>
@@ -12,34 +13,62 @@
   <body>
     <div class="sidebar">
       <div class="header">
-        <div class="logo"><a href="/v5/"><div class="image"></div><div class="name">ethers</div><div class="version">v5.0</div></a></div>
+        <div class="logo"><a href="/v5/"><div class="image"></div><div class="name">ethers</div><div class="version">v5.4</div></a></div>
         <div class="search"><form action="/v5/search/" method="GET"><input name="search" id="search" /></form><span class="search-icon">&#9906;</span></div>
       </div>
       <div class="toc"><div>
-        <div class="link title"><a href="/v5/">Documentation</a></div><div class="base show link depth-1"><a href="/v5/getting-started/">Getting Started</a></div><div class="base show link depth-1"><a href="/v5/concepts/">Ethereum Basics</a></div><div class="hide link depth-2"><a href="/v5/concepts/events/">Events</a></div><div class="hide link depth-2"><a href="/v5/concepts/gas/">Gas</a></div><div class="hide link depth-2"><a href="/v5/concepts/security/">Security</a></div><div class="hide link depth-2"><a href="/v5/concepts/best-practices/">Best Practices</a></div><div class="base show link depth-1"><a href="/v5/api-keys/">Provider API Keys</a></div><div class="base ancestor show link depth-1"><a href="/v5/api/">Application Programming Interface</a></div><div class="show link depth-2"><a href="/v5/api/providers/">Providers</a></div><div class="hide link depth-3"><a href="/v5/api/providers/provider/">Provider</a></div><div class="hide link depth-3"><a href="/v5/api/providers/jsonrpc-provider/">JsonRpcProvider</a></div><div class="hide link depth-3"><a href="/v5/api/providers/api-providers/">API Providers</a></div><div class="hide link depth-3"><a href="/v5/api/providers/other/">Other Providers</a></div><div class="hide link depth-3"><a href="/v5/api/providers/types/">Types</a></div><div class="show link depth-2"><a href="/v5/api/signer/">Signers</a></div><div class="show link depth-2"><a href="/v5/api/contract/">Contract Interaction</a></div><div class="hide link depth-3"><a href="/v5/api/contract/contract/">Contract</a></div><div class="hide link depth-3"><a href="/v5/api/contract/contract-factory/">ContractFactory</a></div><div class="hide link depth-3"><a href="/v5/api/contract/example/">Example: ERC-20 Contract</a></div><div class="ancestor show link depth-2"><a href="/v5/api/utils/">Utilities</a></div><div class="ancestor show link depth-3"><a href="/v5/api/utils/abi/">Application Binary Interface</a></div><div class="show link depth-4"><a href="/v5/api/utils/abi/coder/">AbiCoder</a></div><div class="show link depth-4"><a href="/v5/api/utils/abi/formats/">ABI Formats</a></div><div class="show link depth-4"><a href="/v5/api/utils/abi/fragments/">Fragments</a></div><div class="myself ancestor ancestor show link depth-4"><a href="/v5/api/utils/abi/interface/">Interface</a></div><div class="link show child depth-5"><a href="#Interface--creating">Creating Instances</a></div><div class="link show child depth-5"><a href="#Interface--properties">Properties</a></div><div class="link show child depth-5"><a href="#Interface--formatting">Formatting</a></div><div class="link show child depth-5"><a href="#Interface--fragments">Fragment Access</a></div><div class="link show child depth-5"><a href="#Interface--selectors">Signature and Topic Hashes</a></div><div class="link show child depth-5"><a href="#Interface--encoding">Encoding Data</a></div><div class="link show child depth-5"><a href="#Interface--decoding">Decoding Data</a></div><div class="link show child depth-5"><a href="#Interface--parsing">Parsing</a></div><div class="link show child depth-5"><a href="#Interface--types">Types</a></div><div class="link show child depth-5"><a href="#Interface--specifying-fragments">Specifying Fragments</a></div><div class="show link depth-3"><a href="/v5/api/utils/address/">Addresses</a></div><div class="show link depth-3"><a href="/v5/api/utils/bignumber/">BigNumber</a></div><div class="show link depth-3"><a href="/v5/api/utils/bytes/">Byte Manipulation</a></div><div class="show link depth-3"><a href="/v5/api/utils/constants/">Constants</a></div><div class="show link depth-3"><a href="/v5/api/utils/display-logic/">Display Logic and Input</a></div><div class="show link depth-3"><a href="/v5/api/utils/encoding/">Encoding Utilities</a></div><div class="show link depth-3"><a href="/v5/api/utils/fixednumber/">FixedNumber</a></div><div class="show link depth-3"><a href="/v5/api/utils/hashing/">Hashing Algorithms</a></div><div class="show link depth-3"><a href="/v5/api/utils/hdnode/">HD Wallet</a></div><div class="show link depth-3"><a href="/v5/api/utils/logger/">Logging</a></div><div class="show link depth-3"><a href="/v5/api/utils/properties/">Property Utilities</a></div><div class="show link depth-3"><a href="/v5/api/utils/signing-key/">Signing Key</a></div><div class="show link depth-3"><a href="/v5/api/utils/strings/">Strings</a></div><div class="show link depth-3"><a href="/v5/api/utils/transactions/">Transactions</a></div><div class="show link depth-3"><a href="/v5/api/utils/web/">Web Utilities</a></div><div class="show link depth-3"><a href="/v5/api/utils/wordlists/">Wordlists</a></div><div class="show link depth-2"><a href="/v5/api/other/">Other Libraries</a></div><div class="hide link depth-3"><a href="/v5/api/other/assembly/">Assembly</a></div><div class="hide link depth-4"><a href="/v5/api/other/assembly/dialect/">Ethers ASM Dialect</a></div><div class="hide link depth-4"><a href="/v5/api/other/assembly/api/">Utilities</a></div><div class="hide link depth-4"><a href="/v5/api/other/assembly/ast/">Abstract Syntax Tree</a></div><div class="hide link depth-3"><a href="/v5/api/other/hardware/">Hardware Wallets</a></div><div class="show link depth-2"><a href="/v5/api/experimental/">Experimental</a></div><div class="base show link depth-1"><a href="/v5/cli/">Command Line Interfaces</a></div><div class="hide link depth-2"><a href="/v5/cli/ethers/">Sandbox Utility</a></div><div class="hide link depth-2"><a href="/v5/cli/asm/">Assembler</a></div><div class="hide link depth-2"><a href="/v5/cli/ens/">Ethereum Naming Service</a></div><div class="hide link depth-2"><a href="/v5/cli/typescript/">TypeScript</a></div><div class="hide link depth-2"><a href="/v5/cli/plugin/">Making Your Own</a></div><div class="base show link depth-1"><a href="/v5/cookbook/">Cookbook</a></div><div class="hide link depth-2"><a href="/v5/cookbook/react-native/">React Native (and ilk)</a></div><div class="base show link depth-1"><a href="/v5/migration/">Migration Guide</a></div><div class="hide link depth-2"><a href="/v5/migration/web3/">Migration: From Web3.js</a></div><div class="hide link depth-2"><a href="/v5/migration/ethers-v4/">Migration: From Ethers v4</a></div><div class="base show link depth-1"><a href="/v5/testing/">Testing</a></div><div class="base show link depth-1"><a href="/v5/contributing/">Contributing and Hacking</a></div><div class="base show link depth-1"><a href="/v5/other-resources/">Other Resources</a></div><div class="base show link depth-1"><a href="/v5/documentation/">Flatworm Docs</a></div><div class="base show link depth-1"><a href="/v5/license/">License and Copyright</a></div>
+        <div class="link title"><a href="/v5/">ethers.js中文文档</a></div><div class="base show link depth-1"><a href="/v5/getting-started/">开始使用</a></div><div class="base show link depth-1"><a href="/v5/concepts/">以太坊基础知识</a></div><div class="hide link depth-2"><a href="/v5/concepts/events/">事件</a></div><div class="hide link depth-2"><a href="/v5/concepts/gas/">Gas</a></div><div class="hide link depth-2"><a href="/v5/concepts/security/">Security</a></div><div class="hide link depth-2"><a href="/v5/concepts/best-practices/">Best Practices</a></div><div class="base show link depth-1"><a href="/v5/api-keys/">Provider API Keys</a></div><div class="base ancestor show link depth-1"><a href="/v5/api/">Application Programming Interface</a></div><div class="show link depth-2"><a href="/v5/api/providers/">Providers</a></div><div class="hide link depth-3"><a href="/v5/api/providers/provider/">Provider</a></div><div class="hide link depth-3"><a href="/v5/api/providers/jsonrpc-provider/">JsonRpcProvider</a></div><div class="hide link depth-3"><a href="/v5/api/providers/api-providers/">API Providers</a></div><div class="hide link depth-3"><a href="/v5/api/providers/other/">Other Providers</a></div><div class="hide link depth-3"><a href="/v5/api/providers/types/">Types</a></div><div class="show link depth-2"><a href="/v5/api/signer/">Signers</a></div><div class="show link depth-2"><a href="/v5/api/contract/">Contract Interaction</a></div><div class="hide link depth-3"><a href="/v5/api/contract/contract/">Contract</a></div><div class="hide link depth-3"><a href="/v5/api/contract/contract-factory/">ContractFactory</a></div><div class="hide link depth-3"><a href="/v5/api/contract/example/">Example: ERC-20 Contract</a></div><div class="ancestor show link depth-2"><a href="/v5/api/utils/">Utilities</a></div><div class="ancestor show link depth-3"><a href="/v5/api/utils/abi/">Application Binary Interface</a></div><div class="show link depth-4"><a href="/v5/api/utils/abi/coder/">AbiCoder</a></div><div class="show link depth-4"><a href="/v5/api/utils/abi/formats/">ABI Formats</a></div><div class="show link depth-4"><a href="/v5/api/utils/abi/fragments/">Fragments</a></div><div class="myself ancestor ancestor show link depth-4"><a href="/v5/api/utils/abi/interface/">Interface</a></div><div class="link show child depth-5"><a href="#Interface--creating">Creating Instances</a></div><div class="link show child depth-5"><a href="#Interface--properties">Properties</a></div><div class="link show child depth-5"><a href="#Interface--formatting">Formatting</a></div><div class="link show child depth-5"><a href="#Interface--fragments">Fragment Access</a></div><div class="link show child depth-5"><a href="#Interface--selectors">Signature and Topic Hashes</a></div><div class="link show child depth-5"><a href="#Interface--encoding">Encoding Data</a></div><div class="link show child depth-5"><a href="#Interface--decoding">Decoding Data</a></div><div class="link show child depth-5"><a href="#Interface--parsing">Parsing</a></div><div class="link show child depth-5"><a href="#Interface--types">Types</a></div><div class="link show child depth-5"><a href="#Interface--specifying-fragments">Specifying Fragments</a></div><div class="show link depth-3"><a href="/v5/api/utils/address/">Addresses</a></div><div class="show link depth-3"><a href="/v5/api/utils/bignumber/">BigNumber</a></div><div class="show link depth-3"><a href="/v5/api/utils/bytes/">Byte Manipulation</a></div><div class="show link depth-3"><a href="/v5/api/utils/constants/">Constants</a></div><div class="show link depth-3"><a href="/v5/api/utils/display-logic/">Display Logic and Input</a></div><div class="show link depth-3"><a href="/v5/api/utils/encoding/">Encoding Utilities</a></div><div class="show link depth-3"><a href="/v5/api/utils/fixednumber/">FixedNumber</a></div><div class="show link depth-3"><a href="/v5/api/utils/hashing/">Hashing Algorithms</a></div><div class="show link depth-3"><a href="/v5/api/utils/hdnode/">HD Wallet</a></div><div class="show link depth-3"><a href="/v5/api/utils/logger/">Logging</a></div><div class="show link depth-3"><a href="/v5/api/utils/properties/">Property Utilities</a></div><div class="show link depth-3"><a href="/v5/api/utils/signing-key/">Signing Key</a></div><div class="show link depth-3"><a href="/v5/api/utils/strings/">Strings</a></div><div class="show link depth-3"><a href="/v5/api/utils/transactions/">Transactions</a></div><div class="show link depth-3"><a href="/v5/api/utils/web/">Web Utilities</a></div><div class="show link depth-3"><a href="/v5/api/utils/wordlists/">Wordlists</a></div><div class="show link depth-2"><a href="/v5/api/other/">Other Libraries</a></div><div class="hide link depth-3"><a href="/v5/api/other/assembly/">Assembly</a></div><div class="hide link depth-4"><a href="/v5/api/other/assembly/dialect/">Ethers ASM Dialect</a></div><div class="hide link depth-4"><a href="/v5/api/other/assembly/api/">Utilities</a></div><div class="hide link depth-4"><a href="/v5/api/other/assembly/ast/">Abstract Syntax Tree</a></div><div class="hide link depth-3"><a href="/v5/api/other/hardware/">Hardware Wallets</a></div><div class="show link depth-2"><a href="/v5/api/experimental/">Experimental</a></div><div class="base show link depth-1"><a href="/v5/cli/">Command Line Interfaces</a></div><div class="hide link depth-2"><a href="/v5/cli/ethers/">Sandbox Utility</a></div><div class="hide link depth-2"><a href="/v5/cli/asm/">Assembler</a></div><div class="hide link depth-2"><a href="/v5/cli/ens/">Ethereum Naming Service</a></div><div class="hide link depth-2"><a href="/v5/cli/typescript/">TypeScript</a></div><div class="hide link depth-2"><a href="/v5/cli/plugin/">Making Your Own</a></div><div class="base show link depth-1"><a href="/v5/cookbook/">Cookbook</a></div><div class="hide link depth-2"><a href="/v5/cookbook/react-native/">React Native (and ilk)</a></div><div class="hide link depth-2"><a href="/v5/cookbook/transactions/">Transactions</a></div><div class="base show link depth-1"><a href="/v5/migration/">Migration Guide</a></div><div class="hide link depth-2"><a href="/v5/migration/web3/">Migration: From Web3.js</a></div><div class="hide link depth-2"><a href="/v5/migration/ethers-v4/">Migration: From Ethers v4</a></div><div class="base show link depth-1"><a href="/v5/testing/">Testing</a></div><div class="base show link depth-1"><a href="/v5/contributing/">Contributing and Hacking</a></div><div class="base show link depth-1"><a href="/v5/other-resources/">Other Resources</a></div><div class="base show link depth-1"><a href="/v5/documentation/">Flatworm Docs</a></div><div class="base show link depth-1"><a href="/v5/license/">License and Copyright</a></div>
       </div></div>
       <div class="footer">
         <a href="/v5/single-page/">Single Page</a>
       </div>
     </div>
     <div class="content">
-      <div class="breadcrumbs"><a href="/v5/">Documentation</a>&nbsp;&nbsp;&raquo;&nbsp;&nbsp;<a href="/v5/api/">API</a>&nbsp;&nbsp;&raquo;&nbsp;&nbsp;<a href="/v5/api/utils/">Utilities</a>&nbsp;&nbsp;&raquo;&nbsp;&nbsp;<a href="/v5/api/utils/abi/">ABI</a>&nbsp;&nbsp;&raquo;&nbsp;&nbsp;<span class="current">Interface</span></div>
+      <div class="breadcrumbs"><a href="/v5/">ethers.js中文文档</a>&nbsp;&nbsp;&raquo;&nbsp;&nbsp;<a href="/v5/api/">API</a>&nbsp;&nbsp;&raquo;&nbsp;&nbsp;<a href="/v5/api/utils/">Utilities</a>&nbsp;&nbsp;&raquo;&nbsp;&nbsp;<a href="/v5/api/utils/abi/">ABI</a>&nbsp;&nbsp;&raquo;&nbsp;&nbsp;<span class="current">Interface</span></div>
 
-<a name="Interface"></a><a name="Interface"></a><h1 class="show-anchors"><div>Interface<div class="anchors"><a class="self" href="/v5/api/utils/abi/interface/#Interface"></a><a class="source" href="https://github.com/ethers-io/ethers.js/blob/master/packages/abi/src.ts/interface.ts#L65">source</a></div></div></h1><p>The <b>Interface</b> Class abstracts the encoding and decoding required to interact with contracts on the Ethereum network.</p>
+<a name="Interface"></a><a name="Interface"></a><h1 class="show-anchors"><div>Interface<div class="anchors"><a class="self" href="/v5/api/utils/abi/interface/#Interface"></a><a class="source" href="https://github.com/ethers-io/ethers.js/blob/master/packages/abi/src.ts/interface.ts#L78">source</a></div></div></h1><p>The <b>Interface</b> Class abstracts the encoding and decoding required to interact with contracts on the Ethereum network.</p>
 
 <p>Many of the standards organically evolved along side the <a href="https://solidity.readthedocs.io/">Solidity</a> language, which other languages have adopted to remain compatible with existing deployed contracts.</p>
 
 <p>The EVM itself does not understand what the ABI is. It is simply an agreed upon set of formats to encode various types of data which each contract can expect so they can interoperate with each other.</p>
 
 <a name="Interface--creating"></a><a name="Interface--Interface--creating"></a><h2 class="show-anchors"><div>Creating Instances<div class="anchors"><a class="self" href="/v5/api/utils/abi/interface/#Interface--creating"></a></div></div></h2>
-<div class="property show-anchors"><div class="signature"><span class="modifier">new </span><span class="path">ethers</span><span class="symbol">.</span><span class="path">utils</span><span class="symbol">.</span><span class="method">Interface</span><span class="symbol">(</span> <span class="param">abi</span> <span class="symbol">)</span><div class="anchors"><a class="source" href="https://github.com/ethers-io/ethers.js/blob/master/packages/abi/src.ts/interface.ts#L79">source</a></div></div><div class="body"><p>Create a new <b>Interface</b> from a JSON string or object representing <i>abi</i>.</p>
+<div class="property show-anchors"><div class="signature"><span class="modifier">new </span><span class="path">ethers</span><span class="symbol">.</span><span class="path">utils</span><span class="symbol">.</span><span class="method">Interface</span><span class="symbol">(</span> <span class="param">abi</span> <span class="symbol">)</span><div class="anchors"><a class="source" href="https://github.com/ethers-io/ethers.js/blob/master/packages/abi/src.ts/interface.ts#L92">source</a></div></div><div class="body"><p>Create a new <b>Interface</b> from a JSON string or object representing <i>abi</i>.</p>
 
 <p>The <i>abi</i> may be a JSON string or the parsed Object (using JSON.parse) which is emitted by the <a href="https://solidity.readthedocs.io/en/v0.6.0/using-the-compiler.html#output-description">Solidity compiler</a> (or compatible languages).</p>
 
 <p>The <i>abi</i> may also be a <a href="https://blog.ricmoo.com/human-readable-contract-abis-in-ethers-js-141902f4d917">Human-Readable Abi</a>, which is a format the Ethers created to simplify manually typing the ABI into the source and so that a Contract ABI can also be referenced easily within the same source file.</p>
 
-</div></div><a name="Interface--properties"></a><a name="Interface--Interface--properties"></a><h2 class="show-anchors"><div>Properties<div class="anchors"><a class="self" href="/v5/api/utils/abi/interface/#Interface--properties"></a></div></div></h2>
+</div></div><div class="code-title"><div>Creating an Interface instance</div></div><div class="code"><span class="comment">// This interface is used for the below examples
+</span>
+const iface = new Interface([
+<span class="comment">  // Constructor
+</span>  "constructor(string symbol, string name)",
+
+<span class="comment">  // State mutating method
+</span>  "function transferFrom(address from, address to, uint amount)",
+
+<span class="comment">  // State mutating method, which is payable
+</span>  "function mint(uint amount) payable",
+
+<span class="comment">  // Constant method (i.e. "view" or "pure")
+</span>  "function balanceOf(address owner) view returns (uint)",
+
+<span class="comment">  // An Event
+</span>  "event Transfer(address indexed from, address indexed to, uint256 amount)",
+
+<span class="comment">  // A Custom Solidity Error
+</span>  "error AccountLocked(address owner, uint256 balance)",
+
+<span class="comment">  // Examples with structured types
+</span>  "function addUser(tuple(string name, address addr) user) returns (uint id)",
+  "function addUsers(tuple(string name, address addr)[] user) returns (uint[] id)",
+  "function getUser(uint id) view returns (tuple(string name, address addr) user)"
+]);
+</div><a name="Interface--properties"></a><a name="Interface--Interface--properties"></a><h2 class="show-anchors"><div>Properties<div class="anchors"><a class="self" href="/v5/api/utils/abi/interface/#Interface--properties"></a></div></div></h2>
 <div class="property show-anchors"><div class="signature"><span class="path">interface</span><span class="symbol">.</span><span class="method">fragments</span> <span class="arrow">&rArr;</span> <span class="returns">Array&lt; <a href="/v5/api/utils/abi/fragments/#Fragment">Fragment</a> &gt;</span><div class="anchors"></div></div><div class="body"><p>All the <a href="/v5/api/utils/abi/fragments/#Fragment">Fragments</a> in the interface.</p>
+
+</div></div><div class="property show-anchors"><div class="signature"><span class="path">interface</span><span class="symbol">.</span><span class="method">errors</span> <span class="arrow">&rArr;</span> <span class="returns">Array&lt; <a href="/v5/api/utils/abi/fragments/#ErrorFragment">ErrorFragment</a> &gt;</span><div class="anchors"></div></div><div class="body"><p>All the <a href="/v5/api/utils/abi/fragments/#ErrorFragment">Error Fragments</a> in the interface.</p>
 
 </div></div><div class="property show-anchors"><div class="signature"><span class="path">interface</span><span class="symbol">.</span><span class="method">events</span> <span class="arrow">&rArr;</span> <span class="returns">Array&lt; <a href="/v5/api/utils/abi/fragments/#EventFragment">EventFragment</a> &gt;</span><div class="anchors"></div></div><div class="body"><p>All the <a href="/v5/api/utils/abi/fragments/#EventFragment">Event Fragments</a> in the interface.</p>
 
@@ -48,56 +77,397 @@
 </div></div><div class="property show-anchors"><div class="signature"><span class="path">interface</span><span class="symbol">.</span><span class="method">deploy</span> <span class="arrow">&rArr;</span> <span class="returns"><a href="/v5/api/utils/abi/fragments/#ConstructorFragment">ConstructorFragment</a></span><div class="anchors"></div></div><div class="body"><p>The <a href="/v5/api/utils/abi/fragments/#ConstructorFragment">Constructor Fragments</a> for the interface.</p>
 
 </div></div><a name="Interface--formatting"></a><a name="Interface--Interface--formatting"></a><h2 class="show-anchors"><div>Formatting<div class="anchors"><a class="self" href="/v5/api/utils/abi/interface/#Interface--formatting"></a></div></div></h2>
-<div class="property show-anchors"><div class="signature"><span class="path">interface</span><span class="symbol">.</span><span class="method">format</span><span class="symbol">(</span> <span class="symbol">[</span> <span class="param">format</span> <span class="symbol">]</span> <span class="symbol">)</span> <span class="arrow">&rArr;</span> <span class="returns">string | Array&lt; string &gt;</span><div class="anchors"><a class="source" href="https://github.com/ethers-io/ethers.js/blob/master/packages/abi/src.ts/interface.ts#L145">source</a></div></div><div class="body"><p>Return the formatted <b>Interface</b>. If the format type is <code class="inline">json</code> a single string is returned, otherwise an Array of the human-readable strings is returned.</p>
+<div class="property show-anchors"><div class="signature"><span class="path">interface</span><span class="symbol">.</span><span class="method">format</span><span class="symbol">(</span> <span class="symbol">[</span> <span class="param">format</span> <span class="symbol">]</span> <span class="symbol">)</span> <span class="arrow">&rArr;</span> <span class="returns">string | Array&lt; string &gt;</span><div class="anchors"><a class="source" href="https://github.com/ethers-io/ethers.js/blob/master/packages/abi/src.ts/interface.ts#L161">source</a></div></div><div class="body"><p>Return the formatted <b>Interface</b>. If the format type is <code class="inline">json</code> a single string is returned, otherwise an Array of the human-readable strings is returned.</p>
 
-</div></div><a name="Interface--fragments"></a><a name="Interface--Interface--fragments"></a><h2 class="show-anchors"><div>Fragment Access<div class="anchors"><a class="self" href="/v5/api/utils/abi/interface/#Interface--fragments"></a></div></div></h2>
-<div class="property show-anchors"><div class="signature"><span class="path">interface</span><span class="symbol">.</span><span class="method">getFunction</span><span class="symbol">(</span> <span class="param">fragment</span> <span class="symbol">)</span> <span class="arrow">&rArr;</span> <span class="returns"><a href="/v5/api/utils/abi/fragments/#FunctionFragment">FunctionFragment</a></span><div class="anchors"><a class="source" href="https://github.com/ethers-io/ethers.js/blob/master/packages/abi/src.ts/interface.ts#L179">source</a></div></div><div class="body"><p>Returns the <a href="/v5/api/utils/abi/fragments/#FunctionFragment">FunctionFragment</a> for <i>fragment</i> (see <a href="/v5/api/utils/abi/interface/#Interface--specifying-fragments">Specifying Fragments</a>).</p>
+</div></div><div class="code">const FormatTypes = ethers.utils.FormatTypes;
 
-</div></div><div class="property show-anchors"><div class="signature"><span class="path">interface</span><span class="symbol">.</span><span class="method">getEvent</span><span class="symbol">(</span> <span class="param">fragment</span> <span class="symbol">)</span> <span class="arrow">&rArr;</span> <span class="returns"><a href="/v5/api/utils/abi/fragments/#EventFragment">EventFragment</a></span><div class="anchors"><a class="source" href="https://github.com/ethers-io/ethers.js/blob/master/packages/abi/src.ts/interface.ts#L211">source</a></div></div><div class="body"><p>Returns the <a href="/v5/api/utils/abi/fragments/#EventFragment">EventFragment</a> for <i>fragment</i> (see <a href="/v5/api/utils/abi/interface/#Interface--specifying-fragments">Specifying Fragments</a>).</p>
+iface.format(FormatTypes.json)
+<span class="result ok">// '[{"type":"constructor","payable":false,"inputs":[{"type":"string","name":"symbol"},{"type":"string","name":"name"}]},{"type":"function","name":"transferFrom","constant":false,"payable":false,"inputs":[{"type":"address","name":"from"},{"type":"address","name":"to"},{"type":"uint256","name":"amount"}],"outputs":[]},{"type":"function","name":"mint","constant":false,"stateMutability":"payable","payable":true,"inputs":[{"type":"uint256","name":"amount"}],"outputs":[]},{"type":"function","name":"balanceOf","constant":true,"stateMutability":"view","payable":false,"inputs":[{"type":"address","name":"owner"}],"outputs":[{"type":"uint256"}]},{"type":"event","anonymous":false,"name":"Transfer","inputs":[{"type":"address","name":"from","indexed":true},{"type":"address","name":"to","indexed":true},{"type":"uint256","name":"amount"}]},{"type":"error","name":"AccountLocked","inputs":[{"type":"address","name":"owner"},{"type":"uint256","name":"balance"}]},{"type":"function","name":"addUser","constant":false,"payable":false,"inputs":[{"type":"tuple","name":"user","components":[{"type":"string","name":"name"},{"type":"address","name":"addr"}]}],"outputs":[{"type":"uint256","name":"id"}]},{"type":"function","name":"addUsers","constant":false,"payable":false,"inputs":[{"type":"tuple[]","name":"user","components":[{"type":"string","name":"name"},{"type":"address","name":"addr"}]}],"outputs":[{"type":"uint256[]","name":"id"}]},{"type":"function","name":"getUser","constant":true,"stateMutability":"view","payable":false,"inputs":[{"type":"uint256","name":"id"}],"outputs":[{"type":"tuple","name":"user","components":[{"type":"string","name":"name"},{"type":"address","name":"addr"}]}]}]'
+</span>
+iface.format(FormatTypes.full)
+<span class="result ok">// [
+</span><span class="result ok">//   'constructor(string symbol, string name)',
+</span><span class="result ok">//   'function transferFrom(address from, address to, uint256 amount)',
+</span><span class="result ok">//   'function mint(uint256 amount) payable',
+</span><span class="result ok">//   'function balanceOf(address owner) view returns (uint256)',
+</span><span class="result ok">//   'event Transfer(address indexed from, address indexed to, uint256 amount)',
+</span><span class="result ok">//   'error AccountLocked(address owner, uint256 balance)',
+</span><span class="result ok">//   'function addUser(tuple(string name, address addr) user) returns (uint256 id)',
+</span><span class="result ok">//   'function addUsers(tuple(string name, address addr)[] user) returns (uint256[] id)',
+</span><span class="result ok">//   'function getUser(uint256 id) view returns (tuple(string name, address addr) user)'
+</span><span class="result ok">// ]
+</span>
+iface.format(FormatTypes.minimal)
+<span class="result ok">// [
+</span><span class="result ok">//   'constructor(string,string)',
+</span><span class="result ok">//   'function transferFrom(address,address,uint256)',
+</span><span class="result ok">//   'function mint(uint256) payable',
+</span><span class="result ok">//   'function balanceOf(address) view returns (uint256)',
+</span><span class="result ok">//   'event Transfer(address indexed,address indexed,uint256)',
+</span><span class="result ok">//   'error AccountLocked(address,uint256)',
+</span><span class="result ok">//   'function addUser(tuple(string,address)) returns (uint256)',
+</span><span class="result ok">//   'function addUsers(tuple(string,address)[]) returns (uint256[])',
+</span><span class="result ok">//   'function getUser(uint256) view returns (tuple(string,address))'
+</span><span class="result ok">// ]
+</span></div><a name="Interface--fragments"></a><a name="Interface--Interface--fragments"></a><h2 class="show-anchors"><div>Fragment Access<div class="anchors"><a class="self" href="/v5/api/utils/abi/interface/#Interface--fragments"></a></div></div></h2>
+<div class="property show-anchors"><div class="signature"><span class="path">interface</span><span class="symbol">.</span><span class="method">getFunction</span><span class="symbol">(</span> <span class="param">fragment</span> <span class="symbol">)</span> <span class="arrow">&rArr;</span> <span class="returns"><a href="/v5/api/utils/abi/fragments/#FunctionFragment">FunctionFragment</a></span><div class="anchors"><a class="source" href="https://github.com/ethers-io/ethers.js/blob/master/packages/abi/src.ts/interface.ts#L195">source</a></div></div><div class="body"><p>Returns the <a href="/v5/api/utils/abi/fragments/#FunctionFragment">FunctionFragment</a> for <i>fragment</i> (see <a href="/v5/api/utils/abi/interface/#Interface--specifying-fragments">Specifying Fragments</a>).</p>
 
-</div></div><a name="Interface--selectors"></a><a name="Interface--Interface--selectors"></a><h2 class="show-anchors"><div>Signature and Topic Hashes<div class="anchors"><a class="self" href="/v5/api/utils/abi/interface/#Interface--selectors"></a></div></div></h2>
-<div class="property show-anchors"><div class="signature"><span class="path">interface</span><span class="symbol">.</span><span class="method">getSighash</span><span class="symbol">(</span> <span class="param">fragment</span> <span class="symbol">)</span> <span class="arrow">&rArr;</span> <span class="returns">string&lt; <a href="/v5/api/utils/bytes/#DataHexString">DataHexString</a>&lt; 4 &gt; &gt;</span><div class="anchors"><a class="source" href="https://github.com/ethers-io/ethers.js/blob/master/packages/abi/src.ts/interface.ts#L244">source</a></div></div><div class="body"><p>Return the sighash (or Function Selector) for <i>fragment</i> (see <a href="/v5/api/utils/abi/interface/#Interface--specifying-fragments">Specifying Fragments</a>).</p>
+</div></div><div class="code"><span class="comment">// By method signature, which is normalized so whitespace
+</span><span class="comment">// and superfluous attributes are ignored
+</span>iface.getFunction("transferFrom(address, address, uint256)");
 
-</div></div><div class="property show-anchors"><div class="signature"><span class="path">interface</span><span class="symbol">.</span><span class="method">getEventTopic</span><span class="symbol">(</span> <span class="param">fragment</span> <span class="symbol">)</span> <span class="arrow">&rArr;</span> <span class="returns">string&lt; <a href="/v5/api/utils/bytes/#DataHexString">DataHexString</a>&lt; 32 &gt; &gt;</span><div class="anchors"><a class="source" href="https://github.com/ethers-io/ethers.js/blob/master/packages/abi/src.ts/interface.ts#L253">source</a></div></div><div class="body"><p>Return the topic hash for <i>fragment</i> (see <a href="/v5/api/utils/abi/interface/#Interface--specifying-fragments">Specifying Fragments</a>).</p>
+<span class="comment">// By name; this ONLY works if the method is non-ambiguous
+</span>iface.getFunction("transferFrom");
 
-</div></div><a name="Interface--encoding"></a><a name="Interface--Interface--encoding"></a><h2 class="show-anchors"><div>Encoding Data<div class="anchors"><a class="self" href="/v5/api/utils/abi/interface/#Interface--encoding"></a></div></div></h2>
-<div class="property show-anchors"><div class="signature"><span class="path">interface</span><span class="symbol">.</span><span class="method">encodeDeploy</span><span class="symbol">(</span> <span class="symbol">[</span> <span class="param">values</span> <span class="symbol">]</span> <span class="symbol">)</span> <span class="arrow">&rArr;</span> <span class="returns">string&lt; <a href="/v5/api/utils/bytes/#DataHexString">DataHexString</a> &gt;</span><div class="anchors"><a class="source" href="https://github.com/ethers-io/ethers.js/blob/master/packages/abi/src.ts/interface.ts#L270">source</a></div></div><div class="body"><p>Return the encoded deployment data, which can be concatenated to the deployment bytecode of a contract to pass <i>values</i> into the contract constructor.</p>
+<span class="comment">// By method selector
+</span>iface.getFunction("0x23b872dd");
 
-</div></div><div class="property show-anchors"><div class="signature"><span class="path">interface</span><span class="symbol">.</span><span class="method">encodeFilterTopics</span><span class="symbol">(</span> <span class="param">fragment</span> <span class="symbol">[</span> <span class="symbol">,</span> <span class="param">values</span> <span class="symbol">]</span> <span class="symbol">)</span> <span class="arrow">&rArr;</span> <span class="returns">Array&lt; topic | Array&lt; topic &gt; &gt;</span><div class="anchors"><a class="source" href="https://github.com/ethers-io/ethers.js/blob/master/packages/abi/src.ts/interface.ts#L344">source</a></div></div><div class="body"><p>Returns the encoded topic filter, which can be passed to getLogs for <i>fragment</i> (see <a href="/v5/api/utils/abi/interface/#Interface--specifying-fragments">Specifying Fragments</a>) for the given <i>values</i>.</p>
+<span class="comment">// Throws if the method does not exist
+</span>iface.getFunction("doesNotExist()");
+<span class="result error">// [Error: no matching function] {
+</span><span class="result error">//   argument: 'signature',
+</span><span class="result error">//   code: 'INVALID_ARGUMENT',
+</span><span class="result error">//   reason: 'no matching function',
+</span><span class="result error">//   value: 'doesNotExist()'
+</span><span class="result error">// }
+</span></div><div class="property show-anchors"><div class="signature"><span class="path">interface</span><span class="symbol">.</span><span class="method">getError</span><span class="symbol">(</span> <span class="param">fragment</span> <span class="symbol">)</span> <span class="arrow">&rArr;</span> <span class="returns"><a href="/v5/api/utils/abi/fragments/#ErrorFragment">ErrorFragment</a></span><div class="anchors"><a class="source" href="https://github.com/ethers-io/ethers.js/blob/master/packages/abi/src.ts/interface.ts#L260">source</a></div></div><div class="body"><p>Returns the <a href="/v5/api/utils/abi/fragments/#ErrorFragment">ErrorFragment</a> for <i>fragment</i> (see <a href="/v5/api/utils/abi/interface/#Interface--specifying-fragments">Specifying Fragments</a>).</p>
 
-<p>Each <i>topic</i> is a 32 byte (64 nibble) <a href="/v5/api/utils/bytes/#DataHexString">DataHexString</a>.</p>
+</div></div><div class="code"><span class="comment">// By error signature, which is normalized so whitespace
+</span><span class="comment">// and superfluous attributes are ignored
+</span>iface.getError("AccountLocked(address, uint256)");
 
-</div></div><div class="property show-anchors"><div class="signature"><span class="path">interface</span><span class="symbol">.</span><span class="method">encodeFunctionData</span><span class="symbol">(</span> <span class="param">fragment</span> <span class="symbol">[</span> <span class="symbol">,</span> <span class="param">values</span> <span class="symbol">]</span> <span class="symbol">)</span> <span class="arrow">&rArr;</span> <span class="returns">string&lt; <a href="/v5/api/utils/bytes/#DataHexString">DataHexString</a> &gt;</span><div class="anchors"><a class="source" href="https://github.com/ethers-io/ethers.js/blob/master/packages/abi/src.ts/interface.ts#L290">source</a></div></div><div class="body"><p>Returns the encoded data, which can be used as the data for a transaction for <i>fragment</i> (see <a href="/v5/api/utils/abi/interface/#Interface--specifying-fragments">Specifying Fragments</a>) for the given <i>values</i>.</p>
+<span class="comment">// By name; this ONLY works if the error is non-ambiguous
+</span>iface.getError("AccountLocked");
 
-</div></div><div class="property show-anchors"><div class="signature"><span class="path">interface</span><span class="symbol">.</span><span class="method">encodeFunctionResult</span><span class="symbol">(</span> <span class="param">fragment</span> <span class="symbol">[</span> <span class="symbol">,</span> <span class="param">values</span> <span class="symbol">]</span> <span class="symbol">)</span> <span class="arrow">&rArr;</span> <span class="returns">string&lt; <a href="/v5/api/utils/bytes/#DataHexString">DataHexString</a> &gt;</span><div class="anchors"><a class="source" href="https://github.com/ethers-io/ethers.js/blob/master/packages/abi/src.ts/interface.ts#L335">source</a></div></div><div class="body"><p>Returns the encoded result, which would normally be the response from a call for <i>fragment</i> (see <a href="/v5/api/utils/abi/interface/#Interface--specifying-fragments">Specifying Fragments</a>) for the given <i>values</i>.</p>
+<span class="comment">// By error selector
+</span>iface.getError("0xf7c3865a");
+
+<span class="comment">// Throws if the error does not exist
+</span>iface.getError("DoesNotExist()");
+<span class="result error">// [Error: no matching error] {
+</span><span class="result error">//   argument: 'signature',
+</span><span class="result error">//   code: 'INVALID_ARGUMENT',
+</span><span class="result error">//   reason: 'no matching error',
+</span><span class="result error">//   value: 'DoesNotExist()'
+</span><span class="result error">// }
+</span></div><div class="property show-anchors"><div class="signature"><span class="path">interface</span><span class="symbol">.</span><span class="method">getEvent</span><span class="symbol">(</span> <span class="param">fragment</span> <span class="symbol">)</span> <span class="arrow">&rArr;</span> <span class="returns"><a href="/v5/api/utils/abi/fragments/#EventFragment">EventFragment</a></span><div class="anchors"><a class="source" href="https://github.com/ethers-io/ethers.js/blob/master/packages/abi/src.ts/interface.ts#L227">source</a></div></div><div class="body"><p>Returns the <a href="/v5/api/utils/abi/fragments/#EventFragment">EventFragment</a> for <i>fragment</i> (see <a href="/v5/api/utils/abi/interface/#Interface--specifying-fragments">Specifying Fragments</a>).</p>
+
+</div></div><div class="code"><span class="comment">// By event signature, which is normalized so whitespace
+</span><span class="comment">// and superfluous attributes are ignored
+</span>iface.getEvent("Transfer(address, address, uint256)");
+
+<span class="comment">// By name; this ONLY works if the event is non-ambiguous
+</span>iface.getEvent("Transfer");
+
+<span class="comment">// By event topic hash
+</span>iface.getEvent("0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef");
+
+<span class="comment">// Throws if the event does not exist
+</span>iface.getEvent("DoesNotExist()");
+<span class="result error">// [Error: no matching event] {
+</span><span class="result error">//   argument: 'signature',
+</span><span class="result error">//   code: 'INVALID_ARGUMENT',
+</span><span class="result error">//   reason: 'no matching event',
+</span><span class="result error">//   value: 'DoesNotExist()'
+</span><span class="result error">// }
+</span></div><a name="Interface--selectors"></a><a name="Interface--Interface--selectors"></a><h2 class="show-anchors"><div>Signature and Topic Hashes<div class="anchors"><a class="self" href="/v5/api/utils/abi/interface/#Interface--selectors"></a></div></div></h2>
+<div class="property show-anchors"><div class="signature"><span class="path">interface</span><span class="symbol">.</span><span class="method">getSighash</span><span class="symbol">(</span> <span class="param">fragment</span> <span class="symbol">)</span> <span class="arrow">&rArr;</span> <span class="returns">string&lt; <a href="/v5/api/utils/bytes/#DataHexString">DataHexString</a>&lt; 4 &gt; &gt;</span><div class="anchors"><a class="source" href="https://github.com/ethers-io/ethers.js/blob/master/packages/abi/src.ts/interface.ts#L294">source</a></div></div><div class="body"><p>Return the sighash (or Function Selector) for <i>fragment</i> (see <a href="/v5/api/utils/abi/interface/#Interface--specifying-fragments">Specifying Fragments</a>).</p>
+
+</div></div><div class="code">iface.getSighash("balanceOf");
+<span class="result ok">// '0x70a08231'
+</span>
+iface.getSighash("balanceOf(address)");
+<span class="result ok">// '0x70a08231'
+</span>
+const fragment = iface.getFunction("balanceOf")
+iface.getSighash(fragment);
+<span class="result ok">// '0x70a08231'
+</span></div><div class="property show-anchors"><div class="signature"><span class="path">interface</span><span class="symbol">.</span><span class="method">getEventTopic</span><span class="symbol">(</span> <span class="param">fragment</span> <span class="symbol">)</span> <span class="arrow">&rArr;</span> <span class="returns">string&lt; <a href="/v5/api/utils/bytes/#DataHexString">DataHexString</a>&lt; 32 &gt; &gt;</span><div class="anchors"><a class="source" href="https://github.com/ethers-io/ethers.js/blob/master/packages/abi/src.ts/interface.ts#L311">source</a></div></div><div class="body"><p>Return the topic hash for <i>fragment</i> (see <a href="/v5/api/utils/abi/interface/#Interface--specifying-fragments">Specifying Fragments</a>).</p>
+
+</div></div><div class="code">iface.getEventTopic("Transfer");
+<span class="result ok">// '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef'
+</span>
+iface.getEventTopic("Transfer(address, address, uint)");
+<span class="result ok">// '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef'
+</span>
+const fragment = iface.getEvent("Transfer")
+iface.getEventTopic(fragment);
+<span class="result ok">// '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef'
+</span></div><a name="Interface--encoding"></a><a name="Interface--Interface--encoding"></a><h2 class="show-anchors"><div>Encoding Data<div class="anchors"><a class="self" href="/v5/api/utils/abi/interface/#Interface--encoding"></a></div></div></h2>
+<div class="property show-anchors"><div class="signature"><span class="path">interface</span><span class="symbol">.</span><span class="method">encodeDeploy</span><span class="symbol">(</span> <span class="symbol">[</span> <span class="param">values</span> <span class="symbol">]</span> <span class="symbol">)</span> <span class="arrow">&rArr;</span> <span class="returns">string&lt; <a href="/v5/api/utils/bytes/#DataHexString">DataHexString</a> &gt;</span><div class="anchors"><a class="source" href="https://github.com/ethers-io/ethers.js/blob/master/packages/abi/src.ts/interface.ts#L328">source</a></div></div><div class="body"><p>Return the encoded deployment data, which can be concatenated to the deployment bytecode of a contract to pass <i>values</i> into the contract constructor.</p>
+
+</div></div><div class="code"><span class="comment">// The data that should be appended to the bytecode to pass
+</span><span class="comment">// parameters to the constructor during deployment
+</span>iface.encodeDeploy([ "SYM", "Some Name" ])
+<span class="result ok">// '0x00000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000000353594d00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009536f6d65204e616d650000000000000000000000000000000000000000000000'
+</span></div><div class="property show-anchors"><div class="signature"><span class="path">interface</span><span class="symbol">.</span><span class="method">encodeErrorResult</span><span class="symbol">(</span> <span class="param">fragment</span> <span class="symbol">[</span> <span class="symbol">,</span> <span class="param">values</span> <span class="symbol">]</span> <span class="symbol">)</span> <span class="arrow">&rArr;</span> <span class="returns">string&lt; <a href="/v5/api/utils/bytes/#DataHexString">DataHexString</a> &gt;</span><div class="anchors"><a class="source" href="https://github.com/ethers-io/ethers.js/blob/master/packages/abi/src.ts/interface.ts#L346">source</a></div></div><div class="body"><p>Returns the encoded error result, which would normally be the response from a reverted call for <i>fragment</i> (see <a href="/v5/api/utils/abi/interface/#Interface--specifying-fragments">Specifying Fragments</a>) for the given <i>values</i>.</p>
 
 <p>Most developers will not need this method, but may be useful for authors of a mock blockchain.</p>
 
-</div></div><a name="Interface--decoding"></a><a name="Interface--Interface--decoding"></a><h2 class="show-anchors"><div>Decoding Data<div class="anchors"><a class="self" href="/v5/api/utils/abi/interface/#Interface--decoding"></a></div></div></h2>
-<div class="property show-anchors"><div class="signature"><span class="path">interface</span><span class="symbol">.</span><span class="method">decodeEventLog</span><span class="symbol">(</span> <span class="param">fragment</span> <span class="symbol">,</span> <span class="param">data</span> <span class="symbol">[</span> <span class="symbol">,</span> <span class="param">topics</span> <span class="symbol">]</span> <span class="symbol">)</span> <span class="arrow">&rArr;</span> <span class="returns"><a href="/v5/api/utils/abi/interface/#Result">Result</a></span><div class="anchors"><a class="source" href="https://github.com/ethers-io/ethers.js/blob/master/packages/abi/src.ts/interface.ts#L445">source</a></div></div><div class="body"><p>Returns the decoded event values from an event log for <i>fragment</i> (see <a href="/v5/api/utils/abi/interface/#Interface--specifying-fragments">Specifying Fragments</a>) for the given <i>data</i> with the optional <i>topics</i>.</p>
+</div></div><div class="code"><span class="comment">// Encoding result data (like is returned by eth_call during a revert)
+</span>iface.encodeErrorResult("AccountLocked", [
+  "0x8ba1f109551bD432803012645Ac136ddd64DBA72",
+  parseEther("1.0")
+]);
+<span class="result ok">// '0xf7c3865a0000000000000000000000008ba1f109551bd432803012645ac136ddd64dba720000000000000000000000000000000000000000000000000de0b6b3a7640000'
+</span></div><div class="property show-anchors"><div class="signature"><span class="path">interface</span><span class="symbol">.</span><span class="method">encodeFilterTopics</span><span class="symbol">(</span> <span class="param">fragment</span> <span class="symbol">,</span> <span class="param">values</span> <span class="symbol">)</span> <span class="arrow">&rArr;</span> <span class="returns">Array&lt; topic | Array&lt; topic &gt; &gt;</span><div class="anchors"><a class="source" href="https://github.com/ethers-io/ethers.js/blob/master/packages/abi/src.ts/interface.ts#L441">source</a></div></div><div class="body"><p>Returns the encoded topic filter, which can be passed to getLogs for <i>fragment</i> (see <a href="/v5/api/utils/abi/interface/#Interface--specifying-fragments">Specifying Fragments</a>) for the given <i>values</i>.</p>
+
+<p>Each <i>topic</i> is a 32 byte (64 nibble) <a href="/v5/api/utils/bytes/#DataHexString">DataHexString</a>.</p>
+
+</div></div><div class="code"><span class="comment">// Filter that matches all Transfer events
+</span>iface.encodeFilterTopics("Transfer", [])
+<span class="result ok">// [
+</span><span class="result ok">//   '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef'
+</span><span class="result ok">// ]
+</span>
+<span class="comment">// Filter that matches the sender
+</span>iface.encodeFilterTopics("Transfer", [
+  "0x8ba1f109551bD432803012645Ac136ddd64DBA72"
+])
+<span class="result ok">// [
+</span><span class="result ok">//   '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef',
+</span><span class="result ok">//   '0x0000000000000000000000008ba1f109551bd432803012645ac136ddd64dba72'
+</span><span class="result ok">// ]
+</span>
+<span class="comment">// Filter that matches the receiver
+</span>iface.encodeFilterTopics("Transfer", [
+  null,
+  "0x8ba1f109551bD432803012645Ac136ddd64DBA72"
+])
+<span class="result ok">// [
+</span><span class="result ok">//   '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef',
+</span><span class="result ok">//   null,
+</span><span class="result ok">//   '0x0000000000000000000000008ba1f109551bd432803012645ac136ddd64dba72'
+</span><span class="result ok">// ]
+</span></div><div class="property show-anchors"><div class="signature"><span class="path">interface</span><span class="symbol">.</span><span class="method">encodeFunctionData</span><span class="symbol">(</span> <span class="param">fragment</span> <span class="symbol">[</span> <span class="symbol">,</span> <span class="param">values</span> <span class="symbol">]</span> <span class="symbol">)</span> <span class="arrow">&rArr;</span> <span class="returns">string&lt; <a href="/v5/api/utils/bytes/#DataHexString">DataHexString</a> &gt;</span><div class="anchors"><a class="source" href="https://github.com/ethers-io/ethers.js/blob/master/packages/abi/src.ts/interface.ts#L373">source</a></div></div><div class="body"><p>Returns the encoded data, which can be used as the data for a transaction for <i>fragment</i> (see <a href="/v5/api/utils/abi/interface/#Interface--specifying-fragments">Specifying Fragments</a>) for the given <i>values</i>.</p>
+
+</div></div><div class="code"><span class="comment">// Encoding data for the tx.data of a call or transaction
+</span>iface.encodeFunctionData("transferFrom", [
+  "0x8ba1f109551bD432803012645Ac136ddd64DBA72",
+  "0xaB7C8803962c0f2F5BBBe3FA8bf41cd82AA1923C",
+  parseEther("1.0")
+])
+<span class="result ok">// '0x23b872dd0000000000000000000000008ba1f109551bd432803012645ac136ddd64dba72000000000000000000000000ab7c8803962c0f2f5bbbe3fa8bf41cd82aa1923c0000000000000000000000000000000000000000000000000de0b6b3a7640000'
+</span>
+<span class="comment">// Encoding structured data (using positional Array)
+</span>user = [
+   "Richard Moore",
+   "0x8ba1f109551bD432803012645Ac136ddd64DBA72"
+];
+iface.encodeFunctionData("addUser", [ user ]);
+<span class="result ok">// '0x43967833000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000400000000000000000000000008ba1f109551bd432803012645ac136ddd64dba72000000000000000000000000000000000000000000000000000000000000000d52696368617264204d6f6f726500000000000000000000000000000000000000'
+</span>
+<span class="comment">// Encoding structured data, using objects. Only available
+</span><span class="comment">// if paramters are named.
+</span>user = {
+   name: "Richard Moore",
+   addr: "0x8ba1f109551bD432803012645Ac136ddd64DBA72"
+};
+iface.encodeFunctionData("addUser", [ user ]);
+<span class="result ok">// '0x43967833000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000400000000000000000000000008ba1f109551bd432803012645ac136ddd64dba72000000000000000000000000000000000000000000000000000000000000000d52696368617264204d6f6f726500000000000000000000000000000000000000'
+</span></div><div class="property show-anchors"><div class="signature"><span class="path">interface</span><span class="symbol">.</span><span class="method">encodeFunctionResult</span><span class="symbol">(</span> <span class="param">fragment</span> <span class="symbol">[</span> <span class="symbol">,</span> <span class="param">values</span> <span class="symbol">]</span> <span class="symbol">)</span> <span class="arrow">&rArr;</span> <span class="returns">string&lt; <a href="/v5/api/utils/bytes/#DataHexString">DataHexString</a> &gt;</span><div class="anchors"><a class="source" href="https://github.com/ethers-io/ethers.js/blob/master/packages/abi/src.ts/interface.ts#L432">source</a></div></div><div class="body"><p>Returns the encoded result, which would normally be the response from a call for <i>fragment</i> (see <a href="/v5/api/utils/abi/interface/#Interface--specifying-fragments">Specifying Fragments</a>) for the given <i>values</i>.</p>
+
+<p>Most developers will not need this method, but may be useful for authors of a mock blockchain.</p>
+
+</div></div><div class="code"><span class="comment">// Encoding result data (like is returned by eth_call)
+</span>iface.encodeFunctionResult("balanceOf", [
+  "0x8ba1f109551bD432803012645Ac136ddd64DBA72"
+])
+<span class="result ok">// '0x0000000000000000000000008ba1f109551bd432803012645ac136ddd64dba72'
+</span></div><a name="Interface--decoding"></a><a name="Interface--Interface--decoding"></a><h2 class="show-anchors"><div>Decoding Data<div class="anchors"><a class="self" href="/v5/api/utils/abi/interface/#Interface--decoding"></a></div></div></h2>
+<div class="property show-anchors"><div class="signature"><span class="path">interface</span><span class="symbol">.</span><span class="method">decodeErrorResult</span><span class="symbol">(</span> <span class="param">fragment</span> <span class="symbol">,</span> <span class="param">data</span> <span class="symbol">)</span> <span class="arrow">&rArr;</span> <span class="returns"><a href="/v5/api/utils/abi/interface/#Result">Result</a></span><div class="anchors"><a class="source" href="https://github.com/ethers-io/ethers.js/blob/master/packages/abi/src.ts/interface.ts#L332">source</a></div></div><div class="body"><p>Returns the decoded values from the result of a call during a revert for <i>fragment</i> (see <a href="/v5/api/utils/abi/interface/#Interface--specifying-fragments">Specifying Fragments</a>) for the given <i>data</i>.</p>
+
+<p>Most developers won't need this, as the <code class="inline">decodeFunctionResult</code> will automatically decode errors if the <i>data</i> represents a revert.</p>
+
+</div></div><div class="code"><span class="comment">// Decoding result data (e.g. from an eth_call)
+</span>errorData = "0xf7c3865a0000000000000000000000008ba1f109551bd432803012645ac136ddd64dba720000000000000000000000000000000000000000000000000de0b6b3a7640000";
+
+iface.decodeErrorResult("AccountLocked", errorData)
+<span class="result ok">// [
+</span><span class="result ok">//   '0x8ba1f109551bD432803012645Ac136ddd64DBA72',
+</span><span class="result ok">//   { BigNumber: "1000000000000000000" },
+</span><span class="result ok">//   balance: { BigNumber: "1000000000000000000" },
+</span><span class="result ok">//   owner: '0x8ba1f109551bD432803012645Ac136ddd64DBA72'
+</span><span class="result ok">// ]
+</span></div><div class="property show-anchors"><div class="signature"><span class="path">interface</span><span class="symbol">.</span><span class="method">decodeEventLog</span><span class="symbol">(</span> <span class="param">fragment</span> <span class="symbol">,</span> <span class="param">data</span> <span class="symbol">[</span> <span class="symbol">,</span> <span class="param">topics</span> <span class="symbol">]</span> <span class="symbol">)</span> <span class="arrow">&rArr;</span> <span class="returns"><a href="/v5/api/utils/abi/interface/#Result">Result</a></span><div class="anchors"><a class="source" href="https://github.com/ethers-io/ethers.js/blob/master/packages/abi/src.ts/interface.ts#L542">source</a></div></div><div class="body"><p>Returns the decoded event values from an event log for <i>fragment</i> (see <a href="/v5/api/utils/abi/interface/#Interface--specifying-fragments">Specifying Fragments</a>) for the given <i>data</i> with the optional <i>topics</i>.</p>
 
 <p>If <i>topics</i> is not specified, placeholders will be inserted into the result.</p>
 
-</div></div><div class="property show-anchors"><div class="signature"><span class="path">interface</span><span class="symbol">.</span><span class="method">decodeFunctionData</span><span class="symbol">(</span> <span class="param">fragment</span> <span class="symbol">,</span> <span class="param">data</span> <span class="symbol">)</span> <span class="arrow">&rArr;</span> <span class="returns"><a href="/v5/api/utils/abi/interface/#Result">Result</a></span><div class="anchors"><a class="source" href="https://github.com/ethers-io/ethers.js/blob/master/packages/abi/src.ts/interface.ts#L275">source</a></div></div><div class="body"><p>Returns the decoded values from transaction data for <i>fragment</i> (see <a href="/v5/api/utils/abi/interface/#Interface--specifying-fragments">Specifying Fragments</a>) for the given <i>data</i>.</p>
+<p>Most develoeprs will find the <a href="/v5/api/utils/abi/interface/#Interface--parsing">parsing methods</a> more convenient for decoding event data, as they will automatically detect the matching event.</p>
+
+</div></div><div class="code"><span class="comment">// Decoding log data and topics (the entries in a receipt)
+</span>const data = "0x0000000000000000000000000000000000000000000000000de0b6b3a7640000";
+const topics = [
+  "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+  "0x0000000000000000000000008ba1f109551bd432803012645ac136ddd64dba72",
+  "0x000000000000000000000000ab7c8803962c0f2f5bbbe3fa8bf41cd82aa1923c"
+];
+
+iface.decodeEventLog("Transfer", data, topics);
+<span class="result ok">// [
+</span><span class="result ok">//   '0x8ba1f109551bD432803012645Ac136ddd64DBA72',
+</span><span class="result ok">//   '0xaB7C8803962c0f2F5BBBe3FA8bf41cd82AA1923C',
+</span><span class="result ok">//   { BigNumber: "1000000000000000000" },
+</span><span class="result ok">//   amount: { BigNumber: "1000000000000000000" },
+</span><span class="result ok">//   from: '0x8ba1f109551bD432803012645Ac136ddd64DBA72',
+</span><span class="result ok">//   to: '0xaB7C8803962c0f2F5BBBe3FA8bf41cd82AA1923C'
+</span><span class="result ok">// ]
+</span></div><div class="property show-anchors"><div class="signature"><span class="path">interface</span><span class="symbol">.</span><span class="method">decodeFunctionData</span><span class="symbol">(</span> <span class="param">fragment</span> <span class="symbol">,</span> <span class="param">data</span> <span class="symbol">)</span> <span class="arrow">&rArr;</span> <span class="returns"><a href="/v5/api/utils/abi/interface/#Result">Result</a></span><div class="anchors"><a class="source" href="https://github.com/ethers-io/ethers.js/blob/master/packages/abi/src.ts/interface.ts#L358">source</a></div></div><div class="body"><p>Returns the decoded values from transaction data for <i>fragment</i> (see <a href="/v5/api/utils/abi/interface/#Interface--specifying-fragments">Specifying Fragments</a>) for the given <i>data</i>.</p>
 
 <p>Most developers will not need this method, but may be useful for debugging or inspecting transactions.</p>
 
-</div></div><div class="property show-anchors"><div class="signature"><span class="path">interface</span><span class="symbol">.</span><span class="method">decodeFunctionResult</span><span class="symbol">(</span> <span class="param">fragment</span> <span class="symbol">,</span> <span class="param">data</span> <span class="symbol">)</span> <span class="arrow">&rArr;</span> <span class="returns"><a href="/v5/api/utils/abi/interface/#Result">Result</a></span><div class="anchors"><a class="source" href="https://github.com/ethers-io/ethers.js/blob/master/packages/abi/src.ts/interface.ts#L302">source</a></div></div><div class="body"><p>Returns the decoded values from the result of a call for <i>fragment</i> (see <a href="/v5/api/utils/abi/interface/#Interface--specifying-fragments">Specifying Fragments</a>) for the given <i>data</i>.</p>
+<p>Most develoeprs will also find the <a href="/v5/api/utils/abi/interface/#Interface--parsing">parsing methods</a> more convenient for decoding transation data, as they will automatically detect the matching function.</p>
 
-</div></div><a name="Interface--parsing"></a><a name="Interface--Interface--parsing"></a><h2 class="show-anchors"><div>Parsing<div class="anchors"><a class="self" href="/v5/api/utils/abi/interface/#Interface--parsing"></a></div></div></h2><p>The functions are generally the most useful for most developers. They will automatically search the ABI for a matching Event or Function and decode the components as a fully specified description.</p>
+</div></div><div class="code"><span class="comment">// Decoding function data (the value of tx.data)
+</span>const txData = "0x23b872dd0000000000000000000000008ba1f109551bd432803012645ac136ddd64dba72000000000000000000000000ab7c8803962c0f2f5bbbe3fa8bf41cd82aa1923c0000000000000000000000000000000000000000000000000de0b6b3a7640000";
+iface.decodeFunctionData("transferFrom", txData);
+<span class="result ok">// [
+</span><span class="result ok">//   '0x8ba1f109551bD432803012645Ac136ddd64DBA72',
+</span><span class="result ok">//   '0xaB7C8803962c0f2F5BBBe3FA8bf41cd82AA1923C',
+</span><span class="result ok">//   { BigNumber: "1000000000000000000" },
+</span><span class="result ok">//   amount: { BigNumber: "1000000000000000000" },
+</span><span class="result ok">//   from: '0x8ba1f109551bD432803012645Ac136ddd64DBA72',
+</span><span class="result ok">//   to: '0xaB7C8803962c0f2F5BBBe3FA8bf41cd82AA1923C'
+</span><span class="result ok">// ]
+</span></div><div class="property show-anchors"><div class="signature"><span class="path">interface</span><span class="symbol">.</span><span class="method">decodeFunctionResult</span><span class="symbol">(</span> <span class="param">fragment</span> <span class="symbol">,</span> <span class="param">data</span> <span class="symbol">)</span> <span class="arrow">&rArr;</span> <span class="returns"><a href="/v5/api/utils/abi/interface/#Result">Result</a></span><div class="anchors"><a class="source" href="https://github.com/ethers-io/ethers.js/blob/master/packages/abi/src.ts/interface.ts#L385">source</a></div></div><div class="body"><p>Returns the decoded values from the result of a call for <i>fragment</i> (see <a href="/v5/api/utils/abi/interface/#Interface--specifying-fragments">Specifying Fragments</a>) for the given <i>data</i>.</p>
 
-<div class="property show-anchors"><div class="signature"><span class="path">interface</span><span class="symbol">.</span><span class="method">parseLog</span><span class="symbol">(</span> <span class="param">log</span> <span class="symbol">)</span> <span class="arrow">&rArr;</span> <span class="returns"><a href="/v5/api/utils/abi/interface/#LogDescription">LogDescription</a></span><div class="anchors"><a class="source" href="https://github.com/ethers-io/ethers.js/blob/master/packages/abi/src.ts/interface.ts#L552">source</a></div></div><div class="body"><p>Search the event that matches the <i>log</i> topic hash and parse the values the log represents.</p>
+</div></div><div class="code"><span class="comment">// Decoding result data (e.g. from an eth_call)
+</span>resultData = "0x0000000000000000000000000000000000000000000000000de0b6b3a7640000";
+iface.decodeFunctionResult("balanceOf", resultData)
+<span class="result ok">// [
+</span><span class="result ok">//   { BigNumber: "1000000000000000000" }
+</span><span class="result ok">// ]
+</span>
+<span class="comment">// Decoding result data which was caused by a revert
+</span><span class="comment">// Throws a CALL_EXCEPTION, with extra details
+</span>errorData = "0xf7c3865a0000000000000000000000008ba1f109551bd432803012645ac136ddd64dba720000000000000000000000000000000000000000000000000de0b6b3a7640000";
+iface.decodeFunctionResult("balanceOf", errorData)
+<span class="result error">// [Error: call revert exception] {
+</span><span class="result error">//   code: 'CALL_EXCEPTION',
+</span><span class="result error">//   errorArgs: [
+</span><span class="result error">//     '0x8ba1f109551bD432803012645Ac136ddd64DBA72',
+</span><span class="result error">//     { BigNumber: "1000000000000000000" },
+</span><span class="result error">//     balance: { BigNumber: "1000000000000000000" },
+</span><span class="result error">//     owner: '0x8ba1f109551bD432803012645Ac136ddd64DBA72'
+</span><span class="result error">//   ],
+</span><span class="result error">//   errorName: 'AccountLocked',
+</span><span class="result error">//   errorSignature: 'AccountLocked(address,uint256)',
+</span><span class="result error">//   method: 'balanceOf(address)',
+</span><span class="result error">//   reason: null
+</span><span class="result error">// }
+</span>
+<span class="comment">// Decoding structured data returns a Result object, which
+</span><span class="comment">// will include all values positionally and if the ABI
+</span><span class="comment">// included names, values will additionally be available
+</span><span class="comment">// by their name.
+</span>resultData = "0x000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000400000000000000000000000008ba1f109551bd432803012645ac136ddd64dba72000000000000000000000000000000000000000000000000000000000000000d52696368617264204d6f6f726500000000000000000000000000000000000000";
+result = iface.decodeFunctionResult("getUser", resultData);
+<span class="result ok">// [
+</span><span class="result ok">//   [
+</span><span class="result ok">//     'Richard Moore',
+</span><span class="result ok">//     '0x8ba1f109551bD432803012645Ac136ddd64DBA72',
+</span><span class="result ok">//     addr: '0x8ba1f109551bD432803012645Ac136ddd64DBA72',
+</span><span class="result ok">//     name: 'Richard Moore'
+</span><span class="result ok">//   ],
+</span><span class="result ok">//   user: [
+</span><span class="result ok">//     'Richard Moore',
+</span><span class="result ok">//     '0x8ba1f109551bD432803012645Ac136ddd64DBA72',
+</span><span class="result ok">//     addr: '0x8ba1f109551bD432803012645Ac136ddd64DBA72',
+</span><span class="result ok">//     name: 'Richard Moore'
+</span><span class="result ok">//   ]
+</span><span class="result ok">// ]
+</span>
+<span class="comment">// Access positionally:
+</span><span class="comment">// The 0th output parameter, the 0th proerty of the structure
+</span>result[0][0];
+<span class="result ok">// 'Richard Moore'
+</span>
+<span class="comment">// Access by name: (only avilable because parameters were named)
+</span>result.user.name
+<span class="result ok">// 'Richard Moore'
+</span></div><a name="Interface--parsing"></a><a name="Interface--Interface--parsing"></a><h2 class="show-anchors"><div>Parsing<div class="anchors"><a class="self" href="/v5/api/utils/abi/interface/#Interface--parsing"></a></div></div></h2><p>The functions are generally the most useful for most developers. They will automatically search the ABI for a matching Event or Function and decode the components as a fully specified description.</p>
 
-</div></div><div class="property show-anchors"><div class="signature"><span class="path">interface</span><span class="symbol">.</span><span class="method">parseTransaction</span><span class="symbol">(</span> <span class="param">transaction</span> <span class="symbol">)</span> <span class="arrow">&rArr;</span> <span class="returns"><a href="/v5/api/utils/abi/interface/#TransactionDescription">TransactionDescription</a></span><div class="anchors"><a class="source" href="https://github.com/ethers-io/ethers.js/blob/master/packages/abi/src.ts/interface.ts#L535">source</a></div></div><div class="body"><p>Search for the function that matches the <i>transaction</i> data sighash and parse the transaction properties.</p>
+<div class="property show-anchors"><div class="signature"><span class="path">interface</span><span class="symbol">.</span><span class="method">parseError</span><span class="symbol">(</span> <span class="param">data</span> <span class="symbol">)</span> <span class="arrow">&rArr;</span> <span class="returns"><a href="/v5/api/utils/abi/interface/#ErrorDescription">ErrorDescription</a></span><div class="anchors"><a class="source" href="https://github.com/ethers-io/ethers.js/blob/master/packages/abi/src.ts/interface.ts#L673">source</a></div></div><div class="body"><p>Search for the error that matches the error selector in <i>data</i> and parse out the details.</p>
 
-</div></div><a name="Interface--types"></a><a name="Interface--Interface--types"></a><h2 class="show-anchors"><div>Types<div class="anchors"><a class="self" href="/v5/api/utils/abi/interface/#Interface--types"></a></div></div></h2>
+</div></div><div class="code">const data = "0xf7c3865a0000000000000000000000008ba1f109551bd432803012645ac136ddd64dba720000000000000000000000000000000000000000000000000de0b6b3a7640000";
+
+iface.parseError(data);
+<span class="result ok">// ErrorDescription {
+</span><span class="result ok">//   args: [
+</span><span class="result ok">//     '0x8ba1f109551bD432803012645Ac136ddd64DBA72',
+</span><span class="result ok">//     { BigNumber: "1000000000000000000" },
+</span><span class="result ok">//     balance: { BigNumber: "1000000000000000000" },
+</span><span class="result ok">//     owner: '0x8ba1f109551bD432803012645Ac136ddd64DBA72'
+</span><span class="result ok">//   ],
+</span><span class="result ok">//   errorFragment: [class ErrorFragment],
+</span><span class="result ok">//   name: 'AccountLocked',
+</span><span class="result ok">//   sighash: '0xf7c3865a',
+</span><span class="result ok">//   signature: 'AccountLocked(address,uint256)'
+</span><span class="result ok">// }
+</span></div><div class="property show-anchors"><div class="signature"><span class="path">interface</span><span class="symbol">.</span><span class="method">parseLog</span><span class="symbol">(</span> <span class="param">log</span> <span class="symbol">)</span> <span class="arrow">&rArr;</span> <span class="returns"><a href="/v5/api/utils/abi/interface/#LogDescription">LogDescription</a></span><div class="anchors"><a class="source" href="https://github.com/ethers-io/ethers.js/blob/master/packages/abi/src.ts/interface.ts#L654">source</a></div></div><div class="body"><p>Search the event that matches the <i>log</i> topic hash and parse the values the log represents.</p>
+
+</div></div><div class="code">const data = "0x0000000000000000000000000000000000000000000000000de0b6b3a7640000";
+const topics = [
+  "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+  "0x0000000000000000000000008ba1f109551bd432803012645ac136ddd64dba72",
+  "0x000000000000000000000000ab7c8803962c0f2f5bbbe3fa8bf41cd82aa1923c"
+];
+
+iface.parseLog({ data, topics });
+<span class="result ok">// LogDescription {
+</span><span class="result ok">//   args: [
+</span><span class="result ok">//     '0x8ba1f109551bD432803012645Ac136ddd64DBA72',
+</span><span class="result ok">//     '0xaB7C8803962c0f2F5BBBe3FA8bf41cd82AA1923C',
+</span><span class="result ok">//     { BigNumber: "1000000000000000000" },
+</span><span class="result ok">//     amount: { BigNumber: "1000000000000000000" },
+</span><span class="result ok">//     from: '0x8ba1f109551bD432803012645Ac136ddd64DBA72',
+</span><span class="result ok">//     to: '0xaB7C8803962c0f2F5BBBe3FA8bf41cd82AA1923C'
+</span><span class="result ok">//   ],
+</span><span class="result ok">//   eventFragment: [class EventFragment],
+</span><span class="result ok">//   name: 'Transfer',
+</span><span class="result ok">//   signature: 'Transfer(address,address,uint256)',
+</span><span class="result ok">//   topic: '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef'
+</span><span class="result ok">// }
+</span></div><div class="property show-anchors"><div class="signature"><span class="path">interface</span><span class="symbol">.</span><span class="method">parseTransaction</span><span class="symbol">(</span> <span class="param">transaction</span> <span class="symbol">)</span> <span class="arrow">&rArr;</span> <span class="returns"><a href="/v5/api/utils/abi/interface/#TransactionDescription">TransactionDescription</a></span><div class="anchors"><a class="source" href="https://github.com/ethers-io/ethers.js/blob/master/packages/abi/src.ts/interface.ts#L634">source</a></div></div><div class="body"><p>Search for the function that matches the <i>transaction</i> data sighash and parse the transaction properties.</p>
+
+</div></div><div class="code">const data = "0x23b872dd0000000000000000000000008ba1f109551bd432803012645ac136ddd64dba72000000000000000000000000ab7c8803962c0f2f5bbbe3fa8bf41cd82aa1923c0000000000000000000000000000000000000000000000000de0b6b3a7640000";
+const value = parseEther("1.0");
+
+iface.parseTransaction({ data, value });
+<span class="result ok">// TransactionDescription {
+</span><span class="result ok">//   args: [
+</span><span class="result ok">//     '0x8ba1f109551bD432803012645Ac136ddd64DBA72',
+</span><span class="result ok">//     '0xaB7C8803962c0f2F5BBBe3FA8bf41cd82AA1923C',
+</span><span class="result ok">//     { BigNumber: "1000000000000000000" },
+</span><span class="result ok">//     amount: { BigNumber: "1000000000000000000" },
+</span><span class="result ok">//     from: '0x8ba1f109551bD432803012645Ac136ddd64DBA72',
+</span><span class="result ok">//     to: '0xaB7C8803962c0f2F5BBBe3FA8bf41cd82AA1923C'
+</span><span class="result ok">//   ],
+</span><span class="result ok">//   functionFragment: [class FunctionFragment],
+</span><span class="result ok">//   name: 'transferFrom',
+</span><span class="result ok">//   sighash: '0x23b872dd',
+</span><span class="result ok">//   signature: 'transferFrom(address,address,uint256)',
+</span><span class="result ok">//   value: { BigNumber: "1000000000000000000" }
+</span><span class="result ok">// }
+</span></div><a name="Interface--types"></a><a name="Interface--Interface--types"></a><h2 class="show-anchors"><div>Types<div class="anchors"><a class="self" href="/v5/api/utils/abi/interface/#Interface--types"></a></div></div></h2>
 <a name="Result"></a><a name="Interface--Interface--types--Result"></a><h3 class="show-anchors"><div>Result<span class="inherits"> inherits Array&lt;any&gt;</span><div class="anchors"><a class="self" href="/v5/api/utils/abi/interface/#Result"></a></div></div></h3><p>A <b>Result</b> is an array, so each value can be accessed as a positional argument.</p>
 
 <p>Additionally, if values are named, the identical object as its positional value can be accessed by its name.</p>
 
 <p>The name <code class="inline">length</code> is however reserved as it is part of the Array, so any named value for this key is renamed to <code class="inline">_length</code>. If there is a name collision, only the first is available by its key.</p>
 
-<a name="LogDescription"></a><a name="Interface--Interface--types--LogDescription"></a><h3 class="show-anchors"><div>LogDescription<div class="anchors"><a class="self" href="/v5/api/utils/abi/interface/#LogDescription"></a></div></div></h3>
+<a name="ErrorDescription"></a><a name="Interface--Interface--types--ErrorDescription"></a><h3 class="show-anchors"><div>ErrorDescription<div class="anchors"><a class="self" href="/v5/api/utils/abi/interface/#ErrorDescription"></a></div></div></h3>
+<div class="property show-anchors"><div class="signature"><span class="path">errorDescription</span><span class="symbol">.</span><span class="method">args</span> <span class="arrow">&rArr;</span> <span class="returns"><a href="/v5/api/utils/abi/interface/#Result">Result</a></span><div class="anchors"></div></div><div class="body"><p>The values of the input parameters of the error.</p>
+
+</div></div><div class="property show-anchors"><div class="signature"><span class="path">errorDescription</span><span class="symbol">.</span><span class="method">errorFragment</span> <span class="arrow">&rArr;</span> <span class="returns"><a href="/v5/api/utils/abi/fragments/#ErrorFragment">ErrorFragment</a></span><div class="anchors"></div></div><div class="body"><p>The <a href="/v5/api/utils/abi/fragments/#ErrorFragment">ErrorFragment</a> which matches the selector in the data.</p>
+
+</div></div><div class="property show-anchors"><div class="signature"><span class="path">errorDescription</span><span class="symbol">.</span><span class="method">name</span> <span class="arrow">&rArr;</span> <span class="returns">string</span><div class="anchors"></div></div><div class="body"><p>The error name. (e.g. <code class="inline">AccountLocked</code>)</p>
+
+</div></div><div class="property show-anchors"><div class="signature"><span class="path">errorDescription</span><span class="symbol">.</span><span class="method">signature</span> <span class="arrow">&rArr;</span> <span class="returns">string</span><div class="anchors"></div></div><div class="body"><p>The error signature. (e.g. <code class="inline">AccountLocked(address,uint256)</code>)</p>
+
+</div></div><div class="property show-anchors"><div class="signature"><span class="path">errorDescription</span><span class="symbol">.</span><span class="method">sighash</span> <span class="arrow">&rArr;</span> <span class="returns">string</span><div class="anchors"></div></div><div class="body"><p>The selector of the error.</p>
+
+</div></div><a name="LogDescription"></a><a name="Interface--Interface--types--LogDescription"></a><h3 class="show-anchors"><div>LogDescription<div class="anchors"><a class="self" href="/v5/api/utils/abi/interface/#LogDescription"></a></div></div></h3>
 <div class="property show-anchors"><div class="signature"><span class="path">logDescription</span><span class="symbol">.</span><span class="method">args</span> <span class="arrow">&rArr;</span> <span class="returns"><a href="/v5/api/utils/abi/interface/#Result">Result</a></span><div class="anchors"></div></div><div class="body"><p>The values of the input parameters of the event.</p>
 
 </div></div><div class="property show-anchors"><div class="signature"><span class="path">logDescription</span><span class="symbol">.</span><span class="method">eventFragment</span> <span class="arrow">&rArr;</span> <span class="returns"><a href="/v5/api/utils/abi/fragments/#EventFragment">EventFragment</a></span><div class="anchors"></div></div><div class="body"><p>The <a href="/v5/api/utils/abi/fragments/#EventFragment">EventFragment</a> which matches the topic in the Log.</p>
@@ -131,7 +501,7 @@
         <div class="nav previous"><a href="/v5/api/utils/abi/fragments/"><span class="arrow">&larr;</span>Fragments</a></div>
         <div class="nav next"><a href="/v5/api/utils/address/">Addresses<span class="arrow">&rarr;</span></a></div>
       </div>
-      <div class="copyright">The content of this site is licensed under the <a href="https://choosealicense.com/licenses/cc-by-4.0/">Creative Commons License</a>. Generated on February 8, 2021, 3:25pm.</div>
+      <div class="copyright">The content of this site is licensed under the <a href="https://choosealicense.com/licenses/cc-by-4.0/">Creative Commons License</a>. Generated on December 24, 2021, 5:7pm.</div>
     </div>
     <script src="/v5/static/script.js" type="text/javascript"></script>
     <!--EXTRASCRIPT-->

@@ -52,7 +52,12 @@ utils.keccak256("0x1234")
 
 // Do NOT use UTF-8 strings that are not a DataHexstring
 utils.keccak256("hello world")
-// Error: invalid arrayify value (argument="value", value="hello world", code=INVALID_ARGUMENT, version=bytes/5.0.10)
+// [Error: invalid arrayify value] {
+//   argument: 'value',
+//   code: 'INVALID_ARGUMENT',
+//   reason: 'invalid arrayify value',
+//   value: 'hello world'
+// }
 
 // If needed, convert strings to bytes first:
 utils.keccak256(utils.toUtf8Bytes("hello world"))
@@ -77,7 +82,7 @@ utils.keccak256("0x1234")
 utils.keccak256([ 0x12, 0x34 ])
 // '0x56570de287d73cd1cb6092bb8fdee6173974955fdef345ae579ee9f475ea7432'
 
-const bytes = utils.toUtf8Bytes("0x1234")
+bytes = utils.toUtf8Bytes("0x1234")
 // Uint8Array [ 48, 120, 49, 50, 51, 52 ]
 
 // Hash of SIX (6) characters (different than above)
@@ -242,15 +247,15 @@ Returns a copy of value, where any leaf value with a type of `address` will have
 
 
 ```javascript
-const domain = {
+domain = {
     name: 'Ether Mail',
     version: '1',
     chainId: 1,
     verifyingContract: '0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC'
-}
+};
 
 // The named list of all type definitions
-const types = {
+types = {
     Person: [
         { name: 'name', type: 'string' },
         { name: 'wallet', type: 'address' }
@@ -260,10 +265,10 @@ const types = {
         { name: 'to', type: 'Person' },
         { name: 'contents', type: 'string' }
     ]
-}
+};
 
 // The data to sign
-const value = {
+value = {
     from: {
         name: 'Cow',
         wallet: '0xCD2a3d9F938E13CD947Ec05AbC7FE734Df8DD826'
@@ -273,8 +278,7 @@ const value = {
         wallet: '0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB'
     },
     contents: 'Hello, Bob!'
-}
-
+};
 
 TypedDataEncoder.encode(domain, types, value)
 // '0x1901f2cee375fa42b42143804025fc449deafd50cc031ca257e0b194a650a912090fc52c0ee5d84264471806290a3f2c4cecfc5490626bf912d01f240d7a274b371e'

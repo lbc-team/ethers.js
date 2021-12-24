@@ -28,7 +28,7 @@ Returns a [JsonRpcSigner](/v5/api/providers/jsonrpc-provider/#JsonRpcSigner) whi
 
 
 
-#### *jsonRpcProvider* . **listAccounts**( ) => *Array< string >*
+#### *jsonRpcProvider* . **listAccounts**( ) => *Promise< Array< string > >*
 
 Returns a list of all account addresses managed by this provider.
 
@@ -65,6 +65,9 @@ Request the node unlock the account (if locked) using *password*.
 
 JsonRpcUncheckedSigner
 ----------------------
+
+StaticJsonRpcProvider
+---------------------
 
 Node-Specific Methods
 ---------------------

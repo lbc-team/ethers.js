@@ -4,34 +4,35 @@ Documentation: [html](https://docs.ethers.io/)
 
 -----
 
-Documentation
+ethers.js中文文档
 =============
 
-What is Ethers?
----------------
+ethers.js介绍
+-----------
 
-Features
---------
+包含功能
+----
 
-Developer Documentation
------------------------
+开发手册目录
+------
 
-* [Getting Started](getting-started)
-  * [Installing](getting-started)
-  * [Importing](getting-started)
-  * [Common Terminology](getting-started)
-  * [Connecting to Ethereum: Metamask](getting-started)
-  * [Connecting to Ethereum: RPC](getting-started)
-  * [Contracts](getting-started)
-  * [Signing Messages](getting-started)
-* [Ethereum Basics](concepts)
-  * [Events](concepts/events)
-    * [Logs and Filtering](concepts/events)
+* [开始使用](getting-started)
+  * [安装](getting-started)
+  * [导入](getting-started)
+  * [常见的术语](getting-started)
+  * [连接以太坊: MetaMask](getting-started)
+  * [连接以太坊: RPC](getting-started)
+  * [合约](getting-started)
+  * [签名消息](getting-started)
+* [以太坊基础知识](concepts)
+  * [事件](concepts/events)
+    * [日志和过滤器（Logs and filtering）](concepts/events)
     * [Solidity Topics](concepts/events)
   * [Gas](concepts/gas)
     * [Gas Price](concepts/gas)
     * [Gas Limit](concepts/gas)
   * [Security](concepts/security)
+    * [Side-Channel Attacks](concepts/security)
     * [Key Derivation Functions](concepts/security)
   * [Best Practices](concepts/best-practices)
     * [Network Changes](concepts/best-practices)
@@ -56,6 +57,7 @@ Developer Documentation
     * [JsonRpcProvider](api/providers/jsonrpc-provider)
       * [JsonRpcSigner](api/providers/jsonrpc-provider)
       * [JsonRpcUncheckedSigner](api/providers/jsonrpc-provider)
+      * [StaticJsonRpcProvider](api/providers/jsonrpc-provider)
       * [Node-Specific Methods](api/providers/jsonrpc-provider)
     * [API Providers](api/providers/api-providers)
       * [EtherscanProvider](api/providers/api-providers)
@@ -72,9 +74,11 @@ Developer Documentation
       * [BlockTag](api/providers/types)
       * [Networkish](api/providers/types)
       * [Network](api/providers/types)
+      * [FeeData](api/providers/types)
       * [Block](api/providers/types)
       * [Events and Logs](api/providers/types)
       * [Transactions](api/providers/types)
+      * [Access Lists](api/providers/types)
   * [Signers](api/signer)
     * [Signer](api/signer)
     * [Wallet](api/signer)
@@ -92,6 +96,7 @@ Developer Documentation
       * [Properties](api/contract/contract-factory)
       * [Methods](api/contract/contract-factory)
     * [Example: ERC-20 Contract](api/contract/example)
+      * [Deploying a Contract](api/contract/example)
       * [Connecting to a Contract](api/contract/example)
       * [Properties](api/contract/example)
       * [Methods](api/contract/example)
@@ -106,10 +111,13 @@ Developer Documentation
       * [ABI Formats](api/utils/abi/formats)
         * [Human-Readable ABI](api/utils/abi/formats)
         * [Solidity JSON ABI](api/utils/abi/formats)
+        * [Solidity Object ABI](api/utils/abi/formats)
+        * [Converting Between Formats](api/utils/abi/formats)
       * [Fragments](api/utils/abi/fragments)
         * [Formats](api/utils/abi/fragments)
         * [Fragment](api/utils/abi/fragments)
         * [ConstructorFragment](api/utils/abi/fragments)
+        * [ErrorFragment](api/utils/abi/fragments)
         * [EventFragment](api/utils/abi/fragments)
         * [FunctionFragment](api/utils/abi/fragments)
         * [ParamType](api/utils/abi/fragments)
@@ -234,6 +242,8 @@ Developer Documentation
   * [React Native (and ilk)](cookbook/react-native)
     * [Installing](cookbook/react-native)
     * [Security](cookbook/react-native)
+  * [Transactions](cookbook/transactions)
+    * [Compute the raw transaction](cookbook/transactions)
 * [Migration Guide](migration)
   * [Migration: From Web3.js](migration/web3)
     * [Providers](migration/web3)
@@ -267,6 +277,6 @@ Developer Documentation
   * [Extensions](documentation)
 * [License and Copyright](license)
 
-Legacy Documentation
---------------------
+旧文档
+---
 

@@ -18,6 +18,7 @@ Contract Interaction
   * [Properties](contract-factory)
   * [Methods](contract-factory)
 * [Example: ERC-20 Contract](example)
+  * [Deploying a Contract](example)
   * [Connecting to a Contract](example)
   * [Properties](example)
   * [Methods](example)

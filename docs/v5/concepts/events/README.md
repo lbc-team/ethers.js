@@ -4,11 +4,11 @@ Documentation: [html](https://docs.ethers.io/)
 
 -----
 
-Events
-======
+事件
+==
 
-Logs and Filtering
-------------------
+日志和过滤器（Logs and filtering）
+--------------------------
 
 ### Filters
 
@@ -48,7 +48,7 @@ filter = {
         id("Transfer(address,address,uint256)"),
         hexZeroPad(myAddress, 32)
     ]
-}
+};
 
 // List all token transfers  *to*  myAddress:
 filter = {
@@ -58,7 +58,7 @@ filter = {
         null,
         hexZeroPad(myAddress, 32)
     ]
-}
+};
 
 // List all token transfers  *to*  myAddress or myOtherAddress:
 filter = {
@@ -71,7 +71,7 @@ filter = {
             hexZeroPad(myOtherAddress, 32),
         ]
     ]
-}
+};
 ```
 
 
@@ -79,11 +79,11 @@ To simplify life, ..., explain here, the contract API
 
 
 ```javascript
-const abi = [
+abi = [
   "event Transfer(address indexed src, address indexed dst, uint val)"
 ];
 
-const contract = new Contract(tokenAddress, abi, provider);
+contract = new Contract(tokenAddress, abi, provider);
 
 // List all token transfers *from* myAddress
 contract.filters.Transfer(myAddress)

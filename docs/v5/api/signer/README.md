@@ -26,7 +26,7 @@ Sub-classes **must** implement this.
 
 #### *Signer* . **isSigner**( object ) => *boolean*
 
-Returns true if an only if *object* is a **Signer**.
+Returns true if and only if *object* is a **Signer**.
 
 
 ### Blockchain Methods
@@ -71,6 +71,8 @@ Returns the address associated with the *ensName*.
 #### *signer* . **signMessage**( message ) => *Promise< string< [RawSignature](/v5/api/utils/bytes/#signature-raw) > >*
 
 This returns a Promise which resolves to the [Raw Signature](/v5/api/utils/bytes/#signature-raw) of *message*.
+
+A signed message is prefixd with `"\x19Ethereum Signed Message:\n"` and the length of the message, using the [hashMessage](/v5/api/utils/hashing/#utils-hashMessage) method, so that it is [EIP-191](https://eips.ethereum.org/EIPS/eip-191) compliant. If recovering the address in Solidity, this prefix will be required to create a matching hash.
 
 Sub-classes **must** implement this, however they may throw if signing a message is not supported, such as in a Contract-based Wallet or Meta-Transaction-based Wallet.
 
@@ -148,8 +150,7 @@ const value = {
     contents: 'Hello, Bob!'
 };
 
-
-const signature = await signer._signTypedData(domain, types, value);
+signature = await signer._signTypedData(domain, types, value);
 // '0x463b9c9971d1a144507d2e905f4e98becd159139421a4bb8d3c9c2ed04eb401057dd0698d504fd6ca48829a3c8a7a98c1c961eae617096cb54264bbdd082e13d1c'
 ```
 
@@ -256,8 +257,8 @@ walletMnemonic.address === walletPrivateKey.address
 // true
 
 // The address as a Promise per the Signer API
-walletMnemonic.getAddress()
-// { Promise: '0x71CB05EE1b1F506fF321Da3dac38f25c0c9ce6E1' }
+await walletMnemonic.getAddress()
+// '0x71CB05EE1b1F506fF321Da3dac38f25c0c9ce6E1'
 
 // A Wallet address is also available synchronously
 walletMnemonic.address
@@ -283,8 +284,8 @@ walletPrivateKey.mnemonic
 // null
 
 // Signing a message
-walletMnemonic.signMessage("Hello World")
-// { Promise: '0x14280e5885a19f60e536de50097e96e3738c7acae4e9e62d67272d794b8127d31c03d9cd59781d4ee31fb4e1b893bd9b020ec67dfa65cfb51e2bdadbb1de26d91c' }
+await walletMnemonic.signMessage("Hello World")
+// '0x14280e5885a19f60e536de50097e96e3738c7acae4e9e62d67272d794b8127d31c03d9cd59781d4ee31fb4e1b893bd9b020ec67dfa65cfb51e2bdadbb1de26d91c'
 
 tx = {
   to: "0x8ba1f109551bD432803012645Ac136ddd64DBA72",
@@ -292,21 +293,41 @@ tx = {
 }
 
 // Signing a transaction
-walletMnemonic.signTransaction(tx)
-// { Promise: '0xf865808080948ba1f109551bd432803012645ac136ddd64dba72880de0b6b3a7640000801ca0918e294306d177ab7bd664f5e141436563854ebe0a3e523b9690b4922bbb52b8a01181612cec9c431c4257a79b8c9f0c980a2c49bb5a0e6ac52949163eeb565dfc' }
+await walletMnemonic.signTransaction(tx)
+// '0xf865808080948ba1f109551bd432803012645ac136ddd64dba72880de0b6b3a7640000801ca0918e294306d177ab7bd664f5e141436563854ebe0a3e523b9690b4922bbb52b8a01181612cec9c431c4257a79b8c9f0c980a2c49bb5a0e6ac52949163eeb565dfc'
 
 // The connect method returns a new instance of the
 // Wallet connected to a provider
 wallet = walletMnemonic.connect(provider)
 
 // Querying the network
-wallet.getBalance();
-// { Promise: { BigNumber: "42" } }
-wallet.getTransactionCount();
-// { Promise: 0 }
+await wallet.getBalance();
+// { BigNumber: "42" }
+await wallet.getTransactionCount();
+// 0
 
 // Sending ether
-wallet.sendTransaction(tx)
+await wallet.sendTransaction(tx)
+// {
+//   accessList: [],
+//   chainId: 31337,
+//   confirmations: 0,
+//   data: '0x',
+//   from: '0x2143AF6436D9Ff82b5327Fc94066a522b9CFac20',
+//   gasLimit: { BigNumber: "21001" },
+//   gasPrice: null,
+//   hash: '0x1ba1016d6a19bc2222901f65e0cd282943c0316cdf72661ba250da575d655944',
+//   maxFeePerGas: { BigNumber: "2500000016" },
+//   maxPriorityFeePerGas: { BigNumber: "2500000000" },
+//   nonce: 5,
+//   r: '0xfe90b4d5e69b8aeaf5d6b2423116af094e9828bd3eb27b09a776ecc0336fd5a7',
+//   s: '0x3d3278ce0733cdf96856ef8511bcb9c327bdcb6f4aacc2f9354c62e238f8cf3f',
+//   to: '0x8ba1f109551bD432803012645Ac136ddd64DBA72',
+//   type: 2,
+//   v: 1,
+//   value: { BigNumber: "1000000000000000000" },
+//   wait: [Function]
+// }
 ```
 
 VoidSigner
@@ -335,7 +356,7 @@ contract = new ethers.Contract("dai.tokens.ethers.eth", abi, signer)
 
 // Get the number of tokens for this account
 tokens = await contract.balanceOf(signer.getAddress())
-// { BigNumber: "198172622063578627973" }
+// { BigNumber: "15575624174838529547383" }
 
 //
 // Pre-flight (check for revert) on DAI from the signer
@@ -347,12 +368,31 @@ tokens = await contract.balanceOf(signer.getAddress())
 //
 
 // This will pass since the token balance is available
-contract.callStatic.transfer("donations.ethers.eth", tokens)
-// { Promise: true }
+await contract.callStatic.transfer("donations.ethers.eth", tokens)
+// true
 
 // This will fail since it is greater than the token balance
-contract.callStatic.transfer("donations.ethers.eth", tokens.add(1))
-// Error: call revert exception (method="transfer(address,uint256)", errorSignature="Error(string)", errorArgs=["Dai/insufficient-balance"], reason="Dai/insufficient-balance", code=CALL_EXCEPTION, version=abi/5.0.12)
+await contract.callStatic.transfer("donations.ethers.eth", tokens.add(1))
+// [Error: call revert exception] {
+//   address: 'dai.tokens.ethers.eth',
+//   args: [
+//     'donations.ethers.eth',
+//     { BigNumber: "15575624174838529547384" }
+//   ],
+//   code: 'CALL_EXCEPTION',
+//   errorArgs: [
+//     'Dai/insufficient-balance'
+//   ],
+//   errorName: 'Error',
+//   errorSignature: 'Error(string)',
+//   method: 'transfer(address,uint256)',
+//   reason: 'Dai/insufficient-balance',
+//   transaction: {
+//     data: '0xa9059cbb000000000000000000000000643aa0a61eadcc9cc202d1915d942d35d005400c00000000000000000000000000000000000000000000034c5b350fd26d465c78',
+//     from: '0x8ba1f109551bD432803012645Ac136ddd64DBA72',
+//     to: '0x6B175474E89094C44Da98b954EedeAC495271d0F'
+//   }
+// }
 ```
 
 ExternallyOwnedAccount
