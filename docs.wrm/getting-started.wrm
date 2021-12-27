@@ -1,42 +1,36 @@
-_section: Getting Started @<getting-started>
+_section: 开始使用 @<getting-started>
 
 
-_subsection: Installing @<installing>
+_subsection: 安装 @<installing>
 
-Ethers' various Classes and Functions are available to import
-manually from sub-packages under the [@ethersproject](link-ethers-npm)
-organization but for most projects, the umbrella package is the
-easiest way to get started.
+以太坊中各种类和函数都可以从[@ethersproject](link-ethers-npm)下的子库中手动进行导入，但对于大多数项目来说，用完整的总库是最简单的入门方式。
 
 _code: @lang<shell>
 
 /home/ricmoo> npm install --save ethers
 
 
-_subsection: Importing @<importing>
+_subsection: 导入 @<importing>
 
 _heading: Node.js
 
-_code: node.js require @lang<script>
+_code: node.js 是必须的 @lang<script>
 
 const { ethers } = require("ethers");
 
-_code: ES6 or TypeScript @lang<script>
+_code: ES6 或 TypeScript @lang<script>
 
 import { ethers } from "ethers";
 
 
-_heading: Web Browser
+_heading: Web 浏览器
 
-It is generally better practice (for security reasons) to copy the
-[ethers library](link-ethers-js) to your own webserver and serve it
-yourself.
+出于安全，通常较好的方式是将这个库复制到你的web服务器中来进行各种操作。
 
-For quick demos or prototyping though, you can load it in your
-Web Applications from our CDN.
+但对于想进行快速用例和原型展示，你可以将我们的CDN加载到你的web应用程序中。
 
 
-_code: ES6 in the Browser @lang<html>
+_code: 在浏览器中通过ES6的方式 @lang<html>
 
 <script type="module">
     import { ethers } from "https://cdn.ethers.io/lib/ethers-5.2.esm.min.js";
@@ -44,28 +38,21 @@ _code: ES6 in the Browser @lang<html>
 </script>
 
 
-_code: ES3 (UMD) in the Browser @lang<html>
+_code: 在浏览器中通过ES3 (UMD)的方式 @lang<html>
 
 <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"
         type="application/javascript"></script>
 
 
-_subsection: Common Terminology @<getting-started--glossary>
+_subsection: 常见的术语 @<getting-started--glossary>
 
-This section needs work...
+这部分仍会不断地完善...
 
 _table: Common Terms
 
-$Provider:  A Provider (in ethers) is a class which provides an abstraction
-            for a connection to the Ethereum Network. It provides read-only
-            access to the Blockchain and its status.
-$Signer:    A Signer is a class which (usually) in some way directly or
-            indirectly has access to a private key, which can sign messages
-            and transactions to authorize the network to charge your account
-            ether to perform operations.
-$Contract:  A Contract is an abstraction which represents a connection to a
-            specific contract on the Ethereum Network, so that applications 
-            can use it like a normal JavaScript object.
+$Provider:  Provider（提供者）是一个用于连接以太坊网络的抽象类，提供了通过只读方式的来连接区块链网络和获取其状态的桥梁。
+$Signer:  Signer（签名器）通常是以某种方式直接或间接访问私钥，它可以签名消息和在已授权网络中管理你的账户中的以太币来进行交易。
+$Contract:  Contract（合约）是一个运行在以太坊网络上表示现实中特定合约的抽象，应用可以像使用JavaScript对象一样使用它。
 
 
 | **Provider**     | $Provider      |
@@ -73,16 +60,14 @@ $Contract:  A Contract is an abstraction which represents a connection to a
 | **Contract**     | $Contract      |
 
 
-_subsection: Connecting to Ethereum: MetaMask @<getting-started--connecting>
+_subsection: 连接以太坊: MetaMask @<getting-started--connecting>
 
-The quickest and easiest way to experiment and begin developing on
-Ethereum is to use [[link-metamask]], which is a browser extension
-that provides:
+在以太坊上去开发和测试的最快、最简单的方法是使用[[link-metamask]], 它是一个基于浏览器的扩展程序，提供了:
 
-- A connection to the Ethereum network (a [[Provider]])
-- Holds your private key and can sign things (a [[Signer]])
+- 连接以太坊网络 (a [[Provider]])
+- 保存你的私钥并且可以签名 (a [[Signer]])
 
-_code: Connecting to MetaMask @lang<script>
+_code: 连接 MetaMask @lang<script>
 
 // A Web3Provider wraps a standard Web3 provider, which is
 // what MetaMask injects as window.ethereum into each page
@@ -93,17 +78,15 @@ const provider = new ethers.providers.Web3Provider(window.ethereum)
 // For this, you need the account signer...
 const signer = provider.getSigner()
 
-_subsection: Connecting to Ethereum: RPC @<getting-started--connecting-rpc>
+_subsection: 连接以太坊: RPC @<getting-started--connecting-rpc>
 
-The [JSON-RPC API](link-jsonrpc) is another popular method for interacting
-with Ethereum and is available in all major Ethereum node implementations
-(e.g. [[link-geth]] and [[link-parity]]) as well as many
-third-party web services (e.g. [[link-infura]]). It typically provides:
+[JSON-RPC API](link-jsonrpc) 另一种与以太坊交互的比较流行的方式，用在所有主要的以太坊节点
+(如 [[link-geth]] 和 [[link-parity]]) 以及许多第三方web服务 (如 [[link-infura]])。 它通常提供了:
 
-- A connection to the Ethereum network (a [[Provider]])
-- Holds your private key and can sign things (a [[Signer]])
+- 连接以太坊网络 ([[Provider]])
+- 保存你的私钥并且可以签名 ([[Signer]])
 
-_code: Connecting to an RPC client @lang<script>
+_code: 连接一个 RPC 客户端 @lang<script>
 
 // If you don't specify a //url//, Ethers connects to the default 
 // (i.e. ``http:/\/localhost:8545``)
@@ -114,13 +97,11 @@ const provider = new ethers.providers.JsonRpcProvider();
 // For this, we need the account signer...
 const signer = provider.getSigner()
 
-_heading: Querying the Blockchain @<getting-started--querying>
+_heading: 查询区块链 @<getting-started--querying>
 
-Once you have a [[Provider]], you have a read-only connection to the
-blockchain, which you can use to query the current state, fetch historic
-logs, look up deployed code and so on.
+当你有了[[Provider]]之后, 你就可以通过只读的方式连接区块链, 此外，你还可以使用它来查询当前状态、获取历史日志、查找部署的代码等等。
 
-_code: Basic Queries @lang<javascript>
+_code: 基础查询 @lang<javascript>
 
 // Look up the current block number
 //_result:
@@ -145,9 +126,9 @@ ethers.utils.parseEther("1.0")
 //_log:
 
 
-_heading: Writing to the Blockchain @<getting-started--sending>
+_heading: 写入区块链 @<getting-started--sending>
 
-_code: Sending Ether @lang<script>
+_code: 发送 Ether @lang<script>
 
 // Send 1 ether to an ens name.
 const tx = signer.sendTransaction({
@@ -156,34 +137,23 @@ const tx = signer.sendTransaction({
 });
 
 
-_subsection: Contracts @<getting-started--contracts>
+_subsection: 合约 @<getting-started--contracts>
 
-A Contract is an abstraction of program code which lives on the
-Ethereum blockchain.
+合约是基于以太坊区块链中程序代码的抽象。
 
-The [[Contract]] object makes it easier to use an on-chain
-Contract as a normal JavaScript object, with the methods
-mapped to encoding and decoding data for you.
+[合约](Contract)对象使得链上的合约可以简单地作为一个普通的JavaScript对象, 通过映射的方法来编码和解码数据。
 
-If you are familiar with Databases, this is similar to an //Object Relational Mapper// (ORM).
+如果你熟悉数据库, 你会发现这与//对象关系映射器// (ORM)是相似的。
 
-In order to communicate with the Contract on-chain, this class
-needs to know what methods are available and how to encode and
-decode the data, which is what the //Application Binary Interface// (ABI)
-provides.
+为了与链上的合约进行通信，这个类需要知道哪些方法是可用的，以及如何编码和解码数据，这些通过//应用程序二进制接口// (ABI)来提供。
 
-This class is a //meta-class//, which means its methods are constructed
-at runtime, and when you pass in the ABI to the constructor it uses it
-to determine which methods to add.
+这个类是一个 //元类（meta-class）//, 这意味着它的方法是在运行时构造的, 当你将ABI传递给构造函数时，它来确定要添加哪些方法。
 
-While an on-chain Contract may have many methods available, you can safely ignore
-any methods you don't need or use, providing a smaller subset of the ABI to
-the contract.
+尽管链上的合约有许多可用的方法，但是你可以安全地忽略你认为不需要或者不使用的方法，这样合约里面的ABI就是一个较小的子集。
 
-An ABI often comes from the Solidity or Vyper compiler, but you can use the
-Human-Readable ABI in code, which the following examples use.
+ABI通常来自于Solidity或Vyper编译器，但是你可以在代码中使用可读的ABI，如下例所示：
 
-_code: Connecting to the DAI Contract @lang<javascript>
+_code: 连接 DAI 合约 @lang<javascript>
 
 // You can also use an ENS name for the contract address
 const daiAddress = "dai.tokens.ethers.eth";
@@ -211,9 +181,9 @@ const daiContract = new ethers.Contract(daiAddress, daiAbi, provider);
 //_hide: _page.daiAbi = daiAbi;
 //_hide: _page.daiContract = daiContract;
 
-_heading: Read-Only Methods @<getting-started--reading>
+_heading: 只读方法 @<getting-started--reading>
 
-_code: Querying the DAI Contract @lang<javascript>
+_code: 查询 DAI 合约 @lang<javascript>
 
 //_hide: const daiContract = _page.daiContract;
 
@@ -237,9 +207,9 @@ ethers.utils.formatUnits(balance, 18)
 //_log:
 
 
-_heading: State Changing Methods @<getting-started--writing>
+_heading: 改变状态的方法 @<getting-started--writing>
 
-_code: Sending DAI @lang<script>
+_code: 发送 DAI @lang<script>
 
 // The DAI Contract is currently connected to the Provider,
 // which is read-only. You need to connect to a Signer, so
@@ -253,9 +223,9 @@ const dai = ethers.utils.parseUnits("1.0", 18);
 tx = daiWithSigner.transfer("ricmoo.firefly.eth", dai);
 
 
-_heading: Listening to Events @<getting-started--events>
+_heading: 监听事件 @<getting-started--events>
 
-_code: Listening to Events @lang<javascript>
+_code: 监听事件 @lang<javascript>
 
 //_hide: const daiContract = _page.daiContract;
 //_hide: const formatEther = ethers.utils.formatEther;
@@ -282,9 +252,9 @@ daiContract.on(filter, (from, to, amount, event) => {
 //_hide: daiContract.removeAllListeners(); /* Don't want to block the docs from compiling... */
 
 
-_heading: Query Historic Events @<getting-started--history>
+_heading: 查询历史事件 @<getting-started--history>
 
-_code: Filtering Historic Events @lang<javascript>
+_code: 过滤历史事件 @lang<javascript>
 
 //_hide: const signer = new ethers.VoidSigner("0x8ba1f109551bD432803012645Ac136ddd64DBA72");
 //_hide: const daiContract = _page.daiContract;
@@ -317,9 +287,9 @@ await daiContract.queryFilter(filterFrom, -10000)
 // List all transfers ever sent to me
 await daiContract.queryFilter(filterTo)
 
-_subsection: Signing Messages @<getting-started--signing>
+_subsection: 签名消息 @<getting-started--signing>
 
-_code: Signing Messages @lang<javascript>
+_code: 签名消息 @lang<javascript>
 
 //_hide: const signer = ethers.Wallet.createRandom();
 

@@ -1,14 +1,11 @@
-_section: Ethereum Basics
+_section: 以太坊基础知识
 
-This is a brief overview of some aspects of //Ethereum//
-and blockchains which developers can make use of or should
-be aware of.
+这是 //以太坊// 区块链中某些方面的简要概述，开发者应当了解和知晓，以便充分地进行开发。
 
-This section is sparse at the moment, but will be expanded
-as time goes on.
+目前以下的内容较少，但会随着时间不断地进行扩展。
 
 _toc:
-    events
-    gas
-    security
-    best-practices
+    events 
+    gas 
+    security 
+    best-practices 
