@@ -1,23 +1,16 @@
-_section: Security @<security>
+_section: 安全 @<security>
 
-While security should be a concern for all developers, in the
-blockchain space developers must be additionally conscious of
-many areas which can be exploited.
+虽然所有开发人员都应该关注安全性，但在区块链领域，开发人员还必须特别留意哪些可能被利用的漏洞。
 
-Once a problem has an economic incentives to exploit it, there
-is a much larger risk and with blockchain apps it can become
-quite valuable to attack.
+一旦一个问题具备经济动机去利用它，就会有更大的风险，而对于区块链应用程序来说，攻击它就变得非常有价值。
 
-In addition to many of the other security issues app developers
-may have to worry about, there are a few additional vectors
-that JavaScript developers should be aware of.
+除了应用程序开发人员可能需要担心的许多其他安全问题之外，还有一些额外的矢量是JavaScript开发人员应该注意的。
 
-_subsection: Side-Channel Attacks
+_subsection: 侧信道攻击
 
-A [Side-Channel Attack](link-wiki-side-channel-attack) occurs
-when something orthogonal to the implementation of the algorithm
-used can be exploited to learn more about secure or private
-information.
+当所使用的算法中正交的某些内容被用来了解更多关于安全或私人信息时，就可能会发生[侧信道攻击](link-wiki-side-channel-attack) 。
+
+
 
 _heading: Released Data (Strings, Uint8Arrays, Buffers)
 
