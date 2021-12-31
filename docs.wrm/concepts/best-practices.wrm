@@ -1,37 +1,26 @@
-_section: Best Practices @<best-practices>
+_section: 最佳实践 @<best-practices>
 
-_subsection: Network Changes
+_subsection: 网络变化
 
-Handling a change in the network (e.g. Ropsten vs Mainnet) is
-incredibly complex and a slight failure can at best make your
-application seem confusing and at worst cause the loss of funds,
-leak private data or misrepresent what an action performed.
+处理网络中的变化(例如Ropsten vs Mainnet)是非常复杂的，一个轻微的故障最多会让你的应用程序看起来很混乱，最坏的情况下会导致资金的损失、隐私数据的泄露或错误传导一个请求要所执行的内容。
 
-Luckily, standard users should likely never change their networks
-unless tricked to do so or they make a mistake.
+幸运的是，正常用户应该永远不会改变他们的网络，除非他们被欺骗或者弄错了。
 
-This is a problem you mainly need to worry about for developers, and
-most developers should understand the vast array of issues surrounding
-a network change during application operation and will understand the
-page reloading (which is already the default behaviour in many clients).
+这是开发人员主要需要担心的问题，大多数开发人员应该理解在应用程序操作期间，会引起页面的重载(这已经是许多客户端的默认行为)和网络的变化，这会引起很多问题。
 
-So, the best practice when a network change occurs is to simply
-refresh the page. This should cause all your UI components to
-reset to a known-safe state, including any banners and warnings
-to your users if they are on an unsupported network.
+因此，发生网络变化时，最佳实践是简单地刷新页面。这应该会让你所有的UI组件重置到一个已知的安全状态，包括横幅组件（banners），如果他们在一个不受支持的网络，就可以警告提示你的用户。
 
-This can be accomplished by using the following function:
+这可以通过使用以下函数来完成:
 
-_code: Automatically Refresh on Network Change @lang<script>
+_code: 网络变化时自动刷新 @lang<script>
 
-// Force page refreshes on network changes
+// 网络变化时强制页面刷新
 {
-    // The "any" network will allow spontaneous network changes
+    // "any" 参数表示允许任何自发的网络变化
     const provider = new ethers.providers.Web3Provider(window.ethereum, "any");
     provider.on("network", (newNetwork, oldNetwork) => {
-        // When a Provider makes its initial connection, it emits a "network"
-        // event with a null oldNetwork along with the newNetwork. So, if the
-        // oldNetwork exists, it represents a changing network
+        // 当 Provider 建立初始连接时，它会 emits 一个 "network" 事件，并且 oldNetwork 为空
+        // 一旦 oldNetwork 不为空，就表示网络发生了变化
         if (oldNetwork) {
             window.location.reload();
         }
