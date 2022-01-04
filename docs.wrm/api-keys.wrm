@@ -1,29 +1,22 @@
 _section: Provider API Keys @<api-keys>
 
-//( **TL; DR** &ndash; sign up for your own API keys with the links below to improve your application performance )//
+//( **太长不看版：** &ndash; 使用下面的链接注册来获得您自己的API密钥，以提高您的应用程序性能 )//
 
-When using a [[Provider]] backed by an API service (such as [[link-alchemy]],
-[[link-etherscan]] or [[link-infura]]), the service requires an API key,
-which allows each service to track individual projects and their usage and
-permissions.
+当使用由API服务商(例如[[link-alchemy]],[[link-etherscan]] 或 [[link-infura]])支持的[[Provider]]时, 他们都需要一个API密钥，从而能够跟踪每个项目及其使用和权限。
 
-The ethers library offers default API keys for each service, so that each
+ethers.js 库 为上述的API服务商提供了默认的API密钥，因此每个[[Provider]]都可以轻松地连接————开箱即用。
 [[Provider]] works out-of-the-box.
 
-These API keys are provided as a community resource by the backend services
-for low-traffic projects and for early prototyping.
+这些API密钥是由后端服务作为社区资源提供的，用于低流量项目和早期原型开发。
+c
+因为这些API键是由所有用户共享的(没有获得自己的API密钥)，所以它们被经常被使用，这意味着重新请求发生得更频繁，响应也更慢。
 
-Since these API keys are shared by all users (that have not acquired their
-own API key), they are aggressively throttled which means retries occur more
-frequently and the responses are slower.
+**强烈建议**你从下列的API服务商注册一个免费的API密钥，这有很多好处（可能有些差别，这取决于具体的API服务商）:
 
-It is **highly recommended** that you sign up for a free API key from each service for their
-free tier, which (depending on the service) includes many advantages:
-
-- a much **higher request rate** and concurrent request limit
-- **faster** responses with fewer retries and timeouts
-- useful **metric tracking** for performance tuning and to analyze your customer behaviour
-- more **advanced APIs**, such as archive data or advanced log queries
+- 更**高**的请求速率和并发请求限制
+- 更**快**的响应，更少的重连和超时
+- 在用于性能调优和分析客户行为具有更**优秀**的指标追踪
+- 更**高级**的api，例如归档数据或高级日志查询
 
 _subsection: Etherscan @<api-keys--etherscan>
 
