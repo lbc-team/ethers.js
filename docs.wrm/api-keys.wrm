@@ -5,10 +5,9 @@ _section: Provider API Keys @<api-keys>
 当使用由API服务商(例如[[link-alchemy]],[[link-etherscan]] 或 [[link-infura]])支持的[[Provider]]时, 他们都需要一个API密钥，从而能够跟踪每个项目及其使用和权限。
 
 ethers.js 库 为上述的API服务商提供了默认的API密钥，因此每个[[Provider]]都可以轻松地连接————开箱即用。
-[[Provider]] works out-of-the-box.
 
 这些API密钥是由后端服务作为社区资源提供的，用于低流量项目和早期原型开发。
-c
+
 因为这些API键是由所有用户共享的(没有获得自己的API密钥)，所以它们被经常被使用，这意味着重新请求发生得更频繁，响应也更慢。
 
 **强烈建议**你从下列的API服务商注册一个免费的API密钥，这有很多好处（可能有些差别，这取决于具体的API服务商）:
