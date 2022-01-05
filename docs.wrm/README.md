@@ -8,11 +8,18 @@ files.
 
 
 Building
---------
-
+--------  
+译者注：编译对node版本和网络都有要求，建议如下  
+```  
+nvm use 12
+``` 
+```
+npx hardhat node
+```   
+编译命令： 
 ```
 /home/ricmoo/ethers.js> npm run build-docs
-```
+```  
 
 
 License
