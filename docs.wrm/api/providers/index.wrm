@@ -1,8 +1,6 @@
 _section: Providers @<providers>
 
-A **Provider** is an abstraction of a connection to the
-Ethereum network, providing a concise, consistent interface
-to standard Ethereum node functionality.
+**提供者**(**Provider**)是以太坊网络连接的抽象，为标准以太坊节点功能提供简洁、一致的接口。
 
 The ethers.js library provides several options which should
 cover the vast majority of use-cases, but also includes the
