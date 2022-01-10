@@ -80,7 +80,7 @@ getNetwork(1);
 _heading: 自定义的 ENS 合约
 
 这是因为通常需要在为[[providers-Network]] 指定自定义属性来覆盖root ENS registry，或者是在一个通用的网络中拦截[ENS 方法](Provider--ens-methods)，
-又或者是在一个开发环境的网络中（绝大多数开发环境中的网络中的ENS合约需要你手动部署指定ENS registry。
+又或者是在一个开发环境的网络中（绝大多数开发环境中的网络中的ENS合约需要你手动部署)指定ENS registry。
 
 _code: 例子: 重写 ENS registry @lang<script>
 
