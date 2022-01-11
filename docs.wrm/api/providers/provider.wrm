@@ -1,25 +1,18 @@
 _section: Provider @<Provider>
 
-A **Provider** in ethers is a read-only abstraction to
-access the blockchain data.
+在ethers里面，**Provider** 是访问区块链数据的只读抽象。
 
-_note: Coming from Web3.js?
-If you are coming from Web3.js, this is one of the biggest
-differences you will encounter using ethers.
+_note: 使用过 Web3.js吗?
+如果你用过Web3.js，以下是与ethers.js最大不同点。
 
-The ethers library creates a strong division between the
-operation a **Provider** can perform and those of a [[Signer]],
-which Web3.js lumps together.
+ethers library 在 **Provider**和[[Signer]]可执行的操作之间创建了一个强大的划分，而Web3.js将二者结合在一起。
 
-This separation of concerns and a stricted subset of Provider
-operations allows for a larger variety of backends, a more
-consistent API and ensures other libraries to operate without
-being able to rely on any underlying assumption.
+这种划分的关注点在于Provider严格的操作子集允许更多的后端、更一致的API，并确保其他库可以在不依赖任何潜在假设的情况下运行。
 
-_subsection: Accounts Methods  @<Provider--account-methods>
+_subsection: 账户的方法  @<Provider--account-methods>
 
 _property: provider.getBalance(address [ , blockTag = latest ]) => Promise<[[BigNumber]]>  @<Provider-getBalance> @SRC<providers/base-provider>
-Returns the balance of //address// as of the //blockTag// block height.
+返回给定的//blockTag// 区块高度下//地址//的余额。
 
 _code: @lang<javascript>
 
@@ -28,8 +21,7 @@ await provider.getBalance("ricmoo.eth");
 //_log:
 
 _property: provider.getCode(address [ , blockTag = latest ]) => Promise<string<[[DataHexString]]>>  @<Provider-getCode> @SRC<providers/base-provider>
-Returns the contract code of //address// as of the //blockTag// block height. If there is
-no contract currently deployed, the result is ``0x``.
+返回给定的//blockTag// 区块高度下的合约源代码，如果当前没有合约被部署， 将返回 ``0x``。
 
 _code: @lang<javascript>
 
@@ -38,7 +30,7 @@ await provider.getCode("registrar.firefly.eth");
 //_log:
 
 _property: provider.getStorageAt(addr, pos [ , blockTag = latest ]) => Promise<string<[[DataHexString]]>>  @<Provider-getStorageAt> @SRC<providers/base-provider>
-Returns the ``Bytes32`` value of the position //pos// at address //addr//, as of the //blockTag//.
+在当前的//blockTag//下，输入address参数addr和position参数pos，返回类型为``Bytes32``的值。
 
 _code: @lang<javascript>
 
@@ -47,9 +39,7 @@ await provider.getStorageAt("registrar.firefly.eth", 0)
 //_log:
 
 _property: provider.getTransactionCount(address [ , blockTag = latest ]) => Promise<number>  @<Provider-getTransactionCount> @SRC<providers/base-provider>
-Returns the number of transactions //address// has ever **sent**, as of //blockTag//.
-This value is required to be the nonce for the next transaction from //address//
-sent to the network.
+在当前的//blockTag//下，返回已经发送的交易的数量，这个值是用来提供给**发送**到网络的下一个交易的nonce值。
 
 _code: @lang<javascript>
 
@@ -58,11 +48,10 @@ await provider.getTransactionCount("ricmoo.eth");
 //_log:
 
 
-_subsection: Blocks Methods  @<Provider--block-methods>
+_subsection: 区块的方法  @<Provider--block-methods>
 
 _property: provider.getBlock(block) => Promise<[[providers-Block]]>  @<Provider-getBlock> @SRC<providers/base-provider>
-Get the //block// from the network, where the ``result.transactions`` is a list
-of transaction hashes.
+从网络中得到//区块//， ``result.transactions`` 是一串交易集合的哈希值。
 
 _code: @lang<javascript>
 
@@ -71,8 +60,7 @@ await provider.getBlock(100004)
 //_log:
 
 _property: provider.getBlockWithTransactions(block) => Promise<[[providers-BlockWithTransactions]]>  @<Provider-getBlockWithTransactions> @SRC<providers/base-provider>
-Get the //block// from the network, where the ``result.transactions`` is
-an Array of [[providers-TransactionResponse]] objects.
+从网络中得到//区块//， ``result.transactions`` 是 一个[[providers-TransactionResponse]] 对象的数组集合。
 
 _code: @lang<javascript>
 
@@ -80,42 +68,32 @@ _code: @lang<javascript>
 await provider.getBlockWithTransactions(100004)
 //_log:
 
-_subsection: Ethereum Naming Service (ENS) Methods @<Provider--ens-methods>
+_subsection: 以太坊域名服务 (ENS) 方法 @<Provider--ens-methods>
 
-The [Ethereum Naming Service](link-ens) (ENS) allows a short and
-easy-to-remember ENS Name to be attached to any set of keys
-and values.
+[以太坊域名服务](link-ens) (ENS) 允许一个简短且易于记忆的ENS名称附加到任何一组键和值。
 
-One of the most common uses for this is to use a simple name to
-refer to an [Ethereum Address](address).
+最常见的用法之一是使用一个简单的命名来引用[以太坊地址](address)。
 
-In the ethers API, nearly anywhere that accepts an address, an
-ENS name may be used instead, which can simplify code and make
-reading and debugging much simpler.
+在ethers的 API中，几乎任何接受地址的地方都可以使用ENS命名，这可以简化代码，使读取和调试更加简单。
 
-The provider offers some basic operations to help resolve and
-work with ENS names.
+provider 提供了一些基本操作，以帮助解析和处理ENS命名。
 
 _property: provider.getResolver(name) => Promise<[[EnsResolver]]>
-Returns an EnsResolver instance which can be used to further inquire
-about specific entries for an ENS name.
+返回一个EnsResolver实例，该实例可用于进一步查询ENS命名的特定实体。
 
 _code: @lang<javascript>
 
 //_hide: provider = ethers.getDefaultProvider();
 
-// See below (Resolver) for examples of using this object
+// 有关使用此对象的示例，请参见下面(Resolver)
 const resolver = await provider.getResolver("ricmoo.eth");
 
 //_hide: _page.resolver = resolver;
 
 _property: provider.lookupAddress(address) => Promise<string>  @<Provider-lookupAddress> @SRC<providers/base-provider>
-Performs a reverse lookup of the //address// in ENS using the
-//Reverse Registrar//.  If the name does not exist, or the
-forward lookup does not match, ``null`` is returned.
+使用//反向注册器//对ENS中的地址进行反向查找。如果名称不存在，或者正向查找不匹配，则返回``null``。
 
-An ENS name requries additional configuration to setup a reverse
-record, they are not automatically set up.
+ENS名称需要额外的配置来设置反向记录，它们不会自动设置。
 
 _code: @lang<javascript>
 
@@ -124,9 +102,7 @@ await provider.lookupAddress("0x5555763613a12D8F3e73be831DFf8598089d3dCa");
 //_log:
 
 _property: provider.resolveName(name) => Promise<string<[Address](address)>>  @<Provider-ResolveName> @SRC<providers/base-provider>
-Looks up the address of //name//. If the name is not owned, or
-does not have a //Resolver// configured, or the //Resolver// does
-not have an address configured, ``null`` is returned.
+查找一个//名称//的地址。如果这个//名称//没有被拥有，或者没有配置一个解析器，或者解析器没有配置一个地址，则返回``null``。
 
 _code: @lang<javascript>
 
