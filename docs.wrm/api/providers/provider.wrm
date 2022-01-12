@@ -114,33 +114,32 @@ await provider.resolveName("ricmoo.eth");
 _subsection: EnsResolver @<EnsResolver> 
 
 _property: resolver.name => string
-The name of this resolver.
+Resolver 的名称
 
 _property: resolver.address => string<[[address]]>
-The address of the Resolver.
+Resolve 的地址
 
 _property: resolver.getAddress([ cointType = 60 ]) => Promise<string>
-Returns a Promise which resolves to the [[link-eip-2304]] multicoin address
-stored for the //coinType//. By default an Ethereum [[address]]
-(``coinType = 60``) will be returned.
+返回一个 解析的类型为[[link-eip-2304]] //多币地址//的 Promise。
+默认情况下，返回一个以太坊的[[address]](``coinType = 60``)。
 
 _code: @lang<javascript>
 
 //_hide: const resolver = _page.resolver;
 
-// By default, looks up the Ethereum address
-// (this will match provider.resolveName)
+// 默认情况下，查找以太坊地址
+// (这个会 match provider.resolveName)
 //_result:
 await resolver.getAddress();
 //_log:
 
-// Specify the coinType for other coin addresses (0 = Bitcoin)
+// 为其他coin地址指定coinType (0 = Bitcoin)
 //_result:
 await resolver.getAddress(0);
 //_log:
 
 _property: resolver.getContentHash() => Promise<string>
-Returns a Promise which resolves to any stored [[link-eip-1577]] content hash.
+返回一个Promise，解析为任何存储的[[link-eip-1577]]内容哈希。 [[link-eip-1577]]。
 
 _code: @lang<javascript>
 
@@ -151,7 +150,7 @@ await resolver.getContentHash();
 //_log:
 
 _property: resolver.getText(key) => Promise<string>
-Returns a Promise which resolves to any stored [[link-eip-634]] text entry for //key//.
+返回一个Promise，解析为任何存储的[[link-eip-634]]作为key的文本实体。
 
 _code: @lang<javascript>
 
@@ -169,20 +168,18 @@ await resolver.getText("url");
 await resolver.getText("com.twitter");
 //_log:
 
-_subsection: Logs Methods  @<Provider--log-methods>
+_subsection: Logs 方法  @<Provider--log-methods>
 
 _property: provider.getLogs(filter) => Promise<Array<[[providers-Log]]>>  @<Provider-getLogs> @SRC<providers/base-provider>
-Returns the Array of [[providers-Log]] matching the //filter//.
+返回匹配筛选器的 [[providers-Log]]数组。
 
-Keep in mind that many backends will discard old events, and that requests
-which are too broad may get dropped as they require too many resources to
-execute the query.
+请记住，许多后端会丢弃旧的事件，并且请求范围太广可能也会被丢弃，因为它们需要太多的资源来执行查询。
 
 
 _subsection: Network Status Methods  @<Provider--network-methods>
 
 _property: provider.getNetwork() => Promise<[[providers-Network]]>  @<Provider-getNetwork> @SRC<providers/base-provider:method.BaseProvider.getNetwork>
-Returns the [[providers-Network]] this Provider is connected to.
+返回这个 Provider 所连接的 [[providers-Network]]。
 
 _code: @lang<javascript>
 
@@ -193,7 +190,7 @@ await provider.getNetwork()
 //_log:
 
 _property: provider.getBlockNumber() => Promise<number>  @<Provider-getBlockNumber> @SRC<providers/base-provider>
-Returns the block number (or height) of the most recently mined block.
+返回最近挖出的区块的序号(或高度)。
 
 _code: @lang<javascript>
 
@@ -202,48 +199,40 @@ await provider.getBlockNumber()
 //_log:
 
 _property: provider.getGasPrice() => Promise<[[BigNumber]]>  @<Provider-getGasPrice> @SRC<providers/base-provider>
-Returns a //best guess// of the [[gas-price]] to use in a transaction.
+返回一个 关于这个交易中的 [[gas-price]]的//最准预测//。
 
 _code: @lang<javascript>
 
-// The gas price (in wei)...
+// 燃料价格 (单位： wei)...
 gasPrice = await provider.getGasPrice()
 //_log: gasPrice
 
-// ...often this gas price is easier to understand or
-// display to the user in gwei
+// 通常来说燃料的价格用 gwei 会更好理解
 //_result:
 utils.formatUnits(gasPrice, "gwei")
 //_log:
 
 _property: provider.getFeeData() => Promise<[[providers-FeeData]]>  @<Provider-getFeeData> @SRC<abstract-provider>
-Returns the current recommended [[providers-FeeData]] to use in a transaction.
+返回在一笔交易中当前的recommended [[providers-FeeData]]。
 
-For an EIP-1559 transaction, the ``maxFeePerGas`` and ``maxPriorityFeePerGas``
-should be used.
+对于 EIP-1559 的交易, 应该使用 ``maxFeePerGas`` 和 ``maxPriorityFeePerGas``。
 
-For legacy transactions and networks which do not support EIP-1559, the ``gasPrice``
-should be used.
+对于不支持 EIP-1559 中被遗留的交易和网络，应该使用 ``gasPrice``。
 
 _code: @lang<javascript>
 
-// The gas price (in wei)...
+// 燃料价格 (单位： wei)...
 feeData = await provider.getFeeData()
 //_log: feeData
 
-// ...often these values are easier to understand or
-// display to the user in gwei
+// 通常来说燃料的价格用 gwei 会更好理解
 //_result:
 utils.formatUnits(feeData.maxFeePerGas, "gwei")
 //_log:
 
 _property: provider.ready => Promise<[[providers-Network]]> @<Provider-ready> @src<providers/base-provider>
-Returns a Promise which will stall until the network has heen established,
-ignoring errors due to the target node not being active yet.
-
-This can be used for testing or attaching scripts to wait until the node is
-up and running smoothly.
-
+返回一个 Promise ，直到网络建立就失效，，忽略由于目标节点还未激活而出现的错误。
+这可以用于测试或附上脚本，以等待节点启动并顺利运行。
 
 _subsection: Transactions Methods  @<Provider--transaction-methods>
 
