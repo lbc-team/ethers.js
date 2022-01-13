@@ -234,12 +234,10 @@ _property: provider.ready => Promise<[[providers-Network]]> @<Provider-ready> @s
 返回一个 Promise ，直到网络建立就失效，，忽略由于目标节点还未激活而出现的错误。
 这可以用于测试或附上脚本，以等待节点启动并顺利运行。
 
-_subsection: Transactions Methods  @<Provider--transaction-methods>
+_subsection: Transactions 方法  @<Provider--transaction-methods>
 
 _property: provider.call(transaction [ , blockTag = latest ]) => Promise<string<[[DataHexString]]>>  @<Provider-call> @SRC<providers/base-provider>
-Returns the result of executing the //transaction//, using //call//. A call
-does not require any ether, but cannot change any state. This is useful
-for calling getters on Contracts.
+使用//call//返回执行//交易//的结果。调用不需要任何的以太，但不能改变任何状态。这在合约上调用getter方法是非常有用的。
 
 _code: @lang<javascript>
 
@@ -255,11 +253,12 @@ await provider.call({
 
 _property: provider.estimateGas(transaction) => Promise<[[BigNumber]]>  @<Provider-estimateGas> @SRC<providers/base-provider>
 Returns an estimate of the amount of gas that would be required to submit //transaction//
-to the network.
+返回向网络提交//交易//所需的预估燃料gas值。
 
 An estimate may not be accurate since there could be another transaction
 on the network that was not accounted for, but after being mined affected
 relevant state.
+估计的燃料gas值可能不准确，因为网络上可能有另一个交易没有被计算在内，但在被挖出来之后就会影响相关状态。
 
 _code: @lang<javascript>
 
@@ -285,7 +284,9 @@ If a transaction has not been mined, this method will search the transaction
 pool. Various backends may have more restrictive transaction pool access (e.g.
 if the gas price is too low or the transaction was only recently sent and not
 yet indexed) in which case this method may also return null.
+返回带有//哈希值//的交易，如果交易未知，则返回null。
 
+如果一个交易还没有被挖出，这个方法将搜索交易池。各种后端可能有更多的限制交易池访问(例如，燃料价格太低或交易最近才发送，还没有索引)，在这种情况下，这个方法也可能返回null。
 _code: @lang<javascript>
 
 //_result:
@@ -293,11 +294,9 @@ await provider.getTransaction("0x5b73e239c55d790e3c9c3bbb84092652db01bb8dbf49ccc
 //_log:
 
 _property: provider.getTransactionReceipt(hash) => Promise<[[providers-TransactionReceipt]]> @<Provider-getTransactionReceipt> @src<providers/base-provider>
-Returns the transaction receipt for //hash// or null if the transaction
-has not been mined.
+返回交易收据的//哈希值//，如果交易还没有被挖出则返回null。
 
-To stall until the transaction has been mined, consider the ``waitForTransaction``
-method below.
+如果需要等待交易被挖出，请考虑下面的``waitForTransaction``方法。
 
 _code: @lang<javascript>
 
@@ -306,9 +305,7 @@ await provider.getTransactionReceipt("0x5b73e239c55d790e3c9c3bbb84092652db01bb8d
 //_log:
 
 _property: provider.sendTransaction(transaction) => Promise<[[providers-TransactionResponse]]>  @<Provider-sendTransaction> @SRC<providers/base-provider>
-Submits //transaction// to the network to be mined. The //transaction// **must** be signed,
-and be valid (i.e. the nonce is correct and the account has sufficient balance to pay
-for the transaction).
+向在挖区块的网络提交//交易//。//交易// **必须** 经过签名，并且需要合法（例如，nonce值需要正确并且账户要有足够的余额来进行该笔交易的支付）。
 
 _code: @lang<javascript>
 
@@ -329,13 +326,12 @@ await provider.sendTransaction(signedTx);
 
 _property: provider.waitForTransaction(hash [ , confirms = 1 [ , timeout ] ]) => Promise<[TxReceipt](providers-TransactionReceipt)>  @<Provider-waitForTransaction> @SRC<providers/base-provider>
 Returns a Promise which will not resolve until //transactionHash// is mined.
+返回一个Promise，直到transactionHash被挖出来，才能够被解析。
 
-If //confirms// is 0, this method is non-blocking and if the
-transaction has not been mined returns null. Otherwise,
-this method will block until the transaction has //confirms//
-blocks mined on top of the block in which is was mined.
+如果//confirms//参数为0，这个方法是非阻塞的，如果交易还没有被挖出，则返回null。
+否则，该方法是阻塞的，直到这个包含该交易的、被//confirms//标识的区块被挖出。
 
-_subsection: Event Emitter Methods @<Provider--event-methods>
+_subsection: Event Emitter 方法 @<Provider--event-methods>
 
 The EventEmitter API allows applications to use an
 [[link-wiki-observer-pattern]] to register callbacks for when
