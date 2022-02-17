@@ -2,7 +2,7 @@ _section: JsonRpcProvider  @<JsonRpcProvider> @INHERIT<[[Provider]]> @SRC<provid
 
 [JSON-RPC API](link-jsonrpc)是与以太坊交互比较流行的方法，在主要的以太坊节点实现(如[[link-geth]] 和 [[link-parity]])以及许多第三方web服务(如[[link-infura]])中都可以用。
 
-_property: new ethers.providers.JsonRpcProvider([ urlOrConnectionInfo [ , networkish ] ])  @SRC<providers:constructor.JsonRpcProvider>
+_property: new ethers.providers.JsonRpcProvider([ urlOrConnectionInfo [ ， networkish ] ])  @SRC<providers:constructor.JsonRpcProvider>
 使用 URL 或者 [[ConnectionInfo]] //urlOrConnectionInfo// 作为一个一个 JSON-RPC HTTP API 连接到 //networkish// 网络。
 
 如果 //urlOrConnectionInfo// 没有被指定， 默认值是``http:/\/localhost:8545``。
@@ -19,7 +19,7 @@ _property: jsonRpcProvider.getUncheckedSigner([ addressOrIndex ]) => [[Unchecked
 _property: jsonRpcProvider.listAccounts() => Promise<Array<string>>  @<JsonRpcProvider-listAccounts> @SRC<providers/json-rpc-provider>
 返回此provider管理的所有帐户地址的列表。
 
-_property: jsonRpcProvider.send(method, params) => Promise<any>  @<JsonRpcProvider-send> @SRC<providers/json-rpc-provider>
+_property: jsonRpcProvider.send(method， params) => Promise<any>  @<JsonRpcProvider-send> @SRC<providers/json-rpc-provider>
 允许向provider发送原始消息。
 
 这可以用于后端特定的调用，比如调试或特定的帐户管理。
@@ -37,16 +37,12 @@ _property: signer.sendUncheckedTransaction(transaction) => Promise<string<[[Data
 发送//交易//并返回一个解析为不透明交易哈希的Promise。
 
 _property: signer.unlock(password) => Promise<boolean>  @<JsonRpcSigner-unlock> @SRC<providers>
-Request the node unlock the account (if locked) using //password//.
 使用//密码//请求节点解除锁定（如果被锁了）。
 
 _subsection: JsonRpcUncheckedSigner  @<UncheckedJsonRpcSigner> @INHERIT<[[Signer]]> @SRC<providers:class.UncheckedJsonRpcSigner>
 JSON-RPC API仅在发送交易时提供交易哈希作为响应，但ether Provider要求在返回交易之前填充交易的所有细节。
 例如，燃料价格（gas price）和燃料限制（gas limit）可能由节点或自动包含在内的nonce调整，在这种情况下，不透明的交易哈希已经丢弃了这一点。
 
-To remedy this, the [[JsonRpcSigner]] immediately queries the provider for
-the details using the returned transaction hash to populate the [[providers-TransactionResponse]]
-object.
 为了解决这个问题，[[JsonRpcSigner]]立即查询provider的详细信息，用返回的交易哈希来填充[[providers-TransactionResponse]]对象。
 
 一些后端不立即响应，直到区块被挖出，才发布它负责签署的交易的细节。
@@ -64,7 +60,7 @@ ethers Provider将频繁执行``getNetwork``调用，以确保网络调用和网
 在像MetaMask这样的客户端情况下是非常有必要的，因为用户可能随时改变网络，
 在这种情况下，检查chainId的成本是在本地的，因此很便宜。
 
-众所周知，在某些情况下网络不能改变,如当连接到一个INFURA端点,在这种情况下,可以使用**SStaticJsonRpcProvider**来将一直缓存链ID,可以减少网络流量和往返查询chain ID的次数。
+众所周知，在某些情况下网络不能改变，如当连接到一个INFURA端点，在这种情况下，可以使用**SStaticJsonRpcProvider**来将一直缓存链ID，可以减少网络流量和往返查询chain ID的次数。
 
 这个[[Provider]] **只**应在网络不能更改时使用。
 
