@@ -1,37 +1,34 @@
 _section: Types
 
 _subsection: BlockTag @<providers-BlockTag>
-A **BlockTag** specifies a specific block location in the Blockchain.
+**BlockTag** 在区块链中指定了一个特定的区块位置
 
-- **``"latest"``** - The most recently mined block
+- **``"latest"``** - 最新挖出的区块
 - **``"earliest"``** - Block #0
-- **``"pending"``** - The block currently being prepared for mining; not all
-  operations and backends support this BlockTag
-- **//number//** - The block at this height
+- **``"pending"``** - 目前正在挖的区块;不是所有的操作和后端都支持这个BlockTag属性
+- **//number//** - 区块高度
 - **//a negative number//** - The block this many blocks ago
-- **//hex string//** - The block at this height (as a hexidecimal value)
+- **//hex string//** - 区块高度(十六进制表示)
 
 _subsection: Networkish @<providers-Networkish>
-A **Networkish** may be any of the following:
+**Networkish**可以是以下任意一种:
 
-- a [[providers-Network]] object
-- the name of a common network as a string (e.g. ``"homestead"``)
-- the chain ID a network as a number; if the chain ID is that of a
-  common network, the ``name`` and ``ensAddress`` will be populated, otherwise,
-  the default name ``"unknown"`` and no ``ensAddress`` is used
+- 一个[[providers-Network]] 对象
+- 字符串形式的常见网络 (如``"homestead"``)
+- number类型的网络chain ID; 如果chain ID 是常见网络的一种,``name`` 和 ``ensAddress`` 会自动填充,
+否则 name 会是``"unknown"`` 且不使用任何的 ``ensAddress``。
 
 _subsection: Network @<providers-Network>
-A **Network** represents an Ethereum network.
+**Network** 表示一个Ethereum 网络
 
 _property: network.name => string
-The human-readable name of the network, such as ``homestead``. If the network
-name is unknown, this will be ``"unknown"``.
+可读的网络名称，如``homestead``。如果网络的name未指定，将会是``"unknown"``。
 
 _property: network.chainId => number
-The Chain ID of the network.
+网络的Chain ID。
 
 _property: network.ensAddress => string<[[address]]>
-The address at which the ENS registry is deployed on this network.
+部署在这个网络上的ENS注册表的地址。
 
 
 _subsection: FeeData @<providers-FeeData>
