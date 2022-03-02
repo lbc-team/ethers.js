@@ -32,17 +32,13 @@ _property: network.ensAddress => string<[[address]]>
 
 
 _subsection: FeeData @<providers-FeeData>
-
-A **FeeData** object encapsulates the necessary fee data required
-to send a transaction, based on the best available recommendations.
+**FeeData**对象根据最好且可用建议，去封装发送交易所需的费用数据。
 
 _property: feeData.gasPrice => [[BigNumber]]
-The gasPrice to use for legacy transactions or networks which do not
-support EIP-1559.
+gasPrice用于那些不支持EIP-1559的遗留交易或网络。
 
 _property: feeData.maxFeePerGas => [[BigNumber]]
-The ``maxFeePerGas`` to use for a transaction. This is based on the
-most recent block's ``baseFee``.
+``maxFeePerGas``用于交易。这基于最近产出区块的``baseFee``。
 
 _property: feeData.maxPriorityFeePerGas => [[BigNumber]]
 The ``maxPriorityFeePerGas`` to use for a transaction. This accounts
@@ -51,63 +47,50 @@ for the uncle risk and for the majority of current MEV risk.
 _subsection: Block @<providers-Block>
 
 _property: block.hash => string<[[DataHexString]]<32>>
-The hash of this block.
+这个区块的哈希。
 
 _property: block.parentHash => string<[[DataHexString]]<32>>
-The hash of the previous block.
+上个区块的哈希。
 
 _property: block.number => number
-The height (number) of this block.
+当前区块的高度（数量）。
 
 _property: block.timestamp => number
-The timestamp of this block.
+当前区块的时间戳。
 
 _property: block.nonce => string<[[DataHexString]]>
-The nonce used as part of the proof-of-work to mine this block.
-
-This property is generally of little interest to developers.
+nonce 用在基于工作量证明（PoW）机制挖取区块。
+开发人员通常对这个属性不感兴趣。
 
 _property: block.difficulty => number
-The difficulty target required to be met by the miner of the block.
-
-This property is generally of little interest to developers.
+该区块的矿工需要达到的难度指标。
+开发人员通常对这个属性不感兴趣。
 
 _property: block.gasLimit => [[BigNumber]]
-The maximum amount of gas that this block was permitted to use. This
-is a value that can be voted up or voted down by miners and is used
-to automatically adjust the bandwidth requirements of the network.
-
-This property is generally of little interest to developers.
+这个区块允许使用的最大gas数量。这该值的可以由矿工投票决定要变大还是变小，用于自动调整网络的带宽需求。
+开发人员通常对这个属性不感兴趣。
 
 _property: block.gasUsed => [[BigNumber]]
-The total amount of gas used by all transactions in this block.
+当前区块所有的交易已使用的gas总数量。
 
 _property: block.miner => string
-The coinbase address of this block, which indicates the address the
-miner that mined this block would like the subsidy reward to go to.
+当前区块的coinbase address，这个地址表示挖出这个区块的矿工想要接受这笔开采奖励的地址。
 
 _property: block.extraData => string
-This is extra data a miner may choose to include when mining a block.
-
-This property is generally of little interest to developers.
+该数据表示的是当挖出一个区块时，这个矿工可以选择包含的额外数据。
+开发人员通常对这个属性不感兴趣。
 
 _heading: Block (with transaction hashes)
-
-Often only the hashes of the transactions included in a block are needed,
-so by default a block only contains this information, as it is
-substantially less data.
+通常只需要包含在一个区块中的交易的哈希值，因此在默认情况下，一个块只包含这些信息，这样数据就不会很大。
 
 _property: block.transactions => Array<string<[[DataHexString]]<32>>>
-A list of the transactions hashes for each transaction this block
-includes.
+一个当前区块包含的每一条交易哈希的列表。
 
 _heading: BlockWithTransactions @<providers-BlockWithTransactions> @INHERIT<[Block](providers-Block)>
-
-If all transactions for a block are needed, this object instead includes
-the full details on each transaction.
+如果需要一个块的所有交易，则该对象包含每条交易的完整信息。
 
 _property: block.transactions => Array<[[providers-TransactionResponse]]>
-A list of the transactions this block includes.
+当前区块包含的交易列表。
 
 
 _subsection: Events and Logs
@@ -115,10 +98,10 @@ _subsection: Events and Logs
 _heading: EventFilter @<providers-EventFilter>
 
 _property: filter.address => string<[[address]]>
-The address to filter by, or ``null`` to match any address.
+想要筛选的地址， ``null`` 表示匹配任何用户的地址。
 
 _property: filter.topics => Array<string<[Data](DataHexString)<32>> | Array<string<[Data](DataHexString)<32>>>>
-The topics to filter by or ``null`` to match any topics.
+要筛选的主题，``null``示匹配任何用户的主题。
 
 Each entry represents an **AND** condition that must match, or may
 be ``null`` to match anything. If a given entry is an Array, then
