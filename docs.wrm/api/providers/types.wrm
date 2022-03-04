@@ -74,7 +74,7 @@ _property: block.gasUsed => [[BigNumber]]
 当前区块所有的交易已使用的gas总数量。
 
 _property: block.miner => string
-当前区块的coinbase address，这个地址表示挖出这个区块的矿工想要接受这笔开采奖励的地址。
+当前区块的coinbase 地址，这个地址表示挖出这个区块的矿工想要接受这笔开采奖励的地址。
 
 _property: block.extraData => string
 该数据表示的是当挖出一个区块时，这个矿工可以选择包含的额外数据。
@@ -105,12 +105,11 @@ _property: filter.topics => Array<string<[Data](DataHexString)<32>> | Array<stri
 
 每一个 entry 表示一个**AND**匹配条件，entry 也可以是``null``来匹配所有的内容。
 如果给定的 entry 是一个数组，那么这个 entry 是被视为 **OR**匹配条件来匹配entry里面的内容。
-有关指定复杂过滤器的详细信息和示例，请参阅Filters](events--filters)。
+有关指定复杂过滤器的详细信息和示例，请参阅[Filters](events--filters)。
 
 _heading: Filter @<providers-Filter> @INHERIT<[[providers-EventFilter]]>
 
 _property: filter.fromBlock => [[providers-BlockTag]]
-The starting block (inclusive) to search for logs matching the filter criteria.
 用于搜索匹配过滤条件的日志的起始区块(包含在内)。
 
 _property: filter.toBlock => [[providers-BlockTag]]
@@ -131,7 +130,7 @@ _property: log.blockHash => string<[[DataHexString]]<32>>
 包含该日志的交易的区块的哈希值。
 
 _property: log.removed => boolean
-在区块重组期间，如果一个事务是孤立的，它将被设置为true，表示Log entry已被删除;
+在区块重组期间，如果一个交易是孤立的，它将被设置为true，表示Log entry已被删除;
 在不久的将来，当使用包含该日志的交易被另一个区块挖出时，可能会再次触发此日志，但请记住，值可能会更改。
 
 _property: log.transactionLogIndex => number
@@ -151,7 +150,6 @@ _property: log.transactionHash => string<[[DataHexString]]<32>>
 包含这条日志的交易的哈希值。
 
 _property: log.transactionIndex => number
-The index of the transaction in the block of the transaction of this log.
 区块中包含这条日志的交易的索引。
 
 _property: log.logIndex => number
@@ -187,7 +185,6 @@ _property: transactionRequest.gasLimit => [[BigNumber]] | Promise<[[BigNumber]]>
 如果未指定，ethers将使用``estimateGas``来确定要使用的gas值。对于无法预测的gas的交易，可能需要这样做显式地指定。
 
 _property: transactionRequest.gasPrice => [[BigNumber]] | Promise<[[BigNumber]]>
-The price (in wei) per unit of gas this transaction will pay.
 这笔交易将支付的每个gas的价格(以wei为单位)。
 
 这个属性不适用于这笔交易的``type``设置为``1`` 或者 ``2``的情形，也不适用于交易已指定了``maxFeePerGas`` 或者 ``maxPriorityFeePerGas``的情形。
@@ -195,7 +192,7 @@ The price (in wei) per unit of gas this transaction will pay.
 _property: transactionRequest.maxFeePerGas => [[BigNumber]] | Promise<[[BigNumber]]>
 这笔交易将支付[[link-eip-1559]]基础费用的每个gas的价格的最高价格(以wei为单位)。
 
-大多数开发人员应该不指定该参数，而应该使用网络决定的默认值。
+大多数开发人员不应该指定该参数，而应该使用网络决定的默认值。
 这个属性不适用于这笔交易的``type``设置为``0``的情形，也不适用于交易已指定了``gasPrice``的情形。
 
 _property: transactionRequest.maxPriorityFeePerGas => [[BigNumber]] | Promise<[[BigNumber]]>
@@ -222,9 +219,6 @@ _property: transactionRequest.accessList => [[providers-AccessListish]]
 要包含的[[providers-AccessList]];仅适用于[[link-eip-2930]]和[[link-eip-1559]]的交易。
 
 _heading: TransactionResponse @<providers-TransactionResponse> @INHERIT<[[Transaction]]>
-
-A **TransactionResponse** includes all properties of a [[Transaction]] as well as several
-properties that are useful once it has been mined.
 **TransactionResponse**包括[[Transaction]]的所有属性，以及等区块被挖出来后就很有用的几个属性。
 
 _property: transaction.blockNumber => number
@@ -246,11 +240,8 @@ _property: transaction.raw => string<[[DataHexString]]>
 
 _property: transaction.wait([ confirms = 1 ]) => Promise<[[providers-TransactionReceipt]]>
 //confirms//属性表示你愿意等待的挖出区块数量，一旦满足这个值将返回一个待解析的[[providers-TransactionReceipt]]。
-如果//confirms//为0，并且交易还没有被挖出，则返回`null``。
+如果//confirms//为0，并且交易还没有被挖出，则返回``null``。
 
-If the transaction execution failed (i.e. the receipt status is ``0``),
-a [CALL_EXCEPTION](errors--call-exception) error will be rejected with
-the following properties:
 如果交易执行失败(即接收状态为``0``)，将会生成一个[CALL_EXCEPTION](errors--call-exception)，其属性如下:
 
 - ``error.transaction`` - 这笔交易
@@ -286,10 +277,10 @@ _property: receipt.from => string<[[address]]>
 
 _property: receipt.contractAddress => string<[[address]]>
 如果这笔交易是转去一个``null``的地址，它是表示一个**init transaction**用于部署合约。在这种情况下，这个属性就代表所创建的合约的地址。
-要计算契约地址，[getContractAddress](utils-getContractAddress)utility function还可以与[[providers-TransactionResponse]]对象一起使用，该对象需要交易的nonce值和发送人的地址。
+要计算合约地址，[getContractAddress](utils-getContractAddress)的utility function还可以与[[providers-TransactionResponse]]对象一起使用，该对象需要交易的nonce值和发送人的地址。
 
 _property: receipt.transactionIndex => number
-该交易该区块包含所有交易列表中此交易的索引。
+当前区块包含所有交易列表中，此交易的索引。
 
 _property: receipt.type => number
 此交易的[[link-eip-2718]]类型。如果事务是没有envelope的legacy事务，则其type 为``0``。
@@ -395,7 +386,7 @@ accessList = {
 
 _heading: AccessList @<providers-AccessList>
 
-一个[[link-eip-2930]]交易允许一个可选的**AccessList**，它会导致交易/warm//（预缓存）另一个地址状态和指定的storage key。
+一个[[link-eip-2930]]交易允许一个可选的**AccessList**，它会导致交易//warm//（预缓存）另一个地址状态和指定的storage key。
 
 这会使得交易的内在成本变大，但在整个事务执行过程中给存储和状态访问带来了好处。
 
