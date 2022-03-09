@@ -1,10 +1,10 @@
-_section: 燃料 @<gas>
+_section: gas @<gas>
 
 将阐述“攻击向量”
 
-_subsection: 燃料价格 @<gas-price>
+_subsection: gas price @<gas-price>
 
-天然气价格是被用来出价的，表明你愿意支付的金额(每执行单位)，来使得你的交易被处理。
+gas price是被用来出价的，表明你愿意支付的金额(每执行单位)，来使得你的交易被处理。
 
 
 
