@@ -1,119 +1,98 @@
 _section: ContractFactory @<ContractFactory> @SRC<contracts:class.ContractFactory>
 
-To deploy a [[Contract]], additional information is needed
-that is not available on a Contract object itself.
+去部署一个[[Contract]]，需要附加一些不作用于Contract对象本身上的信息。
 
-Mainly, the bytecode (more specifically the initcode) of a contract is required.
+要注意，合约的字节码(更确切地说是初始化代码)是必需的。
 
-The **Contract Factory** sends a special type of transaction, an initcode
-transaction (i.e. the ``to`` field is null, and the ``data`` field is the
-initcode) where the initcode will be evaluated and the result becomes the
-new code to be deployed as a new contract.
+**Contract Factory**发送一个特殊类型的交易，一个initcode交易(即，``to``字段是空的，``data``字段是initcode)，
+其中initcode将被分析计算，结果成为新代码部署为一个新的合约。
 
-_subsection: Creating Instances  @<ContractFactory--creating>
+_subsection: 创建实例  @<ContractFactory--creating>
 
 _property: new ethers.ContractFactory(interface, bytecode [ , signer ]) @SRC<contracts:constructor.ContractFactory>
 
-Creates a new instance of a **ContractFactory** for the contract described
-by the //interface// and //bytecode// initcode.
+为接口和字节码的初始化代码所描述的合约创建一个**ContractFactory**的新实例。
 
 _property: ContractFactory.fromSolidity(compilerOutput [ , signer ]) => [[ContractFactory]]
-
-Consumes the output of the Solidity compiler, extracting the ABI
-and bytecode from it, allowing for the various formats the solc
-compiler has emitted over its life.
+使用Solidity编译器的输出，从中提取ABI和字节码，允许solc编译器在其生命周期内输出任何格式。
 
 _property: contractFactory.connect(signer) => [[ContractFactory]] @<ContractFactory-connect>
+返回ContractFactory的一个**新实例**，该实例具有相同的接口和字节码，但//signer//不一样。
 
-Returns a **new instance** of the ContractFactory with the same //interface//
-and //bytecode//, but with a different //signer//.
-
-_subsection: Properties  @<ContractFactory--properties>
+_subsection: 属性  @<ContractFactory--properties>
 
 _property: contractFactory.interface => [[Interface]]
 
-The [[Contract]] interface.
+[[Contract]]的接口。
 
 _property: contractFactory.bytecode => string<[[DataHexString]]>
-
-The bytecode (i.e. initcode) that this **ContractFactory** will
-use to deploy the Contract.
+这个**ContractFactory**部署合约是需要用到的字节码(即 initcode)。
 
 _property: contractFactory.signer => [[Signer]]
-
-The [[Signer]] (if any) this ContractFactory will use to deploy instances
-of the Contract to the Blockchain.
+这个ContractFactory用这个[[Signer]](如果有的话)将合约的实例部署到链上。
 
 
-_subsection: Methods  @<ContractFactory--methods>
+
+_subsection: 方法  @<ContractFactory--methods>
 
 _property: contractFactory.attach(address) => [[Contract]] @<ContractFactory-attach>
+返回附有地址的(合约)实例。这与使用带有地址//address//的[Contract constructor](Contract--creating)构造函数是一样的，
+在创建ContractFactory时会传入的//interface//和signerOrProvider。
 
-Return an instance of a [[Contract]] attached to //address//. This is the
-same as using the [Contract constructor](Contract--creating) with
-//address// and this the //interface// and //signerOrProvider// passed
-in when creating the ContractFactory.
+
 
 _property: contractFactory.getDeployTransaction(...args [ , overrides ]) => [[UnsignedTransaction]]
 
-Returns the unsigned transaction which would deploy this Contract with //args// passed
-to the Contract's constructor.
+返回一个未签名的交易，该交易将会具有部署合约时，传递给Contract的构造函数的//args//参数。
 
-If the optional //overrides// is specified, they can be used to
-override the endowment ``value``, transaction ``nonce``, ``gasLimit`` or
-``gasPrice``.
+如果//overrides//被指定了，它们可以用来用来对某些变量进行覆盖赋值、如``value``, 交易的 ``nonce``, ``gasLimit`` 或
+``gasPrice``。
+
 
 _property: contractFactory.deploy(...args [ , overrides ]) => Promise<[[Contract]]> @<ContractFactory-deploy>
+使用signer去部署带有//args//参数传入构造函数的合约，并返回一个Contract，该Contract有address属性，一旦这个交易所在区块被挖出，address属性表示的就是这个合约的地址。
 
-Uses the signer to deploy the Contract with //args// passed into the constructor and
-returns a Contract which is attached to the address where this contract **will** be
-deployed once the transaction is mined.
+这个交易可以在``contract.deployTransaction``中找到，在挖出这个交易之前不应该进行交互。
 
-The transaction can be found at ``contract.deployTransaction``, and no interactions
-should be made until the transaction is mined.
+如果//overrides//被指定了，它们可以用来用来对某些变量进行覆盖赋值、如``value``, 交易的 ``nonce``, ``gasLimit`` 或
+``gasPrice``。
 
-If the optional //overrides// is specified, they can be used to
-override the endowment ``value``, transaction ``nonce``, ``gasLimit`` or
-``gasPrice``.
-
-_code: Deploying a Contract @lang<javascript>
+_code: 部署合约 @lang<javascript>
 
 //_hide: const signer = localSigner;
 //_hide: const ContractFactory = ethers.ContractFactory;
 //_hide: const bytecode = "608060405234801561001057600080fd5b5060405161012e38038061012e8339818101604052604081101561003357600080fd5b81019080805190602001909291908051906020019092919050505081600160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055508060008190555050506088806100a66000396000f3fe6080604052348015600f57600080fd5b506004361060285760003560e01c80633fa4f24514602d575b600080fd5b60336049565b6040518082815260200191505060405180910390f35b6000805490509056fea2646970667358221220926465385af0e8706644e1ff3db7161af699dc063beaadd55405f2ccd6478d7564736f6c63430007040033";
 
-// If your contract constructor requires parameters, the ABI
-// must include the constructor
+// 如果合约构造函数需要参数，ABI必须包含构造函数constructor
 const abi = [
   "constructor(address owner, uint256 initialValue)",
   "function value() view returns (uint)"
 ];
 
-// The factory we use for deploying contracts
+// 我们使用factory来部署合约
 factory = new ContractFactory(abi, bytecode, signer)
 
-// Deploy an instance of the contract
+// 部署合约的实例
 contract = await factory.deploy("ricmoo.eth", 42);
 
-// The address is available immediately, but the contract
-// is NOT deployed yet
+// 地址直接可以得到，但是记住合约还没有被部署
 //_result:
 contract.address
 //_log:
 
-// The transaction that the signer sent to deploy
+// signer发送的部署合约的交易
 //_result:
 contract.deployTransaction
 //_log:
 
-// Wait until the transaction is mined (i.e. contract is deployed)
-//  - returns the receipt
-//  - throws on failure (the reciept is on the error)
+// 在交易被挖出来之前(即合约被部署)等待（Wait）
+//  - 返回receipt
+//  - throws on failure (reciept发生错误)
 //_result:
 await contract.deployTransaction.wait()
 //_log:
 
-// Now the contract is safe to interact with
+// 现在合约时可以用来交互了
 //_result:
 await contract.value()
 //_log:
