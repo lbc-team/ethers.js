@@ -71,10 +71,10 @@ _property: contract.off(event, listener) => this  @<Contract-off> @SRC<contracts
 监听器取消订阅//event//事件。
 
 _property: contract.on(event, listener) => this  @<Contract-on> @SRC<contracts>
-监听//event//事件，当时间发生时，会调用//listener//函数。
+监听//event//事件，当事件发生时，会调用//listener//函数。
 
 _property: contract.once(event, listener) => this  @<Contract-once> @SRC<contracts>
-监听//event//事件，当时间发生时，会调用一次//listener//函数。
+监听//event//事件，当事件发生时，仅调用一次//listener//函数。
 
 _property: contract.removeAllListeners([ event ]) => this  @<Contract-removeAllListeners> @SRC<contracts:BaseContract.removeAllListeners>
 取消所有订阅//event//事件的监听器。如果未提供//event//事件，则取消订阅所有事件的监听。
