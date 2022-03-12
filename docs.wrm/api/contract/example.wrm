@@ -344,17 +344,17 @@ _code: listen for events @lang<javascript>
 //_hide: const filterFrom = _page.filterFrom;
 //_hide: const filterTo = _page.filterTo;
 
-// Listen to incoming events from signer:
+// 监听signer的发送的event事件:
 erc20.on(filterFrom, (from, to, amount, event) => {
   // The `from` will always be the signer address
 });
 
-// Listen to incoming events to signer:
+// 监听signer的接受转账的event事件:
 erc20.on(filterTo, (from, to, amount, event) => {
   // The `to` will always be the signer address
 });
 
-// Listen to all Transfer events:
+// 监听所有的转账交易event事件:
 erc20.on("Transfer", (from, to, amount, event) => {
   // ...
 });
