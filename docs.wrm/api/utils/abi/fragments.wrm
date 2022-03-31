@@ -1,31 +1,25 @@
 _section: Fragments  @<fragments>
 
-Explain an ABI.
+对一个ABI进行描述解释。
 
 _subsection: Formats
 
-_heading: JSON String ABI (Solidity Output JSON)
-The **JSON ABI Format** is the format that is
-[output from the Solidity compiler](link-solc-output).
+_heading: JSON String ABI (Solidity 输出 JSON)
+**JSON ABI Format** 是[Solidity 编译器输出的格式](link-solc-output).
 
-A JSON serialized object is always a string, which represents an Array
-of Objects, where each Object has various properties describing the [[Fragment]] of the ABI.
+JSON序列化的对象总是一个字符串，它表示一个对象数组，其中每个对象都有描述ABI[[Fragment]] 的各种属性。
 
-The deserialized JSON string (which is a normal JavaScript Object) may
-also be passed into any function which accepts a JSON String ABI.
+对JSON字符串(一个普通的JavaScript对象)进行反序列号也可以传递给任何接受JSON string ABI的函数。
+
 
 _heading: Humanb-Readable ABI @<human-readable-abi>
-The Human-Readable ABI was introduced by ethers in [this article](link-ricmoo-humanreadableabi)
-and has since gained wider adoption.
+**Human-Readable ABI** 是[本文](link-ricmoo-humanreadableabi)中由ethers引入的，并依据得到了广泛的采用。
 
-The ABI is described by using an array of strings, where each string is the
-Solidity signature of the **constructor**, **function**, **event** or **error**.
+ABI是通过使用字符串数组来描述的，其中每个字符串都是**构造函数**、**函数**、**事件**或**错误**的solididity式签名。
 
-When parsing a fragment, all inferred properties will be injected (e.g. a //payable//
-method will have its ``constant`` proeprty set to false).
+当解析一个片段(fragment) 时，所有的填写的属性都将被注入(例如，一个//payable//的函数方法将其``constant``属性设置为false)。
 
-Tuples can be specified by using the ``tuple(...)`` syntax or with bare (additional)
-parenthesis, ``(...)``.
+元组可以通过使用``tuple(...)``语法或使用空括号``(...)``来指定。
 
 _code: Example Human-Readable ABI
 
@@ -49,88 +43,72 @@ const ABI = [
 
 
 _heading: Output Formats @<fragments--output-formats> @SRC<abi/fragments:FormatTypes>
-Each [[Fragment]] and [[ParamType]] may be output using its ``format``
-method.
+每个[[Fragment]]和[[ParamType]]可以使用其``format``方法输出。
 
 _property: ethers.utils.FormatTypes.full => string
-This is a full human-readable string, including all parameter names, any
-optional modifiers (e.g. ``indexed``, ``public``, etc) and white-space
-to aid in human readability.
+这是一个完整的人类可读(human-readable)的字符串，包括所有的参数名，任何可选的修饰符(例如，``indexed``，``public``等)和空格，以提高代码可读性。
 
 _property: ethers.utils.FormatTypes.minimal => string
-This is similar to ``full``, except with no unnecessary whitespace or parameter
-names. This is useful for storing a minimal string which can still fully
-reconstruct the original Fragment using [Fragment&thinsp;.&thinsp;from](Fragment-from).
+这类似于``full``，除了没有不必要的空白或参数名。这对于存储最小的字符串非常有用，该字符串仍然可以使用[Fragment&thinsp;.&thinsp;from](Fragment-from)，
+从完全重构原始的Fragment。
 
 _property: ethers.utils.FormatTypes.json => string
-This returns a JavaScript Object which is safe to call ``JSON.stringify``
-on to create a JSON string.
+这将返回一个JavaScript对象，安全地调用``JSON.stringify``创建一个JSON字符串。
 
 _property: ethers.utils.FormatTypes.sighash => string
-This is a minimal output format, which is used by Solidity when computing a
-signature hash or an event topic hash.
+这是一个最小的输出格式，Solidity在计算签名哈希或事件主题topic的哈希时使用它。
 
-_warning: Note
-The ``sighash`` format is **insufficient** to re-create the original [[Fragment]],
-since it discards modifiers such as indexed, anonymous, stateMutability, etc.
+_warning: 注意
+``sighash`` 格式**不足以**重新创建原始的[[Fragment]]，因为它舍弃了indexed, anonymous, stateMutability等修饰符。
 
-It is only useful for computing the selector for a Fragment, and cannot
-be used to format an Interface.
-
+它只用于为Fragment计算选择器(selector)，不能用于格式化接口。
 
 _subsection: Fragment @<Fragment> @SRC<abi/fragments:class.Fragment>
-An ABI is a collection of **Fragments**, where each fragment specifies:
+一个ABI是**Fragments**的集合，每个fragment指定:
 
-- An [Error](ErrorFragment)
-- An [Event](EventFragment)
-- A [Function](FunctionFragment)
-- A [Constructor](ConstructorFragment)
+- 一个 [错误](ErrorFragment)
+- 一个 [事件](EventFragment)
+- 一个 [函数](FunctionFragment)
+- 一个 [构造函数](ConstructorFragment)
 
 _heading: Properties
 
 _property: fragment.name => string
-This is the name of the Event or Function. This will be null for
-a [[ConstructorFragment]].
+这是事件或函数的name。如果是[[ConstructorFragment]]时为null。
 
 _property: fragment.type => string
-This is a string which indicates the type of the [[Fragment]]. This
-will be one of:
+这是一个表示[[Fragment]]类型的字符串。如:
 
 - ``constructor``
 - ``event``
 - ``function``
 
 _property: fragment.inputs => Array<[[ParamType]]>
-This is an array of each [[ParamType]] for the input parameters to
-the Constructor, Event of Function.
+这是构造函数、事件等输入参数的[[ParamType]]的数组。
 
 _heading: Methods
 
 _property: fragment.format([ format = sighash]) => string @<Fragment-format> @SRC<abi/fragments:Fragment.format>
-Creates a string representation of the Fragment using the available
-[output formats](fragments--output-formats).
+使用可用的[输出格式](fragments--output-formats)创建Fragment的字符串描述。
 
 _property: ethers.utils.Fragment.from(objectOrString) => [[Fragment]] @<Fragment-from> @SRC<abi/fragments:Fragment.from>
-Creates a new **Fragment** sub-class from any compatible //objectOrString//.
+从任何兼容的//bject或String//创建一个新的**Fragment**子类。
 
 _property: ethers.utils.Fragment.isFragment(object) => boolean @<Fragment-isFragment> @SRC<abi/fragments:Fragment.isFragment>
-Returns true if //object// is a **Fragment**.
-
+如果//object// 是一个**Fragment**返回true。
 
 _subsection: ConstructorFragment @<ConstructorFragment> @INHERIT<[[Fragment]]> @SRC<abi/fragments:class.ConstructorFragment>
 
 _heading: Properties
 
 _property: fragment.gas => [[BigNumber]]
-This is the gas limit that should be used during deployment. It may be
-null.
+这是部署期间应该使用的gas limit。它可以是null。
 
 _property: fragment.payable => boolean
-This is whether the constructor may receive ether during deployment as
-an endowment (i.e. msg.value != 0).
+表示构造函数在部署期间是否可以接收ether(例如msg。msg.value != 0)。
 
 _property: fragment.stateMutability => string
-This is the state mutability of the constructor. It can be any of:
+这是构造函数的state mutability。它可以是:
 
 - ``nonpayable``
 - ``payable``
@@ -138,50 +116,45 @@ This is the state mutability of the constructor. It can be any of:
 _heading: Methods
 
 _property: ethers.utils.ConstructorFragment.from(objectOrString) => [[ConstructorFragment]] @<ConstructorFragment-from> @SRC<abi/fragments:ConstructorFragment.from>
-Creates a new **ConstructorFragment** from any compatible //objectOrString//.
+从任何兼容的//object或String//创建一个新的**ConstructorFragment**。
 
 _property: ethers.utils.ConstructorFragment.isConstructorFragment(object) => boolean @<ConstructorFragment-isConstructorFragment> @SRC<abi/fragments:ConstructorFragment.isConstructorFragment>
-Returns true if //object// is a **ConstructorFragment**.
-
+如果//object// 是一个 **ConstructorFragment**返回true。
 
 _subsection: ErrorFragment @<ErrorFragment> @INHERIT<[[Fragment]]> @SRC<abi/fragments:class.ErrorFragment>
 
 _heading: Methods
 
 _property: ethers.utils.ErrorFragment.from(objectOrString) => [[ErrorFragment]] @<ErrorFragment-from> @SRC<abi/fragments:ErrorFragment.from>
-Creates a new **ErrorFragment** from any compatible //objectOrString//.
+从任何兼容的//object或String//创建一个新的**ErrorFragment**。
 
 _property: ethers.utils.ErrorFragment.isErrorFragment(object) => boolean @<ErrorFragment-isErrorFragment> @SRC<abi/fragments:ErrorFragment.isErrorFragment>
-Returns true if //object// is an **ErrorFragment**.
-
+如果//object// 是一个 **ErrorFragment**返回true。
 
 _subsection: EventFragment @<EventFragment> @INHERIT<[[Fragment]]> @SRC<abi/fragments:class.EventFragment>
 
 _heading: Properties
 
 _property: fragment.anonymous => boolean
-This is whether the event is anonymous. An anonymous Event does not inject its
-topic hash as topic0 when creating a log.
+表示事件(event)是否匿名。匿名事件在创建日志时不会将其topic哈希值注入到topic0中。
 
 _heading: Methods
 
 _property: ethers.utils.EventFragment.from(objectOrString) => [[EventFragment]] @<EventFragment-from> @SRC<abi/fragments:EventFragment.from>
-Creates a new **EventFragment** from any compatible //objectOrString//.
+从任何兼容的//object或String//创建一个新的**EventFragment**。
 
 _property: ethers.utils.EventFragment.isEventFragment(object) => boolean @<EventFragment-isEventFragment> @SRC<abi/fragments:EventFragment.isEventFragment>
-Returns true if //object// is an **EventFragment**.
-
+如果//object// 是一个 **EventFragment**返回true。
 
 _subsection: FunctionFragment @<FunctionFragment> @INHERIT<[[ConstructorFragment]]> @SRC<abi/fragments:class.FunctionFragment>
 
 _heading: Properties
 
 _property: fragment.constant => boolean
-This is whether the function is constant (i.e. does not change state). This
-is true if the state mutability is ``pure`` or ``view``.
+表示函数是否为常量(即不改变状态)。如果设为true表示状态可变性是``pure`` 或 ``view``。
 
 _property: fragment.stateMutability => string
-This is the state mutability of the constructor. It can be any of:
+这是构造器的状态可变性。它可以是:
 
 - ``nonpayable``
 - ``payable``
@@ -189,61 +162,53 @@ This is the state mutability of the constructor. It can be any of:
 - ``view``
 
 _property: fragment.outputs => Array<[[ParamType]]>
-A list of the Function output parameters.
+函数输出参数的列表。
 
 _heading: Methods
 
 _property: ethers.utils.FunctionFragment.from(objectOrString) => [[FunctionFragment]] @<FunctionFragment-from> @SRC<abi/fragments:ConstructorFragment.from>
-Creates a new **FunctionFragment** from any compatible //objectOrString//.
+从任何兼容的//object或String//创建一个新的**FunctionFragment**。
 
 _property: ethers.utils.FunctionFragment.isFunctionFragment(object) => boolean @<FunctionFragment-isFunctionFragment> @SRC<abi/fragments:FunctionFragment.isFunctionFragment>
-Returns true if //object// is a **FunctionFragment**.
+如果//object// 是一个 **FunctionFragment** 返回true。
 
 
 _subsection: ParamType @<ParamType> @SRC<abi/fragments:class.ParamType>
-The following examples will represent the Solidity parameter:
+下面的例子将代表Solidity参数:
 
 ``string foobar``
 
 _heading: Properties
 
 _property: paramType.name => string @<ParamType-name>
-The local parameter name. This may be null for unnamed parameters. For example,
-the parameter definition ``string foobar`` would be ``foobar``.
+本地参数名。对于未命名的参数，这个值为null。例如，参数字符串``string foobar``会输出``foobar``。
 
 _property: paramType.type => string @<ParamType-type>
-The full type of the parameter, including tuple and array symbols. This may be null
-for unnamed parameters. For the above example, this would be ``foobar``.
+参数的完整类型，包括元组和数组符号。对于未命名的参数，这个值可能为null。对于上面的例子，将输出``foobar``。
 
 _property: paramType.baseType => string @<ParamType-baseType>
-The base type of the parameter. For primitive types (e.g. ``address``, ``uint256``, etc)
-this is equal to [type](ParamType-type). For arrays, it will be the string ``array`` and for
-a tuple, it will be the string ``tuple``.
+参数的基类型(base type)。对于原始类型(例如``address``, ``uint256``等)，这等同于[type](ParamType-type)。
+对于数组，它将是string ``array``，对于元组，它将是string ``tuple``。
 
 _property: paramType.indexed => boolean @<ParamType-indexed>
-Whether the parameter has been marked as indexed. This **only** applies
-to parameters which are part of an [[EventFragment]].
+参数是否被标记为索引。这**只**适用于参数是[[EventFragment]]的部分。
 
 _property: paramType.arrayChildren => [[ParamType]] @<ParamType-arrayChildren>
-The type of children of the array. This is null for any parameter
-which is not an array.
+数组的children类型。对于任何非数组的参数，这将是null。
 
 _property: paramType.arrayLength => number @<ParamType-arrayLength>
-The length of the array, or ``-1`` for dynamic-length arrays. This is
-null for parameters which are not arrays.
+数组的长度，或动态数组的长度``-1``。对于不是数组的参数，这个值为null。
 
 _property: paramType.components => Array<[[ParamType]]> @<ParamType-components>
-The components of a tuple. This is null for non-tuple parameters.
-
+元组的组成部分。这对于非元组参数是null。
 
 _heading: Methods
 
 _property: paramType.format([ outputType = sighash ])
-Creates a string representation of the Fragment using the available
-[output formats](fragments--output-formats).
+使用可用的[output formats](fragments--output-formats)创建Fragment的字符串描述。
 
 _property: ethers.utils.ParamType.from(objectOrString) => [[ParamType]] @<ParamType-from> @SRC<abi/fragments:ParamType.from>
-Creates a new **ParamType** from any compatible //objectOrString//.
+从任何兼容的//object或String//创建一个新的**ParamType**。
 
 _property: ethers.utils.ParamType.isParamType(object) => boolean @<ParamType-isParamType> @SRC<abi/fragments:ParamType.isParamType>
-Returns true if //object// is a **ParamType**.
+如果//object// 是一个**ParamType**返回true。
