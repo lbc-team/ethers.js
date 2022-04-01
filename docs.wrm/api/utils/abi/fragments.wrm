@@ -56,12 +56,12 @@ _property: ethers.utils.FormatTypes.json => string
 这将返回一个JavaScript对象，安全地调用``JSON.stringify``创建一个JSON字符串。
 
 _property: ethers.utils.FormatTypes.sighash => string
-这是一个最小的输出格式，Solidity在计算签名哈希或事件主题topic的哈希时使用它。
+一个最小的输出格式，Solidity在计算签名哈希或事件主题topic的哈希时使用它。
 
 _warning: 注意
 ``sighash`` 格式**不足以**重新创建原始的[[Fragment]]，因为它舍弃了indexed, anonymous, stateMutability等修饰符。
 
-它只用于为Fragment计算选择器(selector)，不能用于格式化接口。
+它只用于为Fragment去计算 选择器(selector)，不能用于格式化接口。
 
 _subsection: Fragment @<Fragment> @SRC<abi/fragments:class.Fragment>
 一个ABI是**Fragments**的集合，每个fragment指定:
@@ -74,7 +74,7 @@ _subsection: Fragment @<Fragment> @SRC<abi/fragments:class.Fragment>
 _heading: Properties
 
 _property: fragment.name => string
-这是事件或函数的name。如果是[[ConstructorFragment]]时为null。
+事件或函数的name。如果是[[ConstructorFragment]]时为null。
 
 _property: fragment.type => string
 这是一个表示[[Fragment]]类型的字符串。如:
@@ -84,7 +84,7 @@ _property: fragment.type => string
 - ``function``
 
 _property: fragment.inputs => Array<[[ParamType]]>
-这是构造函数、事件等输入参数的[[ParamType]]的数组。
+构造函数、事件等输入参数的[[ParamType]]的数组。
 
 _heading: Methods
 
@@ -102,13 +102,13 @@ _subsection: ConstructorFragment @<ConstructorFragment> @INHERIT<[[Fragment]]> @
 _heading: Properties
 
 _property: fragment.gas => [[BigNumber]]
-这是部署期间应该使用的gas limit。它可以是null。
+表示部署期间应该使用的gas limit。它可以是null。
 
 _property: fragment.payable => boolean
 表示构造函数在部署期间是否可以接收ether(例如msg。msg.value != 0)。
 
 _property: fragment.stateMutability => string
-这是构造函数的state mutability。它可以是:
+构造函数的state mutability。它可以是:
 
 - ``nonpayable``
 - ``payable``
@@ -154,7 +154,7 @@ _property: fragment.constant => boolean
 表示函数是否为常量(即不改变状态)。如果设为true表示状态可变性是``pure`` 或 ``view``。
 
 _property: fragment.stateMutability => string
-这是构造器的状态可变性。它可以是:
+构造器的状态可变性。它可以是:
 
 - ``nonpayable``
 - ``payable``
@@ -174,7 +174,7 @@ _property: ethers.utils.FunctionFragment.isFunctionFragment(object) => boolean @
 
 
 _subsection: ParamType @<ParamType> @SRC<abi/fragments:class.ParamType>
-下面的例子将代表Solidity参数:
+下面的例子将表示Solidity中的参数:
 
 ``string foobar``
 
