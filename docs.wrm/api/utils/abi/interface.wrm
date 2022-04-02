@@ -1,57 +1,49 @@
 _section: Interface @<Interface> @SRC<abi/interface:class.Interface>
 
-The **Interface** Class abstracts the encoding and decoding required
-to interact with contracts on the Ethereum network.
+**接口(Interface)**类是以太坊网络上的与合约交互所需的编码和解码的一种抽象。
 
-Many of the standards organically evolved along side the [[link-solidity]]
-language, which other languages have adopted to remain compatible with
-existing deployed contracts.
+许多标准都是随着[[link-solidity]]语言而发展的，其他语言也采用这种方式去与现有部署的合约的保持兼容。
 
-The EVM itself does not understand what the ABI is. It is simply an agreed
-upon set of formats to encode various types of data which each contract can
-expect so they can interoperate with each other.
+EVM本身并不理解ABI是什么。它只是一组商定的格式，用于编码合约所需的各种类型的数据，以便它们可以相互交互。
 
-
-_subsection: Creating Instances @<Interface--creating>
+_subsection: 创建实例 @<Interface--creating>
 
 _property: new ethers.utils.Interface(abi) @SRC<abi/interface:constructor.Interface>
-Create a new **Interface** from a JSON string or object representing
-//abi//.
 
-The //abi// may be a JSON string or the parsed Object (using JSON.parse)
-which is emitted by the [Solidity compiler](link-solc-output) (or compatible languages).
+从表示//abi//的JSON字符串或对象创建一个新的**接口**。
 
-The //abi// may also be a [Human-Readable Abi](link-ricmoo-humanreadableabi),
-which is a format the Ethers created to simplify manually typing the ABI
-into the source and so that a Contract ABI can also be referenced easily
-within the same source file.
+//abi//可以是JSON字符串或[Solidity 编译器](link-solc-output)(或其他兼容语言)使用JSON.parse生产的对象。
 
-_code: Creating an Interface instance @lang<javascript>
+//abi// 也可以是[Human-Readable Abi](link-ricmoo-humanreadableabi)，
+它是Ethers创建的一种格式，以简化将abi手动输入到源文件中的操作，
+这样就可以在同一个源文件中简单地引用Contract abi。
+
+_code: 创建接口实例 @lang<javascript>
 
 //_hide: const Interface = ethers.utils.Interface;
 
-// This interface is used for the below examples
+// 接口用法示例如下
 
 const iface = new Interface([
-  // Constructor
+  // 构造函数
   "constructor(string symbol, string name)",
 
-  // State mutating method
+  // 会改变状态的方法
   "function transferFrom(address from, address to, uint amount)",
 
-  // State mutating method, which is payable
+  // 会改变状态的方法，是 payable 的(可接收以太币)
   "function mint(uint amount) payable",
 
-  // Constant method (i.e. "view" or "pure")
+  // 常量方法 (如 "view" 或 "pure")
   "function balanceOf(address owner) view returns (uint)",
 
-  // An Event
+  // 事件
   "event Transfer(address indexed from, address indexed to, uint256 amount)",
 
-  // A Custom Solidity Error
+  // 自定义的 Solidity Error
   "error AccountLocked(address owner, uint256 balance)",
 
-  // Examples with structured types
+  // 带有结构体类型的例子
   "function addUser(tuple(string name, address addr) user) returns (uint id)",
   "function addUsers(tuple(string name, address addr)[] user) returns (uint[] id)",
   "function getUser(uint id) view returns (tuple(string name, address addr) user)"
@@ -59,30 +51,28 @@ const iface = new Interface([
 
 //_hide: _page.iface = iface;
 
-_subsection: Properties @<Interface--properties>
+_subsection: 属性 @<Interface--properties>
 
 _property: interface.fragments => Array<[[Fragment]]>
-All the [Fragments](Fragment) in the interface.
+接口中所有的[Fragments](Fragment)。
 
 _property: interface.errors => Array<[[ErrorFragment]]>
-All the [Error Fragments](ErrorFragment) in the interface.
+接口中所有的[Error Fragments](ErrorFragment)。
 
 _property: interface.events => Array<[[EventFragment]]>
-All the [Event Fragments](EventFragment) in the interface.
+接口中所有的[Event Fragments](EventFragment)。
 
 _property: interface.functions => Array<[[FunctionFragment]]>
-All the [Function Fragments](FunctionFragment) in the interface.
+接口中所有的[Function Fragments](FunctionFragment)。
 
 _property: interface.deploy => [[ConstructorFragment]]
-The [Constructor Fragments](ConstructorFragment) for the interface.
+接口中所有的[Constructor Fragments](ConstructorFragment)。
 
 
-_subsection: Formatting @<Interface--formatting>
+_subsection: 格式化 @<Interface--formatting>
 
 _property: interface.format( [ format ]) => string | Array<string> @SRC<abi/interface>
-Return the formatted **Interface**. If the format type is ``json`` a
-single string is returned, otherwise an Array of the human-readable
-strings is returned.
+返回格式化的**接口**。如果格式类型是``json``，则返回一个字符串，否则返回一个由human-readable（人类可读）字符串组成的数组。
 
 _code: @lang<javascript>
 
@@ -105,75 +95,72 @@ iface.format(FormatTypes.minimal)
 _subsection: Fragment Access @<Interface--fragments>
 
 _property: interface.getFunction(fragment) => [[FunctionFragment]]  @SRC<abi/interface>
-Returns the [[FunctionFragment]] for //fragment// (see [[Interface--specifying-fragments]]).
+返回//fragment//的[[FunctionFragment]](参考[[Interface--specifying-fragments]])。
 
 _code: @lang<javascript>
 
 //_hide: const iface = _page.iface;
 
-// By method signature, which is normalized so whitespace
-// and superfluous attributes are ignored
+// 通过方法(method)的签名，这是经过标准化后的，因此空格和多余的属性会被舍去
+
 iface.getFunction("transferFrom(address, address, uint256)");
 
-// By name; this ONLY works if the method is non-ambiguous
+// 通过name的方式;这只在方法名称是唯一确定的情况下才有效
 iface.getFunction("transferFrom");
 
-// By method selector
+// 通过函数选择器
 iface.getFunction("0x23b872dd");
 
-// Throws if the method does not exist
+// 如果方法不存在将抛出异常
 //_throws:
 iface.getFunction("doesNotExist()");
 //_log:
 
 _property: interface.getError(fragment) => [[ErrorFragment]] @SRC<abi/interface>
-Returns the [[ErrorFragment]] for //fragment// (see [[Interface--specifying-fragments]]).
+返回fragment的[[ErrorFragment]](参考[[Interface--specifying-fragments]])。
 
 _code: @lang<javascript>
 
 //_hide: const iface = _page.iface;
-
-// By error signature, which is normalized so whitespace
-// and superfluous attributes are ignored
+// 通过错误(error)的签名，这是经过标准化后的，因此空格和多余的属性会被舍去
 iface.getError("AccountLocked(address, uint256)");
 
-// By name; this ONLY works if the error is non-ambiguous
+// 通过name的方式;这只在方法名称是唯一确定的情况下才有效
 iface.getError("AccountLocked");
 
-// By error selector
+// 通过error的选择器
 iface.getError("0xf7c3865a");
 
-// Throws if the error does not exist
+// 如果方法不存在将抛出异常
 //_throws:
 iface.getError("DoesNotExist()");
 //_log:
 
 _property: interface.getEvent(fragment) => [[EventFragment]] @SRC<abi/interface>
-Returns the [[EventFragment]] for //fragment// (see [[Interface--specifying-fragments]]).
+返回//fragment//的[[EventFragment]](参考[[Interface--specifying-fragments]])。
 
 _code: @lang<javascript>
 
 //_hide: const iface = _page.iface;
 
-// By event signature, which is normalized so whitespace
-// and superfluous attributes are ignored
+// 通过事件(event)的签名，这是经过标准化后的，因此空格和多余的属性会被舍去
 iface.getEvent("Transfer(address, address, uint256)");
 
-// By name; this ONLY works if the event is non-ambiguous
+// 通过name的方式;这只在方法名称是唯一确定的情况下才有效
 iface.getEvent("Transfer");
 
-// By event topic hash
+// 通过事件topic哈希
 iface.getEvent("0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef");
 
-// Throws if the event does not exist
+// 如果方法不存在将抛出异常
 //_throws:
 iface.getEvent("DoesNotExist()");
 //_log:
 
-_subsection: Signature and Topic Hashes @<Interface--selectors>
+_subsection: 签名(Signature) 和 主题(Topic) 的哈希 @<Interface--selectors>
 
 _property: interface.getSighash(fragment) => string<[[DataHexString]]<4>> @SRC<abi/interface:method.Interface.getSighash>
-Return the sighash (or Function Selector) for //fragment// (see [[Interface--specifying-fragments]]).
+返回//fragment//的签名哈希(sighash)或函数选择器(Function Selector)(参考[[Interface--specifying-fragments]])。
 
 _code: @lang<javascript>
 
@@ -193,7 +180,7 @@ iface.getSighash(fragment);
 //_log:
 
 _property: interface.getEventTopic(fragment) => string<[[DataHexString]]<32>> @SRC<abi/interface:method.Interface.getEventTopic>
-Return the topic hash for //fragment// (see [[Interface--specifying-fragments]]).
+返回//fragment//的主题哈希(topic hash)(参考[[Interface--specifying-fragments]])。
 
 _code: @lang<javascript>
 
@@ -212,38 +199,33 @@ const fragment = iface.getEvent("Transfer")
 iface.getEventTopic(fragment);
 //_log:
 
-_subsection: Encoding Data @<Interface--encoding>
+_subsection: 编码数据 @<Interface--encoding>
 
 _property: interface.encodeDeploy([ values ]) => string<[[DataHexString]]> @SRC<abi/interface>
-Return the encoded deployment data, which can be concatenated to the
-deployment bytecode of a contract to pass //values// into the contract
-constructor.
+返回已编码的部署数据，这些数据可以连接到合约的部署字节码，以便将//值(values)//传递到合约构造函数中。
 
 _code: @lang<javascript>
 
 //_hide: const iface = _page.iface;
 //_hide: const parseEther = ethers.utils.parseEther;
 
-// The data that should be appended to the bytecode to pass
-// parameters to the constructor during deployment
+// 这些数据表示的是在部署期间应该追加到字节码形式的构造函数的参数
 //_result:
 iface.encodeDeploy([ "SYM", "Some Name" ])
 //_log:
 
 _property: interface.encodeErrorResult(fragment [ , values ]) => string<[[DataHexString]]> @SRC<abi/interface>
-Returns the encoded error result, which would normally be the response from
-a reverted call for //fragment// (see [[Interface--specifying-fragments]]) for
-the given //values//.
+返回编码后的错误结果，这通常是对给定值的fragment(参考[[Interface--specifying-fragments]]))的reverted调用的响应结果。
 
-Most developers will not need this method, but may be useful for authors of
-a mock blockchain.
+大多数开发人员将不需要此方法，但对于那些模拟自己的区块链的开发人员很有用。
 
 _code: @lang<javascript>
 
 //_hide: const iface = _page.iface;
 //_hide: const parseEther = ethers.utils.parseEther;
 
-// Encoding result data (like is returned by eth_call during a revert)
+// 编码结果数据(像在revert期间被eth_call返回)
+
 //_result:
 iface.encodeErrorResult("AccountLocked", [
   "0x8ba1f109551bD432803012645Ac136ddd64DBA72",
@@ -252,29 +234,28 @@ iface.encodeErrorResult("AccountLocked", [
 //_log:
 
 _property: interface.encodeFilterTopics(fragment, values) => Array<topic | Array<topic>> @SRC<abi/interface>
-Returns the encoded topic filter, which can be passed to getLogs for //fragment//
-(see [[Interface--specifying-fragments]]) for the given //values//.
+返回已编码的主题过滤器，可以在//fragment//(参考[[Interface--specifying-fragments]])将values值传递给getLogs函数。
 
-Each //topic// is a 32 byte (64 nibble) [[DataHexString]].
+每个主题是一个32字节(64nibble)的[[DataHexString]]。
 
 _code: @lang<javascript>
 
 //_hide: const iface = _page.iface;
 //_hide: const parseEther = ethers.utils.parseEther;
 
-// Filter that matches all Transfer events
+// 匹配的Transfer事件的过滤器
 //_result:
 iface.encodeFilterTopics("Transfer", [])
 //_log:
 
-// Filter that matches the sender
+// 匹配的sender的过滤器
 //_result:
 iface.encodeFilterTopics("Transfer", [
   "0x8ba1f109551bD432803012645Ac136ddd64DBA72"
 ])
 //_log:
 
-// Filter that matches the receiver
+// 匹配receiver的过滤器
 //_result:
 iface.encodeFilterTopics("Transfer", [
   null,
@@ -283,15 +264,14 @@ iface.encodeFilterTopics("Transfer", [
 //_log:
 
 _property: interface.encodeFunctionData(fragment [ , values ]) => string<[[DataHexString]]> @SRC<abi/interface>
-Returns the encoded data, which can be used as the data for a transaction for
-//fragment// (see [[Interface--specifying-fragments]]) for the given //values//.
+返回编码后的数据，可以在//fragment//(参考[[Interface--specifying-fragments]])指定values值，这个数据用作交易的data中。
 
 _code: @lang<javascript>
 
 //_hide: const iface = _page.iface;
 //_hide: const parseEther = ethers.utils.parseEther;
 
-// Encoding data for the tx.data of a call or transaction
+// 编码数据，用于交易或调用的tx.data
 //_result:
 iface.encodeFunctionData("transferFrom", [
   "0x8ba1f109551bD432803012645Ac136ddd64DBA72",
@@ -300,7 +280,7 @@ iface.encodeFunctionData("transferFrom", [
 ])
 //_log:
 
-// Encoding structured data (using positional Array)
+// 使用 positional 数组编码结构体数据
 user = [
    "Richard Moore",
    "0x8ba1f109551bD432803012645Ac136ddd64DBA72"
@@ -309,8 +289,7 @@ user = [
 iface.encodeFunctionData("addUser", [ user ]);
 //_log:
 
-// Encoding structured data, using objects. Only available
-// if paramters are named.
+// 使用对象的方式编码结构体数据，只有参数被命名才可用
 user = {
    name: "Richard Moore",
    addr: "0x8ba1f109551bD432803012645Ac136ddd64DBA72"
@@ -320,17 +299,18 @@ iface.encodeFunctionData("addUser", [ user ]);
 //_log:
 
 _property: interface.encodeFunctionResult(fragment [ , values ]) => string<[[DataHexString]]> @SRC<abi/interface>
-Returns the encoded result, which would normally be the response from a call for
-//fragment// (see [[Interface--specifying-fragments]]) for the given //values//.
+
 
 Most developers will not need this method, but may be useful for authors of a mock blockchain.
+返回编码后的结果，这通常是对给定值的fragment(参考[[Interface--specifying-fragments]]))的调用的响应结果。
 
+大多数开发人员将不需要此方法，但对于那些模拟自己的区块链的开发人员很有用。
 _code: @lang<javascript>
 
 //_hide: const iface = _page.iface;
 //_hide: const parseEther = ethers.utils.parseEther;
 
-// Encoding result data (like is returned by eth_call)
+// 编码 result 数据 (像被eth_call后的返回结果数据)
 //_result:
 iface.encodeFunctionResult("balanceOf", [
   "0x8ba1f109551bD432803012645Ac136ddd64DBA72"
@@ -338,20 +318,18 @@ iface.encodeFunctionResult("balanceOf", [
 //_log:
 
 
-_subsection: Decoding Data @<Interface--decoding>
+_subsection: 解码数据 @<Interface--decoding>
 
 _property: interface.decodeErrorResult(fragment, data) => [[Result]] @SRC<abi/interface>
-Returns the decoded values from the result of a call during a revert for
-//fragment// (see [[Interface--specifying-fragments]]) for the given //data//.
+在对给定//数据//的fragment(参考[[Interface--specifying-fragments]]))revert期间，返回此调用的结果中已解码的值。
 
-Most developers won't need this, as the ``decodeFunctionResult`` will automatically
-decode errors if the //data// represents a revert.
+大多数开发人员不需要这个数据，因为如果数据表示revert，``decodeFunctionResult``将自动解码errors。
 
 _code: @lang<javascript>
 
 //_hide: const iface = _page.iface;
 
-// Decoding result data (e.g. from an eth_call)
+// 解码Result数据(例如eth_call)
 errorData = "0xf7c3865a0000000000000000000000008ba1f109551bd432803012645ac136ddd64dba720000000000000000000000000000000000000000000000000de0b6b3a7640000";
 
 //_result:
@@ -359,21 +337,17 @@ iface.decodeErrorResult("AccountLocked", errorData)
 //_log:
 
 _property: interface.decodeEventLog(fragment, data [ , topics ]) => [[Result]] @SRC<abi/interface>
-Returns the decoded event values from an event log for
-//fragment// (see [[Interface--specifying-fragments]]) for the given //data//
-with the optional //topics//.
+从事件日志中为带有可选//主题(topics)//的给定数据fragment(参考[[Interface--specifying-fragments]]))返回已解码的事件值。
 
-If //topics// is not specified, placeholders will be inserted into the result.
+如果没有指定//主题(topics)//，将在结果中插入占位符。
 
-Most develoeprs will find the [parsing methods](Interface--parsing) more
-convenient for decoding event data, as they will automatically detect the
-matching event.
+大多数开发人员会发现[parsing methods](Interface--parsing)更便于解码事件数据，因为它们会自动检测匹配的事件。
 
 _code: @lang<javascript>
 
 //_hide: const iface = _page.iface;
 
-// Decoding log data and topics (the entries in a receipt)
+// 解码日志和主题数据 (在整个收据中)
 const data = "0x0000000000000000000000000000000000000000000000000de0b6b3a7640000";
 const topics = [
   "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
@@ -386,77 +360,64 @@ iface.decodeEventLog("Transfer", data, topics);
 //_log:
 
 _property: interface.decodeFunctionData(fragment, data) => [[Result]] @SRC<abi/interface>
-Returns the decoded values from transaction data for
-//fragment// (see [[Interface--specifying-fragments]]) for the given //data//.
+对于给定数据fragment(参考[[Interface--specifying-fragments]]))，从交易数据中返回已解码的值。
 
-Most developers will not need this method, but may be useful for debugging
-or inspecting transactions.
+大多数开发人员不需要这个方法，但是对于调试或检查交易可能很有用。
 
-Most develoeprs will also find the [parsing methods](Interface--parsing) more
-convenient for decoding transation data, as they will automatically detect the
-matching function.
+大多数开发人员还会发现[parsing methods](Interface--parsing)对于解码交易数据更方便，因为它们会自动检测匹配的函数。
 
 _code: @lang<javascript>
 
 //_hide: const iface = _page.iface;
 
-// Decoding function data (the value of tx.data)
+// 解码函数数据(tx.data的值)
 const txData = "0x23b872dd0000000000000000000000008ba1f109551bd432803012645ac136ddd64dba72000000000000000000000000ab7c8803962c0f2f5bbbe3fa8bf41cd82aa1923c0000000000000000000000000000000000000000000000000de0b6b3a7640000";
 //_result:
 iface.decodeFunctionData("transferFrom", txData);
 //_log:
 
 _property: interface.decodeFunctionResult(fragment, data) => [[Result]] @SRC<abi/interface>
-Returns the decoded values from the result of a call for
-//fragment// (see [[Interface--specifying-fragments]]) for the given //data//.
-
+返回给定数据的fragment(参考[[Interface--specifying-fragments]]))调用结果的解码值。
 
 _code: @lang<javascript>
 
 //_hide: const iface = _page.iface;
 
-// Decoding result data (e.g. from an eth_call)
+// 解码result数据(例如，来自eth_call)
 resultData = "0x0000000000000000000000000000000000000000000000000de0b6b3a7640000";
 //_result:
 iface.decodeFunctionResult("balanceOf", resultData)
 //_log:
 
-// Decoding result data which was caused by a revert
-// Throws a CALL_EXCEPTION, with extra details
+// 解码由revert触发的result数据
+// 抛出一个CALL_EXCEPTION，具有额外的信息
 errorData = "0xf7c3865a0000000000000000000000008ba1f109551bd432803012645ac136ddd64dba720000000000000000000000000000000000000000000000000de0b6b3a7640000";
 //_throws:
 iface.decodeFunctionResult("balanceOf", errorData)
 //_log:
 
-// Decoding structured data returns a Result object, which
-// will include all values positionally and if the ABI
-// included names, values will additionally be available
-// by their name.
+// 解码结构体数据将返回一个Result对象，该对象将按位置包含所有值，如果ABI包含names，则值还将通过names使用。
 resultData = "0x000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000400000000000000000000000008ba1f109551bd432803012645ac136ddd64dba72000000000000000000000000000000000000000000000000000000000000000d52696368617264204d6f6f726500000000000000000000000000000000000000";
 //_result:
 result = iface.decodeFunctionResult("getUser", resultData);
 //_log:
 
-// Access positionally:
-// The 0th output parameter, the 0th proerty of the structure
+// 位置访问:下标为0的输出参数，结构体的第一个属性
 //_result:
 result[0][0];
 //_log:
 
-// Access by name: (only avilable because parameters were named)
+// 通过name访问:(仅当因为参数已命名才可用)
 //_result:
 result.user.name
 //_log:
 
-_subsection: Parsing @<Interface--parsing>
-
-The functions are generally the most useful for most developers. They will
-automatically search the ABI for a matching Event or Function and decode
-the components as a fully specified description.
+_subsection: 解析(Parsing) @<Interface--parsing>
+对于大多数开发人员来说，这些函数通常是最有用的。
+它们将自动在ABI中搜索匹配的事件(Event)或函数(Function)，并将组件解码为完整的描述信息。
 
 _property: interface.parseError(data) => [[ErrorDescription]] @SRC<abi/interface>
-Search for the error that matches the error selector in //data// and parse out
-the details.
+在//数据//中搜索与错误选择器匹配的错误，并解析出详细信息。
 
 _code: @lang<javascript>
 
@@ -470,8 +431,7 @@ iface.parseError(data);
 //_log:
 
 _property: interface.parseLog(log) => [[LogDescription]] @SRC<abi/interface>
-Search the event that matches the //log// topic hash and parse the values
-the log represents.
+搜索与//日志//主题哈希匹配的事件，并解析日志表示的值。
 
 _code: @lang<javascript>
 
@@ -490,8 +450,7 @@ iface.parseLog({ data, topics });
 //_log:
 
 _property: interface.parseTransaction(transaction) => [[TransactionDescription]] @SRC<abi/interface>
-Search for the function that matches the //transaction// data sighash
-and parse the transaction properties.
+搜索与//交易//数据签名哈希匹配的函数，并解析出交易的属性。
 
 _code: @lang<javascript>
 
@@ -506,88 +465,81 @@ iface.parseTransaction({ data, value });
 //_hide: _.functionFragment = createClass("FunctionFragment");
 //_log:
 
-_subsection: Types @<Interface--types>
+_subsection: 类型(Types) @<Interface--types>
 
 _heading: Result @<Result> @INHERIT<Array\<any\>>
+一个**Result**是一个数组，因此每个值都可以作为位置参数访问。
 
-A **Result** is an array, so each value can be accessed as a positional
-argument.
+此外，如果值已命名，则可以通过名称访问与其位置值相同的对象。
 
-Additionally, if values are named, the identical object as its positional
-value can be accessed by its name.
+但是对象中的name为``length``是不可用的，因为它是Array的一部分，
+所以这个键的任何命名值都被重命名为_length。
 
-The name ``length`` is however reserved as it is part of the Array, so
-any named value for this key is renamed to ``_length``. If there is a
-name collision, only the first is available by its key.
+如果存在名称冲突，则只有第一个键可用。
 
 
 _heading: ErrorDescription @<ErrorDescription>
 
 _property: errorDescription.args => [[Result]]
-The values of the input parameters of the error.
+error的输入参数的值。
 
 _property: errorDescription.errorFragment => [[ErrorFragment]]
-The [[ErrorFragment]] which matches the selector in the data.
+与数据中选择器匹配的[[ErrorFragment]]。
+
 
 _property: errorDescription.name => string
-The error name. (e.g. ``AccountLocked``)
+error的name。(例如``AccountLocked``)
 
 _property: errorDescription.signature => string
-The error signature. (e.g. ``AccountLocked(address,uint256)``)
+error的签名。(例如``AccountLocked(address,uint256)``)
 
 _property: errorDescription.sighash => string
-The selector of the error.
+error的选择器(selector)。
 
 
 _heading: LogDescription @<LogDescription>
 
 _property: logDescription.args => [[Result]]
-The values of the input parameters of the event.
+事件的输入参数的值。
 
 _property: logDescription.eventFragment => [[EventFragment]]
-The [[EventFragment]] which matches the topic in the Log.
+与日志中的主题匹配的[[EventFragment]]。
 
 _property: logDescription.name => string
-The event name. (e.g. ``Transfer``)
+事件的名称。(例如``Transfer``)
 
 _property: logDescription.signature => string
-The event signature. (e.g. ``Transfer(address,address,uint256)``)
+事件的签名。(如``Transfer(address,address,uint256)``)
 
 _property: logDescription.topic => string
-The topic hash.
+主题的哈希。(topic hash)
 
 
 _heading: TransactionDescription @<TransactionDescription>
 
 _property: transactionDescription.args => [[Result]]
-The decoded values from the transaction data which were passed
-as the input parameters.
+从交易数据的输入参数中解码出来的值。
 
 _property: transactionDescription.functionFragment => [[FunctionFragment]]
-The [[FunctionFragment]] which matches the sighash in the transaction data.
+交易数据中的与签名哈希匹配的[[FunctionFragment]]。
 
 _property: transactionDescription.name => string
-The name of the function. (e.g. ``transfer``)
+函数的名称。(如``transfer``)
 
 _property: transactionDescription.sighash => string
-The sighash (or function selector) that matched the transaction data.
+匹配交易数据的签名哈希(或函数选择器)。
 
 _property: transactionDescription.signature => string
-The signature of the function. (e.g. ``transfer(address,uint256)``)
+函数的签名。(如``transfer(address,uint256)``)
 
 _property: transactionDescription.value => [[BigNumber]]
-The value from the transaction.
-
+交易的value值(以太币). 
 
 _subsection: Specifying Fragments @<Interface--specifying-fragments>
 
-When specifying a fragment to any of the functions in an **Interface**,
-any of the following may be used:
+当指定一个fragment到**接口**中的函数时，可以使用以下任意一个:
 
-- The **name** of the event or function, if it is unique and non-ambiguous
-  within the ABI (e.g. ``transfer``)
-- The **signature** of the event or function. The signature is normalized,
-  so, for example, ``uint`` and ``uint256`` are equivalent (e.g. ``transfer(address, uint)``)
-- The **sighash** or **topichash** of the function. The sighash is often referred
-  to the function selector in Solidity (e.g. ``0xa9059cbb``)
-- A [[Fragment]]
+- 事件或函数的**名称(name)**，如果它在ABI中是唯一确定无歧义(non-ambiguous,例如``transfer``)
+- 事件或函数的签名。签名是标准化的，例如``uint``和``uint256``是等价的(例如``transfer(address, uint)``)
+- 函数的 **签名哈希** 或 **主题哈希** 。签名哈希通常指的是Solidity中的函数选择器(例如``0xa9059cbb``)
+- 一个[[Fragment]]
