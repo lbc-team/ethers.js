@@ -1,22 +1,20 @@
-_section: Addresses @<addresses>
+_section: 地址(Addresses) @<addresses>
 
-Explain addresses,formats and checksumming here.
+请在此介绍地址、格式和校验和。
 
-Also see: [constants.AddressZero](constants)
+还可查看此处: [constants.AddressZero](constants)
 
-_subsection: Address Formats  @<address-formats>
+_subsection: 地址格式  @<address-formats>
 
 
-_heading: Address  @<address>
+_heading: 地址(Address)  @<address>
 
-An **Address** is a [[DataHexString]] of 20 bytes (40 nibbles), with optional
-mixed case.
+一个**地址(Address)**是一个20字节(40 nibbles)的[[DataHexString]]，混合大小写(mixed case)。
 
-If the case is mixed, it is a **Checksum Address**, which uses a specific pattern
-of uppercase and lowercase letters within a given address to reduce the risk
-of errors introduced from typing an address or cut and paste issues.
+如果大小写混合，它是一个**Checksum Address**，它在给定地址中使用特定的大写和小写字母模式，
+以减少输入地址或剪切和粘贴问题带来的错误风险。
 
-All functions that return an Address will return a Checksum Address.
+所有返回地址的函数将返回一个校验和地址。
 
 _heading: ICAP Address  @<address-icap>
 
@@ -35,54 +33,52 @@ standard IBAN address with 30 base-36 characters.
 In general this format is no longer widely supported anymore, however any function that
 accepts an address can receive an ICAP address, and it will be converted internally.
 
-To convert an address into the ICAP format, see [getIcapAddress](utils-getIcapAddress).
+要将地址转换为ICAP格式，请参见[getIcapAddress](utils-getIcapAddress)。
 
 
-_subsection: Converting and Verifying @<utils--address>
+_subsection: 转换和验证 @<utils--address>
 
 _property: ethers.utils.getAddress(address) => string<[[address]]>  @<utils-getAddress> @SRC<address>
-Returns //address// as a Checksum Address.
+返回一个校验和//地址//。
 
-If //address// is an invalid 40-nibble [[HexString]] or if it contains mixed case and
-the checksum is invalid, an [INVALID_ARGUMENT](errors--invalid-argument) Error is thrown.
+如果//address//是一个无效的40-nibble [[HexString]]，或者它包含大小写混合且校验和无效，则抛出[INVALID_ARGUMENT](errors--invalid-argument)错误。
 
-The value of //address// may be any supported address format.
+//address//的值可以是任何所支持的地址格式。
 
 _code: @lang<javascript>
 
 //_hide: const getAddress = ethers.utils.getAddress;
 
-// Injects the checksum (via upper-casing specific letters)
+// 注入校验和(通过大写字母)
 //_result:
 getAddress("0x8ba1f109551bd432803012645ac136ddd64dba72");
 //_log:
 
-// Converts and injects the checksum
+// 转换并注入校验和
 //_result:
 getAddress("XE65GB6LDNXYOFTX0NSV3FUWKOWIXAMJK36");
 //_log:
 
-// Throws if a checksummed address is provided, but a
-// letter is the wrong case
-// ------------v (should be lower-case)
+// 如果提供了一个校验和地址，但字母是错误的情况，则抛出错误
+// ------------B 应为小写字母
 //_throws:
 getAddress("0x8Ba1f109551bD432803012645Ac136ddd64DBA72")
 //_log:
 
-// Throws if the ICAP/IBAN checksum fails
+// 如果 ICAP/IBAN 校验和失败抛出错误
 //_throws:
 getIcapAddress("XE65GB6LDNXYOFTX0NSV3FUWKOWIXAMJK37");
 //_log:
 
-// Throws if the address is invalid, in general
+// 如果地址不合法抛出错误
 //_throws:
 getIcapAddress("I like turtles!");
 //_log:
 
 
 _property: ethers.utils.getIcapAddress(address) => string<[IcapAddress](address-icap)>  @<utils-getIcapAddress> @SRC<address>
-Returns //address// as an [ICAP address](link-icap).
-Supports the same restrictions as [getAddress](utils-getAddress).
+返回一个[ICAP address](link-icap)地址。
+与[getAddress](utils-getAddress)具有相同的限制条件。
 
 _code: @lang<javascript>
 
@@ -97,7 +93,7 @@ getIcapAddress("XE65GB6LDNXYOFTX0NSV3FUWKOWIXAMJK36");
 //_log:
 
 _property: ethers.utils.isAddress(address) => boolean  @<utils-isAddress> @SRC<address>
-Returns true if //address// is valid (in any supported format).
+如果地址有效(任何支持的格式)则返回true。
 
 _code: @lang<javascript>
 
@@ -118,32 +114,29 @@ isAddress("I like turtles.");
 _subsection: Derivation @<utils--address-derivation>
 
 _property: ethers.utils.computeAddress(publicOrPrivateKey) => string<[[address]]>  @<utils-computeAddress> @SRC<transactions>
-Returns the address for //publicOrPrivateKey//. A public key may be
-compressed or uncompressed, and a private key will be converted
-automatically to a public key for the derivation.
+返回//publicOrPrivateKey//的地址。公钥可以压缩或不压缩，私钥将自动转换为派生的公钥。
 
 _code: @lang<javascript>
 
 //_hide: const computeAddress = ethers.utils.computeAddress;
 
-// Private Key
+// 私钥
 //_result:
 computeAddress("0xb976778317b23a1385ec2d483eda6904d9319135b89f1d8eee9f6d2593e2665d");
 //_log:
 
-// Public Key (compressed)
+// 公钥 (压缩过后的)
 //_result:
 computeAddress("0x0376698beebe8ee5c74d8cc50ab84ac301ee8f10af6f28d0ffd6adf4d6d3b9b762");
 //_log:
 
-// Public Key (uncompressed)
+// 公钥 (未被压缩的)
 //_result:
 computeAddress("0x0476698beebe8ee5c74d8cc50ab84ac301ee8f10af6f28d0ffd6adf4d6d3b9b762d46ca56d3dad2ce13213a6f42278dabbb53259f2d92681ea6a0b98197a719be3");
 //_log:
 
 _property: ethers.utils.recoverAddress(digest, signature) => string<[[address]]>  @<utils-recoverAddress> @SRC<transactions>
-Use [[link-wiki-ecrecover]] to determine the address that signed //digest// to
-which generated //signature//.
+使用[[link-wiki-ecrecover]]来确定摘要(digest)生成签名的公钥地址，
 
 _code: @lang<javascript>
 
@@ -151,7 +144,7 @@ _code: @lang<javascript>
 
 const digest = "0x7c5ea36004851c764c44143b1dcb59679b11c9a68e5f41497f6cf3d480715331";
 
-// Using an expanded Signature
+// 使用一个拓展的签名
 //_result:
 recoverAddress(digest, {
   r: "0x528459e4aec8934dc2ee94c4f3265cf6ce00d47cf42bb106afda3642c72e25eb",
@@ -166,11 +159,10 @@ const signature = "0x528459e4aec8934dc2ee94c4f3265cf6ce00d47cf42bb106afda3642c72
 recoverAddress(digest, signature);
 //_log:
 
-_subsection: Contracts Addresses @<utils--contract-addresses>
+_subsection: 合约地址 @<utils--contract-addresses>
 
 _property: ethers.utils.getContractAddress(transaction) => string<[[address]]>  @<utils-getContractAddress> @SRC<address>
-Returns the contract address that would result if //transaction// was
-used to deploy a contract.
+如果一个交易用于部署合约，则返回部署合约后的合约地址。
 
 _code: @lang<javascript>
 
@@ -184,8 +176,7 @@ getContractAddress({ from, nonce });
 //_log:
 
 _property: ethers.utils.getCreate2Address(from, salt, initCodeHash) => string<[[address]]> @<utils-getCreate2Address> @SRC<address>
-Returns the contract address that would result from the given
-[CREATE2](link-eip-1014) call.
+返回给定[CREATE2](link-eip-1014)调用后的合约地址。
 
 _code: @lang<javascript>
 
