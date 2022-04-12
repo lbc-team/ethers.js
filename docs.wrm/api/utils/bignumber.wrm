@@ -1,4 +1,4 @@
-_section: BigNumber @<BigNumber>
+_section: 大数(BigNumber) @<BigNumber>
 
 以太坊中的许多操作都是对[超出JavaScript安全值范围的数字](BigNumber--notes-safenumbers)进行操作。
 
