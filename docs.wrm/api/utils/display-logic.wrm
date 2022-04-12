@@ -1,38 +1,26 @@
-_section: Display Logic and Input @<display-logic>
+_section: 显示逻辑和输入 @<display-logic>
+当创建一个应用程序时，在用户友好的字符串(通常显示为ether)和机器可读的值(合约和数学公式所依赖的，通常使用wei)之间进行转换是很有用的
 
-When creating an Application, it is useful to convert between
-user-friendly strings (usually displaying **ether**) and the
-machine-readable values that contracts and maths depend on
-(usually in **wei**).
+例如，一个钱包通过ether显示余额，在用户界面中用gwei显示gas价格，但是当发送一个交易时，两者都必须用wei表示。
 
-For example, a Wallet may specify the balance in ether, and
-gas prices in gwei for the User Interface, but when sending
-a transaction, both must be specified in wei.
+[parseUnits](unit-conversion)是将ether表示的字符串解析成wei表示的字符串，
+例如将``1.1``解析为wei表示的[BigNumber](BigNumber)，并且在用户输入值时非常有用，例如发送1.1 ether。
 
-The [parseUnits](unit-conversion) will parse a string representing
-ether, such as ``1.1`` into a [BigNumber](BigNumber) in wei, and is
-useful when a user types in a value, such as sending 1.1 ether.
+[formatUnits](unit-conversion)是将[BigNumberish](BigNumberish)解析成ether表示的字符串，这在显示余额时非常有用。
 
-The [formatUnits](unit-conversion) will format a [BigNumberish](BigNumberish)
-into a string, which is useful when displaying a balance.
+_subsection: 单位(Units) @<display-logic--units>
 
+_heading: 十进制数(Decimal Count)
 
-_subsection: Units @<display-logic--units>
+**Unit**可以指定为一个数字，它表示小数点位数。
 
-_heading: Decimal Count
+**例子:**
 
-A **Unit** can be specified as a number, which indicates the
-number of decimal places that should be used.
+- 1 ether 用 wei 表示， 有 **18** 个小数位 (即 1 ether 表示成 10^^18^^ wei)
+- 1 bitcoin 用 Satoshi 表示，有 **8** 个小数位  (即 1 bitcoin 表示成 10^^8^^ satoshi)
 
-**Examples:**
-
-- 1 ether in wei, has **18** decimal places (i.e. 1 ether represents 10^^18^^ wei)
-- 1 bitcoin in Satoshi, has **8** decimal places (i.e. 1 bitcoin represents 10^^8^^ satoshi)
-
-_heading: Named Units @<display-logic--named-units>
-
-There are also several common **Named Units**, in which case their name (as
-a string) may be used.
+_heading: 命名单位 @<display-logic--named-units>
+还有几种常见的**命名单位**，ethers中 可以使用它们的name(string类型)进行操作。
 
 _table: @STYLE<compact>
 
@@ -46,9 +34,9 @@ _table: @STYLE<compact>
 |  //ether//   |     18         |
 
 
-_subsection: Functions @<display-logic--functions>
+_subsection: 功能函数 @<display-logic--functions>
 
-_heading: Formatting @<display-logic--formatting>
+_heading: 格式化 @<display-logic--formatting>
 
 _property: ethers.utils.commify(value) => string  @<utils-commify> @SRC<units>
 Returns a string with value grouped by 3 digits, separated by ``,``.
@@ -61,11 +49,12 @@ _code: @lang<javascript>
 commify("-1000.3000");
 //_log:
 
-_heading: Conversion @<unit-conversion>
+_heading: 转换 @<unit-conversion>
 
 _property: ethers.utils.formatUnits(value [ , unit = "ether" ] ) => string  @<utils-formatUnits> @SRC<units>
-Returns a string representation of //value// formatted with //unit//
-digits (if it is a number) or to the unit specified (if a string).
+返回格式化后字符串形式表示的值，
+如果是数字number指定，则格式化为对应的小数位数；
+如果是字符串string指定，则格式化为 string name 对应的单位；。
 
 _code: @lang<javascript>
 
@@ -96,7 +85,7 @@ formatUnits(oneEther, 18);
 //_log:
 
 _property: ethers.utils.formatEther(value) => string  @<utils-formatEther> @SRC<units>
-The equivalent to calling ``formatUnits(value, "ether")``.
+等价于调用``formatUnits(value, "ether")``。
 
 _code: @lang<javascript>
 
@@ -113,6 +102,9 @@ _property: ethers.utils.parseUnits(value [ , unit = "ether" ] ) => [BigNumber](B
 Returns a [BigNumber](BigNumber) representation of //value//, parsed with
 //unit// digits (if it is a number) or from the unit specified (if
 a string).
+返回[BigNumber](BigNumber)表示的值，
+如果是数字number指定，则解析为对应的小数位数；
+如果是字符串string指定，则解析为 string name 对应的单位；。
 
 _code: @lang<javascript>
 
@@ -139,7 +131,7 @@ parseUnits("121.0", 9);
 //_log:
 
 _property: ethers.utils.parseEther(value) => [BigNumber](BigNumber)  @<utils-parseEther> @SRC<units>
-The equivalent to calling ``parseUnits(value, "ether")``.
+等价于调用``parseUnits(value, "ether")``。
 
 _code: @lang<javascript>
 
