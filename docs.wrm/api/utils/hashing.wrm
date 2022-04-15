@@ -1,29 +1,23 @@
-_section: Hashing Algorithms @<hashing-algorithms>
+_section: 哈希算法 @<hashing-algorithms>
+在整个区块链空间中使用了许多哈希算法，对于一些一些复杂的用法可以使用utilities工具来简化这些操作。
 
-There are many hashing algorithms used throughout the blockchain
-space as well as some more complex usages which require utilities
-to facilitate these common operations.
-
-
-_subsection: Cryptographic Hash Functions @<cryptographic-hash-functions>
-
-The [Cryptographic Hash Functions](link-wiki-cryptographichash)
-are a specific family of hash functions.
+_subsection: 加密哈希函数 @<cryptographic-hash-functions>
+[加密哈希函数](link-wiki-cryptographichash)是一个特定的哈希函数家族。
 
 _property: ethers.utils.id(text) => string<[[DataHexString]]<32>>  @<utils-id> @SRC<hash>
-The Ethereum Identity function computes the [KECCAK256](link-wiki-sha3) hash of the //text// bytes.
+以太坊身份函数(Ethereum Identity function)计算//文本//字节[KECCAK256](link-wiki-sha3)哈希值。
 
 _property:  ethers.utils.keccak256(aBytesLike) => string<[[DataHexString]]<32>>  @<utils-keccak256> @SRC<keccak256>
-Returns the [KECCAK256](link-wiki-sha3) digest //aBytesLike//.
+返回//aBytesLike//的[KECCAK256](link-wiki-sha3)摘要(digest)。
 
 _property: ethers.utils.ripemd160(aBytesLike) => string<[[DataHexString]]<20>>  @<utils-ripemd160> @SRC<sha2>
-Returns the [RIPEMD-160](link-wiki-ripemd) digest of //aBytesLike//.
+返回//aBytesLike//的[RIPEMD-160](link-wiki-ripemd)摘要(digest)。
 
 _property: ethers.utils.sha256(aBytesLike) => string<[[DataHexString]]<32>>  @<utils-sha256> @SRC<sha2:function.sha256>
-Returns the [SHA2-256](link-wiki-sha2) digest of //aBytesLike//.
+返回//aBytesLike//的[SHA2-256](link-wiki-sha2)摘要(digest)。
 
 _property: ethers.utils.sha512(aBytesLike) => string<[[DataHexString]]<64>>  @<utils-sha512> @SRC<sha2:function.sha512>
-Returns the [SHA2-512](link-wiki-sha2) digest of //aBytesLike//.
+返回//aBytesLike//的[SHA2-512](link-wiki-sha2)摘要(digest)。
 
 _code: KECCAK256 @lang<javascript>
 
@@ -39,39 +33,37 @@ utils.keccak256("0x")
 utils.keccak256("0x1234")
 //_log:
 
-// The value MUST be data, such as:
-//  - an Array of numbers
-//  - a data hex string (e.g. "0x1234")
-//  - a Uint8Array
+// value 必须是 data，比如:
+//  - numbers数组
+//  - 十六进制字符串 (如 "0x1234")
+//  - Uint8Array
 
-// Do NOT use UTF-8 strings that are not a DataHexstring
+// 不要使用非十六进制的 UTF-8 字符串
 //_throws:
 utils.keccak256("hello world")
 //_log:
 
-// If needed, convert strings to bytes first:
+// 如果确实要使用非十六进制的 UTF-8 字符串，请先转换成字节(bytes):
 //_result:
 utils.keccak256(utils.toUtf8Bytes("hello world"))
 //_log:
 
-// Or equivalently use the identity function:
+// 等价于使用身份函数(identity function):
 //_result:
 utils.id("hello world")
 //_log:
 
-// Keep in mind that the string "0x1234" represents TWO
-// bytes (i.e. [ 0x12, 0x34 ]. If you wish to compute the
-// hash of the 6 characters "0x1234", convert it to UTF-8
-// bytes first using utils.toUtf8Bytes.
+// 请记住字符串 "0x1234" 表示两个字节(即 [ 0x12, 0x34 ]. If you wish to compute the
+// 如果你想要计算6个字符("0x1234")的哈希，请先通过utils.toUtf8Bytes转换成 UTF-8 字节
 
-// Consider the following examples:
+// 参考下述例子:
 
-// Hash of TWO (2) bytes:
+// 2个字节的哈希
 //_result:
 utils.keccak256("0x1234")
 //_log:
 
-// Hash of TWO (2) bytes: (same result)
+// 2个字节的哈希，与上结果相同
 //_result:
 utils.keccak256([ 0x12, 0x34 ])
 //_log:
@@ -80,12 +72,12 @@ utils.keccak256([ 0x12, 0x34 ])
 bytes = utils.toUtf8Bytes("0x1234")
 //_log:
 
-// Hash of SIX (6) characters (different than above)
+// 6个字符的哈希，与上结果不同
 //_result:
 utils.keccak256(bytes)
 //_log:
 
-// Hash of SIX (6) characters (same result)
+// 6个字符的哈希
 //_result:
 utils.id("0x1234")
 //_log:
@@ -122,16 +114,15 @@ utils.sha512("0x1234")
 _subsection: HMAC @<utils--hmac>
 
 _property: ethers.utils.computeHmac(algorithm, key, data) => string<[[DataHexString]]>  @<utils-computeHmac> @SRC<sha2>
-Returns the [HMAC](link-wiki-hmac) of //data// with //key//
-using the [Algorithm](utils--hmac-supported-algorithm) //algorithm//.
+使用[Algorithm](utils--hmac-supported-algorithm)算法返回 带有key的 [HMAC](link-wiki-hmac)data数据。
 
 _heading: **HMAC Supported Algorithms** @<utils--hmac-supported-algorithm> @SRC<sha2:enum.SupportedAlgorithm>
 
 _property: ethers.utils.SupportedAlgorithm.sha256 => string
-Use the [SHA2-256](link-wiki-sha2) hash algorithm.
+使用[SHA2-256](link-wiki-sha2)哈希算法。
 
 _property: ethers.utils.SupportedAlgorithm.sha512 => string
-Use the [SHA2-512](link-wiki-sha2) hash algorithm.
+使用[SHA2-512](link-wiki-sha2)哈希算法。
 
 _code: HMAC  @lang<javascript>
 
@@ -145,48 +136,46 @@ utils.computeHmac("sha256", key, data)
 _subsection: Hashing Helpers @<utils--hashing-helpers>
 
 _property: ethers.utils.hashMessage(message) => string<[[DataHexString]]<32>>  @<utils-hashMessage> @SRC<hash>
-Computes the [[link-eip-191]] personal message digest of //message//. Personal messages are
-converted to UTF-8 bytes and prefixed with ``\\x19Ethereum Signed Message:``
-and the length of //message//.
+计算//message//的[[link-eip-191]]个人信息摘要。
+个人消息被转换为UTF-8字节，并以``\\x19Ethereum Signed Message:``和//message//的length为前缀。
 
 _code: Hashing Messages  @lang<javascript>
 
-// Hashing a string message
+// 对字符串信息进行哈希
 //_result:
 utils.hashMessage("Hello World")
 //_log:
 
-// Hashing binary data (also "Hello World", but as bytes)
+// 对二进制数据进行哈希 (以下是字节类型的"Hello World")
 //_result:
 utils.hashMessage( [ 72, 101, 108, 108, 111, 32, 87, 111, 114, 108, 100 ])
 //_log:
 
-// NOTE: It is important to understand how strings and binary
-//       data is handled differently. A string is ALWAYS processed
-//       as the bytes of the string, so a hexstring MUST be
-//       converted to an ArrayLike object first.
+// 注意:理解字符串和二进制数据的不同处理方式是很重要的
+// 字符串总是作为字符串形式的字节进行处理，所以必须首先将十六进制字符串转换为类似数组的对象
 
-// Hashing a hex string is the same as hashing a STRING
-// Note: this is the hash of the 4 characters [ '0', 'x', '4', '2' ]
+//首先转换为类数组对象。
+// 对一个十六进制字符串哈希等同于对字符串直接哈希
+// 注意: 这是对4个字符 [ '0', 'x', '4', '2' ] 进行哈希
 //_result:
 utils.hashMessage("0x42")
 //_log:
 
-// Hashing the binary data
-// Note: this is the hash of the 1 byte [ 0x42 ]
+// 对二进制数据进行哈希
+// 注意: 这是对一个字节 [ 0x42 ] 进行哈希
 //_result:
 utils.hashMessage([ 0x42 ])
 //_log:
 
-// Hashing the binary data
-// Note: similarly, this is the hash of the 1 byte [ 0x42 ]
+// 对二进制数据进行哈希
+// 注意: 这也等同于对一个字节 [ 0x42 ] 进行哈希
 //_result:
 utils.hashMessage(utils.arrayify("0x42"))
 //_log:
 
 
 _property: ethers.utils.namehash(name) => string<[[DataHexString]]<32>>  @<utils-namehash> @SRC<hash>
-Returns the [ENS Namehash](link-namehash) of //name//.
+返回[ENS Namehash](link-namehash)的//name//。
 
 _code: Namehash  @lang<javascript>
 
@@ -207,66 +196,49 @@ utils.namehash("ricmoo.xyz")
 //_log:
 
 _heading: Typed Data Encoder @<TypedDataEncoder> @SRC<hash:class.TypedDataEncoder>
-
-The **TypedDataEncoder** is used to compute the various encoded data required
-for [[link-eip-712]] signed data.
+**TypedDataEncoder**用于计算[[link-eip-712]]签名的各种编码数据。
 
 Signed data requires a domain, list of structures and their members and the data
 itself.
+签名数据需要域(domain)、结构成员列表和数据本身。
 
-The **domain** is an object with values for any of the standard domain
-properties.
+**domain**是一个具有任何标准域属性值的对象。
 
-The **types** is an object with each property being the name of a structure, mapping
-to an array of field descriptions. It should **not** include the ``EIP712Domain``
-property unless it is required as a child structure of another.
+**types**是一个对象，每个属性都是一个结构的名称，映射到一个字段描述数组。
+它不应该包含``EIP712Domain``属性，除非它需要作为另一个签名数据的子结构。
 
-_note: Experimental Feature (this exported class name will change)
-This is still an experimental feature. If using it, please specify the **exact**
-version of ethers you are using (e.g. spcify ``"5.0.18"``, **not** ``"^5.0.18"``) as
-the exported class name will be renamed from ``_TypedDataEncoder`` to ``TypedDataEncoder`` once
-it has been used in the field a bit.
+_note: 实验特性 (导出的类名将会改变)
+这是一个实验特性。如果你要使用，请指定 ethers **确切**的版本 
+(例如指定``"5.0.18"``, **而不是** ``"^5.0.18"``) 
+一旦它在字段中被使用，导出的类名将``_TypedDataEncoder``重命名为``TypedDataEncoder``
 
 _property: ethers.utils._TypedDataEncoder.from(types) => [TypedDataEncoder] @<TypedDataEncoder-from> @SRC<hash:TypedDataEncoder.from>
+为//types//创建一个新的**TypedDataEncoder**。
+这个对象是一个相当低级的对象，大多数开发人员不应该直接使用实例。
 
-Creates a new **TypedDataEncoder** for //types//. This object is a fairly
-low-level object that most developers should not require using instances
-directly.
-
-Most developers will find the static class methods below the most useful.
+大多数开发人员会发现下面的静态类方法更有用。
 
 _property: TypedDataEncoder.encode(domain, types, values) => string @<TypedDataEncoder-encode> @SRC<hash:staticmethod.TypedDataEncoder.encode>
-
-Encodes the Returns the hashed [[link-eip-712]] domain.
+编码并返回经过哈希处理的[[link-eip-712]] domain。
 
 _property: TypedDataEncoder.getPayload(domain, types, value) => any @<TypedDataEncoder-getPayload> @SRC<hash:TypedDataEncoder.getPayload>
+返回各种JSON-RPC ``eth_signTypedData*``调用所使用的标准payload。
 
-Returns the standard payload used by various JSON-RPC ``eth_signTypedData*``
-calls.
-
-All domain values and entries in value are normalized and the types are
-verified.
+domain和value的值都会被标准化(normalized)，并对types的内容进行验证。
 
 _property: TypedDataEncoder.getPrimaryType(types) => string @<TypedDataEncoder-getPrimaryType> @SRC<hash:TypedDataEncoder.getPrimaryType>
-
-Constructs a directed acyclic graph of the types and returns the
-root type, which can be used as the **primaryType** for [[link-eip-712]]
-payloads.
+构造一个types的有向无环图并返回root type，root type可以用作[[link-eip-712]]payloads的**primaryType**。
 
 _property: TypedDataEncoder.hash(domain, types, values) => string<[[DataHexString]]<32>> @<TypedDataEncoder-hash> @SRC<hash:staticmethod.TypedDataEncoder.hash>
-
-Returns the computed [[link-eip-712]] hash.
+返回计算后的[[link-eip-712]]哈希。
 
 _property: TypedDataEncoder.hashDomain(domain) => string<[[DataHexString]]<32>> @<TypedDataEncoder-hashDomain> @SRC<hash:TypedDataEncoder.hashDomain>
-
-Returns the hashed [[link-eip-712]] domain.
+返回[[link-eip-712]] domain的哈希。
 
 _property: TypedDataEncoder.resolveNames(domain, types, value, resolveName) => Promise<any> @<TypedDataEncoder-resolveNames> @SRC<hash:TypedDataEncoder.resolveNames>
+返回value的副本，其中任何具有``地址(address)``类型的leaf value都将被递归地替换为value的//resolveName//调用的值。
 
-Returns a copy of value, where any leaf value with a type of ``address`` will have
-been recursively replacedwith the value of calling //resolveName// with that value.
-
-_code: Typed Data Example @lang<javascript>
+_code: Typed Data 例子 @lang<javascript>
 
 //_hide: TypedDataEncoder = ethers.utils._TypedDataEncoder
 
@@ -277,7 +249,8 @@ domain = {
     verifyingContract: '0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC'
 };
 
-// The named list of all type definitions
+// 所有types定义的name列表
+
 types = {
     Person: [
         { name: 'name', type: 'string' },
@@ -290,7 +263,7 @@ types = {
     ]
 };
 
-// The data to sign
+// 待签名的数据
 value = {
     from: {
         name: 'Cow',
@@ -324,25 +297,20 @@ TypedDataEncoder.hashDomain(domain)
 //_log:
 
 
-_subsection: Solidity Hashing Algorithms @<utils--solidity-hashing>
-
-When using the Solidity ``abi.packEncoded(...)`` function, a non-standard
-//tightly packed// version of encoding is used. These functions implement
-the tightly packing algorithm.
+_subsection: Solidity 哈希算法 @<utils--solidity-hashing>
+当使用Solidity ``abi.packEncoded(...)``函数时，将使用非标准(non-standard)的紧密打包(tightly packed)的编码版本。
+这些函数实现了紧密打包算法(tightly packing algorithm)。
 
 _property: ethers.utils.solidityPack(types, values) => string<[[DataHexString]]>  @<utils-solidityPack> @SRC<solidity:pack>
-Returns the non-standard encoded //values// packed according to
-their respective type in //types//.
+返回//types//中对应类型打包的非标准编码值。
 
 _property: ethers.utils.solidityKeccak256(types, values) => string<[[DataHexString]]<32>>  @<utils-solidityKeccak256> @SRC<solidity:keccak256>
-Returns the [KECCAK256](link-wiki-sha3) of the non-standard encoded //values// packed
-according to their respective type in //types//.
+返回//types//中对应类型打包的非标准编码[KECCAK256](link-wiki-sha3)值。
 
 _property: ethers.utils.soliditySha256(types, values) => string<[[DataHexString]]<32>>  @<utils-soliditySha256> @SRC<solidity:sha256>
-Returns the [SHA2-256](link-wiki-sha2) of the non-standard encoded //values// packed
-according to their respective type in //types//.
+返回//types//中对应类型打包的非标准编码[SHA2-256](link-wiki-sha2)值。
 
-_code: Solidity Hashing  @lang<javascript>
+_code: Solidity 哈希  @lang<javascript>
 
 //_result:
 utils.solidityPack([ "int16", "uint48" ], [ -1, 12 ])
@@ -360,11 +328,12 @@ utils.solidityKeccak256([ "int16", "uint48" ], [ -1, 12 ])
 utils.soliditySha256([ "int16", "uint48" ], [ -1, 12 ])
 //_log:
 
-// As a short example of the non-distinguished nature of
-// Solidity tight-packing (which is why it is inappropriate
-// for many things from a security point of view), consider
-// the following examples are all equal, despite representing
-// very different values and layouts.
+
+
+// 作为一个简单的例子，说明了solid 紧密打包不具有区分度(这就是为什么从安全的角度来看它对很多事情都不合适)，
+// 下面的例子打包输出的结果是相同的，尽管它们表示的值和布局都不同。
+
+
 
 //_result:
 utils.solidityPack([ "string", "string" ], [ "hello", "world01" ])
