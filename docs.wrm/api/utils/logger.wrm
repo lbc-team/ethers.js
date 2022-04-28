@@ -1,263 +1,211 @@
 _section: Logging @<logging>
+这有一些简便的logging(日志)工具，用于简化和标准化Ethers库中的error facilities。
 
-These are just a few simple logging utilities provided to simplify
-and standardize the error facilities across the Ethers library.
+[[Logger]]库没有依赖关系，并且非常轻量级，因此可以很容易地包含在每个库中。
 
-The [[Logger]] library has zero dependencies and is intentionally
-very light so it can be easily included in each library.
-
-The [Censorship](Logger--censorship) functionality relies on one instance
-of the Ethers library being included. In large bundled packages or when
-``npm link`` is used, this may not be the case. If you require this
-functionality, ensure that your bundling is configured properly.
-
+[审查(Censorship)](Logger--censorship)功能依赖于包含的ether库的一个实例。在大型绑定包中或使用``npm link``时，可能使用的方式就有所不同。
+如果需要使用此功能，请确保你绑定的配置是正确的。
 
 _subsection: Logger @<Logger> @SRC<logger:class.Logger>
 
 _property: new ethers.utils.Logger(version) @SRC<logger:constructor.Logger>
-Create a new logger which will include //version// in all errors thrown.
+创建一个新的logger包含所有错误抛出的版本(//version//)。
+
 
 _property: Logger.globalLogger() => [[Logger]] @SRC<logger>
-Returns the singleton global logger.
+返回单例全局的logger。
 
 
 _heading: Logging Output
 
 _property: logger.debug(...args) => void @SRC<logger>
-Log debugging information.
+打印 debugging 信息。
 
 _property: logger.info(...args) => void @SRC<logger>
-Log generic information.
+打印通用的信息。
 
 _property: logger.warn(...args) => void @SRC<logger>
-Log warnings.
+打印 warnings 信息。
 
 
 _heading: Errors
-
-These functions honor the current [Censorship](Logger--censorship) and help create
-a standard error model for detecting and processing errors within Ethers.
+这些函数支持当前的[审查(Censorship)](Logger--censorship)，还可以帮助创建一个用于检测和处理Ethers中的错误的标准错误模型。
 
 _property: logger.makeError(message [ , code = UNKNOWN_ERROR [ , params ] ]) => Error @SRC<logger>
-Create an Error object with //message// and an optional //code// and
-additional //params// set. This is useful when an error is needed to be
-rejected instead of thrown.
+创建一个带有消息(//message//)、可选代码(//code//)和附加参数集(//params//)的Error对象。用于需要拒绝错误而不是抛出错误时。
 
 _property: logger.throwError(message [ , code = UNKNOWN_ERROR [ , params ] ]) => never @SRC<logger>
-Throw an Error with //message// and an optional //code// and
-additional //params// set.
+抛出一个带有消息(//message//)、可选代码(//code//)和附加参数集(//params//)的错误(Error)。
 
 _property: logger.throwArgumentError(message, name, value) => never @SRC<logger>
-Throw an [INVALID_ARGUMENT](errors--invalid-argument) Error with //name// and //value//.
+抛出一个带有名称(//name// )和值(//value//)的[INVALID_ARGUMENT](errors--invalid-argument)错误。
 
 _heading: Usage Validation
-
-There can be used to ensure various properties and actions are safe.
+可以用来确保各种属性(properties)和行为(actions)是安全的。
 
 _property: logger.checkAbstract(target, kind) => void @<Logger-checkAbstract> @SRC<logger>
-If //target// is //kind//, throws a [UNSUPPORTED_OPERATION](errors--unsupported-operation) error
-otherwise performs the same operations as [checkNew](Logger-checkNew).
+如果//target//是//kind//，则抛出[UNSUPPORTED_OPERATION](errors--unsupported-operation)错误，
+否则执行与[checkNew](Logger-checkNew)相同的操作。
 
-This is useful for ensuring abstract classes are not being instantiated.
+这可以用来确保抽象类没有被实例化。
 
 _property: logger.checkArgumentCount(count, expectedCount [ , message) => void @<Logger-checkArgumentCount> @SRC<logger>
-If //count// is not equal to //expectedCount//, throws a [MISSING_ARGUMENT](errors--missing-argument)
-or [UNEXPECTED_ARGUMENT](errors--unexpected-argument) error.
+如果//count//不等于//expectedCount//，则抛出[MISSING_ARGUMENT](errors--missing-argument)
+或[UNEXPECTED_ARGUMENT](errors--unexpected-argument)错误。
 
 _property: logger.checkNew(target, kind) => void @<Logger-checkNew> @SRC<logger>
-If //target// is not a valid ``this`` or ``target`` value, throw a
-[MISSING_NEW](errors--missing-new) error. This is useful to ensure
-callers of a Class are using ``new``.
+如果//target//不是有效的``this``或``target``值，则抛出[MISSING_NEW](errors--missing-new)错误。
+这有助于确保类的调用者是使用``new``关键字的。
 
 _property: logger.checkNormalize(message) => void @<Logger-checkNoralize> @SRC<logger>
-Check that the environment has a correctly functioning [[link-js-normalize]]. If not, a
-[UNSUPPORTED_OPERATION](errors--unsupported-operation) error is thrown.
+检查运行环境(environment)是否具有正常运行[[link-js-normalize]]的功能。
+如果没有，则抛出[UNSUPPORTED_OPERATION](errors--unsupported-operation)错误。
 
 _property: logger.checkSafeUint53(value [, message ]) => void @<Logger-checkSafeUint53> @SRC<logger>
-If //value// is not safe as a [JavaScript number](link-wiki-ieee754), throws a
-[NUMERIC_FAULT](errors--numeric-fault) error.
+如果//value//作为[JavaScript number](link-wiki-ieee754)是不安全的，则抛出[NUMERIC_FAULT](errors--numeric-fault)错误。
 
 _heading: Censorship @<Logger--censorship>
 
 _property: Logger.setCensorship(censor [ , permanent = false ]) => void @<Logger-setCensorship> @SRC<logger>
-Set error censorship, optionally preventing errors from being uncensored.
+设置错误审查(error censorship)，可选地设置哪些错误可以被审查。
 
-In production applications, this prevents any error from leaking information
-by masking the message and values of errors.
+在生产应用程序中，这可以通过屏蔽错误的消息(message)和值(values)来防止错误泄露信息。
 
-This can impact debugging, making it substantially more difficult.
+这可能会影响调试，使调试变得更加困难。
 
 _property: Logger.setLogLevel(logLevel) => void @<Logger-setLogLevel> @SRC<logger>
-Set the log level, to suppress logging output below a [particular log level](Logger-levels).
+设置日志级别，使日志输出低于[特定的日志级别](Logger-levels)。
 
 
 _subsection: Errors @<errors>
-
-Every error in Ethers has a ``code`` value, which is a string that will
-match one of the following error codes.
+Ethers中的每个错误都有一个``代码(code)``值，它是一个字符串，将匹配以下错误代码之一。
 
 
-_heading: Generic Error Codes @<errors-generic>
+
+
+_heading: 通用的错误代码 @<errors-generic>
 
 _property: Logger.errors.NOT_IMPLEMENTED @<errors--not-implemented>
-The operation is not implemented. This may occur when calling a method
-on a sub-class that has not fully implemented its abstract superclass.
+该操作还没有实现。一般发生在：调用尚未完全实现其抽象超类的子类的方法时。
 
 _property: Logger.errors.SERVER_ERROR @<errors--server-error>
-There was an error communicating with a server.
+与服务器通信时发生错误。
 
-This may occur for a number of reasons, for example:
+出现这种情况的原因有很多，例如:
 
-- a [CORS](link-cors) issue; this is quite often the problem and also the
-  hardest to diagnose and fix, so it is very beneficial to familiarize
-  yourself with CORS; some backends allow you configure your CORS, such as
-  the geth command-line or conifguration files or the INFURA and Alchemy
-  dashboards by specifing allowed Origins, methods, etc.
-- an SSL issue; for example, if you are trying to connect to a local node via
-  HTTP but are serving the content from a secure HTTPS website
-- a link issue; a firewall is preventing the traffic from reaching the server
-- a server issue; the server is down, or is returning 500 error codes
-- a backend DDoS mitigation proxy; for example, Etherscan operates behind a
-  Cloudflare proxy, which will block traffic if the request is sent via
-  specific User Agents or the client fingerprint is detected as a bot in some
-  cases
+- [CORS](link-cors)的问题;大多数都是这种问题，属于最难诊断和修复的，所以熟悉CORS对你是很有帮助的;
+  一些后端允许你配置你的CORS，例如geth命令行或配置文件，或者是INFURA和Alchemy的通过指定Origins或者methods配置的dashboards等。
+- SSL的问题;例如，如果你试图通过HTTP连接到本地节点，但节点提供的是HTTPS网站的内容。
+- 链接的问题;防火墙正在阻止进入服务器的流量。
+- 服务器的问题;服务器已关闭，或返回500的错误码。
+- 后端DDoS mitigation proxy问题;例如，Etherscan在Cloudflare代理后运行，如果请求是通过特定的用户代理发送的，或者在某些情况下，客户端fingerprint被检测为机器人，Cloudflare代理将阻塞流量
 
 _property: Logger.errors.TIMEOUT @<errors--timeout>
-A timeout occurred.
+发生超时错误。
 
 _property: Logger.errors.UNKNOWN_ERROR @<errors--unknown-error>
-A generic unknown error.
+一个通用的未知错误。
 
 _property: Logger.errors.UNSUPPORTED_OPERATION @<errors--unsupported-operation>
-The operation is not supported.
+不支持该操作。
 
-This can happen for a variety reasons, for example:
+这种情况可能有多种原因，例如:
 
-- Some backends do not support certain operations; such as passing a blockTag
-  to an [[EtherscanProvider]] for [call](Provider-call)
-- A [[Contract]] object connected to [[Provider]] (instead of a [[Signer]]) cannot
-  [sign](Signer-signTransaction) or [send](Signer-sendTransaction) transactions
-- a [[Contract]] connected to a [[Signer]] without a [[Provider]] is write-only
-  and cannot estimate gas or execute static calls
+- 有些后端不支持某些操作;例如传递一个blockTag给[[EtherscanProvider]][调用](Provider-call)
+- 连接到[[Provider]](而不是[[Signer]])的[[Contract]]
+  对象不能[sign](Signer-signTransaction)或[send](Signer-sendTransaction)交易
+- 一个连接到[[Signer]]而没有[[Provider]]的[[Contract]]是只写的，不能估计gas或执行静态调用
 
 
 _heading: Safety Error Codes @<errors-safety>
 
 _property: Logger.errors.BUFFER_OVERRUN @<errors--buffer-overrun>
-The amount of data needed is more than the amount of data required,
-which would cause the data buffer to read past its end.
+所需的数据量大于规定的数据量，这将导致数据缓冲区读取超过其末端。
 
-This can occur if a contract erroneously returns invalid ABI-encoded
-data or RLP data is malformed.
+如果合约错误地返回无效的abi编码数据或RLP数据格式不正确，就会发生这种情况。
 
 _property: Logger.errors.NUMERIC_FAULT @<errors--numeric-fault>
-There was an invalid operation done on numeric values.
+对数值进行了无效的操作。
 
-Common cases of this occur when there is [[link-wiki-overflow]],
-[[link-wiki-underflow]] in fixed numeric types or division by zero.
-
+这种情况通常发生在[[link-wiki-overflow]]、固定数值类型中的[[link-wiki-underflow]]、或除零时。
 
 _heading: Usage Error Codes @<errors-usage>
 
 _property: Logger.errors.INVALID_ARGUMENT @<errors--invalid-argument>
-The type or value of an argument is invalid. This will generally also
-include the ``name`` and ``value`` of the argument. Any function which
-accepts sensitive data (such as a private key) will include the string
-``"[\[REDACTED]\]"`` instead of the value passed in.
+参数的类型或值无效。这通常还包括参数的``name``和``value``。
+任何接受敏感数据(如私钥)的函数将包含string``"[\[REDACTED]\]"``而不是传入的值。
 
 _property: Logger.errors.MISSING_ARGUMENT @<errors--missing-argument>
-An expected parameter was not specified.
+未指定预期参数。
 
 _property: Logger.errors.MISSING_NEW @<errors--missing-new>
-An object is a Class, but is not being called with ``new``.
+对象是一个类，但没有通过``new``调用。
 
 _property: Logger.errors.UNEXPECTED_ARGUMENT @<errors--unexpected-argument>
-Too many parameters we passed into a function.
-
+传递给函数的参数过多。
 
 _heading: Ethereum Error Codes @<errors-ethereum>
 
 _property: Logger.errors.CALL_EXCEPTION @<errors--call-exception>
-An attempt to call a blockchain contract (getter) resulted in a
-revert or other error, such as insufficient gas (out-of-gas) or an
-invalid opcode. This can also occur during gas estimation or if
-waiting for a [[providers-TransactionReceipt]] which failed during execution.
+尝试调用区块链合约(getter)会导致revert或其他错误，例如gas不足(out-of-gas)或无效的操作码。
+这也可能发生在gas估计或等待[[providers-TransactionReceipt]]执行过程中失败。
 
-Consult the contract to determine the cause, such as a failed condition
-in a ``require`` statement. The ``reason`` property may provide more
-context for the cause of this error.
+通过合约来确定原因，例如``require``语句中的失败条件。``reason``属性可以为此错误的原因提供更多上下文。
 
 _property: Logger.errors.INSUFFICIENT_FUNDS @<errors--insufficient-funds>
-The account is attempting to make a transaction which costs more than is
-available.
+该帐户正试图进行一个费用超过自身可用余额的交易。
 
-A sending account must have enough ether to pay for the value, the gas limit
-(at the gas price) as well as the intrinsic cost of data. The intrinsic cost
-of data is 4 gas for each zero byte and 68 gas for each non-zero byte, as well
-as 35000 gas if a transaction contains no ``to`` property and is therefore
-expected to create a new account.
+发送帐户必须有足够的以太币来对value、gas limit、以及数据的内在成本进行支付。
+数据的内在成本是每个零字节4个gas，每个非零字节68个gas，如果交易不包含``to``属性，表示要部署一个新合约，则为35000个gas。
 
 _property: Logger.errors.NETWORK_ERROR @<errors--network>
-An Ethereum network validation error, such as an invalid chain ID.
+以太坊网络验证错误，例如无效的链ID。
 
 _property: Logger.errors.NONCE_EXPIRED @<errors--nonce-expired>
-The nonce being specified has already been used in a mined transaction.
+指定的nonce已经被挖出的区块中的交易所使用。
 
 _property: Logger.errors.REPLACEMENT_UNDERPRICED @<errors--replacement-underpriced>
-When replacing a transaction, by using a nonce which has already been sent to
-the network, but which has not been mined yet the new transaction must specify
-a higher gas price.
+当替换一个交易(已经发送到网络但尚未被挖出的)时，通过相同nonce，新的交易必须比指定替换的的gas price更高。
 
-This error occurs when the gas price is insufficient to //bribe// the transaction
-pool to prefer the new transaction over the old one. Generally, the new gas price
-should be about 50% + 1 wei more, so if a gas price of 10 gwei was used, the
-replacement should be 15.000000001 gwei. This is not enforced by the protocol, as
-it deals with unmined transactions, and can be configured by each node, however
-to ensure a transaction is propagated to a miner it is best practice to follow
-the defaults most nodes have enabled.
+当天然气价格不足以//贿赂(bribe)//交易池（期望使其选择新的交易而不是旧的交易时）就会发生这种错误。
+一般情况下，新的gas price应该是比原来多50% + 1 wei，即如果使用10 gwei的gas price，
+更换的应该是15.000000001gwei。协议没有强制执行这一点，因为它处理未被挖出的交易可以由每个节点自由配置，
+但是要确保将交易传播到一个矿工手里，最好是遵循大多数节点启用的默认值。
 
 _property: Logger.errors.TRANSACTION_REPLACED @<errors--transaction-replaced>
-When a transaction has been replaced by the user, by broadcasting a new transaction
-with the same nonce as an existing in-flight (unmined) transaction in the mempool,
-this error will occur while waiting if the transaction being waited for has become
-invalidated by that other transaction.
+当一个交易被用户替换时，即广播的新交易替换了节点内存池中相同正在等待被打包的相同nonce的旧交易，就会发生此错误，因为
+正在等待被打包的旧交易已经失效了。
 
-This can happen for several reasons, but most commonly because the user has increased
-the gas price (which changes the transaction hash) to "speed up" a transaction or if
-a user has "cancelled" the transaction in their client. In either case this is
-usually accomplished by bribing the miners with a higher gas priced transaction.
+这种情况可能有多种原因，但最常见的原因是用户提高了gas price(这改变了交易哈希)去"加速"交易，
+或者用户在其客户端"取消"了交易。在任何一种情况下，这通常是通过以更高的天然气gas priced贿赂矿工来实现的。
 
-This error will have the additional properties, ``cancelled``, ``hash``, ``reason``,
-``receipt`` and ``replacement``.
+此错误将具有附加属性：``cancelled``, ``hash``, ``reason``, ``receipt`` 和 ``replacement``。
 
-See the [[providers-TransactionResponse]] for the ``wait`` method for more details.
+有关更多详细信息，请参阅``wait``方法的[[providers-TransactionResponse]]。
 
 _property: Logger.errors.UNPREDICTABLE_GAS_LIMIT @<errors--unpredicatable-gas-limit>
-When estimating the required amount of gas for a transaction, a node is queried for
-its best guess.
+在估计一个交易所需的gas数量时，查询一个节点以获得其最佳的预测值。
 
-If a node is unable (or unwilling) to predict the cost, this error occurs.
+如果节点不能(或不愿意)预测成本值，则会发生此错误。
 
-The best remedy for this situation is to specify a gas limit in the transaction
-manually.
+对于这种情况，最好的解决办法是在交易中手动指定一个gas limit。
 
-This error can also indicate that the transaction is expected to fail regardless,
-if for example an account with no tokens is attempting to send a token.
+该错误还会表明，如果一个没有token的帐户试图发送token，交易无论如何都将失败。
 
 
 _subsection: Log Levels @<Logger-levels>
 
 _property: Logger.levels.DEBUG
-Log all output, including debugging information.
+记录所有输出信息，包括调试信息。
 
 _property: Logger.levels.INFO
-Only log output for informational, warnings and errors.
+仅记录信息、警告和错误的输出。
 
 _property: Logger.levels.WARNING
-Only log output for warnings and errors.
+仅记录警告和错误的输出。
 
 _property: Logger.levels.ERROR
-Only log output for errors.
+仅记录错误的输出。
 
 _property: Logger.levels.OFF
-Do not output any logs.
+不输出日志。

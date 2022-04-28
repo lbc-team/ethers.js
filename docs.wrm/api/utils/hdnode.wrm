@@ -1,4 +1,4 @@
-_section: HD Wallet @<hdnodes>
+_section: HD 钱包 @<hdnodes>
 
 分层确定性钱包(HD钱包, Hierarchal Desterministic Wallet)
 是为比特币创建的一个标准，但也适用于各种依赖secp256k1私钥的区块链。
