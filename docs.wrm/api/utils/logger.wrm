@@ -1,4 +1,4 @@
-_section: Logging @<logging>
+_section: 日志 @<logging>
 这有一些简便的logging(日志)工具，用于简化和标准化Ethers库中的error facilities。
 
 [[Logger]]库没有依赖关系，并且非常轻量级，因此可以很容易地包含在每个库中。
