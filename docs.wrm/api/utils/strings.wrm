@@ -1,45 +1,35 @@
-_section: Strings  @<strings>
+_section: 字符串(Strings)  @<strings>
 
-A **String** is a representation of a human-readable input of output,
-which are often taken for granted.
+**字符串(Strings)**的内容通常是人可读(human-readable)的。
 
-When dealing with blockchains, properly handling human-readable and
-human-provided data is important to prevent loss of funds, assets,
-incorrect permissions, etc.
+在处理区块链时，正确处理人可读(human-readable)和人提供(human-provided)的数据
+对于防范资金的损失、权限的错误等非常重要。
 
 _subsection: Bytes32String @<Bytes32String>
+在Solidity存储一个字符串时，前缀是字符串的长度(256位,即32个字节)，接着的才是字符串的内容。
+这意味着即使很短的字符串也至少需要2个words(64个字节)的存储空间。
 
-A string in Solidity is length prefixed with its 256-bit (32 byte)
-length, which means that even short strings require 2 words (64 bytes)
-of storage.
+大多数情况下，我们处理的是较短的字符串，所以我们不用字符串的长度作为前缀，
+而是通过null-terminate处理字符串并将其放入一个word(32个字节)中。
+由于null termination只需要一个字节，因此可以在一个word中存储长度不超过31字节的字符串。
 
-In many cases, we deal with short strings, so instead of prefixing
-the string with its length, we can null-terminate it and fit it in a
-single word (32 bytes). Since we need only a single byte for the
-null termination, we can store strings up to 31 bytes long in a
-word.
-
-_note: Note
-Strings that are 31 __//bytes//__ long may contain fewer than 31 __//characters//__,
-since UTF-8 requires multiple bytes to encode international characters.
+_note: 注意
+长度为31__//bytes//__的字符串可能包含少于31个__//characters//__，因为UTF-8需要多个字节来编码国际字符。
 
 _property: ethers.utils.parseBytes32String(aBytesLike) => string  @<utils-parseBytes32> @SRC<strings>
-Returns the decoded string represented by the ``Bytes32`` encoded data.
+返回对``Bytes32``编码数据进行解码的字符串。
 
 _property: ethers.utils.formatBytes32String(text) => string<[[DataHexString]]<32>>  @<utils-formatBytes32> @SRC<strings>
-Returns a ``bytes32`` string representation of //text//. If the
-length of //text// exceeds 31 bytes, it will throw an error.
+返回//text//的`bytes32``字符串表示形式。如果//text//长度超过31字节，则会抛出错误。
 
 
-_subsection: UTF-8 Strings @<strings-utf8>
+_subsection: UTF-8 字符串 @<strings-utf8>
 
 _property: ethers.utils.toUtf8Bytes(text [ , form = current ] ) => Uint8Array  @<utils-toUtf8Bytes> @SRC<strings>
-Returns the UTF-8 bytes of //text//, optionally normalizing it using the
-[[strings--unicode-normalization-form]] //form//.
+返回//text//的UTF-8字节表示，也可通过[[strings--unicode-normalization-form]] //form//对其进行标准化。
 
 _property: ethers.utils.toUtf8CodePoints(text [ , form = current ] ) => Array<number>  @<utils-toUtf8CodePoints> @SRC<strings>
-Returns the Array of codepoints of //text//, optionally normalized using the
-[[strings--unicode-normalization-form]] //form//.
+返回//text//的codepoints数组，也可通过[[strings--unicode-normalization-form]] //form//对其进行标准化。
 
 _note: Note
 This function correctly splits each **user-perceived character** into
@@ -48,20 +38,17 @@ its codepoint, accounting for surrogate pairs. This should not be confused with
 codeunit instead.
 
 _property: ethers.utils.toUtf8String(aBytesLike [ , onError = error ] ) => string  @<utils-toUtf8String> @SRC<strings>
-Returns the string represented by the UTF-8 bytes of //aBytesLike//.
+返回由//aBytesLike//的UTF-8字节表示的字符串。
 
-The //onError// is a [Custom UTF-8 Error function](strings--error-handling) and if not specified
-it defaults to the [error](strings--Utf8Error) function, which throws an error
-on **any** UTF-8 error.
+//onError// 是一个[自定义的UTF-8 error函数](strings--error-handling)，
+如果没有指定它默认为[error](strings--Utf8Error)函数，在发生UTF-8 error时会抛出一个错误。
 
 _subsection: UnicodeNormalizationForm @<strings--unicode-normalization-form> @SRC<strings/utf8:enum.UnicodeNormalizationForm>
-
-There are several [commonly used forms](link-wiki-unicode-equivalence)
-when normalizing UTF-8 data, which allow strings to be compared or hashed in a stable
-way.
+在标准化UTF-8数据时，有几种[常用的形式](link-wiki-unicode-equivalence)，
+它们能够以稳定的方式对字符串进行比较或哈希。
 
 _property: ethers.utils.UnicodeNormalizationForm.current
-Maintain the current normalization form.
+保持当前的 normalization form。
 
 _property: ethers.utils.UnicodeNormalizationForm.NFC
 The Composed Normalization Form. This form uses single codepoints
@@ -96,29 +83,21 @@ it should **not** be considered a method to achieve //any// level of security fr
 [homoglyph attacks](link-wiki-homoglyph).
 
 
-_subsection: Custom UTF-8 Error Handling @<strings--error-handling>
-
-When converting a string to its codepoints, there is the possibility
-of invalid byte sequences. Since certain situations may need specific
-ways to handle UTF-8 errors, a custom error handling function can be used,
-which has the signature:
+_subsection: 自定义 UTF-8 错误处理 @<strings--error-handling>
+在将字符串转换为其代码点时，可能会出现无效的字节序列。
+由于某些情况下可能需要特定的方法来处理UTF-8错误，可以使用自定义错误处理函数，该函数具有如下签名:
 
 _property: errorFunction(reason, offset, bytes, output [ , badCodepoint ]) => number
-The //reason// is one of the [UTF-8 Error Reasons](strings--error-reasons), //offset// is the index
-into //bytes// where the error was first encountered, output is the list
-of codepoints already processed (and may be modified) and in certain Error
-Reasons, the //badCodepoint// indicates the currently computed codepoint,
-but which would be rejected because its value is invalid.
+//reason//是一个[utf-8的错误原因](strings--error-reasons)，//offset//是第一次遇到error字节的索引,
+//output//已经处理过的(并且可能被修改)的代码点列表和一些错误原因，
+//badCodepoint//表示当前计算的代码点，如果它的值是无效的该签名将会被拒绝。
 
-This function should return the number of bytes to skip past keeping in
-mind the value at //offset// will already be consumed.
+这个函数返回要跳过的字节数，因为//offset//的值已经被使用过了。
 
-
-_heading: UTF-8 Error Reasons @<strings--error-reasons> @SRC<strings/utf8:Utf8ErrorReason>
+_heading: UTF-8 错误原因 @<strings--error-reasons> @SRC<strings/utf8:Utf8ErrorReason>
 
 _property: ethers.utils.Utf8ErrorReason.BAD_PREFIX
-A byte was encountered which is invalid to begin a UTF-8 byte
-sequence with.
+遇到一个字节，该字节开头的UTF-8字节序列是无效的。
 
 _property: ethers.utils.Utf8ErrorReason.MISSING_CONTINUE
 A UTF-8 sequence was begun, but did not have enough continuation
