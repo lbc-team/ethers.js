@@ -20,7 +20,7 @@ _property: ethers.utils.parseBytes32String(aBytesLike) => string  @<utils-parseB
 返回对``Bytes32``编码数据进行解码的字符串。
 
 _property: ethers.utils.formatBytes32String(text) => string<[[DataHexString]]<32>>  @<utils-formatBytes32> @SRC<strings>
-返回//text//的`bytes32``字符串表示形式。如果//text//长度超过31字节，则会抛出错误。
+返回//text//的``bytes32``字符串表示形式。如果//text//长度超过31字节，则会抛出错误。
 
 
 _subsection: UTF-8 字符串 @<strings-utf8>
