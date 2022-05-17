@@ -1,18 +1,11 @@
-_section: Application Binary Interface @NAV<ABI>
+_section: 应用程序二进制接口 @NAV<ABI>
 
-An **Application Binary Interface** (ABI) is a collection of
-[Fragments](Fragment) which specify how to interact with
-various components of a Contract.
+**应用程序二进制接口** (ABI)是一个[Fragments](Fragment)的集合，它指定了如何与合约的各种组件交互。
 
-An [[Interface]] helps organize Fragments by type as well
-as provides the functionality required to encode, decode and
-work with each component.
+[[Interface]]可以按类型组织Fragments，并可以具有对每个组件进行编码、解码等功能。
 
-Most developers will not require this low-level access to encoding
-and decoding the binary data on the network and will most likely
-use a [[Contract]] which provides a more convenient interface. Some
-framework, tool developers or developers using advanced techniques
-may find these classes and utilities useful.
+大多数开发人员可能不需要这种对链上二进制数据进行编码和解码的低级访问，而最有可能使用(Contract)，它提供了一个更方便的接口。
+一些框架和工具开发者或使用高级技术的开发者可能会发现这些类(classes)和实用工具(utilities)很有帮助。
 
 _toc:
   coder

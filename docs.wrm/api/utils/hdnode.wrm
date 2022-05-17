@@ -1,135 +1,114 @@
-_section: HD Wallet @<hdnodes>
+_section: HD 钱包 @<hdnodes>
 
-The Hierarchal Desterministic (HD) Wallet was a standard
-created for Bitcoin, but lends itself well to a wide variety of
-Blockchains which rely on secp256k1 private keys.
+分层确定性钱包(HD钱包, Hierarchal Desterministic Wallet)
+是为比特币创建的一个标准，但也适用于各种依赖secp256k1私钥的区块链。
 
-For a more detailed technical understanding:
+更详细的技术理解:
 
-- [BIP-32](link-bip-32) - the hierarchal deterministic description
-- [BIP-39](link-bip-39) - the method used to derive the BIP-32 seed
-  from human-readable sequences of words (i.e. a mnemonic)
-- [BIP-44](link-bip-44) - a standard defined to make BIP-32 easy
-  to adapt to any future compatible blockchain
+- [BIP-32](link-bip-32) - 分层确定性描述
+- [BIP-39](link-bip-39) - 用于从人类可读的单词序列(即助记符)派生BIP-32种子的方法
+- [BIP-44](link-bip-44) - 定义了一个标准，使BIP-32易于适应任何未来可兼容的区块链
 
-_subsection: Types
+_subsection: 类型
 
-_heading: Constants @<hdnodes--defaultpath> @SRC<hdnode:defaultPath>
+_heading: 常量 @<hdnodes--defaultpath> @SRC<hdnode:defaultPath>
 
 _property: ethers.utils.defaultPath => "m/44'/60'/0'/0/0"
-The default path for Ethereum in an HD Wallet
+以太坊在HD钱包中的默认路径
 
 
-_heading: Mnemonic @<Mnemonic>
+_heading: 助记词 @<Mnemonic>
 
 _property: mnemonic.phrase => string
-The mnemonic phrase for this mnemonic. It is 12, 15, 18, 21 or 24 words long
-and separated by the whitespace specified by the ``locale``.
+助记词的的助记短语，有12、15、18、21或24个单词长，由``locale``指定的空格进行分隔。
 
 _property: mnemonic.path => string
-The HD path for this mnemonic.
+助记词的HD路径。
 
 _property: mnemonic.locale => string
-The language of the wordlist this mnemonic is using.
+这个助记词所使用的单词表语言。
 
 
 _subsection: HDNode @<HDNode> @SRC<hdnode:class.HDNode>
 
-_heading: Creating Instances @<HDNode--creating>
+_heading: 创建实例 @<HDNode--creating>
 
 _property: ethers.HDNode.fromMnemonic(phrase [, password [, wordlist ] ]) => [[HDNode]]  @<HDNode-fromMnemonic> @SRC<hdnode>
-Return the [[HDNode]] for //phrase// with the optional //password//
-and //wordlist//.
+为带有可选密码和单词列表的短语返回[[HDNode]]。
 
 _property: ethers.HDNode.fromSeed(aBytesLike) => [[HDNode]]  @<HDNode-fromSeed> @SRC<hdnode>
-Return the [[HDNode]] for the seed //aBytesLike//.
+为带有//aBytesLike//的种子返回[[HDNode]]。
 
 _property: ethers.HDNode.fromExtendedKey(extendedKey) => [[HDNode]]  @<HDNode-fromExtendedKey> @SRC<hdnode>
-Return the [[HDNode]] for the //extendedKey//. If //extendedKey// was
-neutered, the **HDNode** will only be able to compute addresses and not
-private keys.
+为//extendedKey//返回[[HDNode]]。如果extendedKey被neutered，HDNode将只能计算地址，而不能计算私钥。
 
-
-_heading: Properties  @<HDNode--properties>
+_heading: 属性  @<HDNode--properties>
 
 _property: hdNode.privateKey => string<[[DataHexString]]<32>>
-The private key for this HDNode.
+HDNode的私钥。
 
 _property: hdNode.publicKey => string<[[DataHexString]]<33>>
-The (compresses) public key for this HDNode.
+HDNode压缩后的公钥。
 
 _property: hdNode.fingerprint => string<[[DataHexString]]<4>>
-The fingerprint is meant as an index to quickly match parent and
-children nodes together, however collisions may occur and software
-should verify matching nodes.
+fingerprint是用来快速匹配父节点和子节点的索引，但是可能会发生冲突，软件应该验证匹配的节点。
 
-Most developers will not need to use this.
+大多数开发者不会用到它。
 
 _property: hdNode.parentFingerprint => string<[[DataHexString]]<4>>
-The fingerprint of the parent node. See //fingerprint// for more
-details.
+父节点的fingerprint。请参阅//fingerprint//了解更多细节。
 
-Most developers will not need to use this.
+大多数开发者不会用到它。
 
 _property: hdNode.address => string<[[address]]>
-The address of this HDNode.
+HDNode的地址。
 
 _property: hdNode.mnemonic => [[Mnemonic]]
-The mnemonic of this HDNode, if known.
+HDNode的助记符(如果已知)。
 
 _property: hdNode.path => string
-The path of this HDNode, if known. If the //mnemonic// is also known,
-this will match ``mnemonic.path``.
+HDNode的path(如果已知)。如果助记词也是已知的，这将匹配``mnemonic.path``。
 
 _property: hdNode.chainCode => string<[[DataHexString]]<32>>
 The chain code is used as a non-secret private key which is then used
 with EC-multiply to provide the ability to derive addresses without
 the private key of child non-hardened nodes.
 
-Most developers will not need to use this.
+
+大多数开发者不会用到它。
+
 
 _property: hdNode.index => number
 The index of this HDNode. This will match the last component of
 the //path//.
 
-Most developers will not need to use this.
+大多数开发者不会用到它。
 
 _property: hdNode.depth => number
 The depth of this HDNode. This will match the number of components
 (less one, the ``m/``) of the //path//.
 
-Most developers will not need to use this.
+大多数开发者不会用到它。
 
 _property: hdNode.extendedKey => string
-A serialized string representation of this HDNode. Not all properties
-are included in the serialization, such as the mnemonic and path, so
-serializing and deserializing (using the ``fromExtendedKey`` class
-method) will result in reduced information.
-
+此HDNode的序列化字符串表示形式。
+并不是所有属性都包含在序列化中，例如助记符和路径，因此序列化和反序列化(使用``fromExtendedKey``类方法)将造成信息(information)的减少。
 
 _heading: Methods  @<HDNode--methods>
 
 _property: hdNode.neuter() => [[HDNode]]  @<HDNode-neuter> @SRC<hdnode>
-Return a new instance of //hdNode// with its private key removed
-but all other properties preserved. This ensures that the key
-can not leak the private key of itself or any derived children,
-but may still be used to compute the addresses of itself and
-any non-hardened children.
+返回一个新的//hdNode//实例，其私钥被删除，但所有其他属性保留。
+这确保了密钥不会泄露自己或任何派生子密钥，但仍然可以用于计算自己和任何未硬化(non-hardened)子密钥的地址。
 
 _property: hdNode.derivePath(path) => [[HDNode]]  @<HDNode-derivePath> @SRC<hdnode>
-Return a new [[HDNode]] which is the child of //hdNode// found
-by deriving //path//.
+返回一个新的[[HDNode]]，它是通过派生//path//找到的//hdNode//的子节点。
 
-
-
-_subsection: Other Functions  @<HDNode--utilities>
+_subsection: 其他的函数  @<HDNode--utilities>
 
 _property: ethers.utils.mnemonicToSeed(phrase [ , password]) => string<[[DataHexString]]<64>>  @<utils-mnemonicToSeed> @SRC<hdnode>
-Convert a mnemonic phrase to a seed, according to [BIP-39](link-bip-39).
+根据[BIP-39](link-bip-39)，将助记词短语转换成种子。
 
 _property: ethers.utils.mnemonicToEntropy(phrase [ , wordlist ]) => string<[[DataHexString]]>  @<utils-mnemonicToEntropy> @SRC<hdnode>
-Convert a mnemonic phrase to its entropy, according to [BIP-39](link-bip-39).
-
+根据[BIP-39](link-bip-39)，将助记词短语转换成熵(entropy)。
 _property: ethers.utils.isValidMnemonic(phrase [ , wordlist ]) => boolean  @<utils-isValidMnemonic> @SRC<hdnode>
-Returns true if //phrase// is a valid mnemonic phrase, by
-testing the checksum.
+通过测试校验和，如果短语是有效的助记短语，则返回true。

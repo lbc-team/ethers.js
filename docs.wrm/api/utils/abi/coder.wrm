@@ -1,64 +1,49 @@
 _section: AbiCoder @<AbiCoder> @SRC<abi:class.AbiCoder>
 
-The **AbiCoder** is a collection of Coders which can be used to
-encode and decode the binary data formats used to interoperate
-between the EVM and higher level libraries.
+**AbiCoder**是编码器的集合，可用于在EVM和更高级别库之间通过二进制数据格式进行编码和解码的操作。
 
-Most developers will never need to use this class directly, since
-the [[Interface]] class greatly simplifies these operations.
+大多数开发人员不需要直接使用这个类，因为[[Interface]]类极大地简化了这些操作。
 
+_subsection: 创建实例 @<AbiCoder--creating>
 
-_subsection: Creating Instance @<AbiCoder--creating>
+在大多数情况下，都不需要手动创建[[AbiCoder]]的实例，因为当库被加载时，一个实例是用默认的强制函数创建的，它可以被普遍使用。
 
-For the most part, there should never be a need to manually create
-an instance of an [[AbiCoder]], since one is created with the
-default coercion function when the library is loaded which can
-be used universally.
-
-This is likely only needed by those with specific needs to override
-how values are coerced after they are decoded from their binary format.
+This is likely only needed by those with specific needs 
+to override how values are coerced after they are decoded from their binary format.
 
 _property: new ethers.utils.AbiCoder([coerceFunc]) @SRC<abi:constructor.AbiCoder>
 
-Create a new AbiCoder instance, which will call the //coerceFunc// on every
-decode, where the result of the call will be used in the Result.
+创建一个新的AbiCoder实例，在每一个需要解码的地方都会调用//coerceFunc//，调用的结果将在Result中使用。
 
-The function signature is `(type, value)`, where the //type// is the string
-describing the type and the //value// is the processed value from the underlying
-Coder.
+函数签名是`(type, value)`，//type//字段是是描述类型的字符串，//value// 字段是来自底层Coder的处理过的值。
 
-If the callback throws, the Result will contain a property that when accessed will
-throw, allowing for higher level libraries to recover from data errors.
+如果回调抛出错误，Result将包含一个被访问时将抛出的属性，从而允许更高级别的库从数据错误中恢复。
 
 _property: ethers.utils.defaultAbiCoder => [[AbiCoder]]
-
-An [[AbiCoder]] created when the library is imported which is used by
-the [[Interface]].
+当[[Interface]]使用的库在被导入时将创建一个[[AbiCoder]]。
 
 _subsection: Coding Methods @<AbiCoder--methods>
 
 _property: abiCoder.encode(types, values) => string<[[DataHexString]]> @<AbiCoder-encode> @SRC<abi/abi-coder>
-
-Encode the array //values// according to the array of //types//, each of which may be a
-string or a [[ParamType]].
+根据数组中的//types//对数组//values//进行编码，每个类型可以是字符串或[[ParamType]]。
 
 _code: @lang<javascript>
 
 //_hide: const abiCoder = utils.defaultAbiCoder;
 
-// Encoding simple types
+// 对简单的类型进行编码
 //_result:
 abiCoder.encode([ "uint", "string" ], [ 1234, "Hello World" ]);
 //_log:
 //_hide: _page.example1 = _;
 
-// Encoding with arrays types
+// 对数组的类型进行编码
 //_result:
 abiCoder.encode([ "uint[]", "string" ], [ [ 1234, 5678 ] , "Hello World" ]);
 //_log:
 //_hide: _page.example2 = _;
 
-// Encoding complex structs (using positional properties)
+// 对复杂的结构体进行编码 (使用 positional 属性)
 //_result:
 abiCoder.encode(
   [ "uint", "tuple(uint256, string)" ],
@@ -70,7 +55,7 @@ abiCoder.encode(
 //_log:
 //_hide: _page.example3 = _;
 
-// Encoding complex structs (using keyword properties)
+// 对复杂的结构体进行编码 (使用 keyword 属性)
 //_result:
 abiCoder.encode(
   [ "uint a", "tuple(uint256 b, string c) d" ],
@@ -83,37 +68,34 @@ abiCoder.encode(
 
 _property: abiCoder.decode(types, data) => [[Result]] @<AbiCoder-decode> @SRC<abi/abi-coder>
 
-Decode the //data// according to the array of //types//, each of which may be a
-string or [[ParamType]].
+根据数组中的//types//对//data//进行编码，每个类型可以是字符串或[[ParamType]]。
 
 _code: @lang<javascript>
 
 //_hide: const abiCoder = utils.defaultAbiCoder;
 
-// Decoding simple types
+// 对简单的类型进行解码
 //_hide: data = _page.example1;
 //_verbatim: `data = ${ JSON.stringify(data) };`
 //_result:
 abiCoder.decode([ "uint", "string" ], data);
 //_log:
 
-// Decoding with arrays types
+// 对数组的类型进行解码
 //_hide: data = _page.example2;
 //_verbatim: `data = ${ JSON.stringify(data) };`
 //_result:
 abiCoder.decode([ "uint[]", "string" ], data);
 //_log:
 
-// Decoding complex structs; unnamed parameters allows ONLY
-// positional access to values
+// 对复杂的结构体进行解码; 参数如果未命名，只允许按照位置（positional）方式去访问值（values）
 //_hide: data = _page.example3;
 //_verbatim: `data = ${ JSON.stringify(data) };`
 //_result:
 abiCoder.decode([ "uint", "tuple(uint256, string)" ], data);
 //_log:
 
-// Decoding complex structs; named parameters allows positional
-// or keyword access to values
+// 对复杂的结构体进行解码; 参数如果已命名，可通过位置（positional）方式和关键词（keyword）方式去访问值（values）
 //_result:
 abiCoder.decode([ "uint a", "tuple(uint256 b, string c) d" ], data);
 //_log:

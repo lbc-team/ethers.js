@@ -1,12 +1,12 @@
-_section: Gas @<gas>
+_section: gas @<gas>
 
-Explain attack vectors
+将阐述“攻击向量”
 
-_subsection: Gas Price @<gas-price>
+_subsection: gas price @<gas-price>
 
-The gas price is used somewhat like a bid, indicating an amount
-you are willing to pay (per unit of execution) to have your transaction
-processed.
+gas price是被用来出价的，表明你愿意支付的金额(每执行单位)，来使得你的交易被处理。
 
-_subsection: Gas Limit @<gas-limit>
+
+
+_subsection: 燃料限制 @<gas-limit>
 

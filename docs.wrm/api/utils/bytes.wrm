@@ -1,38 +1,24 @@
-_section: Byte Manipulation
+_section: 字节处理
 
-While there are many high-level APIs for interacting with
-Ethereum, such as [Contracts](Contract) and [Providers](Provider),
-a lot of the low level access requires byte manipulation
-operations.
+虽然有许多用于与以太坊交互的高级api，如[Contracts](Contract)和[Providers](Provider)，但许多低级访问需要通过字节进行操作。
 
-Many of these operations are used internally, but can also be
-used to help normalize binary data representations from the
-output of various functions and methods.
+其中许多操作是内部使用的，但各种函数和方法的输出可以用规范化二进制数据表示。
 
-_subsection: Types
+_subsection: 类型
 
 _heading: Bytes @<Bytes>
 
-A **Bytes** is any object which is an
-[Array](link-js-array) or [TypedArray](link-js-typedarray) with
-each value in the valid byte range (i.e. between 0 and 255 inclusive),
-or is an Object with a ``length`` property where each indexed property
-is in the valid byte range.
+**Bytes**是一个[Array](link-js-array)或[TypedArray](link-js-typedarray)对象，
+每个值都在有效字节范围内(例如0到255之间)，或者是一个具有``length``属性的对象，每个索引的属性都在有效字节范围内。
 
 _heading: BytesLike @<BytesLike>
-
-A **BytesLike** can be either a [[Bytes]] or a [[DataHexString]].
+**BytesLike**可以是[[Bytes]]或[[DataHexString]]。
 
 _heading: DataHexString @<DataHexString>
-
-A **DataHexstring** is identical to a [[HexString]] except that it has
-an even number of nibbles, and therefore is a valid representation of
-binary data as a string.
+**DataHexstring**与[[HexString]]是相同的，除了它有偶数个nibbles，因此二进制数据作为字符串是有效的。
 
 _heading: HexString @<HexString>
-
-A **Hexstring** is a string which has a ``0x`` prefix followed by any
-number of nibbles (i.e. case-insensitive hexadecimal characters, ``0-9`` and ``a-f``).
+**Hexstring**是一个字符串，它有一个0x前缀，后面跟着nibbles number类型(例如，不区分大小写的十六进制字符，``0-9``和``a-f``)。
 
 _heading: Signature @<Signature>
 
@@ -42,137 +28,121 @@ _heading: Signature @<Signature>
 - **recoveryParam** --- The normalized (i.e. 0 or 1) value of **v**
 
 _heading: Raw Signature @<signature-raw> @inherit<string\<[[DataHexString]]\<65\>\>>
-
-A **Raw Signature** is a common Signature format where the r, s and v are
-concatenated into a 65 byte (130 nibble) [[DataHexString]].
-
+**原始签名(Raw Signature)**是一种常见的签名格式，其中r, s和v被连接成一个65字节(130 nibble)的[[DataHexString]]。
 
 _heading: SignatureLike @<SignatureLike>
 
-A **SignatureLike** is similar to a [[Signature]], except redundant properties
-may be omitted or it may be a [[signature-raw]].
+**SignatureLike**类似于一个[[Signature]]，除了多余的属性可以被省略或者它也可以是一个 [[signature-raw]]。
 
-For example, if **_vs** is specified, **s** and **v** may be omitted. Likewise,
-if **recoveryParam** is provided, **v** may be omitted (as in these cases the
-missing values can be computed).
+例如，如果指定了**_vs**，则**s**和**v**可以省略。同样，如果提供了**recoveryParam**，
+则可以省略**v**(在这种情况下，可以计算出缺失的值)。
 
-
-_subsection: Inspection
+_subsection: 检查
 
 _property: ethers.utils.isBytes(object) => boolean  @<utils-isBytes> @SRC<bytes>
-Returns true if and only if //object// is a valid [[Bytes]].
+当且仅当//object//为有效[[Bytes]]时返回true。
 
 _property: ethers.utils.isBytesLike(object) => boolean  @<utils-isBytesLike> @SRC<bytes>
-Returns true if and only if //object// is a [[Bytes]] or [[DataHexString]].
+当且仅当//object//是[[Bytes]]或[[DataHexString]]时返回true。
 
 _property: ethers.utils.isHexString(object, [ length ] ) => boolean  @<utils-isHexString> @SRC<bytes>
-Returns true if and only if //object// is a valid hex string.
-If //length// is specified and //object// is not a valid [[DataHexString]] of
-//length// bytes, an InvalidArgument error is thrown.
+当且仅当//object//是一个有效的十六进制字符串时返回true。
+如果指定了//length//并且//object// 不是一个有效的长度字节的[[DataHexString]]，则抛出一个InvalidArgument错误。
 
-
-_subsection: Converting between Arrays and Hexstrings
+_subsection: 数组和十六进制字符串之间的转换
 
 _property: ethers.utils.arrayify(DataHexStringOrArrayish [ , options ]) => Uint8Array  @<utils-arrayify> @SRC<bytes>
-Converts //DataHexStringOrArrayish// to a Uint8Array.
+将//DataHexStringOrArrayish//转换为Uint8Array。
 
 _property: ethers.utils.hexlify(hexstringOrArrayish) => string<[[DataHexString]]>  @<utils-hexlify> @SRC<bytes>
-Converts //hexstringOrArrayish// to a [[DataHexString]].
+将//hexstringOrArrayish//转换为[[DataHexString]]。
 
 _property: ethers.utils.hexValue(aBigNumberish) => string<[[HexString]]>  @<utils-hexValue> @SRC<bytes>
-Converts //aBigNumberish// to a [[HexString]], with no __unnecessary__ leading
-zeros.
+将//aBigNumberish//转换为[[HexString]]，没有前导零。
 
 _code: Examples @lang<javascript>
 
-// Convert a hexstring to a Uint8Array
+// 将十六进制字符串转换为Uint8Array
 //_result:
 arrayify("0x1234")
 //_log:
 
-// Convert an Array to a hexstring
+// 将数组转换为十六进制字符串
 //_result:
 hexlify([1, 2, 3, 4])
 //_log:
 
-// Convert an Object to a hexstring
+// 将对象转换为十六进制字符串
 //_result:
 hexlify({ length: 2, "0": 1, "1": 2 })
 //_log:
 
-// Convert an Array to a hexstring
+// 将数组转换为十六进制字符串
 //_result:
 hexlify([ 1 ])
 //_log:
 
-// Convert a number to a stripped hex value
+// 将数字转换成无前导零的十六进制值
 //_result:
 hexValue(1)
 //_log:
 
-// Convert an Array to a stripped hex value
+// 将数组转换成无前导零的十六进制值
 //_result:
 hexValue([ 1, 2 ])
 //_log:
 
 
-_subsection: Array Manipulation
+_subsection: 数组处理
 
 _property: ethers.utils.concat(arrayOfBytesLike) => Uint8Array  @<utils-concat> @SRC<bytes>
-Concatenates all the [[BytesLike]] in //arrayOfBytesLike// into a single Uint8Array.
+将//arrayOfBytesLike//中的所有[[BytesLike]]连接到一个单独的Uint8Array中。
 
 _property: ethers.utils.stripZeros(aBytesLike) => Uint8Array  @<utils-stripZeros> @SRC<bytes>
-Returns a Uint8Array with all leading ``0`` bytes of //aBtyesLike// removed.
+返回一个无前导零//aBtyesLike//字节的Uint8Array
 
 _property: ethers.utils.zeroPad(aBytesLike, length) => Uint8Array  @<utils-zeroPad> @SRC<bytes>
 Returns a Uint8Array of the data in //aBytesLike// with ``0`` bytes prepended to
 //length// bytes long.
 
-If //aBytesLike// is already longer than //length// bytes long, an InvalidArgument
-error will be thrown.
+如果//aBytesLike//的长度已经超过长度字节，则会抛出InvalidArgument错误。
 
 
-_subsection: Hexstring Manipulation
+_subsection: 十六进制字符串处理
 
 _property: ethers.utils.hexConcat(arrayOfBytesLike) => string<[[DataHexString]]>  @<utils-hexConcat> @SRC<bytes>
-Concatenates all the [[BytesLike]] in //arrayOfBytesLike// into a single [[DataHexString]]
+将//arrayOfBytesLike//中的所有[[BytesLike]]连接成一个单一的[[DataHexString]]。
 
 _property: ethers.utils.hexDataLength(aBytesLike) => string<[[DataHexString]]>  @<utils-hexDataLength> @SRC<bytes>
-Returns the length (in bytes) of //aBytesLike//.
+返回//aBytesLike//的长度(以字节为单位)。
 
 _property: ethers.utils.hexDataSlice(aBytesLike, offset [ , endOffset ] ) => string<[[DataHexString]]>  @<utils-hexDataSlice> @SRC<bytes>
-Returns a [[DataHexString]] representation of a slice of //aBytesLike//, from
-//offset// (in bytes) to //endOffset// (in bytes). If //endOffset// is
-omitted, the length of //aBytesLike// is used.
+返回一个//aBytesLike//切片的[[DataHexString]]表示，从//offset//(以字节为单位)到//endOffset//(以字节为单位)。
+如果省略了//endOffset//，则使用//aBytesLike//的长度。
 
 _property: ethers.utils.hexStripZeros(aBytesLike) => string<[[HexString]]>  @<utils-hexStripZeros> @SRC<bytes>
-Returns a [[HexString]] representation of //aBytesLike// with all
-leading zeros removed.
+返回//aBytesLike//的[[HexString]]表示形式，去掉所有前导零。
 
 _property: ethers.utils.hexZeroPad(aBytesLike, length) => string<[[DataHexString]]>  @<utils-hexZeroPad> @SRC<bytes>
-Returns a [[DataHexString]] representation of //aBytesLike// padded to //length// bytes.
+返回被填充到//length//字节的//aBytesLike//的[[DataHexString]]表示。
 
-If //aBytesLike// is already longer than //length// bytes long, an InvalidArgument
-error will be thrown.
+如果//aBytesLike//的长度已经超过//length//字节，则会抛出InvalidArgument错误。
 
-
-_subsection: Signature Conversion
+_subsection: 签名转换
 
 _property: ethers.utils.joinSignature(aSignatureLike) => string<[RawSignature](signature-raw)>  @<utils-joinSignature> @SRC<bytes>
-Return the raw-format of //aSignaturelike//, which is 65 bytes (130 nibbles)
-long, concatenating the **r**, **s** and (normalized) **v** of a Signature.
+返回//aSignaturelike//的原始格式，它是65字节(130个nibbles)长，连接签名的**r**, **s**和(标准化后))**v**。
 
 _property: ethers.utils.splitSignature(aSignatureLikeOrBytesLike) => [[Signature]]  @<utils-splitSignature> @SRC<bytes>
-Return the full expanded-format of //aSignaturelike// or a raw-format [[DataHexString]].
-Any missing properties will be computed.
+返回//aSignaturelike//的完整扩展格式或原始格式[[DataHexString]]，将自动计算所有缺失的属性。
 
-_subsection: Random Bytes
+_subsection: 随机字节
 
 _property: ethers.utils.randomBytes(length) => Uint8Array  @<utils-randomBytes> @SRC<random/random>
-Return a new Uint8Array of //length// random bytes.
+返回一个新的Uint8Array 长度为//length//的随机字节。
 
 _property: ethers.utils.shuffled(array) => Array<any>  @<utils-shuffled> @SRC<random>
-Return a copy of //array// shuffled using [[link-wiki-shuffle]].
+返回一个使用[[link-wiki-shuffle]]打乱后的数组副本。
 
 _code: Examples @lang<javascript>
 
@@ -182,12 +152,12 @@ utils.randomBytes(8)
 
 const data = [ 1, 2, 3, 4, 5, 6, 7 ];
 
-// Returns a new Array
+// 返回一个新数组
 //_result:
 utils.shuffled(data);
 //_log:
 
-// The Original is unscathed...
+// 原数据不会有任何变化
 //_result:
 data
 //_log:

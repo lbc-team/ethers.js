@@ -1,113 +1,77 @@
 _section: JsonRpcProvider  @<JsonRpcProvider> @INHERIT<[[Provider]]> @SRC<providers:class.JsonRpcProvider>
 
-The [JSON-RPC API](link-jsonrpc) is a popular method for interacting
-with Ethereum and is available in all major Ethereum node implementations
-(e.g. [[link-geth]] and [[link-parity]]) as well as many
-third-party web services (e.g. [[link-infura]])
+[JSON-RPC API](link-jsonrpc)是与以太坊交互比较流行的方法，在主要的以太坊节点实现(如[[link-geth]] 和 [[link-parity]])以及许多第三方web服务(如[[link-infura]])中都可以用。
 
-_property: new ethers.providers.JsonRpcProvider([ urlOrConnectionInfo [ , networkish ] ])  @SRC<providers:constructor.JsonRpcProvider>
-Connect to a JSON-RPC HTTP API using the URL or [[ConnectionInfo]] //urlOrConnectionInfo//
-connected to the //networkish// network.
+_property: new ethers.providers.JsonRpcProvider([ urlOrConnectionInfo [ ， networkish ] ])  @SRC<providers:constructor.JsonRpcProvider>
+使用 URL 或者 [[ConnectionInfo]] //urlOrConnectionInfo// 作为一个一个 JSON-RPC HTTP API 连接到 //networkish// 网络。
 
-If //urlOrConnectionInfo// is not specified, the default (i.e. ``http:/\/localhost:8545``)
-is used and if no network is specified, it will be determined automatically by querying the
-node using ``eth_chaindId`` and falling back on ``eth_networkId``.
+如果 //urlOrConnectionInfo// 没有被指定， 默认值是``http:/\/localhost:8545``。
+如果网络没有被指定， 它将会自动使用 ``eth_chaindId``查询网络节点并返回 ``eth_networkId``从而确定网络。
 
-_note: Note: Connecting to a Local Node
-Each node implementation is slightly different and may require specific
-command-line flags, configuration or settings in their UI to enable
-JSON-RPC, unlock accounts or expose specific APIs. Please consult
-their documentation.
+_note: 注意: 连接到本地节点
+每个节点的实现略有不同，可能需要特定的命令行标志、配置或UI设置，以启用JSON-RPC、解锁帐户或公开特定的api。请参考他们的文档。
 
 _property: jsonRpcProvider.getSigner([ addressOrIndex ]) => [[JsonRpcSigner]]  @<JsonRpcProvider-getSigner> @SRC<providers/json-rpc-provider>
-Returns a [[JsonRpcSigner]] which is managed by this Ethereum node, at
-//addressOrIndex//. If no //addressOrIndex// is provided, the first
-account (account #0) is used.
+返回一个由该以太坊节点管理的[[JsonRpcSigner]]，地址为//addressOrIndex//。如果没有提供//addressOrIndex//，则使用第一个帐户(account #0)。
 
 _property: jsonRpcProvider.getUncheckedSigner([ addressOrIndex ]) => [[UncheckedJsonRpcSigner]]  @<JsonRpcProvider-getUncheckedSigner> @SRC<providers/json-rpc-provider>
 
 _property: jsonRpcProvider.listAccounts() => Promise<Array<string>>  @<JsonRpcProvider-listAccounts> @SRC<providers/json-rpc-provider>
-Returns a list of all account addresses managed by this provider.
+返回此provider管理的所有帐户地址的列表。
 
-_property: jsonRpcProvider.send(method, params) => Promise<any>  @<JsonRpcProvider-send> @SRC<providers/json-rpc-provider>
-Allows sending raw messages to the provider.
+_property: jsonRpcProvider.send(method， params) => Promise<any>  @<JsonRpcProvider-send> @SRC<providers/json-rpc-provider>
+允许向provider发送原始消息。
 
-This can be used for backend-specific calls, such as for debugging or
-specific account management.
-
+这可以用于后端特定的调用，比如调试或特定的帐户管理。
 
 _subsection: JsonRpcSigner  @<JsonRpcSigner> @INHERIT<[[Signer]]> @SRC<providers:class.JsonRpcSigner>
-A **JsonRpcSigner** is a simple Signer which is backed by a connected
-[[JsonRpcProvider]].
+**JsonRpcSigner**是一个简单的Signer，它由一个连接的[[JsonRpcProvider]]支持。
 
 _property: signer.provider => [[JsonRpcProvider]]
-The provider this signer was established from.
+创建这个signer的provider
 
 _property: signer.connectUnchecked() => [[UncheckedJsonRpcSigner]]  @<JsonRpcSigner-connectUnchecked> @SRC<providers>
-Returns a new Signer object which does not perform additional checks when
-sending a transaction. See [getUncheckedSigner](JsonRpcProvider-getUncheckedSigner) for more details.
+返回一个新的Signer对象，该对象在发送交易时不执行额外的检查。详情请参阅[getUncheckedSigner](JsonRpcProvider-getUncheckedSigner)。
 
 _property: signer.sendUncheckedTransaction(transaction) => Promise<string<[[DataHexString]]\<32>\>>  @<JsonRpcSigner-sendUncheckedTransaction> @SRC<providers>
-Sends the //transaction// and returns a Promise which resolves to the
-opaque transaction hash.
+发送//交易//并返回一个解析为不透明交易哈希的Promise。
 
 _property: signer.unlock(password) => Promise<boolean>  @<JsonRpcSigner-unlock> @SRC<providers>
-Request the node unlock the account (if locked) using //password//.
-
+使用//密码//请求节点解除锁定（如果被锁了）。
 
 _subsection: JsonRpcUncheckedSigner  @<UncheckedJsonRpcSigner> @INHERIT<[[Signer]]> @SRC<providers:class.UncheckedJsonRpcSigner>
-The JSON-RPC API only provides a transaction hash as the response when a
-transaction is sent, but the ethers Provider requires populating all details
-of a transaction before returning it. For example, the gas price and gas limit
-may be adjusted by the node or the nonce automatically included, in which case
-the opaque transaction hash has discarded this.
+JSON-RPC API仅在发送交易时提供交易哈希作为响应，但ether Provider要求在返回交易之前填充交易的所有细节。
+例如，燃料价格（gas price）和燃料限制（gas limit）可能由节点或自动包含在内的nonce调整，在这种情况下，不透明的交易哈希已经丢弃了这一点。
 
-To remedy this, the [[JsonRpcSigner]] immediately queries the provider for
-the details using the returned transaction hash to populate the [[providers-TransactionResponse]]
-object.
+为了解决这个问题，[[JsonRpcSigner]]立即查询provider的详细信息，用返回的交易哈希来填充[[providers-TransactionResponse]]对象。
 
-Some backends do not respond immediately and instead defer releasing the
-details of a transaction it was responsible for signing until it is mined.
+一些后端不立即响应，直到区块被挖出，才发布它负责签署的交易的细节。
 
-The **UncheckedSigner** does not populate any additional information and will
-immediately return the result as a mock [[providers-TransactionResponse]]-like
-object, with most of the properties set to null, but allows access to the
-transaction hash quickly, if that is all that is required.
+**UncheckedSigner**不填充任何附加信息，并将一个模拟的类似[[providers-TransactionResponse]]的对象作为立即返回的结果，
+其中大部分属性设置为null，但如果只需要这些，则可以快速获得交易哈希。
 
 
 _subsection: StaticJsonRpcProvider @<StaticJsonRpcProvider> @INHERIT<[[JsonRpcProvider]]> @SRC<providers:class.StaticJsonRpcProvider>
 
-An ethers Provider will execute frequent ``getNetwork`` calls to ensure
-the network calls and network being communicated with are consistent.
+ethers Provider将频繁执行``getNetwork``调用，以确保网络调用和网络通信是一致的。
 
-In the case of a client like MetaMask, this is desired as the network
-may be changed by the user at any time, in such cases the cost of
-checking the chainId is local and therefore cheap.
+在像MetaMask这样的客户端情况下，这是需要的，因为用户可以随时改变网络，在这种情况下，检查chainId的成本是本地的，因此很便宜。
 
-However, there are also many times where it is known the network cannot
-change, such as when connecting to an INFURA endpoint, in which case,
-the **StaticJsonRpcProvider** can be used which will indefinitely cache
-the chain ID, which can reduce network traffic and reduce round-trip
-queries for the chain ID.
+在像MetaMask这样的客户端情况下是非常有必要的，因为用户可能随时改变网络，
+在这种情况下，检查chainId的成本是在本地的，因此很便宜。
 
-This [[Provider]] should **only** be used when it is known the network
-cannot change.
+众所周知，在某些情况下网络不能改变，如当连接到一个INFURA端点，在这种情况下，可以使用**SStaticJsonRpcProvider**来将一直缓存链ID，可以减少网络流量和往返查询chain ID的次数。
 
+这个[[Provider]] **只**应在网络不能更改时使用。
 
-_subsection: Node-Specific Methods @<JsonRpcProvider--other>
+_subsection: 节点特定的方法 @<JsonRpcProvider--other>
 
-Many methods are less common or specific to certain Ethereum Node implementations
-(e.g. [Parity](link-parity) vs [Geth](link-geth). These include account and admin management,
-debugging, deeper block and transaction exploration and other services (such as
-Swarm and Whisper).
+许多方法是不常见的或特定于某些以太坊节点(例如[Parity](link-parity) 与 [Geth](link-geth))才有的。这些方法包括帐户和管理员管理、调试、更深层次的区块和交易探索以及其他服务(如Swarm和Whisper)。
 
-The [jsonRpcProvider.send](JsonRpcProvider-send) method can be used to access these.
+可以使用[jsonRpcProvider.send](JsonRpcProvider-send) 来获得这些方法。
 
-- [All JSON-RPC methods](link-json-rpc) (including the less common methods) which most
-  Ethereum Nodes support.
-- [Parity's Trace Module](link-parity-trace) can be used to trace and debug EVM
-  execution of a transaction (requires custom configuration)
-- [Geth's Debug Module](link-geth-debug) can be used to debug transactions and
-  internal cache state, etc.
+- 大多数以太坊节点提供的[JSON-RPC 方法](link-json-rpc) (包括不常见的方法)
+- [Parity's Trace Module](link-parity-trace) 可用于跟踪和调试EVM中执行的交易(需要自定义配置)
+- [Geth's Debug Module](link-geth-debug) 调试交易和内部缓存状态等。
 - [Additional Geth Methods](link-geth-rpc)
 - [Additional Parity Methods](link-parity-rpc)

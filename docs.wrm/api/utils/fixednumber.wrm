@@ -1,132 +1,109 @@
 _section: FixedNumber @<FixedNumber>
+**FixedNumber**是一个内部具有十进制除数的固定宽度(以位为单位)的number，这使得它能表示十进制小数部分。
 
-A **FixedNumber** is a fixed-width (in bits) number with an internal
-base-10 divisor, which allows it to represent a decimal fractional
-component.
-
-_subsection: Creating Instances
-
-The FixedNumber constructor cannot be called directly. There are several
-static methods for creating a FixedNumber.
+_subsection: 创建实例
+FixedNumber构造函数不能被直接调用。有几个静态方法可以创建FixedNumber。
 
 _property: FixedNumber.from(value [ , format = "fixed" ] ) => [[FixedNumber]]  @SRC<bignumber:FixedNumber.from>
-Returns an instance of a **FixedNumber** for //value// as a //format//.
+以//format//返回//value//的一个**FixedNumber**的实例。
 
 _property: FixedNumber.fromBytes(aBytesLike [ , format = "fixed" ] ) => [[FixedNumber]]  @SRC<bignumber>
-Returns an instance of a **FixedNumber** for //value// as a //format//.
+以//format//返回//value//的一个FixedNumber的实例。
 
 _property: FixedNumber.fromString(value [ , format = "fixed" ] ) => [[FixedNumber]]  @SRC<bignumber:FixedNumber.fromString>
-Returns an instance of a **FixedNumber** for //value// as a //format//. The //value// must
-not contain more decimals than the //format// permits.
+以//format//返回//value//的一个**FixedNumber**的实例。//value//所包含的值不能超过//format//允许的位数。
 
 _property: FixedNumber.fromValue(value [ , decimals = 0 [ , format = "fixed" ] ] ) => [[FixedNumber]]  @SRC<bignumber:FixedNumber.fromValue>
-Returns an instance of a **FixedNumber** for //value// with //decimals// as a //format//.
+以//format//的格式为//value//返回具有//decimals//位数的**FixedNumber**实例。
 
-
-_subsection: Properties
+_subsection: 属性
 
 _property: fixednumber.format
-The [FixedFormat](FixedFormat) of //fixednumber//.
+关于//fixednumber//的[FixedFormat](FixedFormat)。
 
+_subsection: 方法(Methods)
 
-_subsection: Methods
-
-_heading: Math Operations
+_heading: 数学运算
 
 _property: fixednumber.addUnsafe(otherValue) => [[FixedNumber]]  @SRC<bignumber/fixednumber>
-Returns a new FixedNumber with the value of //fixedvalue// **+** //otherValue//.
+返回一个新的FixedNumber，其值为//fixedvalue// **+** //otherValue//。
 
 _property: fixednumber.subUnsafe(otherValue) => [[FixedNumber]]  @SRC<bignumber/fixednumber>
-Returns a new FixedNumber with the value of //fixedvalue// **-** //otherValue//.
+返回一个新的FixedNumber，其值为//fixedvalue// **-** //otherValue//。
 
 _property: fixednumber.mulUnsafe(otherValue) => [[FixedNumber]]  @SRC<bignumber/fixednumber>
-Returns a new FixedNumber with the value of //fixedvalue// **&times;** //otherValue//.
+返回一个新的FixedNumber，其值为//fixedvalue// **&times;** //otherValue//。
 
 _property: fixednumber.divUnsafe(otherValue) => [[FixedNumber]]  @SRC<bignumber/fixednumber>
-Returns a new FixedNumber with the value of //fixedvalue// **&div;** //otherValue//.
+返回一个新的FixedNumber，其值为//fixedvalue// **&div;** //otherValue//。
 
 _property: fixednumber.round([ decimals = 0 ]) => [[FixedNumber]]  @SRC<bignumber/fixednumber>
-Returns a new FixedNumber with the value of //fixedvalue// rounded to //decimals//.
+返回一个新的FixedNumber，其值为//fixedvalue//按照//decimals//进行了四舍五入。
 
-
-_heading: Comparison and Equivalence
+_heading: 比较和等价
 
 _property: FixedNumber.isZero() => boolean  @SRC<bignumber/fixednumber:FixedNumber.isZero>
-Returns true if and only if the value of //FixedNumber// is zero.
+当且仅当//FixedNumber//的值为零时返回true。
 
-
-_heading: Conversion
+_heading: 转换
 
 _property: fixednumber.toFormat(format) => [[FixedNumber]]  @SRC<bignumber/fixednumber>
-Returns a new FixedNumber with the value of //fixedvalue// with //format//.
+返回一个新的FixedNumber，其值是//fixedvalue//按照//format//进行了格式化后的输出。
 
 _property: fixednumber.toHexString() => string  @SRC<bignumber/fixednumber>
-Returns a [[HexString]] representation of //fixednumber//.
+返回//fixednumber//的[[HexString]]表示形式。
 
 _property: fixednumber.toString() => string  @SRC<bignumber/fixednumber>
-Returns a string representation of //fixednumber//.
+返回//fixednumber//的字符串(string)表示形式。
 
 _property: fixednumber.toUnsafeFloat() => float  @SRC<bignumber/fixednumber>
-Returns a floating-point JavaScript number value of //fixednumber//.
-Due to rounding in JavaScript numbers, the value is only approximate.
+返回一个//fixednumber//的浮点型JavaScript number 值。由于JavaScript number的四舍五入，该值仅是近似值。
 
-
-_heading: Inspection
+_heading: 检查
 
 _property: FixedNumber.isFixedNumber(value) => boolean  @SRC<bignumber/fixednumber>
-Returns true if and only if //value// is a **FixedNumber**.
-
+当且仅当value值是**FixedNumber**时返回true。
 
 _subsection: FixedFormat @<FixedFormat>
+通常直接使用这个类是不必要的，因为将[[FixedFormat--strings]]直接传入[[FixedNumber]]时会自动创建。
 
-A **FixedFormat** is a simple object which represents a decimal
-(base-10) Fixed-Point data representation. Usually using this
-class directly is unnecessary, as passing in a [[FixedFormat--strings]]
-directly into the [[FixedNumber]] will automatically create this.
+_heading: 格式字符串  @<FixedFormat--strings>
+格式字符串由三个部分组成，包括有符号、位宽和小数位。
 
-_heading: Format Strings  @<FixedFormat--strings>
+有符号格式字符串以``fixed``开头，无符号格式字符串以``ufixed``开头，然后是位宽和小数位。
 
-A format string is composed of three components, including signed-ness,
-bit-width and number of decimals.
+宽度必须等于0 mod 8(即``(width % 8) == 0``)，且不大于256位，小数点的位数不能大于80个。
 
-A signed format string begins with ``fixed``, which an unsigned format
-string begins with ``ufixed``, followed by the width (in bits) and the
-number of decimals.
+例如:
 
-The width must be congruent to 0 mod 8 (i.e. ``(width % 8) == 0``) and no
-larger than 256 bits and the number of decimals must be no larger than 80.
+- **fixed128x18**是带符号的，128位宽，有18位小数;这在大多数情况下都是有用的
+- **fixed32x0**是带符号的，32位宽，有0位小数;这和C语言中的``int32_t``是一样的
+- **ufixed32x0**是无符号的，32位宽，有0位小数;这和C语言中的``int32_t``是一样的
+- **fixed** 是``fixed128x18``的缩写
+- **ufixed** 是 ``ufixed128x18``的缩写
 
-For example:
-
-- **fixed128x18** is signed, 128 bits wide and has 18 decimals; this is useful for most purposes
-- **fixed32x0** is signed, 32 bits wide and has 0 decimals; this would be the same as a ``int32_t`` in C
-- **ufixed32x0** is unsigned, 32 bits wide and has 0 decimals; this would be the same as a ``uint32_t`` in C
-- **fixed** is shorthand for ``fixed128x18``
-- **ufixed** is shorthand for ``ufixed128x18``
-
-_heading: Creating Instances
+_heading: 创建实例
 
 _property: FixedFormat.from(value = "fixed128x18") => [[FixedFormat]]  @<FixedNumber-from> @SRC<bignumber/fixednumber:FixedFormat.from>
+返回一个由//value//定义的**FixedFormat**格式的新实例。
+可以传入任何有效的[[FixedFormat--strings]]，也可以传入任何定义了``signed``、``width``和``decimals``的对象，
+包括一个[[FixedFormat]]对象。
 
-Returns a new instance of a **FixedFormat** defined by //value//. Any valid [[FixedFormat--strings]]
-may be passed in as well as any object which has any of ``signed``, ``width`` and ``decimals``
-defined, including a [[FixedFormat]] object.
-
-_heading: Properties
+_heading: 属性
 
 _property: fixedFormat.signed => boolean
-The signed-ness of //fixedFormat//, true if negative values are supported.
+//fixedFormat//的signed值，如果支持负数则为返回true。
 
 _property: fixedFormat.width => number
-The width (in bits) of //fixedFormat//.
+//fixedFormat//的位宽。
 
 _property: fixedFormat.decimals => number
-The number of decimal points of //fixedFormat//.
+//fixedFormat//的小数点位数。
 
 _property: fixedFormat.name => string
-The name of the //fixedFormat//, which can be used to recreate the format
-and is the string that the Solidity language uses to represent this format.
+//fixedFormat//的name，可以用来重新创建格式，它是Solidity语言用来表示这种格式的字符串。
 
 _definition: **//"fixed"//**
-A shorthand for ``fixed128x80``.
+表示的是``fixed128x80``的缩写。
+
 

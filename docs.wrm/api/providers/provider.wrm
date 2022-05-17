@@ -1,25 +1,18 @@
 _section: Provider @<Provider>
 
-A **Provider** in ethers is a read-only abstraction to
-access the blockchain data.
+在ethers里面，**Provider** 是访问区块链数据的只读抽象。
 
-_note: Coming from Web3.js?
-If you are coming from Web3.js, this is one of the biggest
-differences you will encounter using ethers.
+_note: 使用过 Web3.js吗?
+如果你用过Web3.js，以下是与ethers.js最大不同点。
 
-The ethers library creates a strong division between the
-operation a **Provider** can perform and those of a [[Signer]],
-which Web3.js lumps together.
+ethers library 在 **Provider**和[[Signer]]可执行的操作之间创建了一个强大的划分，而Web3.js将二者结合在一起。
 
-This separation of concerns and a stricted subset of Provider
-operations allows for a larger variety of backends, a more
-consistent API and ensures other libraries to operate without
-being able to rely on any underlying assumption.
+这种划分的关注点在于Provider严格的操作子集允许更多的后端、更一致的API，并确保其他库可以在不依赖任何潜在假设的情况下运行。
 
-_subsection: Accounts Methods  @<Provider--account-methods>
+_subsection: 账户的方法  @<Provider--account-methods>
 
 _property: provider.getBalance(address [ , blockTag = latest ]) => Promise<[[BigNumber]]>  @<Provider-getBalance> @SRC<providers/base-provider>
-Returns the balance of //address// as of the //blockTag// block height.
+返回给定的//blockTag// 区块高度下//地址//的余额。
 
 _code: @lang<javascript>
 
@@ -28,8 +21,7 @@ await provider.getBalance("ricmoo.eth");
 //_log:
 
 _property: provider.getCode(address [ , blockTag = latest ]) => Promise<string<[[DataHexString]]>>  @<Provider-getCode> @SRC<providers/base-provider>
-Returns the contract code of //address// as of the //blockTag// block height. If there is
-no contract currently deployed, the result is ``0x``.
+返回给定的//blockTag// 区块高度下的合约源代码，如果当前没有合约被部署， 将返回 ``0x``。
 
 _code: @lang<javascript>
 
@@ -38,7 +30,7 @@ await provider.getCode("registrar.firefly.eth");
 //_log:
 
 _property: provider.getStorageAt(addr, pos [ , blockTag = latest ]) => Promise<string<[[DataHexString]]>>  @<Provider-getStorageAt> @SRC<providers/base-provider>
-Returns the ``Bytes32`` value of the position //pos// at address //addr//, as of the //blockTag//.
+在当前的//blockTag//下，输入address参数addr和position参数pos，返回类型为``Bytes32``的值。
 
 _code: @lang<javascript>
 
@@ -47,9 +39,7 @@ await provider.getStorageAt("registrar.firefly.eth", 0)
 //_log:
 
 _property: provider.getTransactionCount(address [ , blockTag = latest ]) => Promise<number>  @<Provider-getTransactionCount> @SRC<providers/base-provider>
-Returns the number of transactions //address// has ever **sent**, as of //blockTag//.
-This value is required to be the nonce for the next transaction from //address//
-sent to the network.
+在当前的//blockTag//下，返回已经发送的交易的数量，这个值是用来提供给**发送**到网络的下一个交易的nonce值。
 
 _code: @lang<javascript>
 
@@ -58,11 +48,10 @@ await provider.getTransactionCount("ricmoo.eth");
 //_log:
 
 
-_subsection: Blocks Methods  @<Provider--block-methods>
+_subsection: 区块的方法  @<Provider--block-methods>
 
 _property: provider.getBlock(block) => Promise<[[providers-Block]]>  @<Provider-getBlock> @SRC<providers/base-provider>
-Get the //block// from the network, where the ``result.transactions`` is a list
-of transaction hashes.
+从网络中得到//区块//， ``result.transactions`` 是一串交易集合的哈希值。
 
 _code: @lang<javascript>
 
@@ -71,8 +60,7 @@ await provider.getBlock(100004)
 //_log:
 
 _property: provider.getBlockWithTransactions(block) => Promise<[[providers-BlockWithTransactions]]>  @<Provider-getBlockWithTransactions> @SRC<providers/base-provider>
-Get the //block// from the network, where the ``result.transactions`` is
-an Array of [[providers-TransactionResponse]] objects.
+从网络中得到//区块//， ``result.transactions`` 是 一个[[providers-TransactionResponse]] 对象的数组集合。
 
 _code: @lang<javascript>
 
@@ -80,42 +68,32 @@ _code: @lang<javascript>
 await provider.getBlockWithTransactions(100004)
 //_log:
 
-_subsection: Ethereum Naming Service (ENS) Methods @<Provider--ens-methods>
+_subsection: 以太坊域名服务 (ENS) 方法 @<Provider--ens-methods>
 
-The [Ethereum Naming Service](link-ens) (ENS) allows a short and
-easy-to-remember ENS Name to be attached to any set of keys
-and values.
+[以太坊域名服务](link-ens) (ENS) 允许一个简短且易于记忆的ENS名称附加到任何一组键和值。
 
-One of the most common uses for this is to use a simple name to
-refer to an [Ethereum Address](address).
+最常见的用法之一是使用一个简单的命名来引用[以太坊地址](address)。
 
-In the ethers API, nearly anywhere that accepts an address, an
-ENS name may be used instead, which can simplify code and make
-reading and debugging much simpler.
+在ethers的 API中，几乎任何接受地址的地方都可以使用ENS命名，这可以简化代码，使读取和调试更加简单。
 
-The provider offers some basic operations to help resolve and
-work with ENS names.
+provider 提供了一些基本操作，以帮助解析和处理ENS命名。
 
 _property: provider.getResolver(name) => Promise<[[EnsResolver]]>
-Returns an EnsResolver instance which can be used to further inquire
-about specific entries for an ENS name.
+返回一个EnsResolver实例，该实例可用于进一步查询ENS命名的特定实体。
 
 _code: @lang<javascript>
 
 //_hide: provider = ethers.getDefaultProvider();
 
-// See below (Resolver) for examples of using this object
+// 有关使用此对象的示例，请参见下面(Resolver)
 const resolver = await provider.getResolver("ricmoo.eth");
 
 //_hide: _page.resolver = resolver;
 
 _property: provider.lookupAddress(address) => Promise<string>  @<Provider-lookupAddress> @SRC<providers/base-provider>
-Performs a reverse lookup of the //address// in ENS using the
-//Reverse Registrar//.  If the name does not exist, or the
-forward lookup does not match, ``null`` is returned.
+使用//反向注册器//对ENS中的地址进行反向查找。如果名称不存在，或者正向查找不匹配，则返回``null``。
 
-An ENS name requries additional configuration to setup a reverse
-record, they are not automatically set up.
+ENS名称需要额外的配置来设置反向记录，它们不会自动设置。
 
 _code: @lang<javascript>
 
@@ -124,9 +102,7 @@ await provider.lookupAddress("0x5555763613a12D8F3e73be831DFf8598089d3dCa");
 //_log:
 
 _property: provider.resolveName(name) => Promise<string<[Address](address)>>  @<Provider-ResolveName> @SRC<providers/base-provider>
-Looks up the address of //name//. If the name is not owned, or
-does not have a //Resolver// configured, or the //Resolver// does
-not have an address configured, ``null`` is returned.
+查找一个//名称//的地址。如果这个//名称//没有被拥有，或者没有配置一个解析器，或者解析器没有配置一个地址，则返回``null``。
 
 _code: @lang<javascript>
 
@@ -138,33 +114,32 @@ await provider.resolveName("ricmoo.eth");
 _subsection: EnsResolver @<EnsResolver> 
 
 _property: resolver.name => string
-The name of this resolver.
+Resolver 的名称
 
 _property: resolver.address => string<[[address]]>
-The address of the Resolver.
+Resolve 的地址
 
 _property: resolver.getAddress([ cointType = 60 ]) => Promise<string>
-Returns a Promise which resolves to the [[link-eip-2304]] multicoin address
-stored for the //coinType//. By default an Ethereum [[address]]
-(``coinType = 60``) will be returned.
+返回一个 解析的类型为[[link-eip-2304]] //多币地址//的 Promise。
+默认情况下，返回一个以太坊的[[address]](``coinType = 60``)。
 
 _code: @lang<javascript>
 
 //_hide: const resolver = _page.resolver;
 
-// By default, looks up the Ethereum address
-// (this will match provider.resolveName)
+// 默认情况下，查找以太坊地址
+// (这个会 match provider.resolveName)
 //_result:
 await resolver.getAddress();
 //_log:
 
-// Specify the coinType for other coin addresses (0 = Bitcoin)
+// 为其他coin地址指定coinType (0 = Bitcoin)
 //_result:
 await resolver.getAddress(0);
 //_log:
 
 _property: resolver.getContentHash() => Promise<string>
-Returns a Promise which resolves to any stored [[link-eip-1577]] content hash.
+返回一个Promise，解析为任何存储的[[link-eip-1577]]内容哈希。 [[link-eip-1577]]。
 
 _code: @lang<javascript>
 
@@ -175,7 +150,7 @@ await resolver.getContentHash();
 //_log:
 
 _property: resolver.getText(key) => Promise<string>
-Returns a Promise which resolves to any stored [[link-eip-634]] text entry for //key//.
+返回一个Promise，解析为任何存储的[[link-eip-634]]作为key的文本实体。
 
 _code: @lang<javascript>
 
@@ -193,20 +168,18 @@ await resolver.getText("url");
 await resolver.getText("com.twitter");
 //_log:
 
-_subsection: Logs Methods  @<Provider--log-methods>
+_subsection: Logs 方法  @<Provider--log-methods>
 
 _property: provider.getLogs(filter) => Promise<Array<[[providers-Log]]>>  @<Provider-getLogs> @SRC<providers/base-provider>
-Returns the Array of [[providers-Log]] matching the //filter//.
+返回匹配筛选器的 [[providers-Log]]数组。
 
-Keep in mind that many backends will discard old events, and that requests
-which are too broad may get dropped as they require too many resources to
-execute the query.
+请记住，许多后端会丢弃旧的事件，并且请求范围太广可能也会被丢弃，因为它们需要太多的资源来执行查询。
 
 
 _subsection: Network Status Methods  @<Provider--network-methods>
 
 _property: provider.getNetwork() => Promise<[[providers-Network]]>  @<Provider-getNetwork> @SRC<providers/base-provider:method.BaseProvider.getNetwork>
-Returns the [[providers-Network]] this Provider is connected to.
+返回这个 Provider 所连接的 [[providers-Network]]。
 
 _code: @lang<javascript>
 
@@ -217,7 +190,7 @@ await provider.getNetwork()
 //_log:
 
 _property: provider.getBlockNumber() => Promise<number>  @<Provider-getBlockNumber> @SRC<providers/base-provider>
-Returns the block number (or height) of the most recently mined block.
+返回最近挖出的区块的序号(或高度)。
 
 _code: @lang<javascript>
 
@@ -226,55 +199,45 @@ await provider.getBlockNumber()
 //_log:
 
 _property: provider.getGasPrice() => Promise<[[BigNumber]]>  @<Provider-getGasPrice> @SRC<providers/base-provider>
-Returns a //best guess// of the [[gas-price]] to use in a transaction.
+返回一个 关于这个交易中的 [[gas-price]]的//最准预测//。
 
 _code: @lang<javascript>
 
-// The gas price (in wei)...
+// 燃料价格 (单位： wei)...
 gasPrice = await provider.getGasPrice()
 //_log: gasPrice
 
-// ...often this gas price is easier to understand or
-// display to the user in gwei
+// 通常来说燃料的价格用 gwei 会更好理解
 //_result:
 utils.formatUnits(gasPrice, "gwei")
 //_log:
 
 _property: provider.getFeeData() => Promise<[[providers-FeeData]]>  @<Provider-getFeeData> @SRC<abstract-provider>
-Returns the current recommended [[providers-FeeData]] to use in a transaction.
+返回在一笔交易中当前的recommended [[providers-FeeData]]。
 
-For an EIP-1559 transaction, the ``maxFeePerGas`` and ``maxPriorityFeePerGas``
-should be used.
+对于 EIP-1559 的交易, 应该使用 ``maxFeePerGas`` 和 ``maxPriorityFeePerGas``。
 
-For legacy transactions and networks which do not support EIP-1559, the ``gasPrice``
-should be used.
+对于不支持 EIP-1559 中被遗留的交易和网络，应该使用 ``gasPrice``。
 
 _code: @lang<javascript>
 
-// The gas price (in wei)...
+// 燃料价格 (单位： wei)...
 feeData = await provider.getFeeData()
 //_log: feeData
 
-// ...often these values are easier to understand or
-// display to the user in gwei
+// 通常来说燃料的价格用 gwei 会更好理解
 //_result:
 utils.formatUnits(feeData.maxFeePerGas, "gwei")
 //_log:
 
 _property: provider.ready => Promise<[[providers-Network]]> @<Provider-ready> @src<providers/base-provider>
-Returns a Promise which will stall until the network has heen established,
-ignoring errors due to the target node not being active yet.
+返回一个 Promise ，直到网络建立就失效，，忽略由于目标节点还未激活而出现的错误。
+这可以用于测试或附上脚本，以等待节点启动并顺利运行。
 
-This can be used for testing or attaching scripts to wait until the node is
-up and running smoothly.
-
-
-_subsection: Transactions Methods  @<Provider--transaction-methods>
+_subsection: Transactions 方法  @<Provider--transaction-methods>
 
 _property: provider.call(transaction [ , blockTag = latest ]) => Promise<string<[[DataHexString]]>>  @<Provider-call> @SRC<providers/base-provider>
-Returns the result of executing the //transaction//, using //call//. A call
-does not require any ether, but cannot change any state. This is useful
-for calling getters on Contracts.
+使用//call//返回执行//交易//的结果。调用不需要任何的以太，但不能改变任何状态。这在合约上调用getter方法是非常有用的。
 
 _code: @lang<javascript>
 
@@ -289,12 +252,9 @@ await provider.call({
 //_log:
 
 _property: provider.estimateGas(transaction) => Promise<[[BigNumber]]>  @<Provider-estimateGas> @SRC<providers/base-provider>
-Returns an estimate of the amount of gas that would be required to submit //transaction//
-to the network.
+返回向网络提交//交易//所需的预估gas值。
 
-An estimate may not be accurate since there could be another transaction
-on the network that was not accounted for, but after being mined affected
-relevant state.
+估计的gas值可能不准确，因为网络上可能有另一个交易没有被计算在内，但在被挖出来之后就会影响相关状态。
 
 _code: @lang<javascript>
 
@@ -314,13 +274,9 @@ await provider.estimateGas({
 //_log:
 
 _property: provider.getTransaction(hash) => Promise<[[providers-TransactionResponse]]> @<Provider-getTransaction> @src<providers/base-provider>
-Returns the transaction with //hash// or null if the transaction is unknown.
+返回带有//哈希值//的交易，如果交易未知，则返回null。
 
-If a transaction has not been mined, this method will search the transaction
-pool. Various backends may have more restrictive transaction pool access (e.g.
-if the gas price is too low or the transaction was only recently sent and not
-yet indexed) in which case this method may also return null.
-
+如果一个交易还没有被挖出，这个方法将搜索交易池。各种后端可能有更多的限制交易池访问(例如，燃料价格太低或交易最近才发送，还没有索引)，在这种情况下，这个方法也可能返回null。
 _code: @lang<javascript>
 
 //_result:
@@ -328,11 +284,9 @@ await provider.getTransaction("0x5b73e239c55d790e3c9c3bbb84092652db01bb8dbf49ccc
 //_log:
 
 _property: provider.getTransactionReceipt(hash) => Promise<[[providers-TransactionReceipt]]> @<Provider-getTransactionReceipt> @src<providers/base-provider>
-Returns the transaction receipt for //hash// or null if the transaction
-has not been mined.
+返回交易收据的//哈希值//，如果交易还没有被挖出则返回null。
 
-To stall until the transaction has been mined, consider the ``waitForTransaction``
-method below.
+如果需要等待交易被挖出，请考虑下面的``waitForTransaction``方法。
 
 _code: @lang<javascript>
 
@@ -341,9 +295,7 @@ await provider.getTransactionReceipt("0x5b73e239c55d790e3c9c3bbb84092652db01bb8d
 //_log:
 
 _property: provider.sendTransaction(transaction) => Promise<[[providers-TransactionResponse]]>  @<Provider-sendTransaction> @SRC<providers/base-provider>
-Submits //transaction// to the network to be mined. The //transaction// **must** be signed,
-and be valid (i.e. the nonce is correct and the account has sufficient balance to pay
-for the transaction).
+向在挖区块的网络提交//交易//。//交易// **必须** 经过签名，并且需要合法（例如，nonce值需要正确并且账户要有足够的余额来进行该笔交易的支付）。
 
 _code: @lang<javascript>
 
@@ -363,103 +315,84 @@ await provider.sendTransaction(signedTx);
 //_log:
 
 _property: provider.waitForTransaction(hash [ , confirms = 1 [ , timeout ] ]) => Promise<[TxReceipt](providers-TransactionReceipt)>  @<Provider-waitForTransaction> @SRC<providers/base-provider>
-Returns a Promise which will not resolve until //transactionHash// is mined.
+返回一个Promise，直到transactionHash被挖出来，才能够被解析。
 
-If //confirms// is 0, this method is non-blocking and if the
-transaction has not been mined returns null. Otherwise,
-this method will block until the transaction has //confirms//
-blocks mined on top of the block in which is was mined.
+如果//confirms//参数为0，这个方法是非阻塞的，如果交易还没有被挖出，则返回null。
+否则，该方法是阻塞的，直到这个包含该交易的、被//confirms//标识的区块被挖出。
 
-_subsection: Event Emitter Methods @<Provider--event-methods>
+_subsection: Event Emitter 方法 @<Provider--event-methods>
 
-The EventEmitter API allows applications to use an
-[[link-wiki-observer-pattern]] to register callbacks for when
-various events occur.
+EventEmitter API允许应用程序使用[[link-wiki-observer-pattern]]来注册各种事件发生时的回调函数。
 
-This closely follows the Event Emitter provided by other JavaScript
-libraries with the exception that event names support some more
-[complex objects](Provider--events), not only strings. The objects
-are normalized internally.
+
+这与其他JavaScript库提供的Event Emitter密切相关，除开那些事件名称支持一些更[复杂的对象](Provider--events)，而不仅仅是字符串。对象在内部是标准化的。
+
 
 _property: provider.on(eventName, listener) => this  @<Provider-on> @SRC<providers/base-provider>
-Add a //listener// to be triggered for each //eventName// [event](Provider--events).
+为每一个参数为//eventName//的 [事件](Provider--events)添加//监听器//。
 
 _property: provider.once(eventName, listener) => this  @<Provider-once> @SRC<providers/base-provider>
-Add a //listener// to be triggered for only the next
-//eventName// [event](Provider--events), at which time it will be removed.
+为参数为//eventName//的 [事件](Provider--events)添加//监听器//，监听使用过后将会被移除。
 
 _property: provider.emit(eventName, ...args) => boolean  @<Provider-emit> @SRC<providers/base-provider>
 Notify all listeners of the //eventName// [event](Provider--events),
 passing //args// to each listener. This is generally only used internally.
-
+通知所有的//eventName// [event](Provider--events)监听器，并把参数传递给它们。这通常只在内部使用。
 _property: provider.off(eventName [ , listener ]) => this  @<Provider-off> @SRC<providers/base-provider>
-Remove a //listener// for the //eventName// [event](Provider--events).
-If no //listener// is provided, all listeners for //eventName// are removed.
+移除一个参数为//eventName//的[事件](Provider--events)//监听器//，如果没有提供//listener//参数，则移除所有关于//eventName//的监听器。
 
 _property: provider.removeAllListeners([ eventName ]) => this  @<Provider-removeAllListeners> @SRC<providers/base-provider>
-Remove all the listeners for the //eventName// [events](Provider--events).
-If no //eventName// is provided, **all** events are removed.
+移除所有参数为//eventName//的[事件](Provider--events)监听器，如果没有提供//eventName//参数，则移除**所有**事件。
 
 _property: provider.listenerCount([ eventName ]) => number  @<Provider-listenerCount> @SRC<providers/base-provider>
-Returns the number of listeners for the //eventName// [events](Provider--events).
-If no //eventName// is provided, the total number of listeners is returned.
+返回所有参数为//eventName//[事件](Provider--events)的监听器数量。如果没有提供//eventName//参数，返回所有监听器的数量。
 
 _property: provider.listeners(eventName) => Array<Listener>  @<Provider-listeners> @SRC<providers/base-provider>
-Returns the list of Listeners for the //eventName// [events](Provider--events).
+返回参数为//eventName//[事件](Provider--events)监听器的list集合。
 
 
-_heading: Events  @<Provider--events>
+_heading: 事件  @<Provider--events>
 
-Any of the following may be used as the //eventName// in the above methods.
+以下任何一个方法都可以作为上述方法中的//eventName//参数。
 
 _definition: **Log Filter**
 
-A filter is an object, representing a contract log Filter, which has the optional
-properties ``address`` (the source contract) and ``topics`` (a topic-set to match).
+一个过滤器是一个对象，表示合约log Filter它具有可选的``address`` (合约地址) 和 ``topics`` (一个要匹配的主题集)。
 
-If ``address`` is unspecified, the filter matches any contract address.
+如果参数``address``未被指定，则过滤器匹配任何合约地址。
 
-See [EventFilters](providers-EventFilter) for more information on filtering events.
+有关于过滤事件的更多信息，请参阅 [EventFilters](providers-EventFilter)。
 
 _definition: **Topic-Set Filter**
 
-The value of a **Topic-Set Filter** is a array of Topic-Sets.
+**主题集过滤器**的值是一个主题集数组。
 
-This event is identical to a //Log Filter// with the address omitted (i.e. from
-any contract).
+此事件与日志过滤器相同，但参数``address``可以不用填(匹配任何合约)。
 
-See [EventFilters](providers-EventFilter) for more information on filtering events.
+有关于过滤事件的更多信息，请参阅 [EventFilters](providers-EventFilter)。
 
 _definition: **Transaction Filter**
 
-The value of a **Transaction Filter** is any transaction hash.
+**交易过滤器**的值是交易的哈希值。
 
-This event is emitted on every block that is part of a chain that
-includes the given mined transaction. It is much more common that the
-[once](Provider-once) method is used than the [on](Provider-on) method.
+这个事件会在任何给定的交易挖出的链上区块中触发。 使用[once](Provider-once)方法比使用[on](Provider-on)方法要普遍地多。
 
 _null:
 
-In addition to transaction and filter events, there are several named
-events.
+除了交易和过滤事件外，还有几个命名事件。
 
 _table: Named Provider Events @style<full>
 
-$Block:    emitted when a new block is mined
-$Error:    emitted on any error
-$Pending:  emitted when a new transaction enters the memory pool; only
-           certain providers offer this event and may require
-           running your own node for reliable results
-$WillPoll: emitted prior to a polling loop is about to begin;
-           //(very rarely used by most developers)//
-$DidPoll:  emitted after all events from a polling loop are emitted;
-           //(very rarely used by most developers)//
-$Poll:     emitted during each poll cycle after `blockNumber` is updated
-           (if changed) and before any other events (if any) are emitted
-           during the poll loop;
-           //(very rarely used by most developers)//
-$Debug:    each Provider may use this to emit useful debugging information
-           and the format is up to the developer;
+$Block:    当一个区块被挖出时触发
+$Error:    只要有错误就触发
+$Pending:  当一个新交易进入内存池时触发;只有特定的providers提供此事件，从而在运行在自己的节点上获得可靠的数据
+$WillPoll: 在一个polling loop开始之前触发;//(大多数开发者很少使用)//
+$DidPoll:  在polling loop中的所有事件被触发后触发;(//大多数开发者很少使用//)
+$Poll:     在每个poll cycle中，`blockNumber`更新之后(如果改变了)，以及与在poll loop中任何其他的事件(如果有)之前触发;
+           //(大多数开发者很少使用)//
+$Debug:    每个Provider可以使用它来发出有用的调试信息，格式由开发者决定;//(大多数开发者很少使用)//
+
+
            //(very rarely used by most developers)//
 
 |   **Event Name**    |  **Arguments**                   <|   **Description**  <<<|
@@ -472,7 +405,7 @@ $Debug:    each Provider may use this to emit useful debugging information
 |    ``"debug"``      |   provider dependent             <| $Debug             <<<|
 
 
-_code: Events Example @lang<javascript>
+_code: 事件例子 @lang<javascript>
 
 //_hide: const txHash = utils.id("dummy-data");
 //_hide: const myAddress = ethers.constants.HashZero;
@@ -480,18 +413,18 @@ _code: Events Example @lang<javascript>
 //_hide: const hexZeroPad = ethers.utils.hexZeroPad;
 
 provider.on("block", (blockNumber) => {
-    // Emitted on every block change
+    // 只有有一个区块改变就会触发
 })
 
 
 provider.once(txHash, (transaction) => {
-    // Emitted when the transaction has been mined
+    // 当含有交易的区块被挖出就会触发
 })
 
 
-// This filter could also be generated with the Contract or
-// Interface API. If address is not specified, any address
-// matches and if topics is not specified, any log matches
+// 这个过滤器也可以通过Contract或接口API生成。
+// 如果不指定address，则默认匹配任何地址，
+// 如果不指定topics，则默认匹配任何日志。
 filter = {
     address: "dai.tokens.ethers.eth",
     topics: [
@@ -499,12 +432,11 @@ filter = {
     ]
 }
 provider.on(filter, (log, event) => {
-    // Emitted whenever a DAI token transfer occurs
+    // 当 DAI token 发生转账时触发
 })
 
 
-// Notice this is an array of topic-sets and is identical to
-// using a filter with no address (i.e. match any address)
+// 注意，这是一个主题集数组，与使用没有address参数的过滤器相同(即匹配任何地址)
 topicSets = [
     utils.id("Transfer(address,address,uint256)"),
     null,
@@ -514,23 +446,23 @@ topicSets = [
     ]
 ]
 provider.on(topicSets, (log, event) => {
-    // Emitted any token is sent TO either address
+    // 当任何一个token 发送到其他地址时触发
 })
 
 
 provider.on("pending", (tx) => {
-    // Emitted when any new pending transaction is noticed
+    // 当有一笔pending交易被捕获时触发
 });
 
 
 provider.on("error", (tx) => {
-    // Emitted when any error occurs
+    // 只要有错误就会触发
 });
 
 //_hide: provider.removeAllListeners() /* Make sure the docs build without waiting forever */
 
-_subsection: Inspection Methods  @<Provider--inspection-methods>
+_subsection: 校验方法  @<Provider--inspection-methods>
 
 _property: Provider.isProvider(object) => boolean  @<Provider-isProvider> @SRC<abstract-provider>
-Returns true if and only if //object// is a Provider.
+当且仅当参数//object//是Provider返回 true 。
 

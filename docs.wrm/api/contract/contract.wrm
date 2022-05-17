@@ -1,254 +1,196 @@
-_section: Contract @<Contract> @SRC<contracts:class.Contract>
+_section: 合约（Contract） @<Contract> @SRC<contracts:class.Contract>
 
-A **Contract** is an abstraction of code that has been deployed
-to the blockchain.
+**Contract**是部署到区块链的代码的抽象。
 
-A Contract may be sent transactions, which will trigger its code
-to be run with the input of the transaction data.
+合同可能会发送交易，这将触发它的代码并与输入的交易数据一起运行。
 
-_subsection: Creating Instances @<Contract--creating>
+_subsection: 创建实例 @<Contract--creating>
 
 _property: new ethers.Contract(address, abi, signerOrProvider) @src<contracts:class.Contract>
 
 _property: contract.attach(addressOrName) => [[Contract]]  @<Contract-attach> @SRC<contracts:BaseContract.attach>
-Returns a new instance of the **Contract** attached to a new
-address. This is useful if there are multiple similar or identical
-copies of a Contract on the network and you wish to interact with
-each of them.
+返回一个附加到新地址的**Contract**新实例。
+如果网络上有多个类似或相同的合约副本，并且您希望与它们中的每一个进行交互，那么这是非常有用的。
 
 _property: contract.connect(providerOrSigner) => [[Contract]]  @<Contract-connect> @SRC<contracts:BaseContract.connect>
-Returns a new instance of the Contract, but connected to
-//providerOrSigner//.
+返回合约的一个新实例，但需要连接到//providerOrSigner//。
 
-By passing in a [[Provider]], this will return a downgraded
-**Contract** which only has read-only access (i.e. constant calls).
+通过传入一个[[Provider]]，这将返回一个低级的合约实例，它只有只读访问的权限(即常量调用)。
 
-By passing in a [[Signer]]. this will return a **Contract** which
-will act on behalf of that signer.
+通过传入一个[[Signer]]，这将返回一个代表该签名人（signer）的合约实例。
 
 
-_subsection: Properties  @<Contract--properties>
+_subsection: 属性  @<Contract--properties>
 
 _property: contract.address => string<[[address]]>
-This is the address (or ENS name) the contract was constructed with.
+这是构建合约时使用的地址(或ENS名称)。
+
 
 _property: contract.resolvedAddress => string<[[address]]>
-This is a promise that will resolve to the address the **Contract**
-object is attached to. If an [[address]] was provided to the constructor,
-it will be equal to this; if an ENS name was provided, this will be the
-resolved address.
+这是一个合约对象将解析合约地址的promise。
+如果一个[[address]]被提供给构造函数，它将解析成这个地址;
+如果提供的是ENS名称，这将解析成对应的地址。
+
+
 
 _property: contract.deployTransaction => [[providers-TransactionResponse]]
-If the **Contract** object is the result of a ContractFactory deployment,
-this is the transaction which was used to deploy the contract.
+如果**Contract**是ContractFactory部署后返回的对象，
+那么contract.deployTransaction返回的数据就是部署这个合约的交易信息（transaction）。
 
 _property: contract.interface => [[Interface]]
-This is the ABI as an [[Interface]].
+这是作为[[Interface]]接口的ABI。
 
 _property: contract.provider => [[Provider]]
-If a provider was provided to the constructor, this is that provider. If
-a signer was provided that had a [[Provider]], this is that provider.
+如果构造函数使用的是provider生成的contract合约对象，那么这个结果就是这个provider。
+如果使用的是具有[[Provider]]的signer，那么这个结果就是provider。
+
+
 
 _property: contract.signer => [[Signer]]
-If a signer was provided to the constructor, this is that signer.
+如果构造函数使用的是signer生成的contract合约对象，那么这个结果就是这个signer。
 
-
-_subsection: Methods @<Contract--methods>
+_subsection: 方法 @<Contract--methods>
 
 _property: contract.deployed() => Promise<[[Contract]]>  @<Contract-deployed> @SRC<contracts>
 
 _property: Contract.isIndexed(value) => boolean  @<Contract-isIndexed> @SRC<contracts>
 
 
-_subsection: Events @<Contract--events>
+_subsection: 事件（Events） @<Contract--events>
 
 _property: contract.queryFilter(event [ , fromBlockOrBlockHash [ , toBlock ]) => Promise<Array<Event>> @<Contract-queryFilter> @SRC<contracts>
-Return Events that match the //event//.
+返回与//event//匹配的事件。
 
 _property: contract.listenerCount([ event ]) => number  @<Contract-listenerCount> @SRC<contracts:BaseContract.listenerCount>
-Return the number of listeners that are subscribed to //event//. If
-no event is provided, returns the total count of all events.
+返回订阅该//event//的监听器数量。如果没有提供//event//，则返回所有事件的总数。
 
 _property: contract.listeners(event) => Array<Listener>  @<Contract-listeners> @SRC<contracts:BaseContract.listeners>
-Return a list of listeners that are subscribed to //event//.
+返回订阅该//event//的监听器列表。
 
 _property: contract.off(event, listener) => this  @<Contract-off> @SRC<contracts>
-Unsubscribe //listener// to //event//.
+监听器取消订阅//event//事件。
 
 _property: contract.on(event, listener) => this  @<Contract-on> @SRC<contracts>
-Subscribe to //event// calling //listener// when the event occurs.
+监听//event//事件，当事件发生时，会调用//listener//函数。
 
 _property: contract.once(event, listener) => this  @<Contract-once> @SRC<contracts>
-Subscribe once to //event// calling //listener// when the event
-occurs.
+监听//event//事件，当事件发生时，仅调用一次//listener//函数。
 
 _property: contract.removeAllListeners([ event ]) => this  @<Contract-removeAllListeners> @SRC<contracts:BaseContract.removeAllListeners>
-Unsubscribe all listeners for //event//. If no event is provided,
-all events are unsubscribed.
+取消所有订阅//event//事件的监听器。如果未提供//event//事件，则取消订阅所有事件的监听。
 
 
-_subsection: Meta-Class  @<Contract--metaclass>
-
-A Meta-Class is a Class which has any of its properties determined
-at run-time. The **Contract** object uses a Contract's ABI to
-determine what methods are available, so the following sections
-describe the generic ways to interact with the properties added
-at run-time during the **Contract** constructor.
+_subsection: 元类（Meta-Class）  @<Contract--metaclass>
+元类是在运行时确定其所有属性的类。**Contract**对象使用合约的ABI来确定可使用方法（methods），
+因此下面的部分将描述用一些属性，来与在合约构造函数期间交互的通用方法。
 
 
-_heading: Read-Only Methods (constant; i.e. view or pure)  @<Contract--readonly>
 
-A constant method is read-only and evaluates a small amount of EVM
-code against the current blockchain state and can be computed by
-asking a single node, which can return a result. It is therefore
-free and does not require any ether, but **cannot make changes** to
-the blockchain state..
+
+_heading: 只读的方法 (常量; 如 view 或 pure)  @<Contract--readonly>
+常量方法是只读的，针对当前区块链状态计算少量EVM代码，并可以通过请求单个节点来计算，该节点会返回一个结果。
+因此，它是免费的，不需要任何以太币，但不能更改区块链状态。
+
+
 
 _property: contract.METHOD_NAME(...args [, overrides ]) => Promise<any>  @<Contract-functionsCall>
-The type of the result depends on the ABI. If the method returns a single
-value, it will be returned directly, otherwise a [[Result]] object will
-be returned with each parameter available positionally and if the parameter
-is named, it will also be available by its name.
+结果的类型取决于ABI。如果方法返回单个值，则将直接返回该值，否则将返回一个[[Result]]对象，其中包含每个位置可用的参数，
+如果参数被命名，那么就按照命名后的值去执行。
 
-For values that have a simple meaning in JavaScript, the types are fairly
-straight forward; strings and booleans are returned as JavaScript strings
-and booleans.
+如果返回的值匹配JavaScript中的类型值，如strings字符串类型 和 booleans布尔类型，那么返回的值类型就直接是JavaScript中的类型值。
 
-For numbers, if the **type** is in the JavaScript safe range (i.e. less
-than 53 bits, such as an ``int24`` or ``uint48``) a normal JavaScript
-number is used. Otherwise a [[BigNumber]] is returned.
+但对于numbers类型，如果类型在JavaScript的安全范围内(即小于53位，如``int24``或``uint48``8)，则使用标准的JavaScript number类型。
+否则返回[[BigNumber]]类型。
 
-For bytes (both fixed length and dynamic), a [[DataHexString]] is returned.
+对于字节bytes类型(包括固定长度和动态)，将返回一个[[DataHexString]]。
 
-If the call reverts (or runs out of gas), a [CALL_EXCEPTION](errors--call-exception)
-will be thrown which will include:
+如果call reverts(或runs out of gas)，将抛出一个[CALL_EXCEPTION](errors--call-exception)，其中包括:
 
-- ``error.address`` - the contract address
-- ``error.args`` - the arguments passed into the method
-- ``error.transaction`` - the transaction
+- ``error.address`` - 合约地址
+- ``error.args`` - 合约方法中传入的参数
+- ``error.transaction`` - 交易
 
-The //overrides// object for a read-only method may include any of:
+只读方法的//overrides//对象可以包括以下任何一个:
 
-- ``overrides.from`` - the ``msg.sender`` (or ``CALLER``) to use during the
-  execution of the code
-- ``overrides.value`` - the ``msg.value`` (or ``CALLVALUE``) to use during the
-  execution of the code
-- ``overrides.gasPrice`` - the price to pay per gas (theoretically); since there
-  is no transaction, there is not going to be any fee charged, but the EVM still
-  requires a value to report to ``tx.gasprice`` (or ``GASPRICE``);
-  //most developers will not require this//
-- ``overrides.gasLimit`` - the amount of gas (theoretically) to allow a node
-  to use during the execution of the code; since there is no transaction, there
-  is not going to be any fee charged, but the EVM still processes gas metering
-  so calls like ``gasleft`` (or ``GAS``) report meaningful values
-- ``overrides.blockTag`` - a block tag to simulate the execution at, which
-  can be used for hypothetical historic analysis; note that many backends
-  do not support this, or may require paid plans to access as the node database
-  storage and processing requirements are much higher
+- ``overrides.from`` - 代码执行期间使用的``msg.sender`` (或 ``CALLER``) 
+- ``overrides.value`` - 代码执行期间使用的``msg.value`` (或 ``CALLVALUE``) 
+- ``overrides.gasPrice`` - 每个gas的价格(理论上);因为没有交易，所以不会收取任何费用，但EVM仍然需要向``tx.gasprice``(或``GASPRICE``)传递value值;
+//大多数开发人员不需要这样做//
+
+
+- ``overrides.gasLimit`` - 在执行代码期间允许节点使用的gas数量(理论上);因为没有交易，所以不会有任何费用，但EVM仍然估计gas总数量，因此会向``gasleft`` (或 ``GAS``) 传递这些值。
+
+- ``overrides.blockTag`` - 一个用来模拟在哪里执行的块标签，可以用于假设性历史分析;注意，许多后端不支持这一点，或者可能需要付费访问，因为节点数据库存储和处理需求费用要高得多
 
 _property: contract.functions.METHOD_NAME(...args [, overrides ]) => Promise<[[Result]]>
+结果将始终是[[Result]]，即使只有一个返回值类型。
 
-The result will always be a [[Result]], even if there is only a single
-return value type.
+这简化了期望使用[[Contract]]对象的框架，因为它们不需要检查返回类型来展开简化函数。
 
-This simplifies frameworks which wish to use the [[Contract]] object,
-since they do not need to inspect the return types to unwrap simplified
-functions.
+此方法的另一个用途是用于错误恢复。例如，如果一个函数的结果是一个无效的UTF-8字符串，使用上述元类函数的普通调用将抛出一个异常。
+这允许使用Result access error来访问低级字节以及错误的原因，从而允许使用另一种UTF-8错误策略。
 
-Another use for this method is for error recovery. For example, if a
-function result is an invalid UTF-8 string, the normal call using the
-above meta-class function will throw an exception. This allows using the
-Result access error to access the low-level bytes and reason for the error
-allowing an alternate UTF-8 error strategy to be used.
+大多数开发人员不需要这样做。
 
-Most developers should not require this.
-
-The //overrides// are identical to the read-only operations above.
+//overrides//与上面的只读操作相同。
 
 _heading: Write Methods (non-constant) @<Contract--write>
+非常量方法要求签名一笔交易，并需要向矿工支付费用。这个交易将由整个网络上的所有节点以及矿工进行验证，
+矿工会根据当前状态执行，接着在区块链计算新状态。
 
-A non-constant method requires a transaction to be signed and requires
-payment in the form of a fee to be paid to a miner. This transaction
-will be verified by every node on the entire network as well by the
-miner who will compute the new state of the blockchain after executing
-it against the current state.
-
-It cannot return a result. If a result is required, it should be logged
-using a Solidity event (or EVM log), which can then be queried from the
-transaction receipt.
+它不能返回结果。如果需要一个结果，那么应该使用Solidity事件(或EVM日志)对其进行记录，然后可以从交易收据中查询该事件。
 
 _property: contract.METHOD_NAME(...args [ , overrides ]) => Promise<[[providers-TransactionResponse]]>  @<contract-functionsSend>
-Returns a [[providers-TransactionResponse]] for the transaction after
-it is sent to the network. This requires the **Contract** has a
-signer.
+交易被发送到网络后，返回交易的[[providers-TransactionResponse]]。
+**Contract**合约对象需要signer。
 
-The //overrides// object for write methods may include any of:
 
-- ``overrides.gasPrice`` - the price to pay per gas
-- ``overrides.gasLimit`` - the limit on the amount of gas to allow the transaction
-  to consume; any unused gas is returned at the gasPrice
-- ``overrides.value`` - the amount of ether (in wei) to forward with the call
-- ``overrides.nonce`` - the nonce to use for the [[Signer]]
 
-If the ``wait()`` method on the returned [[providers-TransactionResponse]]
-is called, there will be additional properties on the receipt:
+重写方法的//overrides//对象可以是以下任何一个:
 
-- ``receipt.events`` - an array of the logs, with additional properties
-  (if the ABI included a description for the events)
-- ``receipt.events[n].args`` - the parsed arguments
-- ``receipt.events[n].decode`` - a method that can be used to parse the
-  log topics and data (this was used to compute ``args``)
-- ``receipt.events[n].event`` - the name of the event
-- ``receipt.events[n].eventSignature`` - the full signature of the event
-- ``receipt.removeListener()`` - a method to remove the listener that trigger
-  this event
-- ``receipt.getBlock()`` - a method to return the [Block](providers-Block) this event occurred in
-- ``receipt.getTransaction()`` - a method to return the
-  [Transaction](providers-TransactionResponse) this event occurred in
-- ``receipt.getTransactionReceipt()`` - a method to return the
-  [Transaction Receipt](providers-TransactionReceipt) this event occurred in
+- ``overrides.gasPrice`` - 每个gas的价格
+- ``overrides.gasLimit`` - 该笔交易允许使用的gas的最大数量，未被使用的gas按照gasPrice退还
+- ``overrides.value`` - 调用中转账的ether (wei格式)数量
+- ``overrides.nonce`` - [[Signer]]使用的nonce值
 
+如果返回的[[providers-TransactionResponse]]使用了``wait()``方法，那么在收据上将会有额外的属性:
+
+- ``receipt.events`` - 带有附加属性的日志数组(如果ABI包含事件的描述)
+- ``receipt.events[n].args`` - 解析后的参数
+- ``receipt.events[n].decode`` - 可以用来解析日志主题（topics）和数据的方法(用于计算``args``)
+- ``receipt.events[n].event`` - 事件的名称
+- ``receipt.events[n].eventSignature`` - 这个事件完整的签名
+- ``receipt.removeListener()`` - 用于移除触发此事件的监听器的方法
+- ``receipt.getBlock()`` - 返回发生触发此事件的[Block](providers-Block)
+- ``receipt.getTransaction()`` - 返回发生触发此事件的[Transaction](providers-TransactionResponse)
+- ``receipt.getTransactionReceipt()`` - 返回发生触发此事件的[Transaction Receipt](providers-TransactionReceipt)
 
 _heading: Write Methods Analysis @<Contract--check>
-
-There are several options to analyze properties and results of a
-write method without actually executing it.
+在不实际执行的情况下，有几个选项可以分析write method的属性和结果。
 
 _property: contract.estimateGas.METHOD_NAME(...args [ , overrides ]) => Promise<[[BigNumber]]>  @<contract-estimateGas>
-Returns the estimate units of gas that would be required to
-execute the //METHOD_NAME// with //args// and //overrides//.
+返回使用 //args//和//overrides//执行//METHOD_NAME//所需的gas的估计单位。
 
-The //overrides// are identical to the overrides above for read-only
-or write methods, depending on the type of call of //METHOD_NAME//.
+//overrides//与上面针对只读或写方法的overrides相同，具体取决于 //METHOD_NAME//调用的类型。
 
 _property: contract.populateTransaction.METHOD_NAME(...args [ , overrides ]) => Promise<[UnsignedTx](UnsignedTransaction)>  @<contract-populateTransaction>
-Returns an [[UnsignedTransaction]] which represents the transaction
-that would need to be signed and submitted to the network to execute
-//METHOD_NAME// with //args// and //overrides//.
+返回一个[[UnsignedTransaction]]，它表示需要签名并提交给网络的交易，以执行带有//args//和//overrides//的//METHOD_NAME//。
 
-The //overrides// are identical to the overrides above for read-only
-or write methods, depending on the type of call of //METHOD_NAME//.
+//overrides//与上面针对只读或写方法的overrides相同，具体取决于 //METHOD_NAME//调用的类型。
 
 _property: contract.callStatic.METHOD_NAME(...args [ , overrides ]) => Promise<any>  @<contract-callStatic>
-Rather than executing the state-change of a transaction, it is possible
-to ask a node to //pretend// that a call is not state-changing and
-return the result.
+比起执行交易状态更改，更可能是会要求节点//尝试//调用不进行状态的更改并返回结果。
 
-This does not actually change any state, but is free. This in some cases
-can be used to determine if a transaction will fail or succeed.
+这实际上并不改变任何状态，而是免费的。在某些情况下，这可用于确定交易是失败还是成功。
 
-This otherwise functions the same as a [Read-Only Method](Contract--readonly).
+otherwise函数与[Read-Only Method](Contract--readonly)相同。
 
-The //overrides// are identical to the read-only operations above.
+//overrides//与上面的只读操作相同。
 
 _heading: Event Filters @<Contract--filters>
-An event filter is made up of topics, which are values logged in a
-[[link-wiki-bloomfilter]], allowing efficient searching for entries
-which match a filter.
+事件过滤器由主题（topics）组成，这些主题是[[link-wiki-bloomfilter]]中记录的值，允许对匹配过滤器的条目进行有效搜索。
 
 _property: contract.filters.EVENT_NAME(...args) => Filter
-Return a filter for //EVENT_NAME//, optionally filtering by additional
-constraints.
+返回//EVENT_NAME//的过滤器，可以通过增加其他约束进行过滤。
 
-Only ``indexed`` event parameters may be filtered. If a parameter is
-null (or not provided) then any value in that field matches.
+只有``indexed``索引的事件参数可以被过滤。如果参数为空(或未提供)，则该字段中的任何值都匹配。

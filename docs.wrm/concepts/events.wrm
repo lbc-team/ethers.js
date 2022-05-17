@@ -1,44 +1,33 @@
 _section: 事件 @<events>
 
-_subsection: 日志和过滤器（Logs and filtering）
+_subsection: 日志和过滤器（Logs and Filtering）
 
 在区块链的应用程序中经常用到日志和过滤器，因为它可以对索引数据进行高效查询，并且针对不在链上的数据可以提供低成本的数据存储。
 
-These can be used in conjunction with the [Provider Events API](Provider--event-methods)
-and with the [Contract Events API](Contract--events).
+这些可以结合[提供者事件API](Provider--event-methods)以及[合约事件API](Contract--events)一起使用。
 
-The Contract Events API also provides [higher-level methods](Contract--filters)
-to compute and query this data, which should be preferred over the lower-level filter.
+合约事件API也提供了[高级方法](Contract--filters)去计算和查询数据，这种方式要优先于低级的过滤器。
 
-_heading: Filters @<events--filters>
+_heading: 过滤器 @<events--filters>
 
-When a Contract creates a log, it can include up to 4 pieces of
-data to be indexed by. The indexed data is hashed and included in
-a [[link-wiki-bloomfilter]], which is a data structure that allows
-for efficient filtering.
+当合约创建一条日志时，它包含了4条可索引的数据。这些索引数据经过哈希加密，且包含在一个[[link-wiki-bloomfilter]]中， [[link-wiki-bloomfilter]]是一种允许高效过滤的数据结构。
 
-So, a filter may correspondingly have up to 4 topic-sets, where each
-topic-set refers to a condition that must match the indexed log topic
-in that position (i.e. each condition is ``AND``-ed together).
+因此，过滤器相应地可能多达4个主题集，其中每个主题集指向一个条件，该条件必须匹配该位置的索引日志主题(即每个条件都是``AND``语句连接在一起的)。
 
-If a topic-set is ``null``, a log topic in that position is **not filtered**
-at all and **any value** matches.
+如果一个主题集为 ``null``, 则该位置的日志主题 **不过滤**  且与  **任何值**  都匹配。
 
-If a topic-set is a single topic, a log topic in that position **must** match
-**that topic**.
+如果一个主题集是单个主题，则该位置的日志主题 **必须** 匹配 **这个主题**。
 
-If a topic-set is an array of topics, a log topic in that position must
-match **any one** of the topics (i.e. the topic in this position are ``OR``-ed).
+如果主题集是一个数组，则该位置的日志主题必须匹配其中  **任何一个**  主题(即每个条件都是``OR``语句连接在一起的)。
 
-This may sound complicated at first, but is more easily understood with
-some examples.
+虽然一开始听起来有点复杂绕口，但通过以下例子可以很好地帮助你理解。
 
-_table: Example Log Matching @style<full>
+_table: 匹配日志的例子 @style<full>
 
 $TopicABaCD: **[** (topic[0] = A) **OR** (topic[0] = B) **]** **AND**
              **[** (topic[1] = C) **OR** (topic[1] = D) **]**
 
-|  **Topic-Sets**           |  **Matching Logs**                    <<|
+|  **主题集**           |  **匹配日志**                    <<|
 |   [ A ]                   | topic[0] = A                          <<|
 |   [ A, null ]             |   ^                                     |
 |   [ null, B ]             | topic[1] = B                          <<|
@@ -52,7 +41,7 @@ $TopicABaCD: **[** (topic[0] = A) **OR** (topic[0] = B) **]** **AND**
 |   [ [ A, B ], [ C, D ] ]  | $TopicABaCD                       <<|
 
 
-_code: ERC-20 Transfer Filter Examples @lang<javascript>
+_code: ERC-20 转账过滤的例子 @lang<javascript>
 
 //_hide: const tokenAddress = ethers.constants.AddressZero;
 //_hide: const myAddress = ethers.constants.AddressZero;
@@ -60,13 +49,12 @@ _code: ERC-20 Transfer Filter Examples @lang<javascript>
 //_hide: const id = ethers.utils.id;
 //_hide: const hexZeroPad = ethers.utils.hexZeroPad;
 
-// Short example of manually creating filters for an ERC-20
-// Transfer event.
-//
-// Most users should generally use the Contract API to
-// compute filters, as it is much simpler, but this is
-// provided as an illustration for those curious. See
-// below for examples of the equivalent Contract API.
+// 手动创建ERC-20过滤器的简短实例
+// 转账事件
+
+// 大多数用户通常使用过合约的API来过滤计算，因为它更简单，但这是为那些
+// 好奇的人提供一个例证
+// 如下是等价于合约API的例子
 
 // ERC-20:
 //   Transfer(address indexed src, address indexed dst, uint val)
@@ -74,17 +62,15 @@ _code: ERC-20 Transfer Filter Examples @lang<javascript>
 // -------------------^
 // ----------------------------------------^
 //
-// Notice that only *src* and *dst* are *indexed*, so ONLY they
-// qualify for filtering.
+// 注意到只有 *src* and *dst* 被 *索引*, 因此只有这些符合过滤条件
 //
-// Also, note that in Solidity an Event uses the first topic to
-// identify the Event name; for Transfer this will be:
+// 并且，注意到在Solidity事件中使用第一个主题识别事件名称，对于转账函数如下：
 //   id("Transfer(address,address,uint256)")
 //
-// Other Notes:
-//  - A topic must be 32 bytes; so shorter types must be padded
+// 其他要注意的地方
+//  - 一个主题必须是 32 字节; 添加的类型要尽可能短
 
-// List all token transfers  *from*  myAddress
+// 列出所有通证 *来自于*  我的地址的转账
 filter = {
     address: tokenAddress,
     topics: [
@@ -93,7 +79,7 @@ filter = {
     ]
 };
 
-// List all token transfers  *to*  myAddress:
+// 列出所有通证 *转给*  我的地址的转账
 filter = {
     address: tokenAddress,
     topics: [
@@ -103,7 +89,7 @@ filter = {
     ]
 };
 
-// List all token transfers  *to*  myAddress or myOtherAddress:
+// 列出所有通证 *转给*  我的地址或者我的其他地址的转账
 filter = {
     address: tokenAddress,
     topics: [
@@ -118,10 +104,10 @@ filter = {
 
 _null:
 
-To simplify life, ..., explain here, the contract API
+在这里解释一下，为了简化， 合约的API如下：
 
 
-_code: ERC-20 Contract Filter Examples @lang<javascript>
+_code: ERC-20 合约过滤例子 @lang<javascript>
 
 //_hide: const tokenAddress = "0x6B175474E89094C44Da98b954EedeAC495271d0F"; /* DAI */
 //_hide: const myAddress = "0x8ba1f109551bD432803012645Ac136ddd64DBA72";
@@ -135,76 +121,56 @@ abi = [
 
 contract = new Contract(tokenAddress, abi, provider);
 
-// List all token transfers *from* myAddress
+// 列出所有通证 *来自于*  我的地址的转账
 //_result:
 contract.filters.Transfer(myAddress)
 //_log:
 
-// List all token transfers *to* myAddress:
+// 列出所有通证 *转给*  我的地址的转账
 //_result:
 contract.filters.Transfer(null, myAddress)
 //_log:
 
-// List all token transfers *from* myAddress *to* otherAddress:
+// 列出所有通证 *来自于*  我的或者我其他的地址的转账
 //_result:
 contract.filters.Transfer(myAddress, otherAddress)
 //_log:
 
-// List all token transfers *to* myAddress OR otherAddress:
+// 列出所有通证 *转给*  我的地址或者我的其他地址的转账
 //_result:
 contract.filters.Transfer(null, [ myAddress, otherAddress ])
 //_log:
 
 
-_subsection: Solidity Topics @<events-solidity>
+_subsection: Solidity 专题 @<events-solidity>
 
-This is a quick (and non-comprehensive) overview of how events are computed
-in Solidity.
+这是一个在Solidity中关于“事件是如何计算”的简要不全面的概述。
 
-This is likely out of the scope for most developers, but may be interesting
-to those who want to learn a bit more about the underlying technology.
+这可能超出了大多数开发人员的范围，但对于那些希望了解更多底层技术的人来说，可能会很感兴趣。
 
-Solidity provides two types of events, anonymous and non-anonymous. The
-default is non-anonymous, and most developers will not need to worry about
-anonymous events.
+Solidity 提供了两种类型的事件，匿名和非匿名。默认值是非匿名的，大多数开发人员不需要担心匿名事件。
 
-For non-anonymous events, up to 3 topics may be indexed (instead of 4), since
-the first topic is reserved to specify the event signature. This allows
-non-anonymous events to always be filtered by their event signature.
+对于非匿名事件，最多可以索引3个主题(而不是4个)，因为保留第一个主题以指定事件签名。这允许非匿名事件总是通过其事件签名进行过滤。
 
-This topic hash is always in the first slot of the indexed data, and is
-computed by normalizing the Event signature and taking the keccak256 hash
-of it.
+这个主题哈希值总是在索引数据的第一个位置中，通过规范化事件签名并取其keccak256哈希来计算。
 
-For anonymous events, up to 4 topics may be indexed, and there is no
-signature topic hash, so the events cannot be filtered by the event
-signature.
+对于匿名事件，最多可以索引4个主题，并且没有签名的主题哈希，因此事件不能通过事件签名进行过滤。
 
-Each additional indexed property is processed depending on whether its
-length is fixed or dynamic.
+每个附加的索引属性的处理取决于其长度是固定的还是动态的。
 
-For fixed length types (e.g. ``uint``, ``bytes5``), all of which are
-internally exactly 32 bytes (shorter types are padded with zeros;
-numeric values are padded on the left, data values padded on the right),
-these are included directly by their actual value, 32 bytes of data.
+对于固定长度的类型 (例如``uint``, ``bytes5``)，这些全部都恰好是32字节，较短的类型用零填充，数字值类型（numeric values）填充在左边，数据值类型（data values）填充在右边，
+这些直接包含在32个字节的数据里面。
 
-For dynamic types (e.g. ``string``, ``uint256[]``) , the value is hashed
-using keccak256 and this hash is used.
+对于动态类型 (例如``string``, ``uint256[]``) , 这些值通过 keccak256 哈希（hashed），并且使用这个哈希值.
 
-Because dynamic types are hashed, there are important consequences in
-parsing events that should be kept in mind. Mainly that the original
-value is lost in the event. So, it is possible to tell is a topic is
-equal to a given string, but if they do not match, there is no way
-to determine what the value was.
+因为动态类型是被哈希加密的，所以在解析事件时应该记录一些重要的结果。主要是在事件丢失了初始值，因此，一个主题（topics）等于给定的字符串（string）是可能的，但如果两者不匹配，就没有办法确定值是什么。
 
-If a developer requires that a string value is required to be both
-able to be filtered and also able to be read, the value must be included
-in the signature twice, once indexed and once non-indexed (e.g.
-``someEvent(string indexed searchBy, string clearText)``).
+如果开发人员需要一个字符串值既能被过滤也能被读取，那么这个值必须在签名中被包含两次，一次是索引的，一次是非索引的(例如
+``someEvent(string indexed searchBy, string clearText)``)。
 
-For a more detailed description, please refer to the
-[Solidity Event Documentation](link-solidity-events).
+有关更详细的描述，请参阅
+[Solidity事件文档](link-solidity-events)。
 
-_heading: Other Things? TODO
+_heading: 其他内容? 即将补充 
 
-Explain what happens to strings and bytes, how to filter and retain the value
+将会详细阐述字符串和事件的细节，如何过滤和保留值。

@@ -1,51 +1,44 @@
 _section: Types
 
 _subsection: BlockTag @<providers-BlockTag>
-A **BlockTag** specifies a specific block location in the Blockchain.
+**BlockTag** 在区块链中指定了一个特定的区块位置
 
-- **``"latest"``** - The most recently mined block
+- **``"latest"``** - 最新挖出的区块
 - **``"earliest"``** - Block #0
-- **``"pending"``** - The block currently being prepared for mining; not all
-  operations and backends support this BlockTag
-- **//number//** - The block at this height
+- **``"pending"``** - 目前正在挖的区块;不是所有的操作和后端都支持这个BlockTag属性
+- **//number//** - 区块高度
 - **//a negative number//** - The block this many blocks ago
-- **//hex string//** - The block at this height (as a hexidecimal value)
+- **//hex string//** - 区块高度(十六进制表示)
 
 _subsection: Networkish @<providers-Networkish>
-A **Networkish** may be any of the following:
+**Networkish**可以是以下任意一种:
 
-- a [[providers-Network]] object
-- the name of a common network as a string (e.g. ``"homestead"``)
-- the chain ID a network as a number; if the chain ID is that of a
-  common network, the ``name`` and ``ensAddress`` will be populated, otherwise,
-  the default name ``"unknown"`` and no ``ensAddress`` is used
+- 一个[[providers-Network]] 对象
+- 字符串形式的常见网络 (如``"homestead"``)
+- number类型的网络chain ID; 如果chain ID 是常见网络的一种,``name`` 和 ``ensAddress`` 会自动填充,
+否则 name 会是``"unknown"`` 且不使用任何的 ``ensAddress``。
 
 _subsection: Network @<providers-Network>
-A **Network** represents an Ethereum network.
+**Network** 表示一个Ethereum 网络
 
 _property: network.name => string
-The human-readable name of the network, such as ``homestead``. If the network
-name is unknown, this will be ``"unknown"``.
+可读的网络名称，如``homestead``。如果网络的name未指定，将会是``"unknown"``。
 
 _property: network.chainId => number
-The Chain ID of the network.
+网络的Chain ID。
 
 _property: network.ensAddress => string<[[address]]>
-The address at which the ENS registry is deployed on this network.
+部署在这个网络上的ENS注册表的地址。
 
 
 _subsection: FeeData @<providers-FeeData>
-
-A **FeeData** object encapsulates the necessary fee data required
-to send a transaction, based on the best available recommendations.
+**FeeData**对象根据最好且可用建议，去封装发送交易所需的费用数据。
 
 _property: feeData.gasPrice => [[BigNumber]]
-The gasPrice to use for legacy transactions or networks which do not
-support EIP-1559.
+gasPrice用于那些不支持EIP-1559的遗留交易或网络。
 
 _property: feeData.maxFeePerGas => [[BigNumber]]
-The ``maxFeePerGas`` to use for a transaction. This is based on the
-most recent block's ``baseFee``.
+``maxFeePerGas``用于交易。这基于最近产出区块的``baseFee``。
 
 _property: feeData.maxPriorityFeePerGas => [[BigNumber]]
 The ``maxPriorityFeePerGas`` to use for a transaction. This accounts
@@ -54,63 +47,50 @@ for the uncle risk and for the majority of current MEV risk.
 _subsection: Block @<providers-Block>
 
 _property: block.hash => string<[[DataHexString]]<32>>
-The hash of this block.
+这个区块的哈希。
 
 _property: block.parentHash => string<[[DataHexString]]<32>>
-The hash of the previous block.
+上个区块的哈希。
 
 _property: block.number => number
-The height (number) of this block.
+当前区块的高度（数量）。
 
 _property: block.timestamp => number
-The timestamp of this block.
+当前区块的时间戳。
 
 _property: block.nonce => string<[[DataHexString]]>
-The nonce used as part of the proof-of-work to mine this block.
-
-This property is generally of little interest to developers.
+nonce 用在基于工作量证明（PoW）机制挖取区块。
+开发人员通常对这个属性不感兴趣。
 
 _property: block.difficulty => number
-The difficulty target required to be met by the miner of the block.
-
-This property is generally of little interest to developers.
+该区块的矿工需要达到的难度指标。
+开发人员通常对这个属性不感兴趣。
 
 _property: block.gasLimit => [[BigNumber]]
-The maximum amount of gas that this block was permitted to use. This
-is a value that can be voted up or voted down by miners and is used
-to automatically adjust the bandwidth requirements of the network.
-
-This property is generally of little interest to developers.
+这个区块允许使用的最大gas数量。这该值的可以由矿工投票决定要变大还是变小，用于自动调整网络的带宽需求。
+开发人员通常对这个属性不感兴趣。
 
 _property: block.gasUsed => [[BigNumber]]
-The total amount of gas used by all transactions in this block.
+当前区块所有的交易已使用的gas总数量。
 
 _property: block.miner => string
-The coinbase address of this block, which indicates the address the
-miner that mined this block would like the subsidy reward to go to.
+当前区块的coinbase 地址，这个地址表示挖出这个区块的矿工想要接受这笔开采奖励的地址。
 
 _property: block.extraData => string
-This is extra data a miner may choose to include when mining a block.
-
-This property is generally of little interest to developers.
+该数据表示的是当挖出一个区块时，这个矿工可以选择包含的额外数据。
+开发人员通常对这个属性不感兴趣。
 
 _heading: Block (with transaction hashes)
-
-Often only the hashes of the transactions included in a block are needed,
-so by default a block only contains this information, as it is
-substantially less data.
+通常只需要包含在一个区块中的交易的哈希值，因此在默认情况下，一个块只包含这些信息，这样数据就不会很大。
 
 _property: block.transactions => Array<string<[[DataHexString]]<32>>>
-A list of the transactions hashes for each transaction this block
-includes.
+一个当前区块包含的每一条交易哈希的列表。
 
 _heading: BlockWithTransactions @<providers-BlockWithTransactions> @INHERIT<[Block](providers-Block)>
-
-If all transactions for a block are needed, this object instead includes
-the full details on each transaction.
+如果需要一个块的所有交易，则该对象包含每条交易的完整信息。
 
 _property: block.transactions => Array<[[providers-TransactionResponse]]>
-A list of the transactions this block includes.
+当前区块包含的交易列表。
 
 
 _subsection: Events and Logs
@@ -118,315 +98,253 @@ _subsection: Events and Logs
 _heading: EventFilter @<providers-EventFilter>
 
 _property: filter.address => string<[[address]]>
-The address to filter by, or ``null`` to match any address.
+想要筛选的地址， ``null`` 表示匹配任何用户的地址。
 
 _property: filter.topics => Array<string<[Data](DataHexString)<32>> | Array<string<[Data](DataHexString)<32>>>>
-The topics to filter by or ``null`` to match any topics.
+要筛选的主题，``null``示匹配任何用户的主题。
 
-Each entry represents an **AND** condition that must match, or may
-be ``null`` to match anything. If a given entry is an Array, then
-that entry is treated as an **OR** for any value in the entry.
-
-See [Filters](events--filters) for more details and examples
-on specifying complex filters.
+每一个 entry 表示一个**AND**匹配条件，entry 也可以是``null``来匹配所有的内容。
+如果给定的 entry 是一个数组，那么这个 entry 是被视为 **OR**匹配条件来匹配entry里面的内容。
+有关指定复杂过滤器的详细信息和示例，请参阅[Filters](events--filters)。
 
 _heading: Filter @<providers-Filter> @INHERIT<[[providers-EventFilter]]>
 
 _property: filter.fromBlock => [[providers-BlockTag]]
-The starting block (inclusive) to search for logs matching the filter criteria.
+用于搜索匹配过滤条件的日志的起始区块(包含在内)。
 
 _property: filter.toBlock => [[providers-BlockTag]]
-The end block (inclusive) to search for logs matching the filter criteria.
+用于搜索匹配过滤条件的日志的结束区块(包含在内)。
 
 _heading: FilterByBlockHash @<providers-FilterByBlockHash> @INHERIT<[[providers-EventFilter]]>
 
 _property: filter.blockHash => string<[[DataHexString]]<32>>
-The specific block (by its block hash) to search for logs matching the filter criteria.
+指定区块(按这个区块哈希值)搜索符合过滤条件的日志。
 
 
 _heading: Log @<providers-Log>
 
 _property: log.blockNumber => number
-The block height (number) of the block including the transaction of this log.
+包含该日志的交易的区块高度(区块数)。
 
 _property: log.blockHash => string<[[DataHexString]]<32>>
-The block hash of the block including the transaction of this log.
+包含该日志的交易的区块的哈希值。
 
 _property: log.removed => boolean
-During a re-org, if a transaction is orphaned, this will be set to true
-to indicate the Log entry has been removed; it will likely be emitted
-again in the near future when another block is mined with the transaction
-that triggered this log, but keep in mind the values may change.
+在区块重组期间，如果一个交易是孤立的，它将被设置为true，表示Log entry已被删除;
+在不久的将来，当使用包含该日志的交易被另一个区块挖出时，可能会再次触发此日志，但请记住，值可能会更改。
 
 _property: log.transactionLogIndex => number
-The index of this log in the transaction.
+该日志在交易中的索引。
 
 _property: log.address => string<[[address]]>
-The address of the contract that generated this log.
+生成这条日志的合约地址。
+
 
 _property: log.data => string<[[DataHexString]]>
-The data included in this log.
+日志的数据。
 
 _property: log.topics => Array<string<[[DataHexString]]<32> > >
-The list of topics (indexed properties) for this log.
+日志的主题(索引属性)列表。
 
 _property: log.transactionHash => string<[[DataHexString]]<32>>
-The transaction hash of the transaction of this log.
+包含这条日志的交易的哈希值。
 
 _property: log.transactionIndex => number
-The index of the transaction in the block of the transaction of this log.
+区块中包含这条日志的交易的索引。
 
 _property: log.logIndex => number
-The index of this log across all logs in the entire **block**.
+在整个**区块中**所有的日志集合里，该条日志的索引。
 
 
 _subsection: Transactions
 
 _heading: TransactionRequest @<providers-TransactionRequest>
 
-A transaction request describes a transaction that is to
-be sent to the network or otherwise processed.
+transaction request 描述了一笔将要被发送到网络或以其他方式处理的交易。
 
-All fields are optional and may be a promise which resolves
-to the required type.
+所有字段都是可选的，并且可以是一个能被解析为所需类型的promise。
 
 _property: transactionRequest.to => string | Promise<string>
-The address (or ENS name) this transaction it to.
+接受这笔交易的地址(or ENS name)。
 
 _property: transactionRequest.from => string<[[address]]> | Promise<string<[[address]]>>
-The address this transaction is from.
+发送这笔交易的地址。
 
 _property: transactionRequest.nonce => number | Promise<number>
-The nonce for this transaction. This should be set to the number of
-transactions ever sent **from** this address.
+交易的 nonce 值。 **发送**这笔交易要设置这个值，是number类型的。
 
 _property: transactionRequest.data => [[DataHexString]] | Promise<[[DataHexString]]>
-The transaction data.
+交易的数据。
 
 _property: transactionRequest.value => [[BigNumber]] | Promise<[[BigNumber]]>
-The amount (in wei) this transaction is sending.
+这笔交易要发送的数量(以wei为单位)。
 
 _property: transactionRequest.gasLimit => [[BigNumber]] | Promise<[[BigNumber]]>
-The maximum amount of gas this transaction is permitted to use.
+这笔交易允许使用的最大gas值。
 
-If left unspecified, ethers will use ``estimateGas`` to determine the value
-to use. For transactions with unpredicatable gas estiamtes, this may be required
-to specify explicitly.
+如果未指定，ethers将使用``estimateGas``来确定要使用的gas值。对于无法预测的gas的交易，可能需要这样做显式地指定。
 
 _property: transactionRequest.gasPrice => [[BigNumber]] | Promise<[[BigNumber]]>
-The price (in wei) per unit of gas this transaction will pay.
+这笔交易将支付的每个gas的价格(以wei为单位)。
 
-This may not be specified for transactions with ``type`` set to ``1`` or ``2``, or
-if ``maxFeePerGas`` or ``maxPriorityFeePerGas`` is given.
+这个属性不适用于这笔交易的``type``设置为``1`` 或者 ``2``的情形，也不适用于交易已指定了``maxFeePerGas`` 或者 ``maxPriorityFeePerGas``的情形。
 
 _property: transactionRequest.maxFeePerGas => [[BigNumber]] | Promise<[[BigNumber]]>
-The maximum price (in wei) per unit of gas this transaction will pay for the
-[[link-eip-1559]] base fee.
+这笔交易将支付[[link-eip-1559]]基础费用的每个gas的价格的最高价格(以wei为单位)。
 
-Most developers should leave this unspecified and use the default value that
-ethers determines from the network.
-
-This may not be specified for transactions with ``type`` set to ``0`` or if ``gasPrice``
-is specified..
+大多数开发人员不应该指定该参数，而应该使用网络决定的默认值。
+这个属性不适用于这笔交易的``type``设置为``0``的情形，也不适用于交易已指定了``gasPrice``的情形。
 
 _property: transactionRequest.maxPriorityFeePerGas => [[BigNumber]] | Promise<[[BigNumber]]>
-The price (in wei) per unit of gas this transaction will pay for the
-[[link-eip-1559]] priority fee. This is **included in** the ``maxFeePerGass``,
-so this will **not affect** the total maximum cost set with ``maxFeePerGas``.
+这笔交易将支付[[link-eip-1559]]优先费用的每个gas的价格的价格(以wei为单位)。
+这包含在``maxFeePerGass``中，所以这**不会影响**``maxFeePerGas``设置的总最大价格。
 
-Most developers should leave this unspecified and use the default value that
-ethers determines from the network.
-
-This may not be specified for transactions with ``type`` set to ``0`` or if ``gasPrice``
-is specified.
+大多数开发人员应该不指定该参数，而应该使用网络决定的默认值。
+这个属性不适用于这笔交易的``type``设置为``0``的情形，也不适用于交易已指定了``gasPrice``的情形。
 
 _property: transactionRequest.chainId => number | Promise<number>
-The chain ID this transaction is authorized on, as specified by
-[EIP-155](link-eip-155).
-
-If the chain ID is 0 will disable EIP-155 and the transaction will be valid
-on any network. This can be **dangerous** and care should be taken, since it
-allows transactions to be replayed on networks that were possibly not
-intended. Intentionally-replayable transactions are also disabled by default
-on recent versions of Geth and require configuration to enable.
+已被授权交易的chain ID，由[EIP-155](link-eip-155)指定。
+如果chain ID为0将禁用EIP-155，交易将在任何网络上有效。这可能**很危险**，应该小心，因为它允许交易在可能不是你想指定的网络上复现。
+在最新版本的Geth中，有意重现的交易在默认情况下是禁用的，需要配置才能启用。
 
 _property: transactionRequest.type => null | number
 
 The [[link-eip-2718]] type of this transaction envelope, or ``null``
 for to use the network default. To force using a lagacy transaction
 without an envelope, use type ``0``.
+这笔交易envelope的[[link-eip-2718]]类型，在网络上这个默认值是``null``。要强制使用没有envelope的lagacy交易，请使用type ``0``。
+
 
 _property: transactionRequest.accessList => [[providers-AccessListish]]
-
-The [[providers-AccessList]] to include; only available for [[link-eip-2930]]
-and [[link-eip-1559]] transactions.
+要包含的[[providers-AccessList]];仅适用于[[link-eip-2930]]和[[link-eip-1559]]的交易。
 
 _heading: TransactionResponse @<providers-TransactionResponse> @INHERIT<[[Transaction]]>
-
-A **TransactionResponse** includes all properties of a [[Transaction]] as well as several
-properties that are useful once it has been mined.
+**TransactionResponse**包括[[Transaction]]的所有属性，以及等区块被挖出来后就很有用的几个属性。
 
 _property: transaction.blockNumber => number
-The number ("height") of the block this transaction was mined in. If the block has not been mined,
-this is ``null``.
+这笔交易所在区块被挖出来时的高度（区块数量）。如果区块还没有被挖出，这个值为``null``。
+
 
 _property: transaction.blockHash => string<[[DataHexString]]<32>>
-The hash of the block this transaction was mined in. If the block has not been mined,
-this is ``null``.
+这笔交易所在区块被挖出来时的哈希值。如果区块还没有被挖出，这个值为``null``。
 
 _property: transaction.timestamp => number
-The timestamp of the block this transaction was mined in. If the block has not been mined,
-this is ``null``.
+这笔交易所在区块被挖出来时的时间戳。如果区块还没有被挖出，这个值为``null``。
 
 _property: transaction.confirmations => number
-The number of blocks that have been mined (including the initial block) since this
-transaction was mined.
+当这笔交易所在的区块被挖出来时，所有已挖出的区块数量(包括初始块)。
 
 _property: transaction.raw => string<[[DataHexString]]>
-The serialized transaction. This may be null as some backends do not
-rpopulate it. If this is required, it can be computed from a **TransactionResponse**
-object using [this cookbook recipe](cookbook--compute-raw-transaction).
+序列化交易。如果一些后端不重新填充它时可能是null。
+如果你需要这个属性，可以使用[this cookbook recipe](cookbook--compute-raw-transaction)从**TransactionResponse**对象中计算。
 
 _property: transaction.wait([ confirms = 1 ]) => Promise<[[providers-TransactionReceipt]]>
-Resolves to the [[providers-TransactionReceipt]] once the transaction
-has been included in the chain for //confirms// blocks. If //confirms//
-is 0, and the transaction has not been mined, ``null`` is returned.
+//confirms//属性表示你愿意等待的挖出区块数量，一旦满足这个值将返回一个待解析的[[providers-TransactionReceipt]]。
+如果//confirms//为0，并且交易还没有被挖出，则返回``null``。
 
-If the transaction execution failed (i.e. the receipt status is ``0``),
-a [CALL_EXCEPTION](errors--call-exception) error will be rejected with
-the following properties:
+如果交易执行失败(即接收状态为``0``)，将会生成一个[CALL_EXCEPTION](errors--call-exception)，其属性如下:
 
-- ``error.transaction`` - the original transaction
-- ``error.transactionHash`` - the hash of the transaction
-- ``error.receipt`` - the actual receipt, with the status of ``0``
+- ``error.transaction`` - 这笔交易
+- ``error.transactionHash`` - 这笔交易的哈希值
+- ``error.receipt`` - the actual receipt, 状态是 ``0``
 
-If the transaction is replaced by another transaction, a
-[TRANSACTION_REPLACED](errors--transaction-replaced) error will be rejected
-with the following properties:
+如果这笔交易被另一个交易替换，将会生成一个[TRANSACTION_REPLACED](errors--transaction-replaced)，其属性如下:
 
-- ``error.hash`` - the hash of the original transaction which was replaced
-- ``error.reason`` - a string reason; one of ``"repriced"``, ``"cancelled"`` or ``"replaced"``
-- ``error.cancelled`` - a boolean; a ``"repriced"`` transaction is not considered cancelled, but ``"cancelled"`` and ``"replaced"`` are
+- ``error.hash`` - 被替换的交易的哈希值
+- ``error.reason`` - string类型的错误原因; 是 ``"repriced"``或 ``"cancelled"``或 ``"replaced"``其中一个
+- ``error.cancelled`` - boolean类型; ``"repriced"``表示不视为cancelled, 但``"cancelled"`` 和``"replaced"``视为cancelled。
 - ``error.replacement`` - the replacement transaction (a [[providers-TransactionResponse]])
-- ``error.receipt`` - the receipt of the replacement transaction (a [[providers-TransactionReceipt]])
+- ``error.receipt`` - replacement transaction的收据 (a [[providers-TransactionReceipt]])
 
-Transactions are replaced when the user uses an option in their client to
-send a new transaction from the same account with the original ``nonce``.
-This is usually to speed up a transaction or to cancel one, by bribing
-miners with additional fees to prefer the new transaction over the original one.
+当用户在客户端相同的帐户中发送一笔新的交易，这笔交易与之前一笔交易的``nonce``相同时，之前的那笔交易将被替换。
+这通常是为了加快交易或取消交易，新交易可以给矿工更多的费用，让他们更喜欢新交易，而不是原来的交易。
 
 _property: transactionRequest.type => number
-The [[link-eip-2718]] type of this transaction. If the transaction
-is a legacy transaction without an envelope, it will have the type ``0``.
+这笔交易的[[link-eip-2718]]类型。如果事务是没有envelope的legacy交易，则其类型为``0``。
 
 _property: transactionRequest.accessList => [[providers-AccessList]]
-The [[providers-AccessList]] included, or null for transaction types which
-do not support access lists.
+包含的[[providers-AccessList]]，对于不支持访问列表的交易类型时该值为空。
 
 _heading: TransactionReceipt @<providers-TransactionReceipt>
 
 _property: receipt.to => string<[[address]]>
-The address this transaction is to. This is ``null`` if the
-transaction was an **init transaction**, used to deploy a contract.
+接受这笔交易的地址。如果交易是用于部署合约，则为``null``。
+
+
 
 _property: receipt.from => string<[[address]]>
-The address this transaction is from.
+发起这笔交易的地址。
 
 _property: receipt.contractAddress => string<[[address]]>
-If this transaction has a ``null`` to address, it is an **init transaction**
-used to deploy a contract, in which case this is the address created by that
-contract.
-
-To compute a contract address, the [getContractAddress](utils-getContractAddress)
-utility function can also be used with a [[providers-TransactionResponse]]
-object, which requires the transaction nonce and the address of the sender.
+如果这笔交易是转去一个``null``的地址，它是表示一个**init transaction**用于部署合约。在这种情况下，这个属性就代表所创建的合约的地址。
+要计算合约地址，[getContractAddress](utils-getContractAddress)的utility function还可以与[[providers-TransactionResponse]]对象一起使用，该对象需要交易的nonce值和发送人的地址。
 
 _property: receipt.transactionIndex => number
-The index of this transaction in the list of transactions included in
-the block this transaction was mined in.
+当前区块包含所有交易列表中，此交易的索引。
 
 _property: receipt.type => number
-The [[link-eip-2718]] type of this transaction. If the transaction
-is a legacy transaction without an envelope, it will have the type ``0``.
+此交易的[[link-eip-2718]]类型。如果事务是没有envelope的legacy事务，则其type 为``0``。
 
 _property: receipt.root => string
 The intermediate state root of a receipt.
 
-Only transactions included in blocks **before** the [Byzantium Hard Fork](link-eip-609)
-have this property, as it was replaced by the ``status`` property.
+只有在[Byzantium Hard Fork](link-eip-609)之前包含在区块中的交易才有这个属性，因为它被``status``属性取代了。
 
-The property is generally of little use to developers. At the time
-it could be used to verify a state transition with a fraud-proof
-only considering the single transaction; without it the full block
-must be considered.
+这些属性通常对开发者没什么用处。仅考虑单笔交易的防伪性的时候可以用于验证状态转换;如果没有它，则必须考虑整个区块。
 
 _property: receipt.gasUsed => [[BigNumber]]
-The amount of gas actually used by this transaction.
+该交易实际使用的gas值。
 
 _property: receipt.logsBloom => string<[[DataHexString]]>
-A [bloom-filter](link-wiki-bloomfilter), which
-includes all the addresses and topics included in any log in this
-transaction.
+一个[bloom-filter](link-wiki-bloomfilter)，包含此交易中所有日志中包含的全部地址和主题。
 
 _property: receipt.blockHash => string<[[DataHexString]]<32>>
-The block hash of the block that this transaction was included in.
+包含该交易的区块的区块哈希值。
 
 _property: receipt.transactionHash => string<[[DataHexString]]<32>>
-The transaction hash of this transaction.
+这笔交易的哈希值。
 
 _property: receipt.logs => Array<[[providers-Log]]>
-All the logs emitted by this transaction.
+这笔交易触发的所有日志。
 
 _property: receipt.blockNumber => number
-The block height (number) of the block that this transaction was
-included in.
+包含这笔交易的区块的高度（区块数量）。
 
 _property: receipt.confirmations => number
-The number of blocks that have been mined since this transaction,
-including the actual block it was mined in.
+当这笔交易所在的区块被挖出来时，所有已挖出的区块数量(包括这笔刚挖出的区块)。
 
 _property: receipt.cumulativeGasUsed => [[BigNumber]]
-For the block this transaction was included in, this is the sum of the
-gas used by each transaction in the ordered list of transactions
-up to (and including) this transaction.
-
-This is generally of little interest to developers.
+对于包含该交易的块，这是截至(并包括)该交易的有序交易列表中每个交易使用的gas的总和。
+开发人员通常对这个属性不感兴趣。
 
 _property: receipt.byzantium => boolean
-This is true if the block is in a [post-Byzantium Hard Fork](link-eip-609)
-block.
+如果区块是在[post-Byzantium Hard Fork](link-eip-609)区块，这个值是true。
+
+
 
 _property: receipt.status => boolean
-The status of a transaction is 1 is successful or 0 if it was
-reverted. Only transactions included in blocks [post-Byzantium Hard Fork](link-eip-609)
-have this property.
+如果交易成功，这个值为1；如果交易被reverted，这个值为为0。
+只有[post-Byzantium Hard Fork](link-eip-609)中包含的交易才有这个属性。
 
 _subsection: Access Lists
-
-An Access List is optional an includes a list of addresses and storage
-slots for that address which should be //warmed// or pre-fetched for
-use within the execution of this transaction. A //warmed// value has an
-additional upfront cost to access, but is discounted throughout the code
-execution for reading and writing.
+Access List是可选的，它包含一个地址列表和地址的存储槽，这些地址应该是//warmed//或pre-fetched的，以便在这个交易的执行中使用。
+一个//warmed//值有一个额外的预先支付访问的成本，但在整个读取和写入代码的执行过程中会被降低。
 
 _heading: AccessListish @<providers-AccessListish>
 
-A looser description of an [[providers-AccessList]], which will be
-converted internally using [accessListify](utils-accessListify).
+[[providers-AccessList]]的一个更宽松的描述，它将在内部使用[accessListify](utils-accessListify)进行转换。
 
 
-It may be any of:
 
-- any [[providers-AccessList]]
-- an Array of 2-element Arrays, where the first element is the address
-  and second array is an array of storage keys
-- an object, whose keys represent the addresses and each value is an
-  array of storage keys
+他可以是以下的任意一种:
 
-When using the object form (the last option), the addresses and storage
-slots will be sorted. If an explicit order for the access list is
-required, one of the other forms must be used. Most developers
-**do not** require explicit order.
+- 任意的[[providers-AccessList]]
+- 一个包含两个元素的数组，第一个元素是地址，第二个是数组在storage中的key
+- 一个对象, 所以的key表示地址，相应的value表示数组在storage中的key
+
+当使用对象形式(上述最后一个选项)时，地址和存储槽将被排序。
+如果需要access list的显式顺序，则必须使用方式。
+大多数开发人员不需要明确的顺序。
 
 _code: equivalent to the AccessList example below @lang<javascript>
 
@@ -468,13 +386,11 @@ accessList = {
 
 _heading: AccessList @<providers-AccessList>
 
-An [[link-eip-2930]] transaction allows an optional **AccessList**
-which causes a transaction to //warm// (i.e. pre-cache) another
-addresses state and the specified storage keys.
+一个[[link-eip-2930]]交易允许一个可选的**AccessList**，它会导致交易//warm//（预缓存）另一个地址状态和指定的storage key。
 
-This incurs an increased intrinsic cost for the transaction, but provides
-discounts for storage and state access throughout the execution of the
-transaction.
+这会使得交易的内在成本变大，但在整个事务执行过程中给存储和状态访问带来了好处。
+
+
 
 _code: example access list
 

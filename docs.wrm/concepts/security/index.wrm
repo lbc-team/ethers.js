@@ -1,162 +1,91 @@
-_section: Security @<security>
+_section: 安全 @<security>
 
-While security should be a concern for all developers, in the
-blockchain space developers must be additionally conscious of
-many areas which can be exploited.
+虽然所有开发人员都应该关注安全性，但在区块链领域，开发人员还必须特别留意哪些可能被利用的漏洞。
 
-Once a problem has an economic incentives to exploit it, there
-is a much larger risk and with blockchain apps it can become
-quite valuable to attack.
+一旦一个问题具备经济动机去利用它，就会有更大的风险，而对于区块链应用程序来说，攻击它就变得非常有价值。
 
-In addition to many of the other security issues app developers
-may have to worry about, there are a few additional vectors
-that JavaScript developers should be aware of.
+除了应用程序开发人员可能需要担心的许多其他安全问题之外，还有一些额外的矢量是JavaScript开发人员应该注意的。
 
-_subsection: Side-Channel Attacks
+_subsection: 侧信道攻击
 
-A [Side-Channel Attack](link-wiki-side-channel-attack) occurs
-when something orthogonal to the implementation of the algorithm
-used can be exploited to learn more about secure or private
-information.
-
-_heading: Released Data (Strings, Uint8Arrays, Buffers)
-
-In JavaScript, memory may not be securely allocated, or more
-importantly securely released.
-
-[Historically](https://github.com/nodejs/node/issues/4660),
-``new Buffer(16)`` would re-use old memory that had been
-released. This would mean that code runnint later, may have
-access to data that was discarded.
-
-As an example of the dangers, imagine if you had used a Buffer
-to store a private key, signed data and then returned from the
-function, allowing the Buffer to be de-allocated. A future
-function may be able to request a new Buffer, which would still
-have that left-over private key, which it could then use to
-steal the funds from that account.
-
-There are also many debugging tools and systems designed to
-assist develoeprs inspect the memory contents of JavaScript
-programs. In these cases, any //private key// or //mnemonic//
-siiting in memory may be visible to other users on the system,
-or malicious scripts.
-
-_heading: Timing Attack
-
-Timing attacks allow a malicious user or script to determine
-private data through analysing how long an operation requires
-to execute.
-
-In JavaScript, //Garbage Collection// occurs periodically when the
-system determines it is required. Each JavaScript implementation
-is different, with a variety of strategies and and abilities.
-
-Most Garbage Collection requires "stopping the world", or pausing
-all code being executed while it runs. This adds a large delay
-to any code that was currently running.
-
-This can be exploited by attackers to "condition cause a delay".
-They will set up a scenario where the system is on the edge of
-needing to garbage collect, and call your code with two paths,
-a simple path and complex path. The simple path won't stir things
-up enough to cause a garbage collection, while the complex one
-will. By timing how long the code took to execute, they now know
-whether garbage collection occured and therefore whether the simple
-or complex path was taken.
-
-Advancced timing attacks are very difficult to mitigate in any
-garbage-collection-based language. Most libraries where this
-matters will hopefully mitigated this for you as much as possible,
-but it is still good to be aware of.
-
-_heading: General Concerns
-
-- [Cross-Site Scripting](link-wiki-xss)
-- [Cross-Site Request Forgery](link-wiki-csrf)
-- [Phishing](link-wiki-phishing)
+当所使用的算法中正交的某些内容被用来了解更多关于安全或私人信息时，就可能会发生[侧信道攻击](link-wiki-side-channel-attack) 。
 
 
-_subsection: Key Derivation Functions @<security--pbkdf>
 
-This is not specific to Ethereum, but is a useful technique
-to understand and has some implications on User Experience.
+_heading: 数据释放 (Strings, Uint8Arrays, Buffers)
 
-Many people are concerned that encrypting and decrypting an
-Ethereum wallet is quite slow and can take quite some time.
-It is important to understand this is intentional and provides
-much stronger security.
+ 在JavaScript中，内存不太可能安全地分配，更重要的是也很难安全地释放。
 
-The algorithm usually used for this process is [scrypt](link-wiki-scrypt),
-which is a memory and CPU intensive algorithm which computes
-a key (fixed-length pseudo-random series of bytes) for a given
-password.
+从[历史的角度](https://github.com/nodejs/node/issues/4660)来说，``new Buffer(16)`` 会重用已经释放的旧内存。这意味着稍后运行的代码，可能会访问被丢弃的数据。
+
+这里举一个危险的例子，想象一下，如果你使用Buffer来存储私钥、签名数据，然后从函数返回，允许Buffer被解除分配。未来的函数可能会请求一个新的Buffer，该Buffer仍然保留了剩余的私钥，然后它可以使用该私钥从该帐户中窃取资金。
+
+也有很多调试工具和系统被设计用来帮助开发人员检查JavaScript程序的内存内容。在这些情况下，任何位于内存中的私钥或助记词，都可能被系统上的其他用户或恶意脚本所获得。
+
+_heading: 时序攻击
+
+时序攻击允许恶意用户或脚本通过分析操作执行多长时间来确定私有的数据。
+
+在JavaScript中，当系统确定需要//垃圾回收机制//（Garbage Collection）时，垃圾收集会周期性地发生。每种JavaScript实现都是不同的，具有各种各样的方法和能力。
+
+大多数垃圾回收机制需要“停止整个程序”，或者暂停所有正在执行的代码。这将给当前运行的任何代码带来很大的延迟。
+
+攻击者可以利用这种机制来实现“条件导致延迟”。他们会设置一个场景，当系统处于需要进行垃圾收集的边缘时，使用两种路径调用代码，一种是简单路径，一种是复杂路径。
+简单的路径不足以触发足够的垃圾收集，而复杂的方式可以。通过计时代码执行的时间，可以了解到是否发生了垃圾收集，从而知道采用的是简单路径还是复杂路径。
+
+高级的时序攻击在任何基于垃圾收集的语言中都很难减缓。大多数有此问题的库都希望能够尽可能地缓解这种情况，因此这是仍有必要了解的。
+
+_heading: 常见攻击
+
+- [跨站点脚本攻击](link-wiki-xss)
+- [跨站点请求伪造](link-wiki-csrf)
+- [网络钓鱼](link-wiki-phishing)
 
 
-_heading: Why does it take so long?
+_subsection: 密钥导出函数 @<security--pbkdf>
 
-The goal is to use as much CPU and memory as possible during
-this algorithm, so that a single computer can only compute a
-very small number of results for some fixed amount of time. To
-scale up an attack, the attacker requires additional computers,
-increasing the cost to [brute-force attack](link-wiki-bruteforce)
-to guess the password.
+这不是以太坊特有的，但这是一种有用的技术，并且会影响用户体验。
 
-For example, if a user knows their correct password, this process
-may take 10 seconds for them to unlock their own wallet and proceed.
+许多人担心加密和解密一个以太坊钱包是非常缓慢的，可能需要相当长的时间。重要的是要理解这是有意为之，因为这可以提供更强的安全性。
 
-But since an attacker does not know the password, they must guess; and
-each guess also requires 10 seconds. So, if they wish to try guessing 1
-million passwords, their computer would be completely tied up for 10
-million seconds, or around 115 days.
+这个过程通常使用的算法是[scrypt](link-wiki-scrypt)，这是一种内存和CPU密集型算法，它为给定的密码计算一个密钥(固定长度的伪随机字节序列)。
 
-Without using an algorithm like this, a user would be able
-to log in instantly, however, 1 million passwords would only
-take a few seconds to attempt. Even secure passwords would
-likely be broken within a short period of time. There is no way
-the algorithm can be faster for a legitimate user without also
-being faster for an attacker.
+_heading: 为什么要花这么长时间?
 
-_heading: Mitigating the User Experience
+这是为了在用此算法期间需要使用尽可能多的CPU和内存，一台计算机在一段固定的时间内只能计算非常少的结果。为了扩大攻击规模，攻击者需要额外的计算机，这增加了[暴力破解](link-wiki-bruteforce)密码的代价。
 
-Rather than reducing the security (see below), a better practice is to make
-the user feel better about waiting. The Ethers encryption and decryption
-API allows the developer to incorporate a progress bar, by passing in a
-progress callback which will be periodically called with a number between
-0 and 1 indication percent completion.
+例如，如果用户知道他们的正确密码，这个过程可能需要10秒来解锁他们自己的钱包并使用。
 
-In general a progress bar makes the experience feel faster, as well as
-more comfortable since there is a clear indication how much (relative) time
-is remaining. Additionally, using language like //"decrypting..."// in
-a progress bar makes a user feel like there time is not being //needlessly//
-wasted.
+但由于攻击者不知道密码，他们必须猜测;每猜一次也需要花10秒的时间。因此，如果他们想尝试猜测100万个密码，他们的电脑将被完全占用1000万秒，或大约115天。
 
-_heading: Work-Arounds (not recommended)
+如果不使用这样的算法，用户将能够立即登录，然而，100万个密码只需要几秒钟的尝试。即使是安全的密码也可能在短时间内被破解。算法是不可能使得攻击者比合法用户更快解锁钱包。
 
-There are ways to reduce the time required to decrypt an Ethereum JSON
-Wallet, but please keep in mind that doing so **discards nearly all security**
-on that wallet.
+_heading: 提高用户体验
 
-The scrypt algorithm is designed to be tuned. The main purpose of this is
-to increase the difficulty as time goes on and computers get faster, but
-it can also be tuned down in situations where the security is less important.
+与其降低安全性(见下文)，更好的做法是让用户对等待感觉更好。ether加密和解密API允许开发人员合并一个进度条，方法是传递一个进度回调函数，该函数将定期调用一个0到1之间的数字表示完成百分比。
+
+一般来说，进度条会让玩家感觉更快，也更舒服，因为它清楚地显示了还剩下多少(相对)时间。此外，在进度条中使用//"解锁中……"//这样的语言会让用户觉得时间没有被无谓地浪费。
+
+_heading: 其他方案 (不推荐)
+
+有很多方法可以减少以太坊JSON钱包所需的解密时间，但请记住，这样做会放弃该钱包上几乎所有的安全性。
+
+scrypt算法被设计成可调的。这样做的主要目的是考虑到随着时间的推移计算机处理速度的提高而增加难度，但也可以在安全性不那么重要的情况下降低难度。
 
 _code: @LANG<javascript>
 
-// Our wallet object
+// 钱包对象
 const wallet = Wallet.createRandom();
 
-// The password to encrypt with
+// 需要解密的密码
 const password = "password123";
 
-// WARNING: Doing this substantially reduces the security
-//          of the wallet. This is highly NOT recommended.
+// 警告: 这种做法会降低钱包安全性，极度不推荐
 
-// We override the default scrypt.N value, which is used
-// to indicate the difficulty to crack this wallet.
+// 我们重写了 scrypt.N 默认的值，该值是表示破解钱包的难度。
 const json = wallet.encrypt(password, {
   scrypt: {
-    // The number must be a power of 2 (default: 131072)
+    // 这个值必须是2的乘幂 (默认值: 131072)
     N: 64
   }
 });

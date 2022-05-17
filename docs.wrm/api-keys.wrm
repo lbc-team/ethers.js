@@ -1,124 +1,104 @@
 _section: Provider API Keys @<api-keys>
 
-//( **TL; DR** &ndash; sign up for your own API keys with the links below to improve your application performance )//
+//( **太长不看版：** &ndash; 使用下面的链接注册来获得您自己的API密钥，以提高您的应用程序性能 )//
 
-When using a [[Provider]] backed by an API service (such as [[link-alchemy]],
-[[link-etherscan]] or [[link-infura]]), the service requires an API key,
-which allows each service to track individual projects and their usage and
-permissions.
+当使用由API服务商(例如[[link-alchemy]],[[link-etherscan]] 或 [[link-infura]])支持的[[Provider]]时, 他们都需要一个API密钥，从而能够跟踪每个项目及其使用和权限。
 
-The ethers library offers default API keys for each service, so that each
-[[Provider]] works out-of-the-box.
+ethers.js 库 为上述的API服务商提供了默认的API密钥，因此每个[[Provider]]都可以轻松地连接————开箱即用。
 
-These API keys are provided as a community resource by the backend services
-for low-traffic projects and for early prototyping.
+这些API密钥是由后端服务作为社区资源提供的，用于低流量项目和早期原型开发。
 
-Since these API keys are shared by all users (that have not acquired their
-own API key), they are aggressively throttled which means retries occur more
-frequently and the responses are slower.
+因为这些API键是由所有用户共享的(没有获得自己的API密钥)，所以它们被经常被使用，这意味着重新请求发生得更频繁，响应也更慢。
 
-It is **highly recommended** that you sign up for a free API key from each service for their
-free tier, which (depending on the service) includes many advantages:
+**强烈建议**你从下列的API服务商注册一个免费的API密钥，这有很多好处（可能有些差别，这取决于具体的API服务商）:
 
-- a much **higher request rate** and concurrent request limit
-- **faster** responses with fewer retries and timeouts
-- useful **metric tracking** for performance tuning and to analyze your customer behaviour
-- more **advanced APIs**, such as archive data or advanced log queries
+- 更**高**的请求速率和并发请求限制
+- 更**快**的响应，更少的重连和超时
+- 在用于性能调优和分析客户行为具有更**优秀**的指标追踪
+- 更**高级**的api，例如归档数据或高级日志查询
 
-_subsection: Etherscan @<api-keys--etherscan>
+_subsection: Etherscan(以太坊区块浏览器) @<api-keys--etherscan>
 
-Etherscan is an Ethereum block explorer, which is possibly the most useful
-developer tool for building and debugging Ethereum applications.
+Etherscan 是以太坊区块资源管理器，它可能是最有用的构建和调试以太坊应用程序的开发工具。
 
-They offer an extensive collection of API endpoints which provide all the
-operations required to interact with the Ethereum Blockchain.
+Etherscan提供了大量的 API endpoints 集合， 包含了所有能够用来与以太坊区块链交互的操作。
 
-[Sign up for a free API key on Etherscan](link-etherscan-signup)
+[ 免费注册一个 API key ](link-etherscan-signup)
 
-**Benefits:**
+**优点:**
 
-- higher rate limit (since you are not using the [shared rate limit](link-etherscan-ratelimit))
-- customer usage metrics
+- 更高的速率限制 (因为没有 [共享速率限制](link-etherscan-ratelimit))
+- 客户使用指标
 
 _subsection: INFURA @<api-keys--infura>
 
-The INFURA service has been around for quite some time and is very robust
-and reliable and highly recommended.
+INFURA服务已经存在相当一段时间了，鲁棒性强、可靠性高，强烈推荐。
 
-They offer a standard JSON-RPC interface and a WebSocket interface, which makes
-interaction with standard tools versatile, simple and straight forward.
+它们提供了一个标准的JSON-RPC接口和一个WebSocket接口，这使得与标准工具的交互更加通用、简单和直接。
 
-[Sign up for a free Project ID on INFURA](link-infura-signup)
+[ 在 INFURA 免费注册一个 Project ID ](link-infura-signup)
 
-**Benefits:**
+**优点:**
 
-- higher rate limit
-- customer usage metrics
-- access to archive data (requires paid upgrade)
+- 更高的速率限制
+- 客户使用指标
+- 访问归档数据 (需要付费升级)
 
 _subsection: Alchemy @<api-keys--alchemy>
 
-The Alchemy service has been around a few years and is also very robust
-and reliable.
+Alchemy服务已经有几年的历史了，它也具备强鲁棒性和高可靠性。
 
-They offer a standard JSON-RPC interface and a WebSocket interface, as well
-as a collection of advanced APIs for interacting with tokens and to assist
-with debugging.
+它们提供了一个标准的JSON-RPC接口和一个WebSocket接口，以及一组用于与通证（tokens）交互和帮助调试的高级API。
 
-[Sign up for a free API key on Alchemy](link-alchemy-signup)
+[ 在 Alchemy 免费注册一个 API key ](link-alchemy-signup)
 
-**Benefits:**
+**优点:**
 
-- higher rate limit
-- customer usage metrics
-- access to advanced token balance and metadata APIs
-- access to advanced debugging trace and revert reason APIs
+- 更高的速率限制
+- 客户使用指标
+- 能够访问高级通证余额和元数据API
+- 能够进行高级调试跟踪和恢复reason APIs
 
 _subsection: Pocket Gateway@<api-keys--pocket-gateway>
 
 
-[Sign up for a free API key on Pocket](link-pocket-signup)
+[ 在 Pocket 免费注册一个 API key ](link-pocket-signup)
 
 **Benefits:**
 
-- customer usage metrics
-- decentralized Access to Blockchain Infrastructure
-- Stake as opposed to paying a monthly fee
-- Highly redundant global set of nodes incentivized by cryptoeconomic incentives
+- 客户使用指标
+- 使用去中心化区块链基础设施
+- 入股而不是按月付费
+- 受加密经济激励的高度冗余的全局节点集合
 
 
-_subsection: Creating a Default Provider @<api-keys--getDefaultProvider>
+_subsection: 创建默认的 Provider @<api-keys--getDefaultProvider>
 
-The [default provider](providers-getDefaultProvider) connects to multiple
-backends and verifies their results internally, making it simple to have
-a high level of trust in third-party services.
+[默认的提供者](providers-getDefaultProvider)连接到多个后端，并在内部验证它们的结果，这使得对第三方服务的高度信任变得很简单。
 
-A second optional parameter allows API keys to be specified to each
-Provider created internally and any API key omitted will fallback onto
-using the default API key for that service.
+第二个可选参数允许为每个内部创建的Provider指定API keys，任何被遗漏的API keys将返回使用该服务的默认API keys。
 
-It is **highly recommended** that you provide an API for each service, to
-maximize your applications performance.
+**极度推荐** 您为每个服务提供一个API，让您的应用程序性能实现最大化。
 
-_code: Passing API Keys into getDefaultProvider @lang<script>
+_code: 将 API Keys 传到 getDefaultProvider @lang<script>
 
-// Use the mainnet
+// 使用主网
 const network = "homestead";
 
-// Specify your own API keys
-// Each is optional, and if you omit it the default
-// API key for that service will be used.
+// 指定你的API keys
+// 每个都是可选的，如果省略它，则为默认值
+// 该服务的API key将被使用
 const provider = ethers.getDefaultProvider(network, {
     etherscan: YOUR_ETHERSCAN_API_KEY,
     infura: YOUR_INFURA_PROJECT_ID,
-    // Or if using a project secret:
+    // 或者使用项目私钥:
     // infura: {
     //   projectId: YOUR_INFURA_PROJECT_ID,
     //   projectSecret: YOUR_INFURA_PROJECT_SECRET,
     // },
     alchemy: YOUR_ALCHEMY_API_KEY,
     pocket: YOUR_POCKET_APPLICATION_KEY
-    // Or if using an application secret key:
+    // 或者使用应用私钥:
     // pocket: {
     //   applicationId: ,
     //   applicationSecretKey:

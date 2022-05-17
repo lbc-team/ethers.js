@@ -1,23 +1,14 @@
 _section: Example: ERC-20 Contract
+元类（Meta-Classes）的概念有些令人困惑，因此我们将介绍一个简短的例子。
 
-The concept of Meta-Classes is somewhat confusing, so we will go
-over a short example.
+元类是在运行时（run-time）定义的类。合约是由应用程序二进制接口(ABI)指定的，它描述了它所拥有的方法和事件。
+这些描述是[[Contract]]对象处于run-time时传入的，它创建一个新的Class，在run-time时添加了ABI中定义的所有方法。
 
-A meta-class is a class which is defined at run-time. A Contract
-is specified by an //Application Binary Interface// (ABI), which describes
-the methods and events it has. This description is passed the the
-[[Contract]] object at run-time, and it creates a new Class, adding
-all the methods defined in the ABI at run-time.
-
-_subsection: Deploying a Contract
-
-Most often, any contract you will need to interact with will already
-be deployed to the blockchain, but for this example will will first
-deploy the contract.
+_subsection: 部署合约
+大多数情况下，您需要与之交互的任何合约都已经部署到区块链上，但对于本例需要先部署合约。
 
 _property: new ethers.ContractFactory(abi, bytecode, signer)
-Create a new [[ContractFactory]] which can deploy a contract to the
-blockchain.
+创建一个新的[[ContractFactory]]，它可以将合约部署到区块链。
 
 _code: @lang<javascript>
 
@@ -26,50 +17,44 @@ _code: @lang<javascript>
 
 const bytecode = "0x608060405234801561001057600080fd5b506040516103bc3803806103bc83398101604081905261002f9161007c565b60405181815233906000907fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef9060200160405180910390a333600090815260208190526040902055610094565b60006020828403121561008d578081fd5b5051919050565b610319806100a36000396000f3fe608060405234801561001057600080fd5b506004361061004c5760003560e01c8063313ce5671461005157806370a082311461006557806395d89b411461009c578063a9059cbb146100c5575b600080fd5b604051601281526020015b60405180910390f35b61008e610073366004610201565b6001600160a01b031660009081526020819052604090205490565b60405190815260200161005c565b604080518082018252600781526626bcaa37b5b2b760c91b6020820152905161005c919061024b565b6100d86100d3366004610222565b6100e8565b604051901515815260200161005c565b3360009081526020819052604081205482111561014b5760405162461bcd60e51b815260206004820152601a60248201527f696e73756666696369656e7420746f6b656e2062616c616e6365000000000000604482015260640160405180910390fd5b336000908152602081905260408120805484929061016a9084906102b6565b90915550506001600160a01b0383166000908152602081905260408120805484929061019790849061029e565b90915550506040518281526001600160a01b0384169033907fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef9060200160405180910390a350600192915050565b80356001600160a01b03811681146101fc57600080fd5b919050565b600060208284031215610212578081fd5b61021b826101e5565b9392505050565b60008060408385031215610234578081fd5b61023d836101e5565b946020939093013593505050565b6000602080835283518082850152825b818110156102775785810183015185820160400152820161025b565b818111156102885783604083870101525b50601f01601f1916929092016040019392505050565b600082198211156102b1576102b16102cd565b500190565b6000828210156102c8576102c86102cd565b500390565b634e487b7160e01b600052601160045260246000fdfea2646970667358221220d80384ce584e101c5b92e4ee9b7871262285070dbcd2d71f99601f0f4fcecd2364736f6c63430008040033";
 
-// A Human-Readable ABI; we only need to specify relevant fragments,
-// in the case of deployment this means the constructor
+// 一个人类可读（Human-Readable）的ABI;我们只需要指定相关的部分内容，在这里我们用到了构造函数
 const abi = [
     "constructor(uint totalSupply)"
 ];
 
 const factory = new ethers.ContractFactory(abi, bytecode, signer)
 
-// Deploy, setting total supply to 100 tokens (assigned to the deployer)
+// 部署，设置token的total supply为100，分配给部署人（deployer）
 const contract = await factory.deploy(parseUnits("100"));
 
-// The contract is not currentl live on the network yet, however
-// its address is ready for us
+//链上现在虽然我们还没有这个合约，但是这个合约地址我们是预先经过计算后得到的
 //_result:
 contract.address
 //_log:
 //_hide: _page.address = contract.address;
 
-// Wait until the contract has been deployed before interacting
-// with it; returns the receipt for the deployemnt transaction
+// 在交易被挖出来之前(即合约被部署)等待（Wait）
+//  - 部署后，交易会返回receipt
 //_result:
 await contract.deployTransaction.wait();
 //_log:
 
 
-_subsection: Connecting to a Contract
+_subsection: 连接到合约
 
 _heading: ERC20Contract @INHERIT<[[Contract]]>
 
 _property: new ethers.Contract(address, abi, providerOrSigner)
-Creating a new instance of a Contract connects to an existing
-contract by specifying its //address// on the blockchain,
-its //abi// (used to populate the class' methods) a //providerOrSigner//.
+创建一个Contract的新实例，是通过在区块链上指定这个合约的地址、以及它的//abi//(用于填充类的方法)和providerOrSigner来连接到的。
 
-If a [[Provider]] is given, the contract has only read-only access, while
-a [[Signer]] offers access to state manipulating methods.
+如果给定了[[Provider]]，那么合约只有只读访问权限，而[[Signer]]则提供了对状态操作方法的访问权限。
 
 _code: @lang<javascript>
 
 //_hide: const provider = localProvider;
 //_hide: const signer = localSigner;
 
-// A Human-Readable ABI; for interacting with the contract, we
-// must include any fragment we wish to use
+// 一个人类可读（Human-Readable）的ABI;用来与合约交互，必须要包含我们要具体使用的函数内容
 const abi = [
     // Read-Only Functions
     "function balanceOf(address owner) view returns (uint256)",
@@ -83,113 +68,99 @@ const abi = [
     "event Transfer(address indexed from, address indexed to, uint amount)"
 ];
 
-// This can be an address or an ENS name
+// 可以是 address 也可以是 一个 ENS name
 //_hide: const address = _page.address;
 //_verbatim: `const address = ${ JSON.stringify(address) };`
 
-// Read-Only; By connecting to a Provider, allows:
-// - Any constant function
-// - Querying Filters
-// - Populating Unsigned Transactions for non-constant methods
-// - Estimating Gas for non-constant (as an anonymous sender)
-// - Static Calling non-constant methods (as anonymous sender)
+// 只读; 通过 Provider连接，允许以下操作:
+// - 访问常量函数 constant function
+// - 查询过滤器
+// - 对于 non-constant methods 填充未签名的交易
+// - 对于non-constant估算Gas(作为匿名发送者)
+// - 对于non-constant methods静态调用 (作为匿名发送者)
 const erc20 = new ethers.Contract(address, abi, provider);
 //_hide: _page.erc20 = erc20;
 
-// Read-Write; By connecting to a Signer, allows:
-// - Everything from Read-Only (except as Signer, not anonymous)
-// - Sending transactions for non-constant functions
+// 可读写; 通过Signer连接，允许以下操作:
+// - 任何只读的操作 (作为Signer而非匿名者)
+// - 为non-constant functions发送交易
 const erc20_rw = new ethers.Contract(address, abi, signer);
 //_hide: _page.erc20_rw = erc20_rw;
 
 
-_subsection: Properties @NOTE<(inheritted from [[Contract]])>
+_subsection: 属性 @NOTE<(inheritted from [[Contract]])>
 
 _property: erc20.address => string<[[address]]>
-This is the address (or ENS name) the contract was constructed with.
+合约被创建的 地址address (或 ENS name) 
 
 _property: erc20.resolvedAddress => string<[[address]]>
-This is a promise that will resolve to the address the **Contract**
-object is attached to. If an [[address]] was provided to the constructor,
-it will be equal to this; if an ENS name was provided, this will be the
-resolved address.
+这是一个解析到**合约**对象的地址的promise。
+如果是[[address]]提供给构造函数，结果就是这个[[address]];
+如果提供的是ENS name，结果就是解析后地址。
 
 _property: erc20.deployTransaction => [[providers-TransactionResponse]]
-If the **Contract** object is the result of a ContractFactory deployment,
-this is the transaction which was used to deploy the contract.
+如果Contract对象是ContractFactory部署的得到的，在这里的返回的结果就是用于部署合约的交易。
 
 _property: erc20.interface => [[Interface]]
-This is the ABI as an [[Interface]].
+这是作为[[Interface]]的ABI。
 
 _property: erc20.provider => [[Provider]]
-If a provider was provided to the constructor, this is that provider. If
-a signer was provided that had a [[Provider]], this is that provider.
+如果一个provider被提供给构造函数，这条语句的结果就是provider；
+如果提供了的[[Provider]]是一个signer，结果就是signer。
 
 _property: erc20.signer => [[Signer]]
-If a signer was provided to the constructor, this is that signer.
-
+如果是一个signer提供给构造函数，结果就是signer。
 
 _subsection: Methods @NOTE<(inheritted from [[Contract]])>
 
 _property: erc20.attach(addressOrName) => [[Contract]]
-Returns a new instance of the **Contract** attached to a new
-address. This is useful if there are multiple similar or identical
-copies of a Contract on the network and you wish to interact with
-each of them.
+返回一个附在新地址的**合约**的新实例。
+如果网络上有多个类似或相同的合约副本，并且您希望与它们中的每一个进行交互，那么这是非常有用的。
 
 _property: erc20.connect(providerOrSigner) => [[Contract]]
-Returns a new instance of the Contract, but connected to
-//providerOrSigner//.
+返回合约的新实例，但需要连接provider或者Signer。
 
-By passing in a [[Provider]], this will return a downgraded
-**Contract** which only has read-only access (i.e. constant calls).
+通过传入一个[[Provider]]，这将返回一个低级的**合约**，它只有只读访问(即常量调用)。
 
-By passing in a [[Signer]]. this will return a **Contract** which
-will act on behalf of that signer.
+通过传入一个[[Signer]]。这将返回一个代表该signer的**合约**。
 
 _property: erc20.deployed() => Promise<Contract>
 
 _property: Contract.isIndexed(value) => boolean
 
 
-_subsection: Events @NOTE<(inheritted from [[Contract]])> @<erc20-events>
+_subsection: 事件（Events） @NOTE<(inheritted from [[Contract]])> @<erc20-events>
 
-See [Meta-Class Filters](erc20-meta-events) for examples using events.
+关于使用事件的例子请参考[Meta-Class Filters](erc20-meta-events)。
 
 _property: erc20.queryFilter(event [ , fromBlockOrBlockHash [ , toBlock ]) => Promise<Array<Event>> @<erc20-queryfilter>
-Return Events that match the //event//.
+返回匹配//event//参数的事件。
 
 _property: erc20.listenerCount([ event ]) => number
-Return the number of listeners that are subscribed to //event//. If
-no event is provided, returns the total count of all events.
+返回订阅该//event//的监听器数量。如果没有提供//event//，则返回所有事件的总数。
 
 _property: erc20.listeners(event) => Array<Listener>
-Return a list of listeners that are subscribed to //event//.
+返回订阅该//event//的监听器列表。
 
 _property: erc20.off(event, listener) => this
-Unsubscribe //listener// to //event//.
+返回订阅该//event//的监听器列表。
 
 _property: erc20.on(event, listener) => this
-Subscribe to //event// calling //listener// when the event occurs.
+监听//event//事件，当事件发生时，会调用//listener//函数。
 
 _property: erc20.once(event, listener) => this
-Subscribe once to //event// calling //listener// when the event
-occurs.
+监听//event//事件，当事件发生时，仅调用一次//listener//函数。
 
 _property: erc20.removeAllListeners([ event ]) => this
-Unsubscribe all listeners for //event//. If no event is provided,
-all events are unsubscribed.
-
+取消所有订阅//event//事件的监听器。如果未提供//event//事件，则取消订阅所有事件的监听。
 
 _subsection: Meta-Class Methods @NOTE<(added at Runtime)> @<erc20-meta-methods>
 
-Since the Contract is a Meta-Class, the methods available here depend
-on the ABI which was passed into the **Contract**.
+因为合约是元类，这里面可用的方法取决于传入**合约**的ABI。
 
 _property: erc20.decimals([ overrides ]) => Promise<number>
-Returns the number of decimal places used by this ERC-20 token. This can be
-used with [parseUnits](utils-parseUnits) when taking input from the user or
-[formatUnits](utils-formatunits] when displaying the token amounts in the UI.
+返回此ERC-20 token所使用的小数位数。在前端界面，当从用户获取输入时，可以使用[parseUnits](utils-parseUnits)转化后传入合约；
+从合约获得token后可以通过[formatUnits](utils-formatunits]转化后再显示给用户。
 
 _code: @lang<javascript>
 
@@ -199,7 +170,7 @@ await erc20.decimals();
 //_log:
 
 _property: erc20.balanceOf(owner [, overrides ]) => Promise<[[BigNumber]]>
-Returns the balance of //owner// for this ERC-20 token.
+返回持有这个ERC-20 token的//持有者(owner)//的余额。
 
 _code: @lang<javascript>
 
@@ -211,7 +182,7 @@ await erc20.balanceOf(signer.getAddress())
 //_log:
 
 _property: erc20.symbol([ overrides ]) => Promise<string>
-Returns the symbol of the token.
+返回token的symbol。
 
 _code: @lang<javascript>
 
@@ -221,11 +192,9 @@ await erc20.symbol();
 //_log:
 
 _property: erc20_rw.transfer(target, amount [, overrides ]) => Promise<[[providers-TransactionResponse]]>
-Transfers //amount// tokens to //target// from the current signer.
-The return value (a boolean) is inaccessible during a write operation
-using a transaction. Other techniques (such as events) are required
-if this value is required. On-chain contracts calling the ``transfer``
-function have access to this result, which is why it is possible.
+从当前的signer将数量为//amount//的tokens转给接收者//target//。
+在交易处于写入操作时，返回值(布尔类型)是得不到的。
+如果需要这个值，则需要其他方法(如事件)。链上合约调用``transfer``函数可以得到这个结果。
 
 _code: @lang<javascript>
 
@@ -234,22 +203,22 @@ _code: @lang<javascript>
 //_hide: const parseUnits = utils.parseUnits;
 //_hide: const formatUnits = utils.formatUnits;
 
-// Before...
+// 在这之前先转化格式
 //_result:
 formatUnits(await erc20_rw.balanceOf(signer.getAddress()));
 //_log:
 
-// Transfer 1.23 tokens to the ENS name "ricmoo.eth"
+// 转 1.23 tokens 到 ENS name 为 "ricmoo.eth" 的地址
 //_result:
 tx = await erc20_rw.transfer("ricmoo.eth", parseUnits("1.23"));
 //_log:
 
-// Wait for the transaction to be mined...
+// 等待交易所在的区块被挖出打包
 //_result:
 await tx.wait();
 //_log:
 
-// After!
+// 成功后转化格式
 //_result:
 formatUnits(await erc20_rw.balanceOf(signer.getAddress()));
 //_log:
@@ -259,10 +228,10 @@ formatUnits(await erc20_rw.balanceOf("ricmoo.eth"));
 //_log:
 
 _property: erc20.callStatic.transfer(target, amount [, overrides ]) => Promise<boolean>
-Performs a dry-run of transferring //amount// tokens to //target// from
-the current signer, without actually signing or sending a transaction.
+执行一次从当前signer向//target//地址转移//amount//数量的token的演练，而不实际签名或发送交易。
 
-This can be used to preflight check that a transaction will be successful.
+这可以用于检查真实的转账前，交易是否能成功。
+
 
 _code: @lang<javascript>
 
@@ -270,21 +239,19 @@ _code: @lang<javascript>
 //_hide: const randomWallet = ethers.Wallet.createRandom().connect(erc20_rw.provider);
 //_hide: const parseUnits = utils.parseUnits;
 
-// The signer has enough tokens to send, so true is returned
+// signer有足够的tokens发送的话，结果会返回true
 //_result:
 await erc20_rw.callStatic.transfer("ricmoo.eth", parseUnits("1.23"));
 //_log:
 
-// A random address does not have enough tokens to
-// send, in which case the contract throws an error
+// 一个随机的地址不会有足够的tokens用于发送，在这个例子里会抛出错误
 erc20_random = erc20_rw.connect(randomWallet);
 //_throws:
 await erc20_random.callStatic.transfer("ricmoo.eth", parseUnits("1.23"));
 //_log:
 
 _property: erc20.estimateGas.transfer(target, amount [, overrides ]) => Promise<[[BigNumber]]>
-Returns an estimate for how many units of gas would be required
-to transfer //amount// tokens to //target//.
+返回估计的“将//amount//数量的tokens发送//target//地址”所需的多少gas值。
 
 _code: @lang<javascript>
 
@@ -296,8 +263,7 @@ await erc20_rw.estimateGas.transfer("ricmoo.eth", parseUnits("1.23"));
 //_log:
 
 _property: erc20.populateTransaction.transfer(target, amount [, overrides ]) => Promise<[UnsignedTx](UnsignedTransaction)>
-Returns an [[UnsignedTransaction]] which could be signed and submitted
-to the network to transaction //amount// tokens to //target//.
+返回一个[[UnsignedTransaction]]，它可以被签名并提交给网络，达成“将//amount//数量的tokens发送//target//地址”的目的。
 
 _code: @lang<javascript>
 
@@ -308,26 +274,25 @@ _code: @lang<javascript>
 await erc20_rw.populateTransaction.transfer("ricmoo.eth", parseUnits("1.23"));
 //_log:
 
-_note: Note on Estimating and Static Calling
-
-When you perform a static call, the current state is taken into account as
-best as Ethereum can determine. There are many cases where this can provide
-false positives and false negatives. The eventually consistent model of the
+_note: 关于估算和静态调用的注意事项
+当你执行一个静态调用时，以太坊会尽可能地考虑当前状态。
+在许多情况下，这可能会提供假阳性和假阴性。
+The eventually consistent model of the
 blockchain also means there are certain consistency modes that cannot be
 known until an actual transaction is attempted.
 
 
+
+
 _subsection: Meta-Class Filters @NOTE<(added at Runtime)> @<erc20-meta-events>
 
-Since the Contract is a Meta-Class, the methods available here depend
-on the ABI which was passed into the **Contract**.
+因为合约是元类，这里面可用的方法取决于传入**合约**的ABI。
 
 _property: erc20.filters.Transfer([ fromAddress [ , toAddress ] ]) => Filter
-Returns a new Filter which can be used to [query](erc20-queryfilter) or
-to [subscribe/unsubscribe to events](erc20-events).
+返回一个新的Filter用于[查询](erc20-queryfilter)或者去[subscribe/unsubscribe to events](erc20-events)。
 
-If //fromAddress// is null or not provided, then any from address matches.
-If //toAddress// is null or not provided, then any to address matches.
+如果//fromAddress// 是空的或者没有填写，将匹配任何发送人的地址。
+如果 //toAddress//是空的或者没有填写，将匹配任何接受人的地址。
 
 _code: query filter *from* events @lang<javascript>
 
@@ -338,14 +303,12 @@ _code: query filter *from* events @lang<javascript>
 filterFrom = erc20.filters.Transfer(signer.address);
 //_log:
 
-// Search for transfers *from* me in the last 10 blocks
+// 在最新的10个区块内查询我发送的交易
 //_result:
 logsFrom = await erc20.queryFilter(filterFrom, -10, "latest");
 //_log:
 
-// Note that the args providees the details of the event, each
-// parameters is available positionally, and since our ABI
-// included parameter names also by name
+// 请注意，args提供了事件的详细信息，每个参数都是可用的，这是因为我们的ABI包含了所有参数的名称
 //_result:
 logsFrom[0].args
 //_log:
@@ -362,16 +325,13 @@ _code: query filter with *to* events @lang<javascript>
 filterTo = erc20.filters.Transfer(null, signer.address);
 //_log:
 
-// Search for transfers *to* me in the last 10 blocks
-// Note: the contract transferred totalSupply tokens to us
-//       when it was deployed in its constructor
+// 在最新的10个区块内查询发送给我的交易
+// 注意: 这是因为合约在部署时，构造函数写了将totalSupply tokens转给我
 //_result:
 logsTo = await erc20.queryFilter(filterTo, -10, "latest");
 //_log:
 
-// Note that the args providees the details of the event, each
-// parameters is available positionally, and since our ABI
-// included parameter names also by name
+// 请注意，args提供了事件的详细信息，每个参数都是可用的，这是因为我们的ABI包含了所有参数的名称
 //_result:
 logsTo[0].args
 //_log:
@@ -384,17 +344,17 @@ _code: listen for events @lang<javascript>
 //_hide: const filterFrom = _page.filterFrom;
 //_hide: const filterTo = _page.filterTo;
 
-// Listen to incoming events from signer:
+// 监听signer的发送的event事件:
 erc20.on(filterFrom, (from, to, amount, event) => {
   // The `from` will always be the signer address
 });
 
-// Listen to incoming events to signer:
+// 监听signer的接受转账的event事件:
 erc20.on(filterTo, (from, to, amount, event) => {
   // The `to` will always be the signer address
 });
 
-// Listen to all Transfer events:
+// 监听所有的转账交易event事件:
 erc20.on("Transfer", (from, to, amount, event) => {
   // ...
 });

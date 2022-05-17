@@ -1,7 +1,6 @@
 _section: Utilities
+这些实用的工具(utilities)在库中被广泛使用，对DAPP开发人员非常有用。
 
-These utilities are used extensively within the library, but
-are also quite useful for application developers.
 
 _toc:
     abi

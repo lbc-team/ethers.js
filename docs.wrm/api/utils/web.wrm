@@ -2,68 +2,57 @@ _section: Web Utilities  @<web>
 
 
 _property: ethers.utils.fetchJson(urlOrConnectionInfo [, json [ , processFunc ] ]) => Promise<any> @<utils-fetchJson>
-Fetch and parse the JSON content from //urlOrConnectionInfo//, with the
-optional body //json// and optionally processing the result with //processFun//
-before returning it.
+从//urlOrConnectionInfo//中获取并解析JSON内容，body参数json、processFun(在返回前处理result内容)是可选的。
 
 _property: ethers.utils.poll(pollFunc [, options ]) => Promise<any> @<utils-poll>
-Repeatedly call pollFunc using the [[PollOptions]] until it returns a
-value other than undefined.
+使用[[PollOptions]]反复调用pollFunc直到它返回一个非undefined的值。
 
 
 _heading: ConnectionInfo @<ConnectionInfo>
 
 _property: connection.url => string
-The URL to connect to.
+要连接的URL。
 
 _property: connection.user => string
-The username to use for [[link-wiki-basicauth]].
-The default is null (i.e. do not use basic authentication)
+用于[[link-wiki-basicauth]]的用户名。默认为null(即不使用基本身份验证)
 
 _property: connection.password => string
-The password to use for [[link-wiki-basicauth]].
-The default is null (i.e. do not use basic authentication)
+用于[[link-wiki-basicauth]]的密码。默认为null(即不使用基本身份验证)
 
 _property: connection.allowInsecureAuthentication => boolean
-Allow [[link-wiki-basicauth]] over non-secure HTTP. The default is false.
+允许对不安全的HTTP进行[[link-wiki-basicauth]]。默认值为false。
 
 _property: connection.timeout => number
-How long to wait before rejecting with a //timeout// error.
+表示在遇到//timeout//错误并交易被拒绝之前，需要等待多长的时间。
 
 _property: connection.headers => { [ key: string]: string }
-Additional headers to include in the connection.
-
+包含在连接中的额外的头文件。
 
 _heading: PollOptions @<PollOptions>
 
 _property: options.timeout => number
-The amount of time allowed to elapse before triggering a timeout
-error.
+表示经过连接多长的时间，才会触发超时错误。
 
 _property: options.floor => number
-The minimum time limit to allow for [[link-wiki-backoff]].
+允许[[link-wiki-backoff]]的最小时间限制。
 
-The default is 0s.
+默认值是0s。
 
 _property: options.ceiling => number
-The maximum time limit to allow for [[link-wiki-backoff]].
+允许[[link-wiki-backoff]]的最大时间限制。
 
-The default is 10s.
+默认值是10s。
 
 _property: options.interval => number
-The interval used during [[link-wiki-backoff]] calculation.
+[[link-wiki-backoff]]计算期间所用到的interval。
 
-The default is 250ms.
+默认值是250ms。
 
 _property: options.retryLimit => number
-The number of times to retry in the event of an error or //undefined// is
-returned.
+在发生错误或返回//undefined//的情况下进行重试的次数。
 
 _property: options.onceBlock => [[Provider]]
-If this is specified, the polling will wait on new blocks from
-//provider// before attempting the //pollFunc// again.
+如果指定了该值，轮询将等待来自//provider//的新区块，然后再执行//pollFunc//。
 
 _property: options.oncePoll => [[Provider]]
-If this is specified, the polling will occur on each poll
-cycle of //provider// before attempting the //pollFunc//
-again.
+如果指定了该值，//provider//的每个轮询周期将会进行轮询，然后再执行//pollFunc//。

@@ -1,74 +1,63 @@
-_section: BigNumber @<BigNumber>
+_section: 大数(BigNumber) @<BigNumber>
 
-Many operations in Ethereum operate on numbers which are
-[outside the range of safe values](BigNumber--notes-safenumbers) to use
-in JavaScript.
+以太坊中的许多操作都是对[超出JavaScript安全值范围的数字](BigNumber--notes-safenumbers)进行操作。
 
-A **BigNumber** is an object which safely allows mathematical operations
-on numbers of any magnitude.
+**BigNumber**是一个可以安全地对任意大小的数字进行数学运算的对象。
 
-Most operations which need to return a value will return a **BigNumber**
-and parameters which accept values will generally accept them.
+大多数需要返回值的操作将返回一个**BigNumber**，接受值的参数通常会接收它们。
 
-
-_subsection: Types @<BigNumber--types>
+_subsection: 类型 @<BigNumber--types>
 
 _heading: BigNumberish @<BigNumberish>
 
-Many functions and methods in this library take in values which
-can be non-ambiguously and safely converted to a BigNumber. These
-values can be specified as:
+这个库中的许多函数和方法都接受可以无歧义(non-ambiguously)且安全地转换为BigNumber的值。这些值可以指定为:
 
 _definition: **//string//**
-A [[HexString]] or a decimal string, either of which may
-be negative.
+[[HexString]]或decimal string，两者都可以为负数。
 
 _definition: **//BytesLike//**
-A [[BytesLike]] Object, such as an Array or Uint8Array.
+一个[[BytesLike]]对象，例如数组或Uint8Array。
 
 _definition: **//BigNumber//**
-An existing [[BigNumber]] instance.
+一个[[BigNumber]]实例。
 
 _definition: **//number//**
-A number that is within the [safe range](link-js-maxsafe) for JavaScript numbers.
+一个在JavaScript numbers的[安全范围](link-js-maxsafe)内的数字。
 
 _definition: **//BigInt//**
-A JavaScript [BigInt](link-js-bigint)
-object, on environments that support BigInt.
+在支持BigInt的环境中的一个JavaScript [BigInt](link-js-bigint)对象。
 
-
-_subsection: Creating Instances @<BigNumber--creating>
-
-The constructor of BigNumber cannot be called directly. Instead, Use the static ``BigNumber.from``.
+_subsection: 创建实例 @<BigNumber--creating>
+BigNumber的构造函数不能被直接调用。相反，使用静态``BigNumber.from``。
 
 _property: ethers.BigNumber.from(aBigNumberish) => [[BigNumber]]
-Returns an instance of a **BigNumber** for //aBigNumberish//.
+为//aBigNumberish//返回一个**BigNumber**的实例。
 
-_heading: Examples:  @<>
+_heading: 例子:  @<>
 
 _code: @lang<javascript>
 
-// From a decimal string...
+// 来自于十进制字符串
 //_result:
 BigNumber.from("42")
 //_log:
 
-// From a HexString...
+// 来自于十六进制
 //_result:
 BigNumber.from("0x2a")
 //_log:
 
-// From a negative HexString...
+// 来自于负数的十六进制
 //_result:
 BigNumber.from("-0x2a")
 //_log:
 
-// From an Array (or Uint8Array)...
+// 来自于 数组 或 Uint8Array
 //_result:
 BigNumber.from([ 42 ])
 //_log:
 
-// From an existing BigNumber...
+// 来自于BigNumber
 let one1 = constants.One;
 let one2 = BigNumber.from(one1)
 
@@ -76,123 +65,112 @@ let one2 = BigNumber.from(one1)
 one2
 //_log:
 
-// ...which returns the same instance
+// 返回相同的实例
 //_result:
 one1 === one2
 //_log:
 
-// From a (safe) number...
+// 来自于(安全) 的数字...
 //_result:
 BigNumber.from(42)
 //_log:
 
-// From a ES2015 BigInt... (only on platforms with BigInt support)
+// 来自于 ES2015 BigInt (只能在支持BigInt的平台上使用)
 //_result:
 BigNumber.from(42n)
 //_log:
 
-// Numbers outside the safe range fail:
+// 安全范围外的数字将会失效:
 //_throws:
 BigNumber.from(Number.MAX_SAFE_INTEGER);
 //_log:
 
 
-_subsection: Methods @<BigNumber--methods>
+_subsection: 方法 @<BigNumber--methods>
+BigNumber类是不可变的，所以没有任何操作可以改变它所表示的值。
 
-The BigNumber class is immutable, so no operations can change the value
-it represents.
-
-
-_heading: Math Operations
+_heading: 数学运算
 
 _property: BigNumber.add(otherValue) => [[BigNumber]]  @SRC<bignumber>
-Returns a BigNumber with the value of //BigNumber// **+** //otherValue//.
+返回值为//BigNumber// **+** //otherValue//的BigNumber。
 
 _property: BigNumber.sub(otherValue) => [[BigNumber]]  @SRC<bignumber>
-Returns a BigNumber with the value of //BigNumber// **-** //otherValue//.
+返回值为 //BigNumber// **-** //otherValue//的BigNumber。
 
 _property: BigNumber.mul(otherValue) => [[BigNumber]]  @SRC<bignumber>
-Returns a BigNumber with the value of //BigNumber// **&times;** //otherValue//.
+返回值为 //BigNumber// **&times;** //otherValue//的BigNumber。
 
 _property: BigNumber.div(divisor) => [[BigNumber]]  @SRC<bignumber>
-Returns a BigNumber with the value of //BigNumber// **&div;** //divisor//.
+返回值为 //BigNumber// **&div;** //divisor//的BigNumber。
 
 _property: BigNumber.mod(divisor) => [[BigNumber]]  @SRC<bignumber>
-Returns a BigNumber with the value of the **remainder** of //BigNumber// &div; //divisor//.
+返回值为 //BigNumber// &div; //divisor//余数的BigNumber。
 
 _property: BigNumber.pow(exponent) => [[BigNumber]]  @SRC<bignumber>
-Returns a BigNumber with the value of //BigNumber// to the power of //exponent//.
+返回值为 //BigNumber// 指数的幂为//exponent//的BigNumber。
 
 _property: BigNumber.abs() => [[BigNumber]]  @SRC<bignumber>
-Returns a BigNumber with the absolute value of //BigNumber//.
+返回值为绝对值的BigNumber。
 
 _property: BigNumber.mask(bitcount) => [[BigNumber]]  @SRC<bignumber>
-Returns a BigNumber with the value of //BigNumber// with bits beyond
-the //bitcount// least significant bits set to zero.
-
+返回一个BigNumber，其BigNumber的值超出//bitcount//最低有效位的位则设为0。
 
 _heading: Two's Complement
 
-[Two's Complement](link-wiki-twoscomplement)
-is an elegant method used to encode and decode fixed-width signed values
-while efficiently preserving mathematical operations.
-Most users will not need to interact with these.
+[Two's Complement](link-wiki-twoscomplement)是一种优雅的方法，
+用于编码和解码固定宽度的有符号值，同时有效地保留数学运算。大多数用户不需要与它们交互。
 
 _property: BigNumber.fromTwos(bitwidth) => [[BigNumber]]  @SRC<bignumber>
-Returns a BigNumber with the value of //BigNumber// converted from twos-complement with //bitwidth//.
+返回一个BigNumber, BigNumber的值由带位宽（bitwidth）的二进制补码转换而来。
 
 _property: BigNumber.toTwos(bitwidth) => [[BigNumber]]  @SRC<bignumber>
-Returns a BigNumber with the value of //BigNumber// converted to twos-complement with //bitwidth//.
+返回一个BigNumber, BigNumber的值转换为带位宽的二进制补码。
 
-
-_heading: Comparison and Equivalence
+_heading: 比较和相等
 
 _property: BigNumber.eq(otherValue) => boolean  @SRC<bignumber>
-Returns true if and only if the value of //BigNumber// is equal to //otherValue//.
+当且仅当//BigNumber//的值等于//otherValue//时返回true。
 
 _property: BigNumber.lt(otherValue) => boolean  @SRC<bignumber>
-Returns true if and only if the value of //BigNumber// **<** //otherValue//.
+当且仅当//BigNumber//的值**<**//otherValue//时返回true。
 
 _property: BigNumber.lte(otherValue) => boolean  @SRC<bignumber>
-Returns true if and only if the value of //BigNumber// **&le;** //otherValue//.
+当且仅当//BigNumber//的值**&le;**//otherValue//时返回true。
 
 _property: BigNumber.gt(otherValue) => boolean  @SRC<bignumber>
-Returns true if and only if the value of //BigNumber// **>** //otherValue//.
+当且仅当//BigNumber//的值**>**//otherValue//时返回true。
 
 _property: BigNumber.gte(otherValue) => boolean  @SRC<bignumber>
-Returns true if and only if the value of //BigNumber// **&ge;** //otherValue//.
+当且仅当//BigNumber//的值**&ge;**//otherValue//时返回true。
 
 _property: BigNumber.isZero() => boolean  @SRC<bignumber:BigNumber.isZero>
-Returns true if and only if the value of //BigNumber// is zero.
+当且仅当//BigNumber//的值为0时返回true。
 
-
-_heading: Conversion
+_heading: 转换
 
 _property: BigNumber.toBigInt() => bigint  @SRC<bignumber>
-Returns the value of //BigNumber// as a [JavScript BigInt](link-js-bigint) value,
-on platforms which support them.
+在支持BigInt的平台上以[JavScript BigInt](link-js-bigint)值返回BigNumber的值。
 
 _property: BigNumber.toNumber() => number  @SRC<bignumber>
-Returns the value of //BigNumber// as a JavaScript value.
+将BigNumber的值转换JavaScript值。
 
-This will **throw an error**
-if the value is greater than or equal to //Number.MAX_SAFE_INTEGER// or less than or
-equal to //Number.MIN_SAFE_INTEGER//.
+如果该值大于//Number.MAX_SAFE_INTEGER//或小于等于//Number.MIN_SAFE_INTEGER//，
+则会**抛出一个错误**。
 
 _property: BigNumber.toString() => string  @SRC<bignumber:BigNumber.toString>
-Returns the value of //BigNumber// as a base-10 string.
+以十进制字符串的形式返回BigNumber的值。
 
 _property: BigNumber.toHexString() => string<[[DataHexString]]>  @SRC<bignumber:BigNumber.toHexString>
-Returns the value of //BigNumber// as a base-16, ``0x``-prefixed [[DataHexString]].
+返回BigNumber的值为十六进制的值，``0x``是前缀[[DataHexString]].。
 
 
-_heading: Inspection
+_heading: 检查
 
 _property: ethers.BigNumber.isBigNumber(object) => boolean  @SRC<bignumber>
-Returns true if and only if the //object// is a BigNumber object.
+当且仅当对象是BigNumber是//对象//时返回true。
 
 
-_heading: Examples
+_heading: 例子
 
 _code: @lang<javascript>
 
@@ -204,27 +182,21 @@ a.mul(b);
 //_log:
 
 
-_subsection: Notes @<BigNumber--notes>
+_subsection: 注意 @<BigNumber--notes>
 
-This section is a for a couple of questions that come up frequently.
+这部分是针对一些经常出现的问题。
 
+_heading: 为什么我不能只使用 numbers? @<BigNumber--notes-safenumbers>
 
-_heading: Why can't I just use numbers? @<BigNumber--notes-safenumbers>
+许多人在处理以太坊时遇到的第一个问题是数字的概念。
+大多数常见的货币被划分成非常小的粒度。例如，1美元只有100美分。然而，一个**ether**等于10^^18^^ **wei**。
 
-The first problem many encounter when dealing with Ethereum is
-the concept of numbers. Most common currencies are broken down
-with very little granularity. For example, there are only 100
-cents in a single dollar. However, there are 10^^18^^ **wei** in a
-single **ether**.
+JavaScript使用IEEE 754 double-precision binary floating point](link-wiki-ieee754)来表示数值。
+因此，在9,007,199,254,740,991之后的整数集就存在漏洞了;
+这对以太坊来说是个问题，即使是9,007,199,254,740,991数值也才只有0.009以太(单位:wei)，
+这意味着超过这个值将开始产生舍入误差。
 
-JavaScript uses [IEEE 754 double-precision binary floating point](link-wiki-ieee754)
-numbers to represent numeric values. As a result, there are //holes//
-in the integer set after 9,007,199,254,740,991; which is
-problematic for //Ethereum// because that is only around 0.009
-ether (in wei), which means any value over that will begin to
-experience rounding errors.
-
-To demonstrate how this may be an issue in your code, consider:
+用代码来说明这个问题，如下:
 
 _code: @lang<javascript>
 
@@ -234,69 +206,42 @@ _code: @lang<javascript>
 
 _null:
 
-To remedy this, all numbers (which can be large) are stored
-and manipulated as [Big Numbers](BigNumber).
+为了修复这一点，所有的数字(可以很大)都被存储和操作为Big Numbers](BigNumber)。
 
-The functions [parseEther( etherString )](utils-parseEther) and
-[formatEther( wei )](utils-formatEther) can be used to convert
-between string representations, which are displayed to or entered
-by the user and Big Number representations which can have
-mathematical operations handled safely.
+函数[parseEther( etherString )](utils-parseEther)和[formatEther( wei )](utils-formatEther)
+可以用字符串(用户可以查看或输入)和Big Number(可以安全地进行数学操作)之间进行转换。
 
+_heading: 为什么不用 BigNumber.js, BN.js, BigDecimal, 这一类?
 
-_heading: Why not BigNumber.js, BN.js, BigDecimal, etc?
+每个人都有自己最喜欢的Big Number库，一千个读者就有一千个哈姆雷特，
+就像他们的编辑器都有vi vs emacs。在[npm](link-npm-query-bignumber)上有超过100个Big Number库。
 
-Everyone has their own favourite Big Number library, and once someone
-has chosen one, it becomes part of their identity, like their editor,
-vi vs emacs. There are over 100 Big Number libraries on [npm](link-npm-query-bignumber).
+Ethers [[BigNumber]]对象和其他库之间最大的区别之一是它是不可变的，这在处理区块链的异步特性时非常重要。
 
-One of the biggest differences between the Ethers [[BigNumber]] object and
-other libraries is that it is immutable, which is very important when
-dealing with the asynchronous nature of the blockchain.
+在异步函数中捕获值是不安全的，所以不可变性可以让我们不容易犯错误，这在支持大量就地操作的低级库上是不可能得到保证的。
 
-Capturing the value is not safe in async functions, so immutability
-protects us from easy to make mistakes, which is not possible on the
-low-level library's objects which supports myriad in-place operations.
+其次，Ethers [[BigNumber]]提供了内部所需的所有功能，通常对大多数开发人员来说应该足够了，
+而不暴露一些更高级和罕见的功能。因此，在不影响用户的情况下，交换底层库将更加容易。
 
-Second, the Ethers [[BigNumber]] provides all the functionality required
-internally and should generally be sufficient for most developers while
-not exposing some of the more advanced and rare functionality. So it will
-be easier to swap out the underlying library without impacting consumers.
-
-For example, if [[link-npm-bnjs]] was exposed, someone may use the
-greatest-common-denominator functions, which would then be functionality
-the replacing library should also provide to ensure anyone depending on
-that functionality is not broken.
+例如，如果[[link-npm-bnjs]]被公开，有人可能会使用最大的公分母函数，
+这将是替换库也应该提供的功能，以确保不会影响依赖于该功能的开发人员。
 
 
-_heading: Why BN.js??
+_heading: 为什么是BN.js??
 
-The reason why [[link-npm-bnjs]] is used internally as the big
-number is because that is the library used by [[link-npm-elliptic]].
+[[link-npm-bnjs]]之所以在内部被用作big number，是因为它是[[link-npm-elliptic]]使用的库。
 
-Therefore it **must** be included regardless, so we leverage that
-library rather than adding another Big Number library, which would
-mean two different libraries offering the same functionality.
-
-This has saved about 85kb (80% of this library size) of library size
-over other libraries which include separate Big Number libraries for
-various purposes.
+因此，无论如何都必须包含它，所以我们利用这个库，而不是添加另一个Big Number库，添加了就意味着两个不同的库提供相同的功能。
 
 
-_heading: Allow us to set a global Big Number library?
+与其他库(包括用于各种目的的单独的Big Number库)相比，这节省了大约85kb(该库大小的80%)的库大小。
 
-Another comment that comes up frequently is the desire to specify a
-global user-defined Big Number library, which all functions would
-return.
+_heading: 允许我们设置一个全局的 Big Number 库吗?
 
-This becomes problematic since your code may live along side other
-libraries or code that use Ethers. In fact, even Ethers uses a lot
-of the public functions internally.
+有些人经常提到希望指定一个用户定义的全局 Big Number库，所有函数都将返回这个库。
 
-If you, for example, used a library that used ``a.plus(b)`` instead
-of ``a.add(b)``, this would break Ethers when it tries to compute
-fees internally, and other libraries likely have similar logic.
+这是有问题的，因为您的代码可能与其他使用Ethers的库或代码共存。事实上，甚至Ethers也在内部使用了许多公共函数。
 
-But, the [[BigNumber]] prototype is exposed, so you can always add a
-``toMyCustomBigNumber()`` method to all [[BigNumber]]'s globally
-which is safe.
+例如，如果你使用的库使用的是``a.plus(b)``而不是``a.add(b)``，这将在尝试内部计算fees时Ethers会被破坏，而其他库可能有类似的逻辑。
+
+但是，[[BigNumber]]原型是公开的，所以你总是可以添加一个``toMyCustomBigNumber()``方法到所有全局的[[BigNumber]]会更安全。

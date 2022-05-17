@@ -1,161 +1,139 @@
-_section: Other Providers
+_section: 其他的 Providers
 
 _subsection: FallbackProvider  @<FallbackProvider> @INHERIT<[[Provider]]> @SRC<providers/fallback-provider:class.FallbackProvider>
 
-The **FallbackProvider** is the most advanced [[Provider]] available in
-ethers.
+**FallbackProvider** 是ethers中可用的且最高级的[[Provider]]。
 
-It uses a quorum and connects to multiple [Providers](Provider) as backends,
-each configured with a //priority// and a //weight// .
+它使用一个quorum并连接到多个[Providers](Provider)作为后端，每个[Providers](Provider)都配置了一个//优先级//和//权重//。
 
-When a request is made, the request is dispatched to multiple backends, randomly
-chosen (lower-value priority backends are always selected first) and the results from
-each are compared against the others. Only once the quorum has been reached will that
-result be accepted and returned to the caller.
+当发出一个请求时，请求被分配给多个随机选择的后端(优先级较低的后端总是被先选中)，
+并将每个请求的结果与其他请求进行比较。只有达到quorum规定的数量后，该结果才会被接受并返回给调用方。
 
-By default the quorum requires 50% (rounded up) of the backends to agree. The //weight//
-can be used to give a backend Provider more influence.
+
+
+默认情况下，quorum需要50%(四舍五入)的后端响应（to agree）。//权重//可用于让一个后端Provider作用更强。
 
 _property: new ethers.providers.FallbackProvider(providers [ , quorum ])
-Creates a new instance of a FallbackProvider connected to //providers//. If
-quorum is not specified, half of the total sum of the provider weights is
-used.
+创建一个连接到//providers//的FallbackProvider的新实例。
+如果quorum未指定，则设为provider权重总和的一半。
 
-The //providers// can be either an array of [[Provider]] or [[FallbackProviderConfig]].
-If a [[Provider]] is provided, the defaults are a priority of 1 and a weight of 1.
+//providers//可以是[[Provider]] 或 [[FallbackProviderConfig]]的数组。
+如果提供了[[Provider]]，默认的优先级为1，权重为1。
+
 
 _property: provider.providerConfigs => Array<[[FallbackProviderConfig]]>
-The list of Provider Configurations that describe the backends.
+描述后端的Provider配置列表。
 
 _property: provider.quorum => number
-The quorum the backend responses must agree upon before a result will be
-resolved. By default this is //half the sum of the weights//.
-
+在得到结果之前，后端响应的quorum必须达成一致。默认情况下，这个值是//权重之和的一半//。
 
 _heading: FallbackProviderConfig  @<FallbackProviderConfig>
 
 _property: fallbackProviderConfig.provider => [[Provider]]
-The provider for this configuration.
+该配置的provider。
 
 _property: fallbackProviderConfig.priority => number
-The priority used for the provider. Lower-value priorities are favoured over
-higher-value priorities. If multiple providers share the same priority, they
-are chosen at random.
+表示provider使用的优先级。Lower-value优先级比higher-value优先级更受欢迎。
+如果多个providers共享相同的优先级，则随机选择它们。
 
 _property: fallbackProviderConfig.stallTimeout => number
-The timeout (in ms) after which another [[Provider]] will be attempted. This
-does not affect the current Provider; if it returns a result it is counted
-as part of the quorum.
+超时后(以ms为单位)将会尝试其他的[[Provider]]。这不会影响到当前的Provider; 
+如果它返回一个结果，将会计数，并算入到quorum的一部分。
 
-Lower values will result in more network traffic, but may reduce the response
-time of requests.
+Lower values的Provider会造成更多的网络流量，但可能会减少响应的时间。
 
 _property: fallbackProviderConfig.weight => number
-The weight a response from this provider provides. This can be used if a given
-[[Provider]] is more trusted, for example.
+表示这个provider响应的权重。比如，你认为某个[[Provider]]更值得信任，就可以用这个参数去设置。
 
 
 _subsection: IpcProvider  @<IpcProvider> @INHERIT<[[JsonRpcProvider]]> @SRC<providers:class.IpcProvider>
 
-The **IpcProvider** allows the JSON-RPC API to be used over a local
-filename on the file system, exposed by Geth, Parity and other nodes.
+**IpcProvider** 允许JSON-RPC API在文件系统的本地文件名上使用。
+Geth, Parity和其他节点都会开放了这个功能。
 
 This is only available in //node.js// (as it requires file system access,
 and may have additional complications due to file permissions. See any
 related notes on the documentation for the actual node implementation websites.
+这只能在//node.js//中使用，因为它需要访问文件系统，并且由于文件权限可能有增加额外的复杂性。请参阅相关节点实现的文档（See any
+related notes on the documentation for the actual node implementation websites）。
 
 _property: ipcProvider.path => string
-The path this [[Provider]] is connected to.
+这个[[Provider]]要连接的路径。
 
 
 _subsection: UrlJsonRpcProvider @<UrlJsonRpcProvider> @INHERIT<[[JsonRpcProvider]]> @SRC<providers:class.UrlJsonRpcProvider>
 
-This class is intended to be sub-classed and not used directly. It
+这个类打算作为子类而不是直接使用。It
 simplifies creating a [[Provider]] where a normal [[JsonRpcProvider]]
 would suffice, with a little extra effort needed to generate the JSON-RPC
 URL.
 
 _property: new ethers.providers.UrlJsonRpcProvider([ network [ , apiKey ] ])
-Sub-classes do not need to override this. Instead they should override the
-static method ``getUrl`` and optionally ``getApiKey``.
+子类通常不需要重写这一部分。相反应该重写静态的方法 ``getUrl`` 和可选的``getApiKey``。
 
 _property: urlJsonRpcProvider.apiKey => any
-The value of the apiKey that was returned from ``InheritedClass.getApiKey``.
+从``InheritedClass.getApiKey``返回的apiKey的值。
 
 _property: InheritingClass.getApiKey(apiKey) => any
-This function should examine the //apiKey// to ensure it is valid and
-return a (possible modified) value to use in ``getUrl``.
+这个函数应该检查//apiKey//以确保它是有效的，并返回一个(可能修改过的)值在``getUrl``函数中使用。
 
 _property: InheritingClass.getUrl(network, apiKey) => string
-The URL to use for the JsonRpcProvider instance.
+这个URL在JsonRpcProvider 实例中使用。
 
 
 
 _subsection: Web3Provider @<Web3Provider> @INHERIT<[[JsonRpcProvider]]> @SRC<providers:class.Web3Provider>
 
-The Web3Provider is meant to ease moving from a [web3.js based](link-web3)
-application to ethers by wrapping an existing Web3-compatible (such as a
-[Web3HttpProvider](link-web3-http), [Web3IpcProvider](link-web3-ipc) or
-[Web3WsProvider](link-web3-ws)) and exposing it as an ethers.js [[Provider]]
-which can then be used with the rest of the library.
+Web3Provider为了方便一个[基于web3.js](link-web3)应用程序迁移到ethers，主要是通过将现有的Web3-compatible (比如一个
+[Web3HttpProvider](link-web3-http), [Web3IpcProvider](link-web3-ipc) 或者
+[Web3WsProvider](link-web3-ws)) 打包进ethers.js作为ethers.js [[Provider]]，并将相应的接口暴露出去，它可以和ethers.js库的其他部分一起使用。
 
-This may also be used to wrap a standard [EIP-1193 Provider](link-eip-1193).
+这也可以将一个标准的[EIP-1193 Provider](link-eip-1193)打包进去。
 
 _property: new ethers.providers.Web3Provider(externalProvider [, network ])
-Create a new **Web3Provider**, which wraps an [EIP-1193 Provider](link-eip-1193) or
-Web3Provider-compatible Provider.
+创建一个**Web3Provider**，它能将[EIP-1193 Provider](link-eip-1193) 或者 Web3Provider-compatible Provider打包进去。
 
 _property: web3Provider.provider => Web3CompatibleProvider
-The provider used to create this instance.
+这个provider用于创建一个实例。
 
 _heading: ExternalProvider @<Web3Provider--ExternalProvider>
 
-An **ExternalProvider** can be either one for the above mentioned Web3
-Providers (or otherwise compatible) or an [[link-eip-1193]] provider.
+**ExternalProvider** 可以是上面提到的 Web3 Providers (或者是其他兼容的) 又或者是一个[[link-eip-1193]] provider。
 
-An ExternalProvider must offer one of the following signatures, and the
-first matching is used:
+
+ExternalProvider必须提供以下签名之一，并且使用第一个匹配的签名:
+
 
 _property: externalProvider.request(request) => Promise<any>
 
-This follows the [[link-eip-1193]] API signature.
+它遵循[[link-eip-1193]] API 签名。
 
-The //request// should be a standard JSON-RPC payload, which should at
-a minimum specify the ``method`` and ``params``.
+//request// 应该是一个标准的 JSON-RPC payload, 最少指定``method`` 和 ``params``。
 
-The result should be the actual result, which differs from the Web3.js
-response, which is a wrapped JSON-RPC response.
+结果应该是实际的结果，它与Web3.js响应不同，后者是一个包装好的JSON-RPC响应。
 
 _property: externalProvider.sendAsync(request, callback) => void
 
-This follows the [Web3.js Provider Signature](link-web3-send).
+它遵循[Web3.js Provider Signature](link-web3-send).
 
-The //request// should be a standard JSON-RPC payload, which should at
-a minimum specify the ``method`` and ``params``.
+//request// 应该是一个标准的 JSON-RPC payload, 最少指定``method`` 和 ``params``。
 
-The //callback// should use the error-first calling semantics, so
-``(error, result)`` where the result is a JSON-RPC wrapped result.
+//回调函数//应该使用错误优先调用的语义，比如(error, result)，其中result是JSON-RPC包装后的得到的。
+
 
 _property: externalProvider.send(request, callback) => void
-
-This is identical to ``sendAsync``. Historically, this used a synchronous
-web request, but no current browsers support this, so its use this way
-was deprecated quite a long time ago
+这与``sendAsync``是相同的。在历史上，这使用了一个同步的web请求，但当前没有浏览器支持这种方式，所以它的这种使用方式在很久以前就被弃用了。
 
 
 _subsection: WebSocketProvider @<WebSocketProvider> @INHERIT<[[JsonRpcProvider]]> @SRC<providers:class.WebSocketProvider>
 
-The **WebSocketProvider** connects to a JSON-RPC WebSocket-compatible backend
-which allows for a persistent connection, multiplexing requests and pub-sub
-events for a more immediate event dispatching.
+**WebSocketProvider** 连接到一个JSON-RPC websocket兼容的后端，它允许持久连接、多路复用请求和发布-子事件，以实现更即时的事件调度。
 
-The WebSocket API is newer, and if running your own infrastructure, note that
-WebSockets are much more intensive on your server resources, as they must manage
-and maintain the state for each client. For this reason, many services may also
-charge additional fees for using their WebSocket endpoints.
+WebSocket API是较新的，如果运行自己的基础设施，请注意WebSockets对服务器资源的占用会很大，
+因为它们必须管理和维护每个客户端的状态。由于这个原因，许多服务也可能会为使用他们的WebSocket端点而收取额外的费用。
 
 _property: new ethers.providers.WebSocketProvider([ url [ , network ] ])
-Returns a new [[WebSocketProvider]] connected to //url// as the //network//.
+通过一个//url//连接到//网络//，返回一个新的[[WebSocketProvider]]。
 
-If //url// is unspecified, the default ``"ws:/\/localhost:8546"`` will be used.
-If //network// is unspecified, it will be queried from the network.
+如果//url//未指定，默认值是``"ws:/\/localhost:8546"``。
+如果//network//未被指定，它将会从网络中查询。

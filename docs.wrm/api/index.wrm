@@ -1,7 +1,6 @@
-_section: Application Programming Interface  @<api> @NAV<API>
+_section: 应用程序编程接口  @<api> @NAV<API>
 
-An Application Programming Interface (API) is the formal
-specification of the library.
+应用程序编程接口(API)是库的正式规范。
 
 _toc:
     providers

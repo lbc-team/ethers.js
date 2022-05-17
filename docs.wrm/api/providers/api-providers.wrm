@@ -1,43 +1,29 @@
 _section: API Providers @<api-providers>
 
-There are many services which offer a web API for accessing
-the Ethereum Blockchain. These Providers allow connecting
-to them, which simplifies development, since you do not need
-to run your own instance or cluster of Ethereum nodes.
+有很多服务都提供了访问以太坊区块链的web API。这些提供商允许连接到它们，因为你不需要运行你自己的实例或以太坊节点集群，这就简化了开发。
 
-However, this reliance on third-party services can reduce
-resilience, security and increase the amount of required trust.
-To mitigate these issues, it is recommended you use a
-[Default Provider](providers-getDefaultProvider).
+然而，这种对第三方服务的依赖会降低弹性和安全性，并增加所需的信任度。为了缓解这些问题，建议您使用
+[Default Provider](providers-getDefaultProvider)。
 
 
 _subsection: EtherscanProvider @<EtherscanProvider> @inherit<[[Provider]]> @src<providers:class.EtherscanProvider>
 
-The **EtherscanProvider** is backed by a combination of the various
-[Etherscan APIs](link-etherscan-api).
+**EtherscanProvider**是由各种[Etherscan APIs](link-etherscan-api)的组合所支持。
 
 _property: new ethers.providers.EtherscanProvider([ network = "homestead", [ apiKey ] ])
-Create a new **EtherscanProvider** connected to //network// with the
-optional //apiKey//.
+使用可选的//apiKey//创建一个新的**EtherscanProvider**连接到//网络//。
 
-The //network// may be specified as a **string** for a common
-network name, a **number** for a common chain ID or a
-[Network Object]provider-(network).
+这个//网络//可以被指定为一个**字符串**类型的网络名称、或**number**类型的链ID，或[网络对象]provider-(network)。
 
-If no //apiKey// is provided, a shared API key will be used,
-which may result in reduced performance and throttled requests.
-It is highly recommended for production, you register with
-[Etherscan](link-etherscan) for your own API key.
+如果没有提供//apiKey//，将使用一个共享的API key，这可能会导致性能降低和请求受限。
+强烈推荐在生产环境中使用您在[Etherscan](link-etherscan)上注册的API密钥。
 
-_note: Note: Default API keys
-If no //apiKey// is provided, a shared API key will be used,
-which may result in reduced performance and throttled requests.
+_note: 注意: 默认的 API keys
+如果没有提供//apiKey//，将使用一个共享的API key，这可能会导致性能降低和请求受限。
 
-It is highly recommended for production, you register with
-[Etherscan](link-etherscan) for your own API key.
+强烈推荐在生产环境中使用您在[Etherscan](link-etherscan)上注册的API密钥。
 
-
-_definition: **Supported Networks**
+_definition: **支持的网络**
 
 - Homestead (Mainnet)
 - Ropsten (proof-of-work testnet)
@@ -45,15 +31,15 @@ _definition: **Supported Networks**
 - G&ouml;rli (clique testnet)
 - Kovan (proof-of-authority testnet)
 
-_code: Etherscan Examples @lang<javascript>
+_code: Etherscan 例子 @lang<javascript>
 
 //_hide: const EtherscanProvider = ethers.providers.EtherscanProvider;
 //_hide: const apiKey = "...";
 
-// Connect to mainnet (homestead)
+// 连接主网 (homestead)
 provider = new EtherscanProvider();
 
-// Connect to rinkeby testnet (these are equivalent)
+// 连接 rinkeby 测试网(以下这两种方式是等价的)
 provider = new EtherscanProvider("rinkeby");
 provider = new EtherscanProvider(4);
 
@@ -63,7 +49,7 @@ network = ethers.providers.getNetwork("rinkeby");
 
 provider = new EtherscanProvider(network);
 
-// Connect to mainnet (homestead) with an API key
+// 通过API key 连接主网(homestead)
 provider = new EtherscanProvider(null, apiKey);
 provider = new EtherscanProvider("homestead", apiKey);
 
@@ -74,37 +60,29 @@ _property: provider.getHistory(address) => Array<History> @src<providers>
 
 _subsection: InfuraProvider @<InfuraProvider> @INHERIT<[[UrlJsonRpcProvider]]> @src<providers:class.InfuraProvider>
 
-The **InfuraProvider** is backed by the popular [INFURA](link-infura)
-Ethereum service.
+**InfuraProvider** 被流行的[INFURA](link-infura)以太坊服务所支持。
 
 _property: new ethers.providers.InfuraProvider([ network = "homestead", [ apiKey ] ]) @SRC<providers>
-Create a new **InfuraProvider** connected to //network// with
-the optional //apiKey//.
+使用可选的//apiKey//创建一个新的**InfuraProvider**连接到//网络//。
 
-The //network// may be specified as a **string** for a common
-network name, a **number** for a common chain ID or a
-[Network Object]provider-(network).
+这个//网络//可以被指定为一个**字符串**类型的网络名称、或**number**类型的链ID，或[网络对象]provider-(network)。
 
-The //apiKey// can be a **string** Project ID or an **object**
-with the properties ``projectId`` and ``projectSecret`` to
-specify a [Project Secret](link-infura-secret) which can be used
-on non-public sources (like on a server) to further secure your
-API access and quotas.
+//apiKey//可以是一个**string**类型的Project ID，也可以是一个带有``projectId``和``projectSecret``属性**对象**，
+用于指定一个可以在非公共源(如服务器)上使用的[Project Secret](link-infura-secret)，
+以进一步保护你的API access 和 quotas。
 
 _property: InfuraProvider.getWebSocketProvider([ network [ , apiKey ] ]) => [[WebSocketProvider]] @<InfuraProvider-getWebSocketProvider> @SRC<providers:InfuraProvider.getWebSocketProvider>
-Create a new [[WebSocketProvider]] using the INFURA web-socket endpoint
-to connect to //network// with the optional //apiKey//.
+Create a new [[WebSocketProvider]] 使用 INFURA web-socket 端点创建一个新的[[WebSocketProvider]]，并使用可选的//apiKey//连接到网络。
+网络和apiKey的设定与构造函数相同。
 
-The //network// and //apiKey// are specified the same as [the constructor](InfuraProvider).
+//网络// 和 //apiKey// 的设定与[构造函数](InfuraProvider)相同。
 
-_note: Note: Default API keys
-If no //apiKey// is provided, a shared API key will be used,
-which may result in reduced performance and throttled requests.
+_note: 注意: 默认的 API keys
+如果没有提供//apiKey//，将使用一个共享的API key，这可能会导致性能降低和请求受限。
 
-It is highly recommended for production, you register with
-[INFURA](link-infura) for your own API key.
+强烈推荐在生产环境中使用您通过[INFURA](link-infura)注册的API密钥。
 
-_definition: **Supported Networks**
+_definition: **支持的网络**
 
 - Homestead (Mainnet)
 - Ropsten (proof-of-work testnet)
@@ -112,54 +90,52 @@ _definition: **Supported Networks**
 - G&ouml;rli (clique testnet)
 - Kovan (proof-of-authority testnet)
 
-_code: INFURA Examples @lang<javascript>
+_code: INFURA 例子 @lang<javascript>
 
 //_hide: const InfuraProvider = ethers.providers.InfuraProvider;
 //_hide: const projectId = "...";
 //_hide: const projectSecret = "...";
 
-// Connect to mainnet (homestead)
+// 连接到主网 (homestead)
 provider = new InfuraProvider();
 
-// Connect to the ropsten testnet
+// 连接到 ropsten 测试网
 // (see EtherscanProvider above for other network examples)
 provider = new InfuraProvider("ropsten");
 
-// Connect to mainnet with a Project ID (these are equivalent)
+// 使用一个Project ID连接到主网(以下这两种方式是等价的)
 provider = new InfuraProvider(null, projectId);
 provider = new InfuraProvider("homestead", projectId);
 
-// Connect to mainnet with a Project ID and Project Secret
+// 使用Project ID 和 Project Secret 连接到主网
 provider = new InfuraProvider("homestead", {
     projectId: projectId,
     projectSecret: projectSecret
 });
 
-// Connect to the INFURA WebSocket endpoints with a WebSocketProvider
+// 使用一个 WebSocketProvider 连接到 INFURA WebSocket 端点
 provider = InfuraProvider.getWebSocketProvider()
 //_hide: await provider.destroy();
 
 
 _subsection: AlchemyProvider @<AlchemyProvider> @inherit<[[UrlJsonRpcProvider]]> @src<providers:class.AlchemyProvider>
 
-The **AlchemyProvider** is backed by [Alchemy](link-alchemy).
+**AlchemyProvider** 是被[Alchemy](link-alchemy)所支持的。
 
 _property: new ethers.providers.AlchemyProvider([ network = "homestead", [ apiKey ] ])
-Create a new **AlchemyProvider** connected to //network// with
-the optional //apiKey//.
+通过可选的//apiKey//创建一个新的**AlchemyProvider** 连接到//网络//。
 
 The //network// may be specified as a **string** for a common
 network name, a **number** for a common chain ID or a
 [Network Object](providers-Network).
+这个//网络//可以被指定为一个**字符串**类型的网络名称、或**number**类型的链ID，或[网络对象]provider-(network)。
 
-_note: Note: Default API keys
-If no //apiKey// is provided, a shared API key will be used,
-which may result in reduced performance and throttled requests.
+_note: 注意: 默认的 API keys
+如果没有提供//apiKey//，将使用一个共享的API key，这可能会导致性能降低和请求受限。
 
-It is highly recommended for production, you register with
-[Alchemy](link-alchemy) for your own API key.
+强烈推荐在生产环境中使用您通过[Alchemy](link-alchemy) 注册的API密钥。
 
-_definition: **Supported Networks**
+_definition: **支持的网络**
 
 - Homestead (Mainnet)
 - Ropsten (proof-of-work testnet)
@@ -172,36 +148,36 @@ _code: Alchemy Examples @lang<javascript>
 //_hide: const AlchemyProvider = ethers.providers.AlchemyProvider;
 //_hide: const apiKey = "...";
 
-// Connect to mainnet (homestead)
+// 连接到主网(homestead)
 provider = new AlchemyProvider();
 
-// Connect to the ropsten testnet
+// 连接到 ropsten 测试网
 // (see EtherscanProvider above for other network examples)
 provider = new AlchemyProvider("ropsten");
 
-// Connect to mainnet with an API key (these are equivalent)
+// 使用 apiKey 连接到主网(以下这两种方式是等价的)
 provider = new AlchemyProvider(null, apiKey);
 provider = new AlchemyProvider("homestead", apiKey);
 
-// Connect to the Alchemy WebSocket endpoints with a WebSocketProvider
+// 使用一个 WebSocketProvider 连接到 Alchemy WebSocket 端点
 provider = AlchemyProvider.getWebSocketProvider()
 //_hide: provider.destroy();
 
 
 _subsection: CloudflareProvider @<CloudflareProvider> @inherit<[[UrlJsonRpcProvider]]> @src<providers:class.CloudflareProvider>
 
-The CloudflareProvider is backed by the [Cloudflare Ethereum Gateway](link-cloudflare).
+CloudflareProvider 是被 [Cloudflare Ethereum Gateway](link-cloudflare)所支持的。
 
 _property: new ethers.providers.CloudflareProvider()
-Create a new **CloudflareProvider** connected to mainnet (i.e. "homestead").
+创建一个新的**CloudflareProvider** 连接到主网(homestead)。
 
-_definition: **Supported Networks**
+_definition: **支持的网络**
 
-- Homestead (Mainnet)
+- Homestead (主网)
 
-_code: Cloudflare Examples @lang<javascript>
+_code: Cloudflare 例子 @lang<javascript>
 
 //_hide: const CloudflareProvider = ethers.providers.CloudflareProvider;
 
-// Connect to mainnet (homestead)
+// 连接到主网(homestead)
 provider = new CloudflareProvider();

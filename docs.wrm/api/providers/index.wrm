@@ -1,52 +1,36 @@
 _section: Providers @<providers>
 
-A **Provider** is an abstraction of a connection to the
-Ethereum network, providing a concise, consistent interface
-to standard Ethereum node functionality.
+**提供者**(**Provider**)是以太坊网络连接的抽象，为标准以太坊节点功能提供简洁、一致的接口。
 
-The ethers.js library provides several options which should
-cover the vast majority of use-cases, but also includes the
-necessary functions and classes for sub-classing if a more
-custom configuration is necessary.
+ethers.js 库 提供了几种选项应该涵盖了绝大多数用例，但如果需要个性化配置，也包括了子类化所需的函数和类。
 
-Most users should use the [[providers-getDefaultProvider]].
+大多数用户应该使用 [[providers-getDefaultProvider]].
 
 
-_subsection: Default Provider @<providers-getDefaultProvider>
+_subsection: 默认的 Provider @<providers-getDefaultProvider>
 
-The default provider is the safest, easiest way to begin
-developing on //Ethereum//, and it is also robust enough
-for use in production.
+默认的 provider 是在//Ethereum//上最简单、最安全的方法方式，而且它也具备足够强的鲁棒性，可以在生产环境中使用。
 
-It creates a [[FallbackProvider]] connected to as many backend
-services as possible. When a request is made, it is sent to
-multiple backends simultaneously. As responses from each backend
-are returned, they are checked that they agree. Once a quorum
-has been reached (i.e. enough of the backends agree), the response
-is provided to your application.
+它创建一个连接到尽可能多的后端服务的[[FallbackProvider]]。当发出一个请求时，它会同时发送到多个后端。当从每个后端返回响应时，会检查它们是否同意。
+一旦达到规定数量(即足够多的后端同意)，你的应用程序就会得到相应。
 
-This ensures that if a backend has become out-of-sync, or if it
-has been compromised that its responses are dropped in favor of
-responses that match the majority.
+它会确保如果后端不同步或者被破坏，那么将会放弃这个响应，选择接受而支持大多数认同的响应。
 
 _property: ethers.getDefaultProvider([ network, [ options ] ]) => [[Provider]]
-Returns a new Provider, backed by multiple services, connected
-to //network//. If no //network// is provided, **homestead**
-(i.e. mainnet) is used.
+返回一个新的Provider，由多个服务支持连接到 //网络//。如果没有提供 //网络//，那么将会使用 **homestead** (例如mainnet) 。
 
-The //network// may also be a URL to connect to, such as ``http:/\/localhost:8545``
-or ``wss:/\/example.com``.
+//网络// 也可以作为 URL 来连接，比如 ``http:/\/localhost:8545`` 或 ``wss:/\/example.com``。
 
-The //options// is an object, with the following properties:
+//options// 参数是一个对象，有以下几个属性：
 
-_table: Option Properties
+_table: Option 对象的属性
 
 $Alchemy:     [[link-alchemy]] API Token
 $Etherscan:   [[link-etherscan]] API Token
-$Infura:      [[link-infura]] Project ID or ``{ projectId, projectSecret }``
-$Pocket:      [[link-pocket]] Application ID or ``{ applicationId, applicationSecretKey }``
-$Quorum:      The number of backends that must agree
-              //(default: 2 for mainnet, 1 for testnets)//
+$Infura:      [[link-infura]] Project ID 或 ``{ projectId, projectSecret }``
+$Pocket:      [[link-pocket]] Application ID 或 ``{ applicationId, applicationSecretKey }``
+$Quorum:      必须满足规定的后端同意数量
+              //(默认: 2 for mainnet, 1 for testnets)//
 
 |    **Property**    |  **Description**  |
 |    //alchemy//     | $Alchemy          |
@@ -55,64 +39,50 @@ $Quorum:      The number of backends that must agree
 |    //pocket//      | $Pocket           |
 |    //quorum//      | $Quorum           |
 
-_note: Note: API Keys
+_note: 注意: API Keys
 
-It is highly recommended for production services to acquire
-and specify an API Key for each service.
+强烈建议在生产环境下，从每个服务商获取制定一个API Keys。
 
-The default API Keys used by ethers are shared across all users,
-so services may throttle all services that are using the default
-API Keys during periods of load without realizing it.
+ethers提供的默认的API Keys是所有用户之间共享的，在大量服务加载的时候可能默认的API key服务会有所被限制，需要提前意识到这一点。
 
-Many services also have monitoring and usage metrics, which are
-only available if an API Key is specified. This allows tracking
-how many requests are being sent and which methods are being
-used the most.
+许多服务还具有监视和使用指标，这些指标只有在指定了API Key时才可用。这允许跟踪有多少请求正在被发送，以及哪些方法被使用得最多。
 
-Some services also provide additional paid features, which are only
-available when specifying an API Key.
+有些服务还提供额外的付费功能，这些功能只有在指定API Key时才可用。
 
-_subsection: Networks
+_subsection: 网络
 
-There are several official common Ethereum networks as well as custom
-networks and other compatible projects.
+有几个官方的通用以太坊网络，以及自定义网络和其他兼容项目。
 
-Any API that accept a [[providers-Networkish]] can be passed a common
-name (such as ``"mainnet"`` or ``"ropsten"``) or chain ID to use that
-network definition or may specify custom parameters.
+任何接收[[providers-Networkish]] 的API都可以传递一个通用名称(如 ``"mainnet"`` or ``"ropsten"``) 或者 chain ID、自定义的参数来定义网络。
 
-_property: ethers.providers.getNetwork(aNetworkish) => [[providers-Network]]
+_property: ethers.providers.getNetwork(aNetworkish) => [[providers-Network]]。
 
-Returns the full [[providers-Network]] for the given standard
-//aNetworkish// [[providers-Networkish]].
+通过给定标准规范的//aNetworkish// [[providers-Networkish]]，返回完整的 [[providers-Network]] 。
 
-This is useful for functions and classes which wish to accept [[providers-Networkish]]
-as an input parameter.
+这对于希望接受[[providers-Networkish]]作为输入参数的函数和类非常有用。
 
 _code: @lang<javascript>
 
 //_hide: const getNetwork = ethers.providers.getNetwork;
 
-// By Chain Name
+// 通过链名
 //_result:
 getNetwork("homestead");
 //_hide: delete _._defaultProvider;
 //_log:
 
-// By Chain ID
+// 通过链ID
 //_result:
 getNetwork(1);
 //_hide: delete _._defaultProvider;
 //_log:
 
-_heading: Custom ENS Contract
+_heading: 自定义的 ENS 合约
 
-One common reason to specify custom properties for a [[providers-Network]] is to override
-the address of the root ENS registry, either on a common network to intercept
-the [ENS Methods](Provider--ens-methods) or to specify the ENS registry on a
-dev network (on most dev networks you must deploy the ENS contracts manually).
+这是因为通常需要在为[[providers-Network]] 指定自定义属性来覆盖root ENS registry，或者是在一个通用的网络中拦截[ENS 方法](Provider--ens-methods)，
+又或者是在一个开发环境的网络中（绝大多数开发环境中的网络中的ENS合约需要你手动部署)指定ENS registry。
 
-_code: Example: Override the ENS registry @lang<script>
+_code: 例子: 重写 ENS registry @lang<script>
 
 const network = {
     name: "dev",
@@ -121,7 +91,7 @@ const network = {
 };
 
 
-_subsection: Provider Documentation
+_subsection: Provider 文档
 
 _toc:
     provider
