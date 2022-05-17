@@ -1,63 +1,56 @@
-_section: Wordlists @<wordlists>
+_section: Wordlists(词表) @<wordlists>
 
-_subsection: Wordlist @<Wordlist>
+_subsection: 词表 @<Wordlist>
 
 _property: wordlist.locale => string
-The locale for this wordlist.
+词表的locale设置。
 
 _property: wordlist.getWord(index) => string
-Returns the word at //index//.
+根据//索引//返回词表中单词。
 
 _property: wordlist.getWordIndex(word) => number
-Returns the index of //word// within the wordlist.
+返回词表中//单词//的索引。
 
 _property: wordlist.split(mnemonic) => Array<string>
-Returns the mnemonic split into each individual word, according to a
-locale's valid whitespace character set.
+根据locale设置的有效空白字符集，返回被拆分为单个单词的助记符。
 
 _property: wordlist.join(words) => string
-Returns the mnemonic by joining //words// together using the
-whitespace that is standard for the locale.
+通过使用locale设置的标准空格将单词连接在一起，再返回助记符。
 
 _property: Wordlist.check(wordlists) => string<[[DataHexString]]<32>>
-Checks that all words map both directions correctly and return the
-hash of the lists. Sub-classes should use this to validate the wordlist
-is correct against the official wordlist hash.
+检查所有单词双向的映射是否正确，并返回列表的哈希值。
+子类应该使用它来验证词表是否与官方词表的哈希值匹配。
 
 _property: Wordlist.register(wordlist [ , name ]) => void
-Register a wordlist with the list of wordlists, optionally overriding
-the registered //name//.
+用词表的列表注册一个wordlist，可以将已注册的//name//重写。
 
-_subsection: Languages @<wordlists--languages>
-
-The [official wordlists](link-bip39-wordlists) available at
-`ethers.wordlists`. In the browser, only the english language is
-available by default; to include the others (which increases the
-size of the library), see the dist files in the `ethers` package.
+_subsection: 语言 @<wordlists--languages>
+[官方词表](link-bip39-wordlists)可在`ethers.wordlists`找到。
+在浏览器中，默认只有英文可用；要包含其他文件(这会增加库的大小)，请参阅`ethers`包中的dist文件夹。
 
 _property: ethers.wordlists.cz => Wordlist
-The Czech [[Wordlist]].
+捷克语 [[Wordlist]].
 
 _property: ethers.wordlists.en => Wordlist
-The English [[Wordlist]].
+英语 [[Wordlist]].
 
 _property: ethers.wordlists.es => Wordlist
-The Spanish [[Wordlist]].
+西班牙语 [[Wordlist]].
 
 _property: ethers.wordlists.fr => Wordlist
-The French [[Wordlist]].
+法语 [[Wordlist]].
 
 _property: ethers.wordlists.it => Wordlist
-The Italian [[Wordlist]].
+意大利语 [[Wordlist]].
 
 _property: ethers.wordlists.ja => Wordlist
-The Japanese [[Wordlist]].
+日语 [[Wordlist]].
 
 _property: ethers.wordlists.ko => Wordlist
-The Korean [[Wordlist]].
+韩语 [[Wordlist]].
 
 _property: ethers.wordlists.zh_cn => Wordlist
-The Simplified Chinese [[Wordlist]].
+简体中文 [[Wordlist]].
 
 _property: ethers.wordlists.zh_tw => Wordlist
-The Traditional Chinese [[Wordlist]].
+繁体中文 [[Wordlist]].
