@@ -27,7 +27,7 @@ _subsection: 标签 @<asm-dialect-label>
 _subsection: 字面量(Literals) @<asm-dialect-literal>
 一个**字面量(Literals)**执行``PUSH``操作，表示将数据放入栈中。
 
-一个**字面量(Literals)**能以[[DataHexString]]或十进制的字节值的形式提供。
+提供一个**字面量(Literals)**能以[[DataHexString]]或十进制的字节值的形式。
 
 @TODO: examples
 
@@ -40,9 +40,9 @@ _subsection: 作用域 @<asm-dialect-scope>
 
 最常见的用法是在**部署字节码**中嵌入一个合约**运行时字节码**，这个字节码可以用作**初始化代码(init code)**。
 
-当将程序部署到以太坊时，将使用**init transaction**。//init transaction//的``to`` 字段的地址为空，
+当程序部署到以太坊时，将使用**init transaction**。//init transaction//的``to`` 字段的地址为空，
 ``data``的字段数据中包含字节码。
-``data``字段里的字节码就是程序，当执行时返回其他字节码作为结果，这个结果就是要被安装的字节码。
+``data``字段里的字节码就是程序，执行时返回其他字节码作为结果(result)，返回的结果就是要被安装的字节码。
 
 因此，重要的是，嵌入式代码使用相对于自身的跳转，而不是相对于它所嵌入的整个程序，
 这也意味着跳转**只**能针对它自己的作用域，而不能针对父作用域或子作用域。这是由汇编程序强制执行的。
