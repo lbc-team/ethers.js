@@ -2,7 +2,7 @@ _section: 合约交互 @<contracts>
 
 **Contract**对象是部署在以太坊网络上的合约(EVM字节码)的抽象。它允许以一种简单的方式去将链上的合约的调用（calls）和交易（transactions）序列化，并反序列化它们的结果（results）和触发的日志（logs）。
 
-ContractFactory是契约字节码的抽象，可以方便地部署契约。
+ContractFactory是合约字节码的抽象，可以方便地部署合约。
 
 **ContractFactory**合约 //字节码（bytecode）//的抽象，可以方便地部署合约。
 

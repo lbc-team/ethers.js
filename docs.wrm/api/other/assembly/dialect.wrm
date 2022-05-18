@@ -74,7 +74,7 @@ _subsection: 链接 @<asm-dialect-links>
 
 一个 **链接** 允许访问[[asm-dialect-scope]], [[asm-dialect-datasegment]] or [[asm-dialect-label]].
 
-要访问一个标记项的字节偏移量，使用`$foobar``。
+要访问一个标记项的字节偏移量，使用``$foobar``。
 
 对于[[asm-dialect-label]]，目标(target)必须在此范围内是直接可达的。
 对于[[asm-dialect-datasegment]]或[[asm-dialect-scope]]，它可以位于同一作用域或任何子作用域内。
