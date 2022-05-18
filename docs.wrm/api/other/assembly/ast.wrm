@@ -1,150 +1,109 @@
-_section: Abstract Syntax Tree @<asm-ast>
+_section: 抽象语法树(Abstract Syntax Tree) @<asm-ast>
+使用[Ethers ASM Dialect](asm-dialect)去解析文件将生成一个抽象语法树。
+根节点将始终是name为``_``的[[asm-scopenode]]。
 
-Parsing a file using the [Ethers ASM Dialect](asm-dialect) will
-generate an Abstract Syntax Tree. The root node will always
-be a [[asm-scopenode]] whose name is ``_``.
+要将文件解析为抽象语法树，请使用[parse](asm-parse)函数。
 
-To parse a file into an Abstract Syntax tree, use the [parse](asm-parse)
-function.
+_subsection: 类型
 
-
-_subsection: Types
-
-_heading: Location @<asm-location>
+_heading: 位置(Location) @<asm-location>
 
 _property: offset => number
-The offset into the source code to the start of this node.
+源代码中到此节点的开始处的偏移量。
 
 _property: length => number
-The length of characters in the source code to the end of this node.
+源代码中到此节点末尾的字符长度。
 
 _property: source => string
-The source code of this node.
+此节点的源代码。
 
+_subsection: 节点(Nodes)
 
-_subsection: Nodes
+@TODO: 在这里放置一个显示层次结构的图表
 
-@TODO: Place a diagram here showing the hierarchy
-
-_heading: Node @<asm-node> @SRC<asm:class.Node>
+_heading: 节点 @<asm-node> @SRC<asm:class.Node>
 
 _property: node.tag => string
-A unique tag for this node for the lifetime of the process.
+程序生命周期中此节点的唯一标记。
 
 _property: node.location => [[asm-location]]
-The source code and location within the source code that this
-node represents.
-
+此节点所表示的源代码，和该节点在源代码中的位置(location)。
 
 _heading: ValueNode @<asm-valuenode> @INHERIT<[[asm-node]]> @SRC<asm:class.ValueNode>
-
-A **ValueNode** is a node which may manipulate the stack.
-
+一个 **ValueNode(值节点)** 是一个可以操作堆栈的节点。
 
 _heading: LiteralNode @<asm-literalnode> @INHERIT<[[asm-valuenode]]> @SRC<asm:class.LiteralNode>
 
 _property: literalNode.value => string
-The literal value of this node, which may be a [[DataHexString]] or
-string of a decimal number.
+此节点的文字值，可以是[[DataHexString]]或十进制数的字符串。
 
 _property: literalNode.verbatim => boolean
-This is true in a [[asm-datanode]] context, since in that case the
-value should be taken verbatim and no ``PUSH`` operation should be
-added, otherwise false.
+在[[asm-datanode]]上下文中，这是true，
+因为在这种情况下，值应该逐字取，不应该添加``PUSH``操作，否则为false。
 
 
 _heading: PopNode @<asm-popnode> @INHERIT<[[asm-valuenode]]> @SRC<asm:class.PopNode>
-
-A **PopNode** is used to store a place-holder for an implicit pop from the
-stack. It represents the code for an implicit place-holder (i.e. ``$$``) or an
-explicit place-holder (e.g. ``$1``), which indicates the expected stack position
-to consume.
+**PopNode**用于存储栈中隐式弹出的占位符。
+它表示隐式占位符(例如``$$``)或显式占位符(例如``$1``)的代码，它表示要预期要使用的堆栈位置。
 
 _property: literalNode.index => number
-
-The index this **PopNode** is representing. For an implicit place-holder
-this is ``0``.
-
+这个**PopNode**所代表的索引。对于隐式占位符是``0``。
 
 _heading: LinkNode @<asm-linknode> @INHERIT<[[asm-valuenode]]> @SRC<asm:class.LinkNode>
-
-A **LinkNode** represents a link to another [[asm-node]]'s data,
-for example ``$foo`` or ``#bar``.
+**LinkNode(链接节点)** 表示到另一个[[asm-node]]数据的链接，例如``$foo``或``#bar``。
 
 _property: linkNode.label => string
-The name of the target node.
+目标节点的名称。
 
 _property: linkNode.type => "offset" | "length"
-Whether this node is for an offset or a length value of the
-target node.
-
+表示此节点是用于目标节点的偏移值还是长度值。
 
 _heading: OpcodeNode @<asm-opcodenode> @INHERIT<[[asm-valuenode]]> @SRC<asm:class.OpcodeNode>
 
 _property: opcodeNode.opcode => [[asm-opcode]]
-The opcode for this Node.
+此节点的操作码。
 
 _property: opcodeNode.operands => Array<[[asm-valuenode]]>
-A list of all operands passed into this Node.
-
+传递到此节点的所有操作数(operands)的列表。
 
 _heading: EvaluationNode @<asm-evaluationnode> @INHERIT<[[asm-valuenode]]> @SRC<asm:class.EvaluationNode>
-
-An **EvaluationNode** is used to execute code and insert the results
-but does not generate
-any output assembly, using the ``{{! code here }}`` syntax.
+**EvaluationNode**用于执行代码和插入结果，但不生成任何输出程序集，使用``{{! code here }}``语法。
 
 _property: literalNode.verbatim => boolean
-This is true in a [[asm-datanode]] context, since in that case the
-value should be taken verbatim and no ``PUSH`` operation should be
-added, otherwise false.
+在[[asm-datanode]]上下文中，这是true，
+因为在这种情况下，值应该逐字取，不应该添加``PUSH``操作，否则为false。
 
 _property: evaluationNode.script => string
-The code to evaluate and produce the result to use as a literal.
-
+一段用于计算和生成结果以作为文字使用的代码。
 
 _heading: ExecutionNode @<asm-executionnode> @INHERIT<[[asm-node]]> @SRC<asm:class.ExecutionNode>
 
-An **ExecutionNode** is used to execute code but does not generate
-any output assembly, using the ``{{! code here }}`` syntax.
+**ExecutionNode** 用于执行代码，但不生成任何输出程序集，使用``{{! code here }}``语法。
 
 _property: evaluationNode.script => string
-The code to execute. Any result is ignored.
-
+要执行的代码。任何结果(result)都会被忽略。
 
 _heading: LabelledNode @<asm-labellednode> @INHERIT<[[asm-node]]> @SRC<asm:class.LabelledNode>
-
-A **LabelledNode** is used for any Node that has a name, and can therefore
-be targeted by a [[asm-linknode]].
+**LabelledNode**用于任何具有name的节点，因此可以作为[[asm-linknode]]的目标。
 
 _property: labelledNode.name => string
-The name of this node.
-
+节点的名称。
 
 _heading: LabelNode @<asm-labelnode> @INHERIT<[[asm-labellednode]]> @SRC<asm:class.LabelNode>
-
-A **LabelNode** is used as a place to ``JUMP`` to by referencing it
-name, using ``@myLabel:``. A ``JUMPDEST`` is automatically inserted
-at the bytecode offset.
-
+通过使用``@myLabel:``引用name，**LabelNode**将被用作要跳转的位置。
+自动在字节码偏移处插入一个``JUMPDEST``。
 
 _heading: DataNode @<asm-datanode> @INHERIT<[[asm-labellednode]]> @SRC<asm:class.DataNode>
-
-A **DataNode** allows for data to be inserted directly into the output
-assembly, using ``@myData[ ... ]``. The data is padded if needed to ensure
-values that would otherwise be regarded as a ``PUSH`` value does not impact
-anything past the data.
+**DataNode**允许数据直接插入到输出程序集中，使用``@myData[ ... ]``。
+如果需要则对数据进行填充，以确保原本被视为``PUSH``值的值不会影响数据以外的任何内容。
 
 _property: dataNode.data => Array<[[asm-valuenode]]>
-The child nodes, which each represent a verbatim piece of data in insert.
+子节点，代表逐字插入的一段数据。
 
 _heading: ScopeNode @<asm-scopenode> @INHERIT<[[asm-labellednode]]> @SRC<asm:class.ScopeNode>
-
-
-A **ScopeNode** allows a new frame of reference that all [[asm-linknode]]'s
-will use when resolving offset locations, using ``@myScope{ ... }``.
+ScopeNode允许一个新的引用框架，所有[[asm-linknode]]在解析偏移位置时都会使用这个引用框架，使用``@myScope{ ... }``。
 
 _property: scopeNode.statements => Array<[[asm-node]]>
-The list of child nodes for this scope.
+此作用域的子节点列表。
 
 
