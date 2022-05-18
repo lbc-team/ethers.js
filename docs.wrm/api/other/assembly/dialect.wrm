@@ -7,22 +7,13 @@ _section: Ethers ASM Dialect @<asm-dialect>
 
 编译过程执行非常小的操作集，并且有意简化，这与底层EVM字节码密切相关。
 
-Operations include embedding programs within programs (for example the
-deployment bootstrap has the runtime embedded in it) and computing the
-necessary offsets for jump operations.
+操作包括在程序中的嵌入程序(例如，部署辅助程序中嵌入了runtime)和计算跳转操作所需的偏移量。
 
 [命令行汇编器](cli-asm)可用于编译//Ethers ASM Dialect//文件或将字节码反汇编为人类可读的操作码和文字。
 
 _subsection: 操作码(Opcodes) @<asm-dialect-opcode>
-
-An **Opcode** may be provided in either a //functional// or
-//instructional// syntax. For Opcodes that require parameters,
-the //functional// syntax is recommended and the //instructional//
-syntax will raise a warning.
 **操作码(Opcodes)**可以提供功能性语法(functional syntax)或指导性语法(functional syntax)。
 对于需要参数的操作码，推荐使用功能性语法，指导性语法会发出警告。
-
-
 
 @TODO: Examples
 
