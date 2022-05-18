@@ -1,8 +1,5 @@
-_section: Other Libraries
-
-Now that ethers is more modular, it is possible to have additional
-ancillary packages, which are not part of the core but optionally
-add functionality only needed in certain situations.
+_section: 其他的库
+现在的ethers库更加模块化，可以有额外的辅助库，这些库不是核心的部分，但可以选择添加只有在指定的某些情况下才需要的功能库。
 
 _toc:
     assembly

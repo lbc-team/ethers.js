@@ -1,115 +1,92 @@
 _section: Ethers ASM Dialect @<asm-dialect>
 
-This provides a quick, high-level overview of the **Ethers ASM Dialect**
-for EVM, which is defined by the [Ethers ASM Dialect Grammar](link-ethers-asm-grammar)
+本文提供了用于EVM的**Ethers ASM Dialect**快速、高级的概述，
+它是由[Ethers ASM Dialect Grammar](link-ethers-asm-grammar)定义的。
 
-Once a program is compiled by a higher level language into ASM (assembly),
-or hand-coded directly in ASM, it needs to be assembled into bytecode.
+一旦一个程序被高级语言编译成ASM(汇编)，或者直接在ASM中进行手动编码，它就需要被编译成字节码。
 
-The assembly process performs a very small set of operations and is
-intentionally simple and closely related to the underlying EVM bytecode.
+编译过程执行非常小的操作集，并且有意简化，这与底层EVM字节码密切相关。
 
 Operations include embedding programs within programs (for example the
 deployment bootstrap has the runtime embedded in it) and computing the
 necessary offsets for jump operations.
 
-The [Command-Line Assembler](cli-asm) can be used to assemble an
-//Ethers ASM Dialect// file or to disassemble bytecode into its
-human-readable (ish) opcodes and literals.
+[命令行汇编器](cli-asm)可用于编译//Ethers ASM Dialect//文件或将字节码反汇编为人类可读的操作码和文字。
 
-
-_subsection: Opcodes @<asm-dialect-opcode>
+_subsection: 操作码(Opcodes) @<asm-dialect-opcode>
 
 An **Opcode** may be provided in either a //functional// or
 //instructional// syntax. For Opcodes that require parameters,
 the //functional// syntax is recommended and the //instructional//
 syntax will raise a warning.
+**操作码(Opcodes)**可以提供功能性语法(functional syntax)或指导性语法(functional syntax)。
+对于需要参数的操作码，推荐使用功能性语法，指导性语法会发出警告。
+
+
 
 @TODO: Examples
 
 
-_subsection: Labels @<asm-dialect-label>
-
-A **Label** is a position in the program which can be jumped to. A
-``JUMPDEST`` is automatically added to this point in the assembled
-output.
+_subsection: 标签 @<asm-dialect-label>
+**标签**是程序中可以跳转到的位置。一个``JUMPDEST``会自动添加到汇编输出中的这个点。
 
 @TODO: Examples
 
 
-_subsection: Literals @<asm-dialect-literal>
+_subsection: 字面量(Literals) @<asm-dialect-literal>
+一个**字面量(Literals)**执行``PUSH``操作，表示将数据放入栈中。
 
-A **Literal** puts data on the stack when executed using a ``PUSH``
-operation.
-
-A **Literal** can be provided using a [[DataHexString]] or a decimal
-byte value.
+一个**字面量(Literals)**能以[[DataHexString]]或十进制的字节值的形式提供。
 
 @TODO: examples
 
 
-_subsection: Comments @<asm-dialect-comment>
+_subsection: 注释 @<asm-dialect-comment>
+要在**Ethers ASM Dialect**中输入注释，分号(即 ; )后面的任何文本都会被汇编程序忽略。
 
-To enter a comment in the **Ethers ASM Dialect**, any text following
-a semi-colon (i.e. ``;``) is ignored by the assembler.
+_subsection: 作用域 @<asm-dialect-scope>
+以太坊的常见情况是将一个程序嵌入到另一个程序中。
 
+最常见的用法是在**部署字节码**中嵌入一个合约**运行时字节码**，这个字节码可以用作**初始化代码(init code)**。
 
-_subsection: Scopes @<asm-dialect-scope>
+当将程序部署到以太坊时，将使用**init transaction**。//init transaction//的``to`` 字段的地址为空，
+``data``的字段数据中包含字节码。
+``data``字段里的字节码就是程序，当执行时返回其他字节码作为结果，这个结果就是要被安装的字节码。
 
-A common case in Ethereum is to have one program embedded in another.
+因此，重要的是，嵌入式代码使用相对于自身的跳转，而不是相对于它所嵌入的整个程序，
+这也意味着跳转**只**能针对它自己的作用域，而不能针对父作用域或子作用域。这是由汇编程序强制执行的。
 
-The most common use of this is embedding a Contract **runtime bytecode**
-within a **deployment bytecode**, which can be used as **init code**.
+作用域可以访问任何子[[asm-dialect-datasegment]]或子[[asm-dialect-scope]] 
+的偏移量(相对于自身而言)，也可以访问程序中任何位置的[[asm-dialect-datasegment]]或[[asm-dialect-scope]]的长度。
 
-When deploying a program to Ethereum, an **init transaction** is used. An
-//init transaction// has a null ``to`` address and contains bytecode in
-the ``data``. This ``data`` bytecode is a program, that when executed
-returns some other bytecode as a result, this result is the bytecode
-to be installed.
+在**Ethers ASM Dialect**中的每个程序都有一个最高等级的作用域``_``。
 
-Therefore it is important that embedded code uses jumps relative to itself,
-not the entire program it is embedded in, which also means that a jump
-can **only** target its own scope, no parent or child scopes. This is
-enforced by the assembler.
+_subsection: 数据段(Data Segment) @<asm-dialect-datasegment>
 
-A scope may access the offset of any child [[asm-dialect-datasegment]] or
-child [[asm-dialect-scope]] (with respect to itself) and may access the length
-of any [[asm-dialect-datasegment]] or [[asm-dialect-scope]] anywhere in the program.
+**数据段** 允许将任意数据嵌入到程序中，这对于查找表或部署常量很有用。
 
-Every program in the **Ethers ASM Dialect** has a top-level scope named ``_``.
-
-
-_subsection: Data Segment @<asm-dialect-datasegment>
-
-A **Data Segment** allows arbitrary data to be embedded into a program,
-which can be useful for lookup tables or deploy-time constants.
-
-An empty **Data Segment** can also be used when a labelled location is
-required, but without the ``JUMPDEST`` which a [[asm-dialect-label]] adds.
+空的**数据段**也可以在一个需要带标签的位置中使用，没有JUMPDEST(标签所添加的)。
 
 @TODO: Example
 
 
-_subsection: Links @<asm-dialect-links>
+_subsection: 链接 @<asm-dialect-links>
 
-A **Link** allows access to a [[asm-dialect-scope]], [[asm-dialect-datasegment]] or [[asm-dialect-label]].
+一个 **链接** 允许访问[[asm-dialect-scope]], [[asm-dialect-datasegment]] or [[asm-dialect-label]].
 
-To access the byte offset of a labelled item, use ``$foobar``.
+要访问一个标记项的字节偏移量，使用`$foobar``。
 
-For a [[asm-dialect-label]], the target must be directly reachable within this scope. For
-a [[asm-dialect-datasegment]] or a [[asm-dialect-scope]], it can be inside the same scope or any
-child scope.
+对于[[asm-dialect-label]]，目标(target)必须在此范围内是直接可达的。
+对于[[asm-dialect-datasegment]]或[[asm-dialect-scope]]，它可以位于同一作用域或任何子作用域内。
 
-For a [[asm-dialect-datasegment]] or a [[asm-dialect-label]], there is an additional type of
-**Link**, which provides the length of the data or bytecode respectively. A
-**Length Link** is accessed by ``#foobar`` and is pushed on the stack as a
-literal.
+对于[[asm-dialect-datasegment]]或[[asm-dialect-label]]，
+还有一种附加类型的**链接**，它分别提供数据或字节码的长度。**Length Link** 可以通过``#foobar``获得，
+并作为字面量压入栈中。
 
-
-_subsection: Stack Placeholders @<asm-dialect-placeholder>
+_subsection: 堆栈占位符 @<asm-dialect-placeholder>
 
 @TODO: exampl
 
 
-_subsection: Evaluation and Execution @<asm-dialect-scripting>
+_subsection: 评价与执行 @<asm-dialect-scripting>
 
