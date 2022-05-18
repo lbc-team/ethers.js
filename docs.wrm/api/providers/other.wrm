@@ -51,11 +51,7 @@ _subsection: IpcProvider  @<IpcProvider> @INHERIT<[[JsonRpcProvider]]> @SRC<prov
 **IpcProvider** 允许JSON-RPC API在文件系统的本地文件名上使用。
 Geth, Parity和其他节点都会开放了这个功能。
 
-This is only available in //node.js// (as it requires file system access,
-and may have additional complications due to file permissions. See any
-related notes on the documentation for the actual node implementation websites.
-这只能在//node.js//中使用，因为它需要访问文件系统，并且由于文件权限可能有增加额外的复杂性。请参阅相关节点实现的文档（See any
-related notes on the documentation for the actual node implementation websites）。
+这只能在//node.js//中使用，因为它需要访问文件系统，并且由于文件权限可能有增加额外的复杂性。(请参阅相关节点实现的文档)
 
 _property: ipcProvider.path => string
 这个[[Provider]]要连接的路径。

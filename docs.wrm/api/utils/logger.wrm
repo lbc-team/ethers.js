@@ -177,7 +177,7 @@ _property: Logger.errors.TRANSACTION_REPLACED @<errors--transaction-replaced>
 正在等待被打包的旧交易已经失效了。
 
 这种情况可能有多种原因，但最常见的原因是用户提高了gas price(这改变了交易哈希)去"加速"交易，
-或者用户在其客户端"取消"了交易。在任何一种情况下，这通常是通过以更高的天然气gas priced贿赂矿工来实现的。
+或者用户在其客户端"取消"了交易。在任何一种情况下，这通常是通过以更高的gas price去贿赂矿工来实现的。
 
 此错误将具有附加属性：``cancelled``, ``hash``, ``reason``, ``receipt`` 和 ``replacement``。
 
