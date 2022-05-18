@@ -1,20 +1,14 @@
-_section: Hardware Wallets
+_section: 硬件钱包
 
 
 _subsection: LedgerSigner @<hw-ledger> @INHERIT<[[Signer]]> @SRC<hardware-wallets:class.LedgerSigner>
+[Ledger Hardware 钱包](link-ledger) 是非常受欢迎的。
 
-The [Ledger Hardware Wallets](link-ledger) are a fairly
-popular brand.
-
-
-_code: Importing in ES6 or TypeScript @lang<script>
-
+_code: 在 ES6 或 TypeScript 中导入 @lang<script>
 import { LedgerSigner } from "@ethersproject/hardware-wallets";
-
 
 _heading: API
 
 _property: new LedgerSigner([provider [, type [ , path ] ] ]) => [[hw-ledger]]
-Connects to a Ledger Hardware Wallet. The //type// if left unspecified is
-determined by the environment; in node the default is "hid" and in the browser
-"u2f" is the default. The default Ethereum path is used if //path// is left unspecified.
+连接到Ledger Hardware 钱包。如果未指定类型，则由环境(environment)决定;
+在节点中默认是"hid"，在浏览器中默认是"u2f"。如果//路径(path)//不指定，则使用默认的以太坊路径。
