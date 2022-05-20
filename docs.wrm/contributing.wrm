@@ -75,18 +75,11 @@ _code: Testing @lang<shell>
 
 _heading: Distribution
 
-Most developers should not ever require this step, but for people
-forking ethers and creating alternates (for example if you have
-a non-EVM compatible chain but are trying to reuse this package).
+大多数开发者不应该需要这个步骤，但对于分叉以太坊和创建替代物的人来说（例如，如果你有一个非EVM兼容链，但试图重新使用这个包）。
 
-This script will rebuild the entire ethers project, compare it
-against npm, re-write package versions, update internal hashes,
-re-write various TypeScript files (to get around some ES+TS
-limitations for Tree Shaking and linking), re-write map files,
-bundle stripped versions of dependencies and basically just a
-whole bunch of stuff.
+这个脚本将重建整个ether项目，将它与npm进行比较，重写包版本，更新内部哈希值，重写各种TypeScript文件(以绕过一些ES+TS对shake和链接的限制)，重写映射文件，打包去除依赖的版本，基本上就是一堆东西。
 
-If you use this and get stuck, [message me](link-mail).
+如果你使用这个并且陷入了困境, [请给我发消息](link-mail).
 
 _code: Preparing the Distribution @lang<shell>
 
@@ -102,30 +95,22 @@ _code: Preparing the Distribution @lang<shell>
 
 _note: Do NOT check in dist files in a PR
 
-For Pull Requests, please ONLY commit files in the ``docs.wrm/`` and
-``packages/*/src.ts/`` folders. I will prepare the distribution builds
-myself and keeping the PR relevant makes it easier to verify the changes.
+对于拉取代码的请求，请只提交``docs.wrm/`` and``packages/*/src.ts/``文件夹下的文件。
+我将自己准备发布构建 并且保持PR的相关性，这样更容易验证修改。
 
 _heading: Publishing
 
-Again, this should not be necessary for most developers. This step
-requires using the ``misc/admin/cmds/config-set`` script for a number
-of values, including private keys, NPM session keys, AWS access keys,
-GitHub API tokens, etc.
+同样，这对大多数开发者来说应该是没有必要的。这个步骤需要使用``misc/admin/cmds/config-set``脚本来设置一些值，
+包括私钥、NPM会话密钥、AWS访问密钥。GitHub API令牌，等等
 
-The config file is encrypted with about 30 seconds of scrypt password-based
-key derivation function, so brute-forcing the file is quite expensive.
+配置文件是用大约30秒的基于scrypt密码的,密钥推导功能进行加密，因此对该文件进行暴力破解代价是相当昂贵的
 
-The config file also contains a plain-text mnemonic. This is a money-pot.
-Place a tempting amount of ether or Bitcoin on this account and set up an
-e-mail alert for this account.
+配置文件还包含一个纯文本的助记符。这是个money-pot(钱罐子)。在这个账户上放置一笔一定数量的以太币或比特币，并为这个账户设置一个 为这个账户设置电子邮件警报。
 
-If any attacker happens across your encrypted config, they will have instant
-access to the plain-text mnemonic, so they have the option to immediately
-steal the ether (i.e. the responsible-disclosure bond).
+任何攻击者都会在你的加密配置中遇到，他们可以立即访问明文助记符，因此他们可以选择立即窃取以太网(i.e. the responsible-disclosure bond)。
 
-If you ever see this ether taken, your encrypted file is compromised! Rotate
-all your AWS keys, NPM session keys, etc. immedately.
+If you ever see this ether taken, your encrypted file is compromised!
+如果你看到这个以太坊被盗，你的加密文件就讲会被破坏。Rotate all your AWS keys, NPM session keys, etc. immedately.
 
 @TODO: document all the keys that need to be set for each step
 
@@ -141,32 +126,29 @@ _code: Preparing the Distribution @lang<shell>
 
 _subsection: Documentation @<contributing--documentation>
 
-The documents are generated using [Flatworm](flatworm) documentation
-generation tool, which was written for the purpose of writing the documentation
-for ethers.
+这些文件是用[Flatworm](flatworm)文档生成工具生成的，该工具是为编写ethers的文档而编写的。
 
 Style Guide (this section will have much more coming):
 
-- Try to keep lines no longer than //around// 80 characters
-- Avoid inline links in the source; use the ``externalLinks`` field in the config.js
-- Prefix external links with ``link-``
+- 尽量保持行的长度不超过//大约//80个字符
+- 避免在源代码中使用内联链接；使用config.js中的``externalLinks``字段
+- 用``link-``作为外部链接的前缀
 - Changing an anchor name must be well justified, as it will break all existing links
   to that section; flatworm will support symlinks in the future
-- In general, I aim for consistency; look to similar situations throughout the documentation
+- 一般来说，我的目标是一致性；在整个文档中寻找类似的情况
 
 
 _heading: Building
 
-To build the documentation, you should first follow the
-[above steps](contributing--building) to build the ethers library.
+要构建文档，您应该首先遵循[以上步骤](contributing--building)来构建ethers库.
 
-Building the docs will generate several types of output:
+构建文档将生成几种类型的输出:
 
-- A full set of HTML pages, linking across each other
+- 一套完整的HTML页面，相互链接
 - A single one-page HTML page with all pages linking to local anchors
-- A full set of README.md pages organized to be browsable and linkable in GitHub
-- A metadata dump for tool ingestion (still needs more work)
-- (@TODO; only half done) The documentation as a LaTeX and generated PDF
+- 整套的README.md页面，在GitHub中可以浏览和链接。
+- 元数据转储，用于工具摄取（仍需更多工作）
+- (@TODO;只完成了一半)以LaTeX和生成的PDF格式的文档
 
 _code: Building the Documentations @lang<shell>
 
@@ -175,14 +157,9 @@ _code: Building the Documentations @lang<shell>
 
 _heading: Evaluation
 
-When building the documentation, all code samples are run through a JavaScript
-VM to ensure there are no typos in the example code, as well the exact output
-of results are injected into the output, so there is no need to keep the results
-and code in-sync.
+在构建文档时，所有的代码样本都会通过一个JavaScript虚拟机运行，以确保示例代码中没有错别字，同时也会将结果的准确输出注入到输出中，所以不需要保持结果和代码的同步。
 
-However, this can be a bit of a headache when making many small changes, so to
-build the documentation faster, you can skip the evaluation step, which will
-inject the code directly.
+然而，在做许多小的改动时，这可能是一个有点头痛的问题，所以为了更快地建立文档，你可以跳过评估步骤，这将直接注入代码。
 
 _code: Build docs skipping evaluation @lang<shell>
 
@@ -191,11 +168,9 @@ _code: Build docs skipping evaluation @lang<shell>
 
 _heading: Previewing Changes
 
-To preview the changes locally, you can use any standard web server and run
-from the ``/docs/`` folder, or use the built-in web server.
+要在本地预览变化,你可以使用任何标准网络服务器并且从``/docs/``文件夹中运行, 或者使用内置的Web服务器
 
-The same caveats as normal web development apply, such flushing browser
-caches after changing (and re-building) the docs.
+与普通网络开发一样的注意事项也适用，比如在修改（和重新构建）文档后，要刷新浏览器的缓存。在改变（和重新构建）文档后，要刷新浏览器缓存。
 
 _code: Running a webserver @lang<shell>
 
