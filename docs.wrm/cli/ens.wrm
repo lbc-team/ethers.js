@@ -1,81 +1,79 @@
 _section: Ethereum Naming Service @NAV<ENS>
 
-_subsection: Help
+_subsection: 帮助
 
 _code: @lang<text>
 
-Usage:
+用法:
    ethers-ens COMMAND [ ARGS ] [ OPTIONS ]
 
-COMMANDS
+命令
    lookup [ NAME | ADDRESS [ ... ] ]
-                              Lookup a name or address
+                              查找名称或者地址
    commit NAME                Submit a pre-commitment
-      [ --duration DAYS ]        Register duration (default: 365 days)
+      [ --duration DAYS ]        注册期限 (默认：365天)
       [ --salt SALT ]            SALT to blind the commit with
-      [ --secret SECRET ]        Use id(SECRET) as the salt
-      [ --owner OWNER ]          The target owner (default: current account)
+      [ --secret SECRET ]        使用id(SECRET)作为salt
+      [ --owner OWNER ]          目标所有者 (默认：当前账户)
    reveal NAME                Reveal a previous pre-commitment
-      [ --duration DAYS ]        Register duration (default: 365 days)
+      [ --duration DAYS ]        注册期限 (默认：365天)
       [ --salt SALT ]            SALT to blind the commit with
-      [ --secret SECRET ]        Use id(SECRET) as the salt
-      [ --owner OWNER ]          The target owner (default: current account)
-   set-controller NAME        Set the controller (default: current account)
-      [ --address ADDRESS ]      Specify another address
-   set-subnode NAME           Set a subnode owner (default: current account)
-      [ --address ADDRESS ]      Specify another address
-   set-resolver NAME          Set the resolver (default: resolver.eth)
-      [ --address ADDRESS ]      Specify another address
-   set-addr NAME              Set the addr record (default: current account)
-      [ --address ADDRESS ]      Specify another address
-   set-text NAME KEY VALUE    Set a text record
-   set-email NAME EMAIL       Set the email text record
-   set-website NAME URL       Set the website text record
-   set-content NAME HASH      Set the IPFS Content Hash
+      [ --secret SECRET ]        使用id(SECRET)作为salt
+      [ --owner OWNER ]          目标所有者 (默认：当前账户)
+   set-controller NAME        设置controller (默认：当前账户)
+      [ --address ADDRESS ]      指定另一个地址
+   set-subnode NAME           设置一个字节点所有者(默认：当前账户)
+      [ --address ADDRESS ]      指定另一个地址
+   set-resolver NAME          设置解析器(默认: resolver.eth)
+      [ --address ADDRESS ]      指定另一个地址
+   set-addr NAME              设置地址记录(默认：当前账户)
+      [ --address ADDRESS ]      指定另一个地址
+   set-text NAME KEY VALUE    设置一个文本记录
+   set-email NAME EMAIL       设置电子邮箱文本记录
+   set-website NAME URL       设置网站文本记录
+   set-content NAME HASH      设置IPFS内容哈希值
    migrate-registrar NAME     Migrate from the Legacy to the Permanent Registrar
-   transfer NAME NEW_OWNER    Transfer registrant ownership
-   reclaim NAME               Reset the controller by the registrant
-      [ --address ADDRESS ]      Specify another address
+   transfer NAME NEW_OWNER    转移注册人所有权
+   reclaim NAME               由注册人重置controller
+      [ --address ADDRESS ]      指定另一个地址
 
-ACCOUNT OPTIONS
-  --account FILENAME          Load from a file (JSON, RAW or mnemonic)
-  --account RAW_KEY           Use a private key (insecure *)
-  --account 'MNEMONIC'        Use a mnemonic (insecure *)
-  --account -                 Use secure entry for a raw key or mnemonic
-  --account-void ADDRESS      Use an address as a void signer
-  --account-void ENS_NAME     Add the resolved address as a void signer
-  --account-rpc ADDRESS       Add the address from a JSON-RPC provider
-  --account-rpc INDEX         Add the index from a JSON-RPC provider
-  --mnemonic-password         Prompt for a password for mnemonics
+账户选项
+  --account FILENAME          从(JSON, RAW or mnemonic)文件加载
+  --account RAW_KEY           使用私钥(insecure *)
+  --account 'MNEMONIC'        使用助记词(insecure *)
+  --account -                 对原始密钥或者助记词使用安全入口
+  --account-void ADDRESS      使用地址作为无效签名者
+  --account-void ENS_NAME     使用解析地址添加为无效签名者
+  --account-rpc ADDRESS       从JSON-RPC provider程序添加地址
+  --account-rpc INDEX         从JSON-RPC provider程序添加索引
+  --mnemonic-password         提示输入助记密码
   --xxx-mnemonic-password     Prompt for a (experimental) hard password
 
-PROVIDER OPTIONS (default: all + homestead)
-  --alchemy                   Include Alchemy
-  --etherscan                 Include Etherscan
-  --infura                    Include INFURA
-  --nodesmith                 Include nodesmith
-  --rpc URL                   Include a custom JSON-RPC
-  --offline                   Dump signed transactions (no send)
-  --network NETWORK           Network to connect to (default: homestead)
+PROVIDER 选项 (默认: all + homestead)
+  --alchemy                   包含Alchemy
+  --etherscan                 包含Etherscan
+  --infura                    包含INFURA
+  --nodesmith                 包含nodesmith
+  --rpc URL                   包含一个自定义的JSON-RPC
+  --offline                   转储已签署的交易(不发送)
+  --network NETWORK           要连接的网络(默认: homestead)
 
-TRANSACTION OPTIONS (default: query network)
-  --gasPrice GWEI             Default gas price for transactions(in wei)
-  --gasLimit GAS              Default gas limit for transactions
-  --nonce NONCE               Initial nonce for the first transaction
-  --yes                       Always accept Signing and Sending
+交易选项 (默认: query network)
+  --gasPrice GWEI             交易的默认gas限额(以wei为单位)
+  --gasLimit GAS              交易的默认gas限额
+  --nonce NONCE               第一笔交易的初始nonce
+  --yes                       始终接受签名和发送
 
-OTHER OPTIONS
+其他选项
   --wait                      Wait until transactions are mined
-  --debug                     Show stack traces for errors
-  --help                      Show this usage and exit
-  --version                   Show this version and exit
+  --debug                     显示错误的堆栈跟踪
+  --help                      显示此用法并退出
+  --version                   显示此版本并退出
 
-(*) By including mnemonics or private keys on the command line they are
-    possibly readable by other users on your system and may get stored in
-    your bash history file. This is NOT recommended.
+(*) 因为在命令行中包含助记符或私钥，在你系统上的其他用户可能可以读取它们，并可能存储在bash历史文件中。不推荐这样做。
 
 
-_subsection: Examples
+_subsection: 示例
 
 TODO examples
 
