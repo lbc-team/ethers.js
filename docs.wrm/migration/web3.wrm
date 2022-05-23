@@ -1,12 +1,13 @@
 _section: Migration: From Web3.js
 
-This migration guide focuses on migrating web3.js version 1.2.9 to ethers.js v5.
+本迁移指南的重点是将web3.js 1.2.9版本迁移到ethers.js v5。
 
 _subsection: Providers
 
-In ethers, a provider provides an abstraction for a connection to the Ethereum Network. It can be used to issue read only queries and send signed state changing transactions to the Ethereum Network.
+在ethers中，Providers为连接到ethers网络提供了一个抽象的概念。
+它可以用来发布只读查询，并向ethers网络发送签名的状态变化交易。
 
-_heading: Connecting to Ethereum
+_heading: 连接到ethers
 
 _code: @lang<script>
 
@@ -20,7 +21,7 @@ const url = "http://127.0.0.1:8545";
 const provider = new ethers.providers.JsonRpcProvider(url);
 
 
-_heading: Connecting to Ethereum: Metamask
+_heading: 连接到ethers: Metamask
 
 
 _code: @lang<script>
@@ -34,33 +35,32 @@ const provider = new ethers.providers.Web3Provider(window.ethereum);
 
 _subsection: Signers
 
-In ethers, a **signer** is an abstraction of an Ethereum Account. It can be used to sign messages and transactions and send signed transactions to the Ethereum Network.
+在ethers中,**签名**是ethers账户的一个抽象概念。它可以用来签署消息和交易，并将签署的交易发送到ethers网络。
 
-In web3, an account can be used to sign messages and transactions.
+在web3中，一个账户可以用来签署消息和交易。
 
-
-_heading: Creating signer
+_heading: 创建签名
 
 _code: @lang<script>
 
 // web3
 const account = web3.eth.accounts.create();
 
-// ethers (create random new account)
+// ethers (随机创建新账户)
 const signer = ethers.Wallet.createRandom();
 
-// ethers (connect to JSON-RPC accounts)
+// ethers (连接到JSON-RPC账户)
 const signer = provider.getSigner();
 
 
-_heading: Signing a message
+_heading: 签署信息
 
 _code: @lang<script>
 
-// web3 (using a private key)
+// web3 (使用私钥)
 signature = web3.eth.accounts.sign('Some data', privateKey)
 
-// web3 (using a JSON-RPC account)
+// web3 (使用JSON-RPC账户)
 // @TODO
 
 // ethers
@@ -69,9 +69,9 @@ signature = await signer.signMessage('Some data')
 
 _subsection: Contracts
 
-A contract object is an abstraction of a smart contract on the Ethereum Network. It allows for easy interaction with the smart contract.
+一个合约对象是ethers网络上智能合约的一个抽象。它允许与智能合约简单交互。
 
-_heading: Deploying a Contract
+_heading: 部署合约
 
 _code: @lang<script>
 
@@ -100,7 +100,7 @@ console.log('contract address', contract.address);
 await contract.deployTransaction.wait();
 
 
-_heading: Interacting with a Contract
+_heading: 与合约交互
 
 _code: @lang<script>
 
@@ -115,12 +115,13 @@ contract.methods.changeValue(42).send({from: ....})
 });
 
 // ethers
-// pass a provider when initiating a contract for read only queries
+// 在初始化只读查询合约的时候传递一个provider
+在初始化只读查询合约的时候传递一个provider
 const contract = new ethers.Contract(contractAddress, abi, provider);
 const value = await contract.getValue();
 
 
-// pass a signer to create a contract instance for state changing operations
+// 传递一个signer，为改变状态的操作创建一个合同实例。
 const contract = new ethers.Contract(contractAddress, abi, signer);
 const tx = await contract.changeValue(33);
 
@@ -128,16 +129,14 @@ const tx = await contract.changeValue(33);
 const receipt = await tx.wait();
 
 
-_heading: Overloaded Functions
+_heading: 重载函数
 
-Overloaded functions are functions that have the same name but different parameter
-types.
+重载函数是具有相同名称但参数类型不同的函数。
 
-In ethers, the syntax to call an overloaded contract function is different
-from the non-overloaded function. This section shows the differences between web3
-and ethers when calling overloaded functions.
+在以太网中，调用一个重载合约函数的语法与非重载函数不同。
+本节展示了web3 和ethers在调用重载函数时的区别。
 
-See [issue #407](link-issue-407) for more details.
+查看[issue #407](link-issue-407)更多详情。
 
 _code: @lang<script>
 
@@ -152,8 +151,8 @@ const abi = [
 ]
 const contract = new ethers.Contract(address, abi, signer);
 
-// for ambiguous functions (two functions with the same
-// name), the signature must also be specified
+// 对于不明确的函数（两个具有相同名称的函数名称）
+// ，也必须指定签名
 message = await contract['getMessage(string)']('nice');
 
 
@@ -161,7 +160,7 @@ _subsection: Numbers
 
 _heading: BigNumber
 
-Convert to BigNumber:
+转换为BigNumber类型
 
 _code: @lang<script>
 
@@ -180,9 +179,9 @@ ethers.BigNumber.from("0x1e240")
 
 _subsection: Utilities
 
-_heading: Hash
+_heading: 哈希
 
-Computing Keccak256 hash of a UTF-8 string in web3 and ethers:
+计算web3和ethers中UTF-8字符串的Keccak256哈希值：
 
 _code: @lang<script>
 
@@ -190,9 +189,9 @@ _code: @lang<script>
 web3.utils.sha3('hello world');
 web3.utils.keccak256('hello world');
 
-// ethers (hash of a string)
+// ethers (字符串的哈希值)
 ethers.utils.id('hello world')
 
-// ethers (hash of binary data)
+// ethers (二进制数据的哈希值)
 ethers.utils.keccak256('0x4242')
 
