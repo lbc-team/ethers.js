@@ -1,42 +1,33 @@
 _section: Making Your Own @<cli-diy>
 
-The //cli// library is meant to make it easy to create command
-line utilities of your own.
+//cli//库的目的是方便您自己创建自己ID命令行工具
 
 _subsection: CLI @<cli-cli> @SRC<cli:class.CLI>
 
-A **CLI** handles parsing all the command-line flags, options and arguments
-and instantiates a [[cli-plugin]] to process the command.
+一个**CLI**处理所有命令行标志、选项和参数的解析,并且实例化一个[[cli-plugin]]来处理命令
 
-A **CLI** may support multiple [[cli-plugin]]'s in which case the first
-argument is used to determine which to run (or if no arguments, the default
-plugin will be selected) or may be designed to be standalone, in which case
-exactly one [[cli-plugin]] will be used and no command argument is allowed.
+一个**CLI**可以支持多个[[cli-plugin]]在这种情况下，第一个参数被用来决定运行哪一个 (如果没有参数,将选择默认的插件) ，或者可以被设计成独立的, 
+在这种情况下，正好可以使用一个[[cli-plugin]]并且不允许有命令参数。
 
 
 _property: addPlugin(command, pluginClass) => void  @<cli-addplugin> @SRC<cli/cli>
-Add a //plugin// class for the //command//. After all options and flags
-have been consumed, the first argument will be consumed and the
-associated plugin class will be instantiated and run.
+为//command//添加一个//plugin//类。在所有选项和标志被使用后，第一个参数将被使用，相关的插件类将被实例化并运行。
 
 _property: setPlugin(pluginClass) => void  @<cli-setplugin> @SRC<cli/cli>
-Set a dedicated [[cli-plugin]] class which will handle all input. This
-may not be used in conjunction with addPlugin and will not automatically
-accept a command from the arguments.
+设置一个专门的[[cli-plugin]]类，将处理所有的输入。 它不能与addPlugin一起使用，也不会自动接受参数中的命令。
 
 _property: showUsage([ message = "" [ , status = 0 ] ]) => never  @<cli-showusage> @SRC<cli/cli>
-Shows the usage help screen for the CLI and terminates.
+显示CLI的使用帮助屏幕并终止。
 
 _property: run(args) => Promise<void>  @<cli-run> @SRC<cli/cli:CLI.run>
-Usually the value of //args// passed in will be ``process.argv.slice(2)``.
+通常传入的//args//数值将会是``process.argv.slice(2)``.
 
 
 _subsection: Plugin  @<cli-plugin> @SRC<cli:class.Plugin>
 
-Each **Plugin** manages each command of a CLI and is executed in phases.
+每个**Plugin**管理CLI的每一条命令并且分阶段执行。
 
-If the usage (i.e. help) of a CLI is requested, the static methods ``getHelp``
-and ``getOptionHelp`` are used to generate the help screen.
+如果使用CLI的请求(i.e. 即帮助), 则使用静态方法``getHelp``和``getOptionHelp``用来生成帮助界面
 
 Otherwise, a plugin is instantiated and the ``prepareOptions`` is called. Each
 plugin **must** call ``super.prepareOptions``, otherwise the basic options are
@@ -46,35 +37,30 @@ CLI to bail and issue an //unknown option// error. This should throw if a value
 for a given option is invalid or some combination of options and flags is not
 allowed.
 
-Once the prepareOptions is complete (the returned promise is resolved), the ``prepareArguments``
-is called. This should validate the number of arguments expected and throw
-an error if there are too many or too few arguments or if any arguments do not
-make sense.
+一旦prepareOptions完成(the returned promise is resolved), 就会调用``prepareArguments``。这应该验证预期参数的数量，如果有太多或者太少，或者任何参数没有意义，则抛出一个错误。
 
-Once the prepareArguments is complete (the returned promise is resolved), the ``run``
-is called.
+一旦prepareArguments完成(the returned promise is resolved), 则会调用 ``run``。
 
 _property: plugin.network => [[providers-Network]]
-The network this plugin is running for.
+这个插件运行的网络
 
 _property: plugin.provider => [[Provider]]
-The provider for this plugin is running for.
+这个插件运行的provider对象
 
 _property: plugin.accounts => Array<[[Signer]]>
-The accounts passed into the plugin using ``--account``,
-``--account-rpc`` and ``--account-void`` which this plugin can use.
+使用这个插件可以使用``--account``,``--account-rpc``和``--account-void`` 传递给插件的账户
 
 _property: plugin.gasLimit => [[BigNumber]]
-The gas limit this plugin should use. This is null if unspecified.
+这个插件应该使用的gas限额。如果未指定则为空。
 
 _property: plugin.gasPrice => [[BigNumber]]
-The gas price this plugin should use. This is null if unspecified.
+这个插件应该使用的gas价格。如果未指定则为空。
 
 _property: plugin.nonce => number
-The initial nonce for the account this plugin should use.
+这个插件用户应该使用的初始nonce。
 
 
-_heading: Methods
+_heading: 方法
 
 _property: plugin.prepareOptions(argParser [ , verifyOnly = false ]) => Promise<void>  @<plugin-prepareoptions> @SRC<cli/cli:Plugin.prepareOptions>
 
@@ -83,36 +69,29 @@ _property: plugin.prepareArgs(args) =>  Promise<void>  @<plugin-prepareargs> @SR
 _property: plugin.run() => Promise<void>  @<plugin-run> @SRC<cli/cli:Plugin.run>
 
 _property: plugin.getAddress(addressOrName [ , message = "", [ allowZero = false ] ]) => Promise<string>  @<plugin-getaddress> @SRC<cli/cli:Plugin.getAddress>
-A plugin should use this method to resolve an address. If the resolved address is
-the zero address and //allowZero// is not true, an error is raised.
+插件应该使用这种方法来解析地址。如果解析的地址是零地址，并且//allowZero//不是真值, 则会引发错误。
 
 _property: plugin.dump(header, info) => void  @<plugin-dump> @SRC<cli/cli:Plugin.dump>
-Dumps the contents of //info// to the console with a //header// in a nicely
-formatted style. In the future, plugins may support a JSON output format
-which will automatically work with this method.
+将//info//以良好的格式风格转储到console控制台，并带有//header//。以后的话，插件可能会支持自动使用该方法的JSON输出格式。
 
 _property: plugin.throwUsageError([ message = "" ]) => never  @<plugin-throwusageerror> @SRC<cli/cli>
-Stops execution of the plugin and shows the help screen of the plugin with
-the optional //message//.
+停止插件的执行，显示插件的帮助屏幕，带有可选的//信息//.
 
 _property: plugin.throwError(message) => never  @<plugin-throwerror> @SRC<cli/cli>
-Stops execution of the plugin and shows //message//.
+停止插件的执行，显示//信息//.
 
-_heading: Static Methods
+_heading: 静态方法
 
 _property: Plugin.getHelp => Help  @<plugin-gethelp> @SRC<cli/cli>
-Each subclass should implement this static method which is used to
-generate the help screen.
+每个子类都应该实现这个静态方法用于生成帮助屏幕
 
 _property: Plugin.getOptionHelp => Array<Help>  @<plugin-getoptionshelp> @SRC<cli/cli>
-Each subclass should implement this static method if it supports
-additional options which is used to generate the help screen.
+如果它支持用于生成帮助屏幕的附加选项，每个子类都应该实现这个静态方法。
 
 
 _subsection: ArgParser @<cli-argparser> @SRC<cli:class.ArgParser>
 
-The **ArgParser** is used to parse a command line into flags, options
-and arguments.
+**ArgParser** is used to 用来将一条命令行解析成标志, 选项和参数。
 
 _code: @lang<shell>
 
@@ -129,31 +108,25 @@ _code: @lang<shell>
 
 _null:
 
-Flags are simple binary options (such as the ``--yes``), which are true if present
-otherwise false.
+Flags 是一个简单的二进制选项(例如``--yes``), 如果存在则为真，否则的话为假
 
-Options require a single parameter follow them on the command line
-(such as ``--account wallet.json``, which has the name ``account`` and the value
-``wallet.json``)
+选项在一个命令行中需要带一个参数
+(例如``--account wallet.json``, 它有名字``account`` 和它的值``wallet.json``)
 
-Arguments are all other values on the command line, and are not accessed through
-the **ArgParser** directly.
+参数是命令行中所有其他值,而并不是通过**ArgParser**直接访问的.
 
-When a CLI is run, an **ArgParser** is used to validate the command line by using
+当一个CLI在运行的时候, an **ArgParser** is used to validate the command line by using
 prepareOptions, which consumes all flags and options leaving only the arguments
 behind, which are then passed into prepareArgs.
 
 _property: argParser.consumeFlag(name) => boolean  @<argparser-consumeflag> @SRC<cli/cli>
-Remove the flag //name// and return true if it is present.
+删除标签//name//，如果存在，返回true
 
 _property: argParser.consumeMultiOptions(names) => Array<{ name: string, value: string}>  @<argparser-consumemultioptions> @SRC<cli/cli>
-Remove all options which match any name in the Array of //names//
-with their values returning the list (in order) of values.
-
+Remove all options which match any name in the Array of //names// with their values returning the list (in order) of values.
+删除所有与//names//数组中的任何名称相匹配的选项，其值返回值的列表（按顺序）。
 _property: argParser.consumeOption(name) => string  @<argparser-consumeoption> @SRC<cli/cli>
-Remove the option with its value for //name// and return the value. This
-will throw a UsageError if the option is included multiple times.
+Remove the option with its value for //name// and return the value. This will throw a UsageError if the option is included multiple times.
 
 _property: argParser.consumeOptions(name) => Array<string>  @<argparser-consumeoptions> @SRC<cli/cli>
-Remove all options with their values for //name// and return the list
-(in order) of values.
+Remove all options with their values for //name// and return the list (in order) of values.
