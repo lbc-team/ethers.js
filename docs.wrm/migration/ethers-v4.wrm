@@ -33,22 +33,21 @@ new ethers.utils.BigNumber(someValue)
 ethers.utils.bigNumberify(someValue);
 
 // v5
-// - Constructor is private
-// - Removed `bigNumberify`
+// - Constructor 是私有的
+// - 移除 `bigNumberify`
 ethers.BigNumber.from(someValue)
 
 
-_subsection: Contracts
+_subsection: 合约
 
-_heading: ENS Name Resolution
+_heading: ENS 名称解析
 
-The name of the resolved address has changed. If the address passed into the
-constructor was an ENS name, the address will be resolved before any calls
-are made to the contract.
+
+解析的地址的名称已更改。如果传递给构造函数的地址是一个ENS名称，那么在对合约进行任何调用之前，该地址将被解析。
 
 解析地址的属性名称从``addressPromise``改为了``resolvedAddress``。
 
-_code: Resolved ENS Names @lang<script>
+_code: 解析 ENS 名称 @lang<script>
 
 // v4
 contract.addressPromise
@@ -70,7 +69,7 @@ contract.estimate.transfer(toAddress, amount)
 // v5
 contract.estimateGas.transfer(toAddress, amount)
 
-_heading: Functions
+_heading: 函数
 
 In a contract in ethers, there is a ``functions`` bucket, which exposes
 all the methods of a contract.
