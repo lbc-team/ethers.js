@@ -7,8 +7,7 @@ _section: Contributing and Hacking @<contributing>
 申请拉取代码请求, 不过请记住几点:
 
 - 破坏后向兼容性的改变将不会被接受；它们可能主要考虑的是下一个主要版本
-- Security is important; adding dependencies require fairly convincing
-  arguments as to why
+- 安全是很重要的; adding dependencies require fairly convincing arguments as to why
 - 这个库的目标是精简,所以在修改之前和之后都要注意dist/ether.min.js文件的大小
 - 保持PR简单易读; 只修改 ``docs.wrm/``和``packages/*/src.ts/`` 文件夹中的文件,因为这样可以方便地验证更改
 - 为预期的和意外的输入添加测试用例
@@ -17,7 +16,7 @@ _section: Contributing and Hacking @<contributing>
 一般来说, **在开始一个pull请求//之前//请先提出一个问题**, 这样我们可以进行公开讨论，找出解决问题/功能的最佳办法**:)**
 
 
-_subsection: Building @<contributing--building>
+_subsection: 构建 @<contributing--building>
 
 不巧的是，以太坊的构建过程并不是超级简单的，但我已经试图使它尽可能的简单化。
 
@@ -109,7 +108,6 @@ _heading: Publishing
 
 任何攻击者都会在你的加密配置中遇到，他们可以立即访问明文助记符，因此他们可以选择立即窃取以太网(i.e. the responsible-disclosure bond)。
 
-If you ever see this ether taken, your encrypted file is compromised!
 如果你看到这个以太坊被盗，你的加密文件就讲会被破坏。Rotate all your AWS keys, NPM session keys, etc. immedately.
 
 @TODO: document all the keys that need to be set for each step
@@ -124,17 +122,16 @@ _code: Preparing the Distribution @lang<shell>
 /home/ricmoo/ethers.js> npm run publish-all
 
 
-_subsection: Documentation @<contributing--documentation>
+_subsection: 文档 @<contributing--documentation>
 
 这些文件是用[Flatworm](flatworm)文档生成工具生成的，该工具是为编写ethers的文档而编写的。
 
-Style Guide (this section will have much more coming):
+风格指南(这一章会有更多内容):
 
 - 尽量保持行的长度不超过//大约//80个字符
 - 避免在源代码中使用内联链接；使用config.js中的``externalLinks``字段
 - 用``link-``作为外部链接的前缀
-- Changing an anchor name must be well justified, as it will break all existing links
-  to that section; flatworm will support symlinks in the future
+- 更改锚定名称必须合乎情理,因为它将中断该部分的所有链接，flatworm在未来将支持符号链接
 - 一般来说，我的目标是一致性；在整个文档中寻找类似的情况
 
 
@@ -145,12 +142,12 @@ _heading: 构建
 构建文档将生成几种类型的输出:
 
 - 一套完整的HTML页面，相互链接
-- A single one-page HTML page with all pages linking to local anchors
+- 一个单页HTML页面，所有页面都链接到本地锚点
 - 整套的README.md页面，在GitHub中可以浏览和链接。
 - 元数据转储，用于工具摄取（仍需更多工作）
 - (@TODO;只完成了一半)以LaTeX和生成的PDF格式的文档
 
-_code: Building the Documentations @lang<shell>
+_code: 构建文档 @lang<shell>
 
 /home/ricmoo/ethers.js> npm run build-docs
 
@@ -166,9 +163,9 @@ _code: 创建跳过评估的文档 @lang<shell>
 /home/ricmoo/ethers.js> npm run build-docs -- --skip-eval
 
 
-_heading: Previewing Changes
+_heading: 预览更改
 
-要在本地预览变化,你可以使用任何标准网络服务器并且从``/docs/``文件夹中运行, 或者使用内置的Web服务器
+要在本地预览更改,你可以使用任何标准网络服务器并且从``/docs/``文件夹中运行, 或者使用内置的Web服务器
 
 与普通网络开发一样的注意事项也适用，比如在修改（和重新构建）文档后，要刷新浏览器的缓存。在改变（和重新构建）文档后，要刷新浏览器缓存。
 
