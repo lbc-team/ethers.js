@@ -1,11 +1,10 @@
-_section: Testing
+_section: 测试
 
 测试是任何希望保持安全、安全和可靠的库的关键部分。
 
 Ethers目前有**超过23000个测试**在它的测试套件中, 这些测试都可以作为简单的GZIP-JSON导出文件供其他项目使用。。
 
-The tests are run on every check-in and the results can been seen on the
-[GitHub CI Action](link-github-ci).
+每次签入都要运行测试并且结果可以在[GitHub CI Action](link-github-ci)上查看
 
 我们还努力不断地添加新的测试用例，特别是当问题出现时，以确保问题出现在修复之前，在修复之后得到纠正，并包括进来以防止未来的变更导致回退。
 
@@ -16,7 +15,7 @@ The tests are run on every check-in and the results can been seen on the
 cases were created.
 
 
-_subsection: Supported Platforms @<testing-supported>
+_subsection: 测试平台 @<testing-supported>
 
 虽然网络技术发展很快，特别是在Web3领域，但我们尽量保持ether的可访问性。
 
@@ -42,7 +41,7 @@ environments such as [Otto](link-otto).
 Basically, the moral of the story is "be inclusive and don't drop people needlessly".
 
 
-_subsection: Test Suites @<testing-suites>
+_subsection: 测试套件 @<testing-suites>
 
 测试套件在``@ethersproject/testcases``中以GZIP格式提供, 这使得安装和导入比较容易(GZIP和JSON在大多数语言中都很容易使用)。每个测试套件在这个包中也有其可用的模式。
 
@@ -116,7 +115,7 @@ Returns a random number of at least //lower// and less than //upper//
 given //seed//.
 
 
-_subsection: Schemas @<testing-schemas>
+_subsection: 模式 @<testing-schemas>
 
 本节仍在进行中，但将概述测试用例及其值的一些更微妙的方面。
 
@@ -125,13 +124,13 @@ _subsection: Schemas @<testing-schemas>
 例如，不再需要分离ABI和ABIv2测试用例，帐户和交易套件可以合并到一个大型集合中。
 
 
-_heading: Accounts
+_heading: 账户
 
 使用私钥的基本账户信息和计算各种地址形式。
 
 测试时通过[EthereumJS](https:/\/github.com/ethereumjs)和创建的自定义脚本来直接与Geth和cpp实现进行交互来验证的。
 
-//插卡你: ``accounts.json.gz``//
+//请查看: ``accounts.json.gz``//
 
 _table: 属性
 
@@ -170,7 +169,7 @@ _code: 示例 @lang<script>
 }
 
 
-_heading: Contract Signatures
+_heading: 合约签名
 
 计算的ABI签名和选择器哈希值。
 
@@ -182,7 +181,7 @@ _code: 示例 @lang<script>
   "signature": "testSig(string[2],uint128,(bytes,bytes,bytes),bytes)"
 }
 
-_heading: Hashes
+_heading: 哈希
 
 _code: 示例 @lang<script>
 {
@@ -193,7 +192,7 @@ _code: 示例 @lang<script>
 }
 
 
-_heading: Hierarchal Deterministic Node (BIP-32)
+_heading: 等级确定的节点 (BIP-32)
 
 [BIP-32](link-bip-32) HD Wallets的测试用例
 
