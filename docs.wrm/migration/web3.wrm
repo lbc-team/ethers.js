@@ -33,7 +33,7 @@ const web3 = new Web3(Web3.givenProvider);
 const provider = new ethers.providers.Web3Provider(window.ethereum);
 
 
-_subsection: Signers
+_subsection: 签名者
 
 在ethers中,**签名**是ethers账户的一个抽象概念。它可以用来签署消息和交易，并将签署的交易发送到ethers网络。
 
@@ -67,7 +67,7 @@ signature = web3.eth.accounts.sign('Some data', privateKey)
 signature = await signer.signMessage('Some data')
 
 
-_subsection: Contracts
+_subsection: 合约
 
 一个合约对象是ethers网络上智能合约的一个抽象。它允许与智能合约简单交互。
 
@@ -96,7 +96,7 @@ const factory = new ethers.ContractFactory(abi, bytecode, signer);
 const contract = await factory.deploy("hello world");
 console.log('contract address', contract.address);
 
-// wait for contract creation transaction to be mined
+// 等待合约创建交易完成
 await contract.deployTransaction.wait();
 
 
@@ -106,9 +106,9 @@ _code: @lang<script>
 
 // web3
 const contract = new web3.eth.Contract(abi, contractAddress);
-// read only query
+// 只读查询
 contract.methods.getValue().call();
-// state changing operation
+// 状态变化的操作
 contract.methods.changeValue(42).send({from: ....})
 .on('receipt', function(){
     ...
@@ -167,13 +167,13 @@ _code: @lang<script>
 // web3
 web3.utils.toBN('123456');
 
-// ethers (from a number; must be within safe range)
+// ethers (一个数字；必须是在可靠安全的范围内)
 ethers.BigNumber.from(123456)
 
-// ethers (from base-10 string)
+// ethers (10进制字符串)
 ethers.BigNumber.from("123456")
 
-// ethers (from hex string)
+// ethers (十六进制字符串)
 ethers.BigNumber.from("0x1e240")
 
 
