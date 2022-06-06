@@ -27,7 +27,7 @@ import "@ethersproject/shims"
 import { ethers } from "ethers";
 
 
-_subsection: Security @<cookbook-reactnative-security>
+_subsection: 安全 @<cookbook-reactnative-security>
 
 React Native环境不包含用于计算随机私钥的安全随机源。这可能会导致其他人可能猜到的私钥，从而导致资金被盗和资产被操纵。
 
