@@ -33,7 +33,7 @@ BODY:       可选的; 指令主体内容（仅适用于某些指令）
 _heading: Flatworm 指令 @<flatworm-directive>
 
 _definition: **_section:** //TITLE//
-一个//section//的**TITLE**字体样式为H1。Sections会被链接到//目录//中，并在它们的上方有一条分界线。
+//section//的**TITLE**字体样式为H1。Sections会被链接到//目录//中，并在它们的上方有一条分界线。
 
 正文支持markdown。
 
@@ -42,38 +42,38 @@ _definition: **_section:** //TITLE//
 **拓展:** [@inherit](flatworm--ext-inherit), [@src](flatworm--ext-src), [@nav](flatworm--ext-nav), [@note](flatworm--ext-note)
 
 _definition: **_subsection:** //TITLE//
-一个//subsection//的**TITLE**字体样式为H2。会被链接到//目录//中，并在它们的上方有一条分界线。
+//subsection//的**TITLE**字体样式为H2。会被链接到//目录//中，并在它们的上方有一条分界线。
 
 标题和正文支持markdown。
 
 **拓展:** [@inherit](flatworm--ext-inherit), [@src](flatworm--ext-src), [@note](flatworm--ext-note)
 
 _definition: **_heading:** //TITLE//
-一个//heading//**TITLE**字体样式为H3。
+//heading//**TITLE**字体样式为H3。
 
 标题和正文支持markdown。
 
 **拓展:** [@inherit](flatworm--ext-inherit), [@src](flatworm--ext-src), [@note](flatworm--ext-note)
 
 _definition: **_definition:** //TERM//
-一个//definition//的**TERM**是正常文本，正文是缩进的
+//definition//的**TERM**是正常文本，正文是缩进的
 
 标题和正文支持markdown。
 
 _definition: **_property:** //SIGNATURE//
-一个//property//有它的JavaScript **SIGNATURE**格式化.
+//property//有它的JavaScript **SIGNATURE**格式化.
 
 正文支持markdown并且signature返回的部分支持markdown链接
 
 **拓展:** [@src](flatworm--ext-src)
 
 _definition: **_note:** //BANNER//
-一个//note//被放置在蓝色边框的盒子中以此引起对它的注意。
+//note//被放置在蓝色边框的盒子中以此引起对它的注意。
 
 正文支持markdown。
 
 _definition: **_warning:** //BANNER//
-一个//warning//被放置在橙色边框的盒子中以此引起对它的注意.
+//warning//被放置在橙色边框的盒子中以此引起对它的注意.
 
 正文支持markdown。
 
@@ -95,12 +95,12 @@ _definition: **_table:** //FOOTER//
 **拓展:** [@style](flatworm--ext-style)
 
 _definition: **_toc:**
-一个//toc//注入一个目录, 将主体的每一行作为文件名加载，如果存在的话，递归加载//toc//,否则的话，会加载所有的//sections//和//subsections//.
+//toc//注入目录, 将主体的每一行作为文件名加载，如果存在的话，递归加载//toc//,否则的话，会加载所有的//sections//和//subsections//.
 
 正文**不**支持markdown, 因为它被解释为一个要处理的文件和目录的列表。
 
 _definition: **_null:**
-一个//null//是用来终止一个命令的。 打个比方, 在一个//definition//之后, 主体是缩进的, 所以一个 //null//可以用来重置缩进。
+//null//是用来终止命令的。 打个比方, 在//definition//之后, 主体是缩进的, 所以//null//可以用来重置缩进。
 
 主体支持markdown。
 
@@ -162,7 +162,7 @@ a ``_note:`` or ``_code:``.
 
 _subsection: Markdown @<flatworm-markdown>
 
-markdown是很简单并且没有其他语种的灵活性, but allows for **粗体**, //斜体//,
+markdown是很简单并且没有其他语种的灵活性, 但允许**粗体**, //斜体//,
 __下划线__, ``单空格``, ^^上标^^ and ~~删除~~文本, 支持[链接](flatworm-markdown)和列表。
 
 列表是作为正文的块所渲染的，所以不能在标题或另一个列表中使用。
@@ -202,13 +202,13 @@ _heading: JavaScript Evaluation @<flatworm--code-eval>
 
 整个**代码片段** 源是包括在一个异步IIFE中,这就意味着``await``是被允许的,并且少量的特殊注释代码是被允许的。
 
-一个``/\/_hide:`` 直接将以下代码包含在输出中，但不会将其包含在生成的片段输出中。
+``/\/_hide:`` 直接将以下代码包含在输出中，但不会将其包含在生成的片段输出中。
 
-一个``/\/_log:`` 在输出中包括以下任何表达式的值，前缀为' ' /\/ ' ',如果可以的话，渲染器将会以不同的样式标记输出。
+``/\/_log:`` 在输出中包括以下任何表达式的值，前缀为' ' /\/ ' ',如果可以的话，渲染器将会以不同的样式标记输出。
 
-一个``/\/_result:`` 将会开始一个块, 内容分配给``_``。这个块会以一个``/\/_log:``或者 ``/\/_null:``结束,如果没有给定log值, 那么假定为``_``。如果发生错误，则生成失败。
+``/\/_result:`` 将会开始一个块, 内容分配给``_``。这个块会以一个``/\/_log:``或者 ``/\/_null:``结束,如果没有给定log值, 那么假定为``_``。如果发生错误，则生成失败。
 
-一个``/\/_throws:``将开始一个块, 该块将抛出分配给 ``_``的错误.这个块可以以一个 ``/\/_log:``或者``/\/_null:``结束,
+``/\/_throws:``将开始一个块, 该块将抛出分配给 ``_``的错误.这个块可以以一个 ``/\/_log:``或者``/\/_null:``结束,
 如果没有给定log值, 那么假定为``_``。 如果没有发生一个错误，则生成失败。
 
 _code: 代码评估示例 @lang<text>
@@ -259,7 +259,7 @@ _table:
 |   shell        | Shel脚本或者命令行                                           |
 |   text         | 没有语法要点的纯文本                                  |
 
-_subsection: Table @<flatworm--table>
+_subsection: 表格 @<flatworm--table>
 
 table指令会占用整个指令体，直到下一个指令。为了开始一个文本块而提前终止表格,使用**_null:**指令。
 
@@ -274,7 +274,7 @@ _heading: Alignment @<flatworm--table-alignment>
 
 单元格的对齐方式由单元格数据周围的空格决定。
 
-_table: Alignment Conditions (higher precedence listed first)
+_table: 对齐条件 (优先级高的排在前面)
 
 |   **Alignment**   |                    **Whitespace**                     |
 |    //Left//       | 内容前的空格不超过1个                  |
@@ -282,19 +282,9 @@ _table: Alignment Conditions (higher precedence listed first)
 |    //Center//     | 在内容的之前和之后**都**有2个以上的空格   |
 
 
-_code: Alignment Example @lang<text>
+_code: 对齐例子 @lang<text>
 
-\_table: Result of Alignment Example @style<compact>
-
-|   center    |
-
-| left        |
-|left         |
-
-|       right |
-|        right|
-
-_table: Result of Alignment Example @style<compact>
+\_table: 对齐示例结果 @style<compact>
 
 |   center    |
 
@@ -304,29 +294,39 @@ _table: Result of Alignment Example @style<compact>
 |       right |
 |        right|
 
+_table: 对齐示例结果 @style<compact>
 
-_heading: Row and Column Spanning @<flatworm--table-spanning>
+|   center    |
+
+| left        |
+|left         |
+
+|       right |
+|        right|
+
+
+_heading: 行和列生成 @<flatworm--table-spanning>
 
 一个列可以以任意数量的 **``"<"``**结束它的内容，这表示要拓展到多少个//额外的//列。
 
 如果单元格内容只包含一个 **``"^"``**, 那么上面的行会被拓展到这个单元格 (拓展到相同数量的列)。
 
-_code: Cell Spanning Example @lang<text>
+_code: 单元格扩展示例 @lang<text>
 
-\_table: Result of Cell Spanning Example @style<compact>
-
-|  (1x1)  |  (1x2)      <|  (2x1)  |
-|  (2x2)      <|  (2x1)  |    ^    |
-|    ^         |    ^    |  (1x1)  |
-
-_table: Result of Cell Spanning Example @style<compact>
+\_table: 单元格扩展示例结果 @style<compact>
 
 |  (1x1)  |  (1x2)      <|  (2x1)  |
 |  (2x2)      <|  (2x1)  |    ^    |
 |    ^         |    ^    |  (1x1)  |
 
+_table: 单元格扩展示例 @style<compact>
 
-_heading: Styles  @<flatworm--table-style>
+|  (1x1)  |  (1x2)      <|  (2x1)  |
+|  (2x2)      <|  (2x1)  |    ^    |
+|    ^         |    ^    |  (1x1)  |
+
+
+_heading: 风格  @<flatworm--table-style>
 
 表格的[@style extension](flatworm--ext-style)可以用来控制它的外观。
 
@@ -339,13 +339,13 @@ _table:
 |   //full//    |    100%         |    等间距的   |
 
 
-_heading: Variables  @<flatworm--table-variable>
+_heading: 变量  @<flatworm--table-variable>
 
 通常情况下，表的布局更易于表达和维护，而不会不均匀或改变其中的内容。在一条table指令中使用**variables**单独定义内容。变量名必须以字母开头，并且只能包含字母和数字。
 
 当内容在表中重复的时候，变量也会很有用。
 
-一个变量是通过以``"$NAME:"``开头的行来声明的, 它占用下一个变量声明或者下一个表格的行之前所有的行。
+变量是通过以``"$NAME:"``开头的行来声明的, 它占用下一个变量声明或者下一个表格的行之前所有的行。
 
 变量名必须以字母开头，可以由字母和数字组成。(i.e. ``/[a-z][a-z0-9]*/i``)
 
@@ -382,7 +382,7 @@ _subsection: 配置 @<flatworm-config>
 
 TODO:  example JSON and example JS
 
-_subsection: Extensions @<flatworm-extensions>
+_subsection: 拓展 @<flatworm-extensions>
 
 _heading: @inherit\< //markdown// >  @<flatworm--ext-inherit>
 

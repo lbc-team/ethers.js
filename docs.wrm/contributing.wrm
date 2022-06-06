@@ -25,7 +25,7 @@ _subsection: Building @<contributing--building>
 
 ``misc/admin``文件夹中有几个自定义脚本可以帮助管理monorepo。开发人员通常不需要担心这些问题，因为 它们都是被``npm 运行脚本`` 操作包裹封装的。
 
-_code: Installing @lang<shell>
+_code: 安装 @lang<shell>
 
 # Clone the repository
 /home/ricmoo> git clone https://github.com/ethers-io/ethers.js.git
@@ -40,7 +40,7 @@ _code: Installing @lang<shell>
 # - Link the rat-nets into each project (postinstall)
 /home/ricmoo/ethers.js> npm install
 
-_heading: Making Changes @<contributing--updating>
+_heading: 进行更改 @<contributing--updating>
 
 一旦你的环境设置好, 你应该能够简单地开启``自动构建``特性,并且能够修改TypeScript源代码.
 
@@ -63,9 +63,9 @@ _code: Building Distribution Files @lang<shell>
 
 /home/ricmoo/ethers.js> npm run build-all
 
-_heading: Testing
+_heading: 测试
 
-_code: Testing @lang<shell>
+_code: 测试 @lang<shell>
 
 # 重构所有文件(npm run build-all)同时捆绑测试用例进行测试
 /home/ricmoo/ethers.js> npm test
@@ -138,7 +138,7 @@ Style Guide (this section will have much more coming):
 - 一般来说，我的目标是一致性；在整个文档中寻找类似的情况
 
 
-_heading: Building
+_heading: 构建
 
 要构建文档，您应该首先遵循[以上步骤](contributing--building)来构建ethers库.
 
@@ -155,13 +155,13 @@ _code: Building the Documentations @lang<shell>
 /home/ricmoo/ethers.js> npm run build-docs
 
 
-_heading: Evaluation
+_heading: 评估
 
 在构建文档时，所有的代码样本都会通过一个JavaScript虚拟机运行，以确保示例代码中没有错别字，同时也会将结果的准确输出注入到输出中，所以不需要保持结果和代码的同步。
 
 然而，在做许多小的改动时，这可能是一个有点头痛的问题，所以为了更快地建立文档，你可以跳过评估步骤，这将直接注入代码。
 
-_code: Build docs skipping evaluation @lang<shell>
+_code: 创建跳过评估的文档 @lang<shell>
 
 /home/ricmoo/ethers.js> npm run build-docs -- --skip-eval
 
@@ -172,6 +172,6 @@ _heading: Previewing Changes
 
 与普通网络开发一样的注意事项也适用，比如在修改（和重新构建）文档后，要刷新浏览器的缓存。在改变（和重新构建）文档后，要刷新浏览器缓存。
 
-_code: Running a webserver @lang<shell>
+_code: 运行一个网络服务器 @lang<shell>
 
 /home/ricmoo/ethers.js> npm run serve-docs
