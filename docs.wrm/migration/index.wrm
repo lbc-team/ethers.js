@@ -1,4 +1,4 @@
-_section: Migration Guide @<migration>
+_section: 迁移指南 @<migration>
 
 这里有一些从Ethers或其他库的旧版本升级时的迁移指南。
 
