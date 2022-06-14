@@ -59,10 +59,7 @@ _property: ipcProvider.path => string
 
 _subsection: UrlJsonRpcProvider @<UrlJsonRpcProvider> @INHERIT<[[JsonRpcProvider]]> @SRC<providers:class.UrlJsonRpcProvider>
 
-这个类打算作为子类而不是直接使用。It
-simplifies creating a [[Provider]] where a normal [[JsonRpcProvider]]
-would suffice, with a little extra effort needed to generate the JSON-RPC
-URL.
+这个类打算作为子类而不是直接使用。只需要额外生成一个SON-RPCURL后，就能通过[[JsonRpcProvider]]创建一个[[Provider]]。
 
 _property: new ethers.providers.UrlJsonRpcProvider([ network [ , apiKey ] ])
 子类通常不需要重写这一部分。相反应该重写静态的方法 ``getUrl`` 和可选的``getApiKey``。

@@ -97,8 +97,7 @@ _property: signer.sendTransaction(transactionRequest) => Promise<[[providers-Tra
 
 _property: signer._signTypedData(domain, types, value) => Promise<string<[RawSignature](signature-raw)>>  @<Signer-signTypedData>
 
-Signs the typed data //value// with //types// data structure for //domain// using
-the [[link-eip-712]] specification.
+使用[[link-eip-712]]规范，采用类型数据结构作为领域签署类型化的数据值。
 
 _warning: Experimental feature (方法名称会做更改)
 

@@ -125,9 +125,6 @@ _subsection: AlchemyProvider @<AlchemyProvider> @inherit<[[UrlJsonRpcProvider]]>
 _property: new ethers.providers.AlchemyProvider([ network = "homestead", [ apiKey ] ])
 通过可选的//apiKey//创建一个新的**AlchemyProvider** 连接到//网络//。
 
-The //network// may be specified as a **string** for a common
-network name, a **number** for a common chain ID or a
-[Network Object](providers-Network).
 这个//网络//可以被指定为一个**字符串**类型的网络名称、或**number**类型的链ID，或[网络对象]provider-(network)。
 
 _note: 注意: 默认的 API keys

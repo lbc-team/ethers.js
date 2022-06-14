@@ -27,7 +27,7 @@ _heading: Web 浏览器
 
 出于安全，通常较好的方式是将这个库复制到你的web服务器中来进行各种操作。
 
-但对于想进行快速用例和原型展示，你可以将我们的CDN加载到你的web应用程序中。
+但若想快速构建实例展示，可以将我们的CDN加载到你的web应用程序中。
 
 
 _code: 在浏览器中通过ES6的方式 @lang<html>
@@ -44,14 +44,14 @@ _code: 在浏览器中通过ES3 (UMD)的方式 @lang<html>
         type="application/javascript"></script>
 
 
-_subsection: 常见的术语 @<getting-started--glossary>
+_subsection: 常用术语 @<getting-started--glossary>
 
-这部分仍会不断地完善...
+这部分将会不断完善...
 
 _table: Common Terms
 
-$Provider:  Provider（提供者）是一个用于连接以太坊网络的抽象类，提供了通过只读方式的来连接区块链网络和获取其状态的桥梁。
-$Signer:  Signer（签名器）通常是以某种方式直接或间接访问私钥，它可以签名消息和在已授权网络中管理你的账户中的以太币来进行交易。
+$Provider:  Provider（提供者）是一个用于连接以太坊网络的抽象类，提供了只读形式来访问区块链网络和获取链上状态。
+$Signer:  Signer（签名器）通常是以某种方式直接或间接访问私钥，可以签名消息和在已授权网络中管理你账户中的以太币来进行交易。
 $Contract:  Contract（合约）是一个运行在以太坊网络上表示现实中特定合约的抽象，应用可以像使用JavaScript对象一样使用它。
 
 

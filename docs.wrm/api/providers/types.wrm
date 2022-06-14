@@ -81,7 +81,7 @@ _property: block.extraData => string
 开发人员通常对这个属性不感兴趣。
 
 _heading: Block (with transaction hashes)
-通常只需要包含在一个区块中的交易的哈希值，因此在默认情况下，一个块只包含这些信息，这样数据就不会很大。
+通常只需要一个区块中包含交易的哈希值，因此默认情况下，一个区块只包含这些信息，这样数据就不会很大。
 
 _property: block.transactions => Array<string<[[DataHexString]]<32>>>
 一个当前区块包含的每一条交易哈希的列表。

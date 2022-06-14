@@ -335,8 +335,6 @@ _property: provider.once(eventName, listener) => this  @<Provider-once> @SRC<pro
 为参数为//eventName//的 [事件](Provider--events)添加//监听器//，监听使用过后将会被移除。
 
 _property: provider.emit(eventName, ...args) => boolean  @<Provider-emit> @SRC<providers/base-provider>
-Notify all listeners of the //eventName// [event](Provider--events),
-passing //args// to each listener. This is generally only used internally.
 通知所有的//eventName// [event](Provider--events)监听器，并把参数传递给它们。这通常只在内部使用。
 _property: provider.off(eventName [ , listener ]) => this  @<Provider-off> @SRC<providers/base-provider>
 移除一个参数为//eventName//的[事件](Provider--events)//监听器//，如果没有提供//listener//参数，则移除所有关于//eventName//的监听器。
