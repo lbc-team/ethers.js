@@ -2,7 +2,7 @@ _section: 合约（Contract） @<Contract> @SRC<contracts:class.Contract>
 
 **Contract**是部署到区块链的代码的抽象。
 
-合同可能会发送交易，这将触发它的代码并与输入的交易数据一起运行。
+合约可以被用来发送交易，将交易数据作为参数运行代码。
 
 _subsection: 创建实例 @<Contract--creating>
 

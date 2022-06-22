@@ -8,6 +8,8 @@ _subsection: 创建实例 @<AbiCoder--creating>
 
 在大多数情况下，都不需要手动创建[[AbiCoder]]的实例，因为当库被加载时，一个实例是用默认的强制函数创建的，它可以被普遍使用。
 
+这可能只有那些有特殊需求的人才需要，通过二进制格式解码后将值进行强制更改。
+
 This is likely only needed by those with specific needs 
 to override how values are coerced after they are decoded from their binary format.
 
