@@ -9,7 +9,7 @@ _heading: JSON String ABI (Solidity 输出 JSON)
 
 JSON序列化的对象总是一个字符串，它表示一个对象数组，其中每个对象都有描述ABI[[Fragment]] 的各种属性。
 
-对JSON字符串(一个普通的JavaScript对象)进行反序列号也可以传递给任何接受JSON string ABI的函数。
+对JSON字符串(一个普通的JavaScript对象)进行反序列化也可以传递给任何接受JSON string ABI的函数。
 
 
 _heading: Humanb-Readable ABI @<human-readable-abi>
