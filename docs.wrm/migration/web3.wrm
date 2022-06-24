@@ -125,7 +125,7 @@ const value = await contract.getValue();
 const contract = new ethers.Contract(contractAddress, abi, signer);
 const tx = await contract.changeValue(33);
 
-// wait for the transaction to be mined
+// 等待交易完成
 const receipt = await tx.wait();
 
 
@@ -156,7 +156,7 @@ const contract = new ethers.Contract(address, abi, signer);
 message = await contract['getMessage(string)']('nice');
 
 
-_subsection: Numbers
+_subsection: 数字
 
 _heading: BigNumber
 

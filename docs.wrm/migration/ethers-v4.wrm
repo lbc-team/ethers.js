@@ -56,7 +56,7 @@ contract.addressPromise
 contract.resolvedAddress
 
 
-_heading: Gas Estimation
+_heading: Gas 估算
 
 The only difference in gas estimation is that the bucket has changed
 its name from ``estimate`` to ``estimateGas``.
@@ -133,9 +133,9 @@ await contract.functions.double()
 // [ 123, 5 ]
 
 
-_subsection: Errors
+_subsection: 错误
 
-_heading: Namespace
+_heading: 命名空间
 所有错误现在属于[[Logger]]类，相关的函数已经转移到[[Logger]]实例中, 它可以包括每个包的版本字符串
 
 全局错误函数已经被移至[[Logger]]类方法中。
@@ -174,11 +174,11 @@ logger.info(...)
 
 _subsection: Interface
 
-The [[Interface]] object has undergone the most dramatic changes.
+[[Interface]]对象经历了最具戏剧性的变化。
 
 它不再是一个元类，现在有一些方法可以简化处理合约接口操作，而不需要进行对象检查和特殊的临界情况
 
-_heading: Functions
+_heading: 函数
 
 _code: @lang<script>
 
@@ -197,7 +197,7 @@ interface.encodeFunctionData("transfer(address,uint)", [ to, amount ])
 interface.decodeFunctionResult("transfer(address to, uint256 amount)", data)
 
 
-_heading: Events
+_heading: 事件
 
 _code: @lang<script>
 
@@ -265,9 +265,9 @@ const eventSig = eventFragment.format()
 const topic = interface.getTopic(eventFragment)
 
 
-_subsection: Wallet
+_subsection: 钱包
 
-_heading: Mnemonic Phrases
+_heading: 助记短语
 **mnemonic**短语和相关属性已经合并为一个``mnemonic``对象, which also now includes the ``locale``.
 
 _code: @lang<script>
