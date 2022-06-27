@@ -65,7 +65,7 @@ PROVIDER 选项 (默认: all + homestead)
   --yes                       始终接受签名和发送
 
 其他选项
-  --wait                      Wait until transactions are mined
+  --wait                      等待交易完成
   --debug                     显示错误的堆栈跟踪
   --help                      显示此用法并退出
   --version                   显示此版本并退出

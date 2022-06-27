@@ -115,15 +115,13 @@ Flags 是一个简单的二进制选项(例如``--yes``), 如果存在则为真�
 
 参数是命令行中所有其他值,而并不是通过**ArgParser**直接访问的.
 
-当一个CLI在运行的时候, an **ArgParser** is used to validate the command line by using
-prepareOptions, which consumes all flags and options leaving only the arguments
+当一个CLI在运行的时候, 一个**ArgParser**通过使用prepareOptions来验证命令行, which consumes all flags and options leaving only the arguments
 behind, which are then passed into prepareArgs.
 
 _property: argParser.consumeFlag(name) => boolean  @<argparser-consumeflag> @SRC<cli/cli>
 删除标签//name//，如果存在，返回true
 
 _property: argParser.consumeMultiOptions(names) => Array<{ name: string, value: string}>  @<argparser-consumemultioptions> @SRC<cli/cli>
-Remove all options which match any name in the Array of //names// with their values returning the list (in order) of values.
 删除所有与//names//数组中的任何名称相匹配的选项，其值返回值的列表（按顺序）。
 _property: argParser.consumeOption(name) => string  @<argparser-consumeoption> @SRC<cli/cli>
 删除带有//name//值的选项，并返回该值。如果该选项被多次包含，这将抛出一个UsageError。
