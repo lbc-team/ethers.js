@@ -24,7 +24,7 @@ _code: @lang<text>
       [ --hex ]                  消息内容是十六进制编码
    eval CODE                  在一个有ethers的虚拟环境运行代码
    run FILENAME               在一个有ethers的虚拟环境运行文件
-   wait HASH                  Wait for a transaction HASH to be mined
+   wait HASH                  等待交易哈希完成
    wrap-ether VALUE           Deposit VALUE into Wrapped Ether (WETH)
    unwrap-ether VALUE         从Wrapped Ether (WETH)赎回VALUE
    send-token TOKEN ADDRESS VALUE
@@ -76,27 +76,26 @@ _subsection: 示例
 _code: 创建新的选项 @lang<shell> @<cliex-init>
 
 /home/ethers> ethers init wallet.json
-Creating a new JSON Wallet - wallet.json
-Keep this password and file SAFE!! If lost or forgotten
-it CANNOT be recovered, by ANYone, EVER.
-Choose a password: ******
-Confirm password: ******
-Encrypting... 100%
-New account address: 0x485bcC23ae2E5038ec7ec9b8DCB2A6A6291cC003
+创建新的json钱包 - wallet.json
+保持密码和文件安全！如果丢失或者遗失，任何人都不能恢复
+选择密码: ******
+确认密码: ******
+加密中... 100%
+新的账户地址: 0x485bcC23ae2E5038ec7ec9b8DCB2A6A6291cC003
 Saved:               wallet.json
 
 
-# If you are planning to try out the Ropsten testnet...
+# 如果你打算尝试试用Ropsten 测试网...
 /home/ethers> ethers --network ropsten fund 0x485bcC23ae2E5038ec7ec9b8DCB2A6A6291cC003
-Transaction Hash: 0x8dc55b8f8dc8076acded97f9e3ed7d6162460c0221e2769806006b6d7d1156e0
+交易哈希: 0x8dc55b8f8dc8076acded97f9e3ed7d6162460c0221e2769806006b6d7d1156e0
 
 
-_code: Sending Ether and Tokens  @<cliex-send> @lang<shell>
+_code: 发送 Ether and Tokens  @<cliex-send> @lang<shell>
 
-# Sending ether
+# 发送 ether
 /home/ricmoo> ethers --account wallet.json send ricmoo.firefly.eth 0.123
-Password (wallet.json): ******
-Decrypting... 100%
+密码 (wallet.json): ******
+加密... 100%
 Transaction:
   To:         0x8ba1f109551bD432803012645Ac136ddd64DBA72
   From:       0xaB7C8803962c0f2F5BBBe3FA8bf41cd82AA1923C
@@ -113,9 +112,7 @@ Response:
 
 
 # Sending a token (SAI)
-# NOTE: the contract address could be used instead but
-#       popular token contract addresses are also managed
-#       by ethers
+# NOTE: 合同地址也可以使用，但常用的token合同地址也由以太坊管理
 /home/ricmoo> ethers --account wallet.json send-token sai.tokens.ethers.eth ricmoo.firefly.eth 1.0
 Sending Tokens:
   To:              0x8ba1f109551bD432803012645Ac136ddd64DBA72
@@ -205,7 +202,7 @@ _code: 随机创建一个助记符  @lang<shell>
 useful pond inch knock ritual matrix giggle attend dilemma convince coach amazing
 
 
-_heading: Using Mnemonics (with a password)  @<cliex-mnemonicpassword>
+_heading: 使用助记符（带密码）  @<cliex-mnemonicpassword>
 
 所有助记符都有一个密码,但默认是使用空字符串(i.e. ``""``)作为密码。如果你的助记符有密码,``-\-mnemonic-password``将会提示你输入密码以解密该账户。
 
@@ -213,15 +210,15 @@ _heading: Using Mnemonics (with a password)  @<cliex-mnemonicpassword>
 _code: @lang<shell>
 
 /home/ricmoo> ethers --account mnemonic.txt --mnemonic-password
-Password (mnemonic): ******
-network: homestead (chainId: 1)
+密码 (助记符): ******
+网络: homestead (chainId: 1)
 homestead> accounts[0].getAddress()
 <Promise id=0 resolved>
 '0x6d3F723EC1B73141AA4aC248c3ab34A5a1DAD776'
 homestead>
 
 
-_heading: Using Mnemonics (with experimental memory-hard passwords)  @<cliex-mnemonicpassword-xxx>
+_heading: 使用助记符 (with experimental memory-hard passwords)  @<cliex-mnemonicpassword-xxx>
 
 ``-\-xxx-mnemonic-password``类似于``-\-mnemonic-password``选项,它使用密码对助记符的帐户进行解密, 然而它首先通过[scrypt](link-wiki-scrypt)//基于密码的密钥派生函数//传递密码，which is intentionally slow and makes
 a brute-force attack far more difficult.
@@ -238,5 +235,5 @@ homestead> accounts[0].getAddress()
 homestead>
 
 _warning: Note
-This is still an experimental feature (hence the ``xxx``).
+这仍然是一个实验性的功能(hence the ``xxx``).
 

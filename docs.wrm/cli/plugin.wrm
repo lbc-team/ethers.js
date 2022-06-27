@@ -126,7 +126,6 @@ _property: argParser.consumeMultiOptions(names) => Array<{ name: string, value: 
 Remove all options which match any name in the Array of //names// with their values returning the list (in order) of values.
 删除所有与//names//数组中的任何名称相匹配的选项，其值返回值的列表（按顺序）。
 _property: argParser.consumeOption(name) => string  @<argparser-consumeoption> @SRC<cli/cli>
-Remove the option with its value for //name// and return the value. This will throw a UsageError if the option is included multiple times.
-
+删除带有//name//值的选项，并返回该值。如果该选项被多次包含，这将抛出一个UsageError。
 _property: argParser.consumeOptions(name) => Array<string>  @<argparser-consumeoptions> @SRC<cli/cli>
-Remove all options with their values for //name// and return the list (in order) of values.
+删除所有选项及其对//name//的值，并返回（按顺序）值的列表。
