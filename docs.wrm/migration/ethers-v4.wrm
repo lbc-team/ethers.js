@@ -8,7 +8,7 @@ _section: Migration: From Ethers v4  @<migration-v4>
 
 _subsection: BigNumber
 
-_heading: Namespace
+_heading: 命名空间
 由于[[BigNumber]]使用的相当频繁, 它已经被移到the top level of the umbrella package.
 
 _code: @lang<script>
@@ -172,9 +172,9 @@ logger.warn(...)
 logger.info(...)
 
 
-_subsection: Interface
+_subsection: 接口
 
-[[Interface]]对象经历了最具戏剧性的变化。
+[[接口]]对象经历了最具戏剧性的变化。
 
 它不再是一个元类，现在有一些方法可以简化处理合约接口操作，而不需要进行对象检查和特殊的临界情况
 
@@ -268,7 +268,7 @@ const topic = interface.getTopic(eventFragment)
 _subsection: 钱包
 
 _heading: 助记短语
-**mnemonic**短语和相关属性已经合并为一个``mnemonic``对象, which also now includes the ``locale``.
+**mnemonic**短语和相关属性已经合并为一个``mnemonic``对象,它现在也包括``locale``.
 
 _code: @lang<script>
 

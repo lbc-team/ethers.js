@@ -116,7 +116,6 @@ contract.methods.changeValue(42).send({from: ....})
 
 // ethers
 // 在初始化只读查询合约的时候传递一个provider
-在初始化只读查询合约的时候传递一个provider
 const contract = new ethers.Contract(contractAddress, abi, provider);
 const value = await contract.getValue();
 
