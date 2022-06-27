@@ -255,7 +255,7 @@ _table:
 
 |  **Language**  |                             **Notes**                                    |
 |   javascript   | Syntax highlights and [evaluates](flatworm--code-eval) the JavaScript    |
-|   script       | Same as ``javascript``, but does not evaluate the results                |
+|   script       | 和``javascript``一样, 但是不会评估结果                |
 |   shell        | Shel脚本或者命令行                                           |
 |   text         | 没有语法要点的纯文本                                  |
 
