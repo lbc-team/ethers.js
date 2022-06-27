@@ -3,19 +3,19 @@ _section: Assembler @<cli-asm>
 assembler命令行工具允许您将[Ethers ASM Dialect](asm-dialect)汇编成可部署的EVM bytecode，并将EVM字节码反汇编成人类可读的助记符。
 
 
-_subsection: Help
+_subsection: 帮助
 
 _code: @lang<text>
 
-Usage:
+用法:
    ethers-asm [ FILENAME ] [ OPTIONS ]
 
 选项
   --define KEY=VALUE          provide assembler defines
-  --disassemble               Disassemble input bytecode
+  --disassemble               反汇编输入字节码
   --ignore-warnings           忽略警告
-  --pic                       generate position independent code
-  --target LABEL              output LABEL bytecode (default: _)
+  --pic                       生成独立位置代码
+  --target LABEL              输出LABEL字节码 (默认: _)
 
 其他选项
   --debug                     显示错误的堆栈跟踪
@@ -105,14 +105,14 @@ _code: @lang<shell>
 
 # Piping in ASM source code
 /home/ethers> cat SimpleStore.asm | ethers-asm
-# Same as above
+# 和上面一样
 
-# Setting a define which the ASM file checks and adds a checksum
+# 设置一个ASM文件检查并添加校验和的定义
 /home/ethers> ethers-asm --define checksum SimpleStore.asm
 0x602a6000556065601160003960656000f334601e5760003560e01c80632096525514602457806355241077146030575b60006000fd5b60005460005260206000f35b6024361415601e5760043560005560006000f37f10358310d664c9aeb4bf4ce7a10a6a03176bd23194c8ccbd3160a6dac90774d6
 
 
-_heading: Options
+_heading: 选项
 
 _definition: **-\-define KEY=VALUE** //or// **-\-define FLAG**
 这允许键/值对(值是一个字符串)和flags (值是``true``)传递给汇编程序,这可以在[Scripting Blocks](asm-dialect-scripting)中访问,例如``{{= defined.someKey }}``.
