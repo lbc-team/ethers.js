@@ -102,10 +102,10 @@ _subsection: ConstructorFragment @<ConstructorFragment> @INHERIT<[[Fragment]]> @
 _heading: Properties
 
 _property: fragment.gas => [[BigNumber]]
-表示部署期间应该使用的gas limit。它可以是null。
+表示部署期间应该使用的gas limit，它可以是null。
 
 _property: fragment.payable => boolean
-表示构造函数在部署期间是否可以接收ether(例如msg。msg.value != 0)。
+表示构造函数在部署期间是否可以接收ether(例如：msg.value != 0)。
 
 _property: fragment.stateMutability => string
 构造函数的state mutability。它可以是:
