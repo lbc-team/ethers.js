@@ -165,7 +165,7 @@ _property: Logger.errors.NONCE_EXPIRED @<errors--nonce-expired>
 指定的nonce已经被挖出的区块中的交易所使用。
 
 _property: Logger.errors.REPLACEMENT_UNDERPRICED @<errors--replacement-underpriced>
-当替换一个交易(已经发送到网络但尚未被挖出的)时，通过相同nonce，新的交易必须比指定替换的的gas price更高。
+当替换一个交易(已经发送到网络但尚未被挖出)时，通过相同nonce，新的交易必须比指定替换的的gas price更高。
 
 当天然气价格不足以//贿赂(bribe)//交易池（期望使其选择新的交易而不是旧的交易时）就会发生这种错误。
 一般情况下，新的gas price应该是比原来多50% + 1 wei，即如果使用10 gwei的gas price，

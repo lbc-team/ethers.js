@@ -50,7 +50,6 @@ _property: new NonceManager(signer)
 创建一个新的NonceManager。
 
 _property: nonceManager.signer => [[Signer]]
-The signer whose nonce is being managed.
 signer管理的nonce值。
 
 _property: nonceManager.provider => [[Provider]]

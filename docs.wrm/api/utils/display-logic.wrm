@@ -39,7 +39,7 @@ _subsection: 功能函数 @<display-logic--functions>
 _heading: 格式化 @<display-logic--formatting>
 
 _property: ethers.utils.commify(value) => string  @<utils-commify> @SRC<units>
-Returns a string with value grouped by 3 digits, separated by ``,``.
+返回一个由3位数字组成的,并且用``,``分隔的字符串.
 
 _code: @lang<javascript>
 
@@ -99,12 +99,9 @@ formatEther(value);
 //_log:
 
 _property: ethers.utils.parseUnits(value [ , unit = "ether" ] ) => [BigNumber](BigNumber)  @<utils-parseUnits> @SRC<units>
-Returns a [BigNumber](BigNumber) representation of //value//, parsed with
-//unit// digits (if it is a number) or from the unit specified (if
-a string).
 返回[BigNumber](BigNumber)表示的值，
 如果是数字number指定，则解析为对应的小数位数；
-如果是字符串string指定，则解析为 string name 对应的单位；。
+如果是字符串string指定，则解析为 string name 对应的单位。
 
 _code: @lang<javascript>
 

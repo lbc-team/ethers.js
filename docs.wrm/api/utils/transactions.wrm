@@ -114,10 +114,6 @@ _property: ethers.utils.serializeTransaction(tx [ , signature ]) => string<[[Dat
 如果提供了chainId，则此函数将使用[[link-eip-155]]，否则将使用legacy serialization。
 强烈建议总是指定chainId。
 
-If //signature// includes a chain ID (explicitly or implicitly by using an
-[[link-eip-155]] ``v`` or ``_vs``) it will be used to compute the
-chain ID.
-
 如果签名包含链ID(通过显式地或隐式地使用[[link-eip-155]]的一个 ``v`` 或 ``_vs``)，它将被用于计算链ID。
 
 如果交易的链ID和签名之间不匹配，则抛出错误。

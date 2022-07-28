@@ -1,5 +1,5 @@
 _section: 哈希算法 @<hashing-algorithms>
-在整个区块链空间中使用了许多哈希算法，对于一些一些复杂的用法可以使用utilities工具来简化这些操作。
+在整个区块链空间中使用了许多哈希算法，对于一些复杂的用法可以使用utilities工具来简化这些操作。
 
 _subsection: 加密哈希函数 @<cryptographic-hash-functions>
 [加密哈希函数](link-wiki-cryptographichash)是一个特定的哈希函数家族。
@@ -198,8 +198,6 @@ utils.namehash("ricmoo.xyz")
 _heading: Typed Data Encoder @<TypedDataEncoder> @SRC<hash:class.TypedDataEncoder>
 **TypedDataEncoder**用于计算[[link-eip-712]]签名的各种编码数据。
 
-Signed data requires a domain, list of structures and their members and the data
-itself.
 签名数据需要域(domain)、结构成员列表和数据本身。
 
 **domain**是一个具有任何标准域属性值的对象。
