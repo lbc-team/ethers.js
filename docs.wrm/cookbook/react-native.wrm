@@ -1,27 +1,18 @@
 _section: React Native (and ilk) @<cookbook-reactnative>
 
-The [[link-react-native]] framework has become quite popular and
-has many popular forks, such as [[link-expo]].
+The [[link-react-native]]框架已经变得相当流行并且具有许多流行的分支, 例如[[link-expo]].
 
-React Native is based on [[link-javascriptcore]] (part of WebKit) and
-does not use Node.js or the common Web and DOM APIs. As such,
-there are many operations missing that a normal web environment
-or Node.js instance would provide.
+React Native是基于[[link-javascriptcore]] (WebKit的部分) 并且不使用Node.js或常见的Web和DOM API。因此，丢失了许多正常的网络环境或者Node.js实例所能提供的操作。
 
-For this reason, there is a [[link-npm-ethersproject-shims]] module
-provided to fill in the holes.
+由于这个原因, 这里提供一个[[link-npm-ethersproject-shims]]模块来填补这个漏洞
 
+_subsection: 安装 @<cookbook-reactnative-shims>
 
-_subsection: Installing @<cookbook-reactnative-shims>
+要在React Native中使用ether, 你必须要为所需且缺少的功能提供ether shims,或者使用ethers.js shim.
 
-To use ethers in React Native, you must either provide shims for the needed
-missing functionality, or use the ethers.js shim.
+**强烈建议**您查看下面的[security部分](cookbook-reactnative-security)获得关于安装可能影响你的应用程序安全的软件包
 
-It is **HIGHLY RECOMMENDED** you check out the [security section](cookbook-reactnative-security)
-below for instructions on installing packages which can affect the security
-of your application.
-
-After installing packages, you may need to restart your packager and company.
+安装软件包后, 你可能需要重启你的软件包和company.
 
 _code: Installing @lang<shell>
 
@@ -36,25 +27,20 @@ import "@ethersproject/shims"
 import { ethers } from "ethers";
 
 
-_subsection: Security @<cookbook-reactnative-security>
+_subsection: 安全 @<cookbook-reactnative-security>
 
-The React Native environment does not contain a secure random source, which
-is used when computing random private keys. This could result in private
-keys that others could possibly guess, allowing funds to be stolen and assets
-manipulated.
+React Native环境不包含用于计算随机私钥的安全随机源。这可能会导致其他人可能猜到的私钥，从而导致资金被盗和资产被操纵。
 
-For this reason, it is **HIGHLY RECOMMENDED** to also install the
-[[link-npm-react-native-get-random-values]], which **must** be included
-before the shims. If it worked correctly you should not receive any
-warning in the console regarding missing secure random sources.
+由于这个原因,**强烈建议**也安装[[link-npm-react-native-get-random-values]],它**必须**被包含shims的前面。
+如果它工作正常，您应该不会在控制台中收到任何关于丢失安全随机源的警告。
 
 _code: Importing with Secure Random Sources @lang<script>
 
-// Import the crypto getRandomValues shim (**BEFORE** the shims)
+// 导入crypto getRandomValues shim(在shims**之前**)
 import "react-native-get-random-values"
 
-// Import the the ethers shims (**BEFORE** ethers)
+// 导入ethers shims (在导入ethers**之前**)
 import "@ethersproject/shims"
 
-// Import the ethers library
+// 导入ethers库
 import { ethers } from "ethers";

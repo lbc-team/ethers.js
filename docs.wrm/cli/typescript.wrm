@@ -1,28 +1,26 @@
 _section: TypeScript
 
-_subsection: Help
+_subsection: 帮助
 
 _code: @lang<text>
 
-Usage:
+用法:
    ethers-ts FILENAME [ ... ] [ OPTIONS ]
 
-OPTIONS
-  --output FILENAME           Write the output to FILENAME (default: stdout)
-  --force                     Overwrite files if they already exist
-  --no-optimize               Do not run the solc optimizer
-  --no-bytecode               Do not include bytecode and Factory methods
+选项
+  --output FILENAME           将输出写入FILENAME文件(default: stdout)
+  --force                     如果它们存在则覆盖它们
+  --no-optimize               不运行solc optimizer
+  --no-bytecode               不包括字节码和Factory方法
 
-OTHER OPTIONS
-  --debug                     Show stack traces for errors
-  --help                      Show this usage and exit
-  --version                   Show this version and exit
+其他选项
+  --debug                     显示错误的堆栈跟踪
+  --help                      显示此用法并退出
+  --version                   显示此版本并退出
 
-(*) By including mnemonics or private keys on the command line they are
-    possibly readable by other users on your system and may get stored in
-    your bash history file. This is NOT recommended.
+(*) 因为在命令行中包含助记符或私钥，在你系统上的其他用户可能可以读取它们，并可能存储在bash历史文件中。不推荐这样做。
 
 
-_subsection: Examples
+_subsection: 示例
 
 TODO

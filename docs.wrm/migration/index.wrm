@@ -1,7 +1,6 @@
-_section: Migration Guide @<migration>
+_section: 迁移指南 @<migration>
 
-Here are some migration guides when upgrading from older versions
-of Ethers or other libraries.
+这里有一些从Ethers或其他库的旧版本升级时的迁移指南。
 
 _toc:
     web3

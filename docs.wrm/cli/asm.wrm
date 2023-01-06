@@ -1,31 +1,29 @@
 _section: Assembler @<cli-asm>
 
-The assembler Command-Line utility allows you to assemble the
-[Ethers ASM Dialect](asm-dialect) into deployable EVM bytecode
-and disassemble EVM bytecode into human-readable mnemonics.
+assembler命令行工具允许您将[Ethers ASM Dialect](asm-dialect)汇编成可部署的EVM bytecode，并将EVM字节码反汇编成人类可读的助记符。
 
 
-_subsection: Help
+_subsection: 帮助
 
 _code: @lang<text>
 
-Usage:
+用法:
    ethers-asm [ FILENAME ] [ OPTIONS ]
 
-OPTIONS
+选项
   --define KEY=VALUE          provide assembler defines
-  --disassemble               Disassemble input bytecode
-  --ignore-warnings           Ignore warnings
-  --pic                       generate position independent code
-  --target LABEL              output LABEL bytecode (default: _)
+  --disassemble               反汇编输入字节码
+  --ignore-warnings           忽略警告
+  --pic                       生成独立位置代码
+  --target LABEL              输出LABEL字节码 (默认: _)
 
-OTHER OPTIONS
-  --debug                     Show stack traces for errors
-  --help                      Show this usage and exit
-  --version                   Show this version and exit
+其他选项
+  --debug                     显示错误的堆栈跟踪
+  --help                      显示此用法并退出
+  --version                   显示此版本并退出
 
 
-_subsection: Example Input Files
+_subsection: 示例输入文件
 
 _code: SimpleStore.asm  @lang<asm>
 
@@ -90,23 +88,15 @@ _code: SimpleStore.bin  @lang<text>
 0xf35b6024361415601e5760043560005560006000f3
 
 
-_note: Note: Bytecode File Syntax
-A bin file may be made up of multiple blocks of bytecode, each may
-optionally begin with a ``0x`` prefix, all of which **must** be of
-even length (since bytes are required, with 2 nibbles per byte)
+_note: Note: 字节码文件语法
+一个bin文件可以由多个字节码块组成,每个字节可以选择以``0x``前缀开头,所有的字节**必须**为偶数长度(因为字节是必需的,每个字节有2个nibbles)。
 
-All whitespace is ignored.
+所有空白都会被忽略。
 
-_subsection: Assembler Examples
+_subsection: 汇编例子
+汇编器通过汇编阶段的多次遍历，将[Ethers ASM Dialect](asm-dialect)成字节码,每次🏪都接近最终结果。
 
-The assembler converts an [Ethers ASM Dialect](asm-dialect) into
-bytecode by running multiple passes of an assemble stage, each pass
-more closely approximating the final result.
-
-This allows small portions of the bytecode to be massaged and tweaked
-until the bytecode stabilizes. This allows for more compact jump
-destinations and for code to include more advanced meta-programming
-techniques.
+这允许对字节码的一小部分进行修改和调整，直到字节码稳定。This allows for more compact jump destinations，并允许代码包含更高级的元编程技术。
 
 _code: @lang<shell>
 
@@ -115,49 +105,36 @@ _code: @lang<shell>
 
 # Piping in ASM source code
 /home/ethers> cat SimpleStore.asm | ethers-asm
-# Same as above
+# 和上面一样
 
-# Setting a define which the ASM file checks and adds a checksum
+# 设置一个ASM文件检查并添加校验和的定义
 /home/ethers> ethers-asm --define checksum SimpleStore.asm
 0x602a6000556065601160003960656000f334601e5760003560e01c80632096525514602457806355241077146030575b60006000fd5b60005460005260206000f35b6024361415601e5760043560005560006000f37f10358310d664c9aeb4bf4ce7a10a6a03176bd23194c8ccbd3160a6dac90774d6
 
 
-_heading: Options
+_heading: 选项
 
 _definition: **-\-define KEY=VALUE** //or// **-\-define FLAG**
-This allows key/value pairs (where the value is a string) and
-flags (which the value is ``true``) to be passed along to the
-assembler, which can be accessed in
-[Scripting Blocks](asm-dialect-scripting), such as ``{{= defined.someKey }}``.
+这允许键/值对(值是一个字符串)和flags (值是``true``)传递给汇编程序,这可以在[Scripting Blocks](asm-dialect-scripting)中访问,例如``{{= defined.someKey }}``.
 
 _definition: **-\-ignore-warnings**
-By default any warning will be treated like an error. This enabled
-by-passing warnings.
+默认情况下，任何警告都将被视为一个错误。This enabled by-passing warnings.
 
 _definition: **-\-pic**
-When a program is assembled, the labels are usually given as an
-absolute byte position, which can be jumped to for loops and
-control flow. This means that a program must be installed at a specific
-location.
+当程序在汇编的时候，标签通常以绝对字节位置给出，可以跳转到for循环和控制流。这就意味着程序必须安装在特定的位置。
 
-Byt specifying the **Position Independent Code** flag, code
-will be generated in a way such that all offsets are relative, allowing
-the program to be moved without any impact to its logic.
+通过指定**Position Independent Code** flag,代码将以所有偏移量都是相对的方式生成，允许程序在不影响其逻辑的情况下移动。
 
-This does incur an additional gas cost of 8 gas per offset access though.
+不过这确实会产生额外的gas成本，即每个偏移量需要8个gas。
 
 _definition: **-\-target LABEL**
-All programs have a root scope named ``_`` which is by default
-assembled. This option allows another labelled target (either a
-[[asm-dialect-scope]] or a [[asm-dialect-datasegment]] to be
-assembled instead. The entire program is still assembled per usual,
-so this only impacts which part of the program is output.
+所有程序都有一个名为``_`` 的作用域，默认情况下是进行汇编的。这个选项允许其他被标记了的目标(
+[[asm-dialect-scope]]或者[[asm-dialect-datasegment]]进行汇编
+。整个程序仍然按照常规汇编，因此这只影响输出的一部分。
 
-_subsection: Disassembler Examples
+_subsection: 反汇编程序例子
 
-A disassembled program shows offsets and mnemonics for the given
-bytecode. This format may change in the future to be more
-human-readable.
+反汇编程序显示给定字节码的偏移量和助记符。这个格式在未来可能会改变，以使人类更易于阅读。
 
 _code: @lang<shell>
 
@@ -217,4 +194,4 @@ _code: @lang<shell>
 0054 : RETURN
 
 /home/ethers> cat SimpleStore.bin | ethers-asm --disassemble
-# Same as above
+# 和上面一样

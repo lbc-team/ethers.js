@@ -1,21 +1,15 @@
 _section: Migration: From Ethers v4  @<migration-v4>
 
-This document only covers the features present in v4 which have changed
-in some important way in v5.
+这份文件只涵盖了v4中存在的、在v5中发生了一些重要变化的功能。
 
-It does not cover all the new additional features that have been added and
-mainly aims to help those updating their older scripts and applications to
-retain functional parity.
+它没有涵盖所有已添加的新特性，主要目的是帮助那些更新他们的旧脚本和应用程序的人保持功能的一致性。
 
-If you encounter any missing changes, please let me know and I'll update this
-guide.
-
+如果你遇到任何遗漏的变化，请告诉我，我将更新本指南。
 
 _subsection: BigNumber
 
-_heading: Namespace
-Since [[BigNumber]] is used quite frequently, it has been moved to
-the top level of the umbrella package.
+_heading: 命名空间
+由于[[BigNumber]]使用的相当频繁, 它已经被移到the top level of the umbrella package.
 
 _code: @lang<script>
 
@@ -28,12 +22,9 @@ ethers.BigNumber
 ethers.BigNumberish
 
 
-_heading: Creating Instances
+_heading: 创建实例
 
-The ``bigNumberify`` method was always preferred over the constructor
-since it could short-circuit an object instantiation for [[BigNumber]
-objects (since they are immutable). This has been moved to a static
-``from`` class method.
+``bigNumberify``总是优先于构造函数，因为它可以缩短[[BigNumber]对象的对象实例化（因为它们是不可变的）这已经被移动到了静态的``from``类方法中.
 
 _code: @lang<script>
 
@@ -42,23 +33,21 @@ new ethers.utils.BigNumber(someValue)
 ethers.utils.bigNumberify(someValue);
 
 // v5
-// - Constructor is private
-// - Removed `bigNumberify`
+// - Constructor 是私有的
+// - 移除 `bigNumberify`
 ethers.BigNumber.from(someValue)
 
 
-_subsection: Contracts
+_subsection: 合约
 
-_heading: ENS Name Resolution
+_heading: ENS 名称解析
 
-The name of the resolved address has changed. If the address passed into the
-constructor was an ENS name, the address will be resolved before any calls
-are made to the contract.
 
-The name of the property where the resolved address has changed from ``addressPromise``
-to ``resolvedAddress``.
+解析的地址的名称已更改。如果传递给构造函数的地址是一个ENS名称，那么在对合约进行任何调用之前，该地址将被解析。
 
-_code: Resolved ENS Names @lang<script>
+解析地址的属性名称从``addressPromise``改为了``resolvedAddress``。
+
+_code: 解析 ENS 名称 @lang<script>
 
 // v4
 contract.addressPromise
@@ -67,7 +56,7 @@ contract.addressPromise
 contract.resolvedAddress
 
 
-_heading: Gas Estimation
+_heading: Gas 估算
 
 The only difference in gas estimation is that the bucket has changed
 its name from ``estimate`` to ``estimateGas``.
@@ -80,7 +69,7 @@ contract.estimate.transfer(toAddress, amount)
 // v5
 contract.estimateGas.transfer(toAddress, amount)
 
-_heading: Functions
+_heading: 函数
 
 In a contract in ethers, there is a ``functions`` bucket, which exposes
 all the methods of a contract.
@@ -99,7 +88,7 @@ The main difference will occur when a contract method only returns a single
 item. The root method will dereference this automatically while the ``functions``
 bucket will preserve it as an [[Result]].
 
-If a method returns multiple items, there is no difference.
+如果一个方法返回多个项，则没有区别。
 
 This helps when creating a framework, since the result will always be known to
 have the same number of components as the [[Fragment]] outputs, without having
@@ -109,10 +98,10 @@ _code: Functions Bucket @lang<script>
 
 const abi = [
 
-  // Returns a single value
+  // 返回一个值
   "function single() view returns (uint8)",
 
-  // Returns two values
+  // 返回两个值
   "function double() view returns (uint8, uint8)",
 ];
 
@@ -144,14 +133,12 @@ await contract.functions.double()
 // [ 123, 5 ]
 
 
-_subsection: Errors
+_subsection: 错误
 
-_heading: Namespace
-All errors now belong to the [[Logger]] class and the related functions
-have been moved to [[Logger]] instances, which can include a per-package
-version string.
+_heading: 命名空间
+所有错误现在属于[[Logger]]类，相关的函数已经转移到[[Logger]]实例中, 它可以包括每个包的版本字符串
 
-Global error functions have been moved to [[Logger]] class methods.
+全局错误函数已经被移至[[Logger]]类方法中。
 
 _code: @lang<script>
 
@@ -185,15 +172,13 @@ logger.warn(...)
 logger.info(...)
 
 
-_subsection: Interface
+_subsection: 接口
 
-The [[Interface]] object has undergone the most dramatic changes.
+[[接口]]对象经历了最具戏剧性的变化。
 
-It is no longer a meta-class and now has methods that simplify handling
-contract interface operations without the need for object inspection and
-special edge cases.
+它不再是一个元类，现在有一些方法可以简化处理合约接口操作，而不需要进行对象检查和特殊的临界情况
 
-_heading: Functions
+_heading: 函数
 
 _code: @lang<script>
 
@@ -205,14 +190,14 @@ interface.functions.transfer.decode(callData)
 interface.encodeFunctionData("transfer", [ to, amount ])
 interface.decodeFunctionResult("transfer", data)
 
-// Or you can use any compatible signature or Fragment objects.
+// 或者你可以使用任何兼容的签名或Fragment对象。
 // Notice that signature normalization is performed for you,
-// e.g. "uint" and "uint256" will be automatically converted
+// e.g. "uint"和"uint256"将被自动转换
 interface.encodeFunctionData("transfer(address,uint)", [ to, amount ])
 interface.decodeFunctionResult("transfer(address to, uint256 amount)", data)
 
 
-_heading: Events
+_heading: 事件
 
 _code: @lang<script>
 
@@ -226,8 +211,7 @@ interface.decodeEventLog("Transfer", data, topics)
 
 
 _heading: Inspection
-Interrogating properties about a function or event can now (mostly) be
-done directly on the [[Fragment]] object.
+现在（大部分）关于一个函数或者事件的查询可以直接在[[Fragment]]对象上完成
 
 _code:
 
@@ -281,11 +265,10 @@ const eventSig = eventFragment.format()
 const topic = interface.getTopic(eventFragment)
 
 
-_subsection: Wallet
+_subsection: 钱包
 
-_heading: Mnemonic Phrases
-The **mnemonic** phrase and related properties have been merged into
-a single ``mnemonic`` object, which also now includes the ``locale``.
+_heading: 助记短语
+**mnemonic**短语和相关属性已经合并为一个``mnemonic``对象,它现在也包括``locale``.
 
 _code: @lang<script>
 
@@ -294,8 +277,8 @@ wallet.mnemonic
 wallet.path
 
 // v5
-// - Mnemonic phrase and path are a Mnemonic object
-// - Note: wallet.mnemonic is null if there is no mnemonic
+// - 助记符语法和路径是一个助记符对象
+// - 注意: 如果没有助记符，wallet.mnemonic为空
 wallet.mnemonic.phrase
 wallet.mnemonic.path
 

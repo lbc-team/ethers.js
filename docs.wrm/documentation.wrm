@@ -1,125 +1,108 @@
-_section: Flatworm Docs @<flatworm>
+_section: Flatworm 文档 @<flatworm>
 
-The //Flatworm Docs// rendering engine is designed to be **very**
-simple, but provide enough formatting necessary for documenting
-JavaScript libraries.
+//Flatworm 文档//渲染引擎被设计得非常简单，但为记录 JavaScript 库提供了足够的必要格式化。
 
-A lot of its inspiration came from [Read the Docs](link-rtd) and
-the [Sphinx](link-sphinx) project.
+它的很多灵感来自 Read the Docs(link-rtd)和Sphinx(link-sphinx)项目。
 
+_subsection: 片段 @<flatworm-fragments>
 
-_subsection: Fragments @<flatworm-fragments>
+每个页面是由片段组成的。每个片段是一条[指令](flatworm-directive),
+有一个值和可选的//链接//, //拓展// 和一个主体。
 
-Each page is made up of fragments. A fragment is a [directive](flatworm-directive),
-with an value and optional //link//, //extensions// and a body.
+许多的指令在他的值和主体支持[markdown](flatworm-markdown)
 
-Many directives support [markdown](flatworm-markdown) in their value and body.
-
-A fragment's body continues until another fragment is encountered.
+一个片段的主体一直持续到遇到另一个片段的主体。
 
 
-_heading: Directive Format
+_heading: 指令格式
 
 _code: @lang<text>
 
-\_DIRECTIVE: VALUE @<LINK> @EXTENSION<PARAMETER>
+\_DIRECTIVE: 值 @<LINK> @EXTENSION<PARAMETER>
 BODY
 
 MORE BODY
 
-DIRECTIVE:  The directive name
-VALUE:      Optional; the value to pass to the directive
-LINK:       Optional; a name for internal linking
-EXTENSION:  Optional; extended directive functionality
-PARAMETER:  Optional; value to pass to extended directive functions
-BODY:       Optional; the directive body (certain directives only)
+DIRECTIVE:  指令名称
+VALUE:      可选的; 要传递给指令的值
+LINK:       可选的; 一个用于内部链接的名称
+EXTENSION:  可选的; 拓展指令的功能
+PARAMETER:  可选的; 用来传递给扩展指令功能的值
+BODY:       可选的; 指令主体内容（仅适用于某些指令）
 
-
-_heading: Flatworm Directives @<flatworm-directive>
+_heading: Flatworm 指令 @<flatworm-directive>
 
 _definition: **_section:** //TITLE//
-A //section// has its **TITLE** in an H1 font. Sections are linked
-to in //Table of Contents// and have a dividing line drawn above
-them.
+//section//的**TITLE**字体样式为H1。Sections会被链接到//目录//中，并在它们的上方有一条分界线。
 
-The body supports markdown.
+正文支持markdown。
 
-There should only be one ``_section:`` per page.
+每页应该只能有一个 ``_section:``。
 
-**Extensions:** [@inherit](flatworm--ext-inherit), [@src](flatworm--ext-src), [@nav](flatworm--ext-nav), [@note](flatworm--ext-note)
+**拓展:** [@inherit](flatworm--ext-inherit), [@src](flatworm--ext-src), [@nav](flatworm--ext-nav), [@note](flatworm--ext-note)
 
 _definition: **_subsection:** //TITLE//
-A //subsection// has its **TITLE** in an H2 font. Subsections are linked
-to in //Table of Contents// and have a dividing line drawn above
-them.
+//subsection//的**TITLE**字体样式为H2。会被链接到//目录//中，并在它们的上方有一条分界线。
 
-The title and body support markdown.
+标题和正文支持markdown。
 
-**Extensions:** [@inherit](flatworm--ext-inherit), [@src](flatworm--ext-src), [@note](flatworm--ext-note)
+**拓展:** [@inherit](flatworm--ext-inherit), [@src](flatworm--ext-src), [@note](flatworm--ext-note)
 
 _definition: **_heading:** //TITLE//
-A //heading// has its **TITLE** in an H3 font.
+//heading//**TITLE**字体样式为H3。
 
-The title and body support markdown.
+标题和正文支持markdown。
 
-**Extensions:** [@inherit](flatworm--ext-inherit), [@src](flatworm--ext-src), [@note](flatworm--ext-note)
+**拓展:** [@inherit](flatworm--ext-inherit), [@src](flatworm--ext-src), [@note](flatworm--ext-note)
 
 _definition: **_definition:** //TERM//
-A //definition// has its **TERM** in normal text and the body is
-indented.
+//definition//的**TERM**是正常文本，正文是缩进的
 
-The title and body support markdown.
+标题和正文支持markdown。
 
 _definition: **_property:** //SIGNATURE//
-A //property// has its JavaScript **SIGNATURE** formatted.
+//property//有它的JavaScript **SIGNATURE**格式化.
 
-The body supports markdown and the return portion of the signature
-support markdown links.
+正文支持markdown并且signature返回的部分支持markdown链接
 
-**Extensions:** [@src](flatworm--ext-src)
+**拓展:** [@src](flatworm--ext-src)
 
 _definition: **_note:** //BANNER//
-A //note// is placed in a blue bordered-box to draw attention to it.
+//note//被放置在蓝色边框的盒子中以此引起对它的注意。
 
-The body supports markdown.
+正文支持markdown。
 
 _definition: **_warning:** //BANNER//
-A //warning// is placed in an orange bordered-box to draw attention to it.
+//warning//被放置在橙色边框的盒子中以此引起对它的注意.
 
-The body supports markdown.
+正文支持markdown。
 
 _definition: **_code:** //CAPTION//
-Creates a [Code](flatworm--code) block.
+创建一条[代码](flatworm--code) block。
 
-The body does **not** support markdown, and will be output exactly as
-is, with the exception of [Code Evaluation](flatworm--code-eval).
+正文**不**支持markdown, 同时将会按照原样输出, 除了[代码评估](flatworm--code-eval)以外.
 
-If a line begins with a ``"_"``, it should be escaped with a ``"\\"``.
+如果一行以一个``"_"``开头, 它应该以一个``"\\"``转义。
 
-**Extensions:** [@lang](flatworm--ext-lang)
+**拓展:** [@lang](flatworm--ext-lang)
 
 _definition: **_table:** //FOOTER//
 
-Creates a [Table](flatworm--table) structured according to the body.
+根据正文创建一个[表格](flatworm--table)结构。
 
-Each cell contents supports markdown and variables supports markdown.
+每个单元格支持markdown并且变量支持markdown.
 
-**Extensions:** [@style](flatworm--ext-style)
+**拓展:** [@style](flatworm--ext-style)
 
 _definition: **_toc:**
-A //toc// injects a Table of Contents, loading each line of the
-body as a filename and recursively loads the //toc// if present,
-otherwise all the //sections// and //subsections//.
+//toc//注入目录, 将主体的每一行作为文件名加载，如果存在的话，递归加载//toc//,否则的话，会加载所有的//sections//和//subsections//.
 
-The body does **not** support markdown, as it is interpreted as
-a list of files and directories to process.
+正文**不**支持markdown, 因为它被解释为一个要处理的文件和目录的列表。
 
 _definition: **_null:**
-A //null// is used to terminated a directive. For example, after
-a //definition//, the bodies are indented, so a //null// can be
-used to reset the indentation.
+//null//是用来终止命令的。 打个比方, 在//definition//之后, 主体是缩进的, 所以//null//可以用来重置缩进。
 
-The body supports markdown.
+主体支持markdown。
 
 _code: Example @lang<text>
 
@@ -179,13 +162,10 @@ a ``_note:`` or ``_code:``.
 
 _subsection: Markdown @<flatworm-markdown>
 
-The markdown is simple and does not have the flexibility of
-other dialects, but allows for **bold**, //italic//,
-__underlined__, ``monospaced``, super^^script^^ and ~~strike~~
-text, supporting [links](flatworm-markdown) and lists.
+markdown是很简单并且没有其他语种的灵活性, 但允许**粗体**, //斜体//,
+__下划线__, ``单空格``, ^^上标^^ and ~~删除~~文本, 支持[链接](flatworm-markdown)和列表。
 
-Lists are rendered as blocks of a body, so cannot be used within
-a title or within another list.
+列表是作为正文的块所渲染的，所以不能在标题或另一个列表中使用。
 
 _code: @lang<text>
 
@@ -212,38 +192,26 @@ This is a self-titled link [[https://ethereumorg]] and this
 [[some-link]] will use the title from its directives value.
 
 
-_subsection: Code @<flatworm--code>
+_subsection: 代码指令 @<flatworm--code>
 
-The code directive creates a monospace, contained block useful
-for displaying code samples.
+代码指令创建了一个有用的单空间包含块，用于显示代码示例。
 
 _heading: JavaScript Evaluation @<flatworm--code-eval>
 
-For JavaScript files, the file is transpiled and executed in a VM,
-allowiung output (or exceptions) of blocks to be included in the
-fragment output.
+对于JavaScript文件, 文件被编译并在VM中执行，允许块的输出(或异常)被包含在片段的输出。
 
-The entire **code fragment** source is included in an async IIFE,
-whick means ``await`` is allowed, and several special comment
-directives are allowed.
+整个**代码片段** 源是包括在一个异步IIFE中,这就意味着``await``是被允许的,并且少量的特殊注释代码是被允许的。
 
-A ``/\/_hide:`` will include any following code directly into the
-output, but will not include it in the generated output for the fragment.
+``/\/_hide:`` 直接将以下代码包含在输出中，但不会将其包含在生成的片段输出中。
 
-A ``/\/_log:`` will include the value of any following expression in the
-output, prefixed with a ``/\/ ``. Renderers will mark output in different
-style if possible.
+``/\/_log:`` 在输出中包括以下任何表达式的值，前缀为' ' /\/ ' ',如果可以的话，渲染器将会以不同的样式标记输出。
 
-A ``/\/_result:`` will begin a block, assigning the contents to ``_``. The
-block can be ended with a ``/\/_log:`` or ``/\/_null:``, if no value is given
-to log, then ``_`` is assumed. If an error occurs, generation fails.
+``/\/_result:`` 将会开始一个块, 内容分配给``_``。这个块会以一个``/\/_log:``或者 ``/\/_null:``结束,如果没有给定log值, 那么假定为``_``。如果发生错误，则生成失败。
 
-A ``/\/_throws:`` will begin a block, which is expected to throw assigning
-the error to ``_``. The block can be ended with a ``/\/_log:`` or ``/\/_null:``,
-if no value is given to log, then ``_`` is assumed. If an error do not occur,
-generation fails.
+``/\/_throws:``将开始一个块, 该块将抛出分配给 ``_``的错误.这个块可以以一个 ``/\/_log:``或者``/\/_null:``结束,
+如果没有给定log值, 那么假定为``_``。 如果没有发生一个错误，则生成失败。
 
-_code: Code Evaluation Example @lang<text>
+_code: 代码评估示例 @lang<text>
 
 \_code: Result of Code Example  @lang<javascript>
 
@@ -262,7 +230,7 @@ const foo = 4 + 5;
 //_log: foo
 
 
-_code: Result of Code Example  @lang<javascript>
+_code: 示例代码结果  @lang<javascript>
 
 //_hide: const url = require("url");
 
@@ -279,61 +247,44 @@ const foo = 4 + 5;
 //_log: foo
 
 
-_heading: Languages
+_heading: 语言
 
-The language can be specified using the [@lang extension](flatworm--ext-lang).
+语言可以用[@lang extension](flatworm--ext-lang)来指定。
 
 _table:
 
 |  **Language**  |                             **Notes**                                    |
 |   javascript   | Syntax highlights and [evaluates](flatworm--code-eval) the JavaScript    |
-|   script       | Same as ``javascript``, but does not evaluate the results                |
-|   shell        | Shell scripts or command-line                                            |
-|   text         | Plain text with no syntax highlighting                                   |
+|   script       | 和``javascript``一样, 但是不会评估结果                |
+|   shell        | Shel脚本或者命令行                                           |
+|   text         | 没有语法要点的纯文本                                  |
 
-_subsection: Tables @<flatworm--table>
+_subsection: 表格 @<flatworm--table>
 
-The table directive consumes the entire body up until the next
-directive. To terminate a table early to begin a text block,
-use a **_null:** directive.
+table指令会占用整个指令体，直到下一个指令。为了开始一个文本块而提前终止表格,使用**_null:**指令。
 
-Each line of the body should be [Row Data](flatworm--table-row) or a
-[Variable Declaration](flatworm--table-variable) (or continuation of
-a //Variable Declaration//). Blank lines are ignored.
+正文的每一行应该是[Row Data](flatworm--table-row) 或者 一个
+[Variable Declaration](flatworm--table-variable) (一个//变量声明//的延续). 空行会被忽略。
 
 _heading: Row Data @<flatworm--table-row>
 
-Each **Row Data** line must begin and end with a **``"|"``**, with each
-gap representing the cell data, [alignment](flatworm--table-alignment)
-with optional [column and row spanning](flatworm--table-spanning).
-
+每个**Row Data** 行必须以一个**``"|"``**开头和结尾,每个间隙代表着单元格数据,[alignment](flatworm--table-alignment)带有可选的[column and row spanning](flatworm--table-spanning)。
 
 _heading: Alignment @<flatworm--table-alignment>
 
-The alignment for a cell is determined by the whitespace surrounding the
-cell data.
+单元格的对齐方式由单元格数据周围的空格决定。
 
-_table: Alignment Conditions (higher precedence listed first)
+_table: 对齐条件 (优先级高的排在前面)
 
 |   **Alignment**   |                    **Whitespace**                     |
-|    //Left//       | 1 or fewer spaces before the content                  |
-|    //Right//      | 1 or fewer spaces after the content                   |
-|    //Center//     | 2 or more space **both** before and after the content |
+|    //Left//       | 内容前的空格不超过1个                  |
+|    //Right//      | 内容后的空格不超过1个                  |
+|    //Center//     | 在内容的之前和之后**都**有2个以上的空格   |
 
 
-_code: Alignment Example @lang<text>
+_code: 对齐例子 @lang<text>
 
-\_table: Result of Alignment Example @style<compact>
-
-|   center    |
-
-| left        |
-|left         |
-
-|       right |
-|        right|
-
-_table: Result of Alignment Example @style<compact>
+\_table: 对齐示例结果 @style<compact>
 
 |   center    |
 
@@ -343,69 +294,68 @@ _table: Result of Alignment Example @style<compact>
 |       right |
 |        right|
 
+_table: 对齐示例结果 @style<compact>
 
-_heading: Row and Column Spanning @<flatworm--table-spanning>
+|   center    |
 
-A column may end its content with any number of **``"<"``** which indicates
-how many //additional// columns to extend into.
+| left        |
+|left         |
 
-If the cell content contains only a **``"^"``**, then the row above is
-extended into this cell (into the same number of columns).
+|       right |
+|        right|
 
-_code: Cell Spanning Example @lang<text>
 
-\_table: Result of Cell Spanning Example @style<compact>
+_heading: 行和列生成 @<flatworm--table-spanning>
+
+一个列可以以任意数量的 **``"<"``**结束它的内容，这表示要拓展到多少个//额外的//列。
+
+如果单元格内容只包含一个 **``"^"``**, 那么上面的行会被拓展到这个单元格 (拓展到相同数量的列)。
+
+_code: 单元格扩展示例 @lang<text>
+
+\_table: 单元格扩展示例结果 @style<compact>
 
 |  (1x1)  |  (1x2)      <|  (2x1)  |
 |  (2x2)      <|  (2x1)  |    ^    |
 |    ^         |    ^    |  (1x1)  |
 
-_table: Result of Cell Spanning Example @style<compact>
+_table: 单元格扩展示例 @style<compact>
 
 |  (1x1)  |  (1x2)      <|  (2x1)  |
 |  (2x2)      <|  (2x1)  |    ^    |
 |    ^         |    ^    |  (1x1)  |
 
 
-_heading: Styles  @<flatworm--table-style>
+_heading: 风格  @<flatworm--table-style>
 
-The [@style extension](flatworm--ext-style) for a table can be used to control its
-appearance.
+表格的[@style extension](flatworm--ext-style)可以用来控制它的外观。
 
 _table:
 
 |   **Name**    |    **Width**    |  **Columns**       |
-|  //minimal//  |   minimum size  |    best fit        |
-|  //compact//  |     40%         |    evenly spaced   |
-|   //wide//    |     67%         |    evenly spaced   |
-|   //full//    |    100%         |    evenly spaced   |
+|  //minimal//  |   最小长度  |    最适合的        |
+|  //compact//  |     40%         |    等间距的   |
+|   //wide//    |     67%         |    等间距的   |
+|   //full//    |    100%         |    等间距的   |
 
 
-_heading: Variables  @<flatworm--table-variable>
+_heading: 变量  @<flatworm--table-variable>
 
-Often the layout of a table is easier to express and maintain without
-uneven or changing content within it. So the content can be defined
-separately within a table directive using **variables**. A variable
-name must begin with a letter and must only contain letters and numbers.
+通常情况下，表的布局更易于表达和维护，而不会不均匀或改变其中的内容。在一条table指令中使用**variables**单独定义内容。变量名必须以字母开头，并且只能包含字母和数字。
 
-Variables are also useful when content is repeated throughout a table.
+当内容在表中重复的时候，变量也会很有用。
 
-A variable is declared by starting a line with ``"$NAME:"``, which
-consumes all lines until the next variable declaration or until the
-next table row line.
+变量是通过以``"$NAME:"``开头的行来声明的, 它占用下一个变量声明或者下一个表格的行之前所有的行。
 
-A variable name must start with a letter and may consist of letters and
-numbers. (i.e. ``/[a-z][a-z0-9]*/i``)
+变量名必须以字母开头，可以由字母和数字组成。(i.e. ``/[a-z][a-z0-9]*/i``)
 
 _code: Variables Example @lang<text>
 
-\_table: Result of Variables Example
+\_table: 示例变量的结果
 
-$Yes:    This option is supported.
-$No:     This option is **not** supported
-$bottom: This just represents an example of
-         what is possible. Notice that variable
-         content can span multiple lines.
+$Yes:    这个选项是支持的。
+$No:     这个选项是不支持的。
+$bottom: 这只是一个可能的例子。注意的是变量内容可以跨越多行。
 
 |  **Feature**     |  **Supported**  |
 |  Dancing Monkey  |      $Yes       |
@@ -413,13 +363,11 @@ $bottom: This just represents an example of
 |  Newt Hair       |      $Yes       |
 |        $bottom                    <|
 
-_table: Result of Variables Example
+_table: 示例变量的结果
 
-$Yes: This option is supported.
-$No:  This option is **not** supported.
-$bottom: This just represents an example of
-         what is possible. Notice that variable
-         content can span multiple lines.
+$Yes: 这个选项是支持的。
+$No:  这个选项是**不**支持的。
+$bottom: 这只是一个可能的例子。注意的是变量内容可以跨越多行。
 
 |  **Feature**     |  **Supported**  |
 |  Dancing Monkey  |      $Yes       |
@@ -428,49 +376,37 @@ $bottom: This just represents an example of
 |        $bottom                    <|
 
 
-_subsection: Configuration @<flatworm-config>
+_subsection: 配置 @<flatworm-config>
 
-Configuration is optional (but highly recommended) and may be either
-a simple JSON file (config.json) or a JS file (config.js) placed in
-the top  of the source folder.
+配置上可选的（但强烈建议）并且可能是放在源文件夹顶部简单的JSON文件(config.json)或者JS文件(config.js)。
 
 TODO:  example JSON and example JS
 
-
-_subsection: Extensions @<flatworm-extensions>
+_subsection: 拓展 @<flatworm-extensions>
 
 _heading: @inherit\< //markdown// >  @<flatworm--ext-inherit>
 
-Adds an inherits description to a directive. The //markdown// may contain links.
-
+向指令添加继承说明。//markdown//可能包含链接。
 
 _heading: @lang\< //text// >  @<flatworm--ext-lang>
 
-Set the language a [code directive](flatworm--code) should be
-syntax-highlighted for. If "javascript", the code will be evaluated.
-
+将语言设置成[code directive](flatworm--code)应该凸显出语法。如果是"javascript",代码将会被评估。
 
 _heading: @nav\< //text// >  @<flatworm--ext-nav>
 
-Sets the name in the breadcrumbs when not the current node.
+当不是当前节点时，在breadcrumbs中设置名称。
 
 
 _heading: @note\<// markdown// >  @<flatworm--ext-note>
 
-Adds a note to a directive. The //markdown// may contain links. If the directive
-already has an @INHERIT extension, that will be used instead and the @NOTE will
-be ignored.
-
+向指令添加注释。The //markdown//可能包含链接。 如果指令已经有一个@INHERIT拓展名, 则将该使用该拓展名并且@NOTE将会被忽略。
 
 _heading: @src\< //key// >  @<flatworm--ext-src>
 
-Calls the configuration ``getSourceUrl(key, VALUE)`` to get a URL which
-will be linked to by a link next to the //directive//.
+调用配置``getSourceUrl(key, VALUE)``来获取一个URL，该URL将会通过//指令//旁边的链接链接到该URL。
 
-This extended directive function requires an advanced ``config.js`` [[flatworm-config]]
-file since it requires a JavaScript function.
-
+这个拓展的指令函数需要一个高级的``config.js`` [[flatworm-config]]文件因为它需要一个JavaScript函数。
 
 _heading: @style\< //text// >  @<flatworm--ext-style>
 
-The [Table Style](flatworm--table-style) to use for a table directive.
+[Table Style](flatworm--table-style)用于table指令。

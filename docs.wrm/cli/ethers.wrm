@@ -1,107 +1,101 @@
 _section: Sandbox Utility
 
-The sandbox utility provides a simple way to use the most common
-ethers utilities required during learning, debugging and managing
-interactions with the Ethereum network.
+在学习、调试和管理与以太坊网络的交互过程中，sandbox实用程序提供了一种使用最常用以太坊实用程序的简单方法。
 
-If no command is given, it will enter a REPL interface with many
-of the ethers utilities already exposed.
+If no command is given, it will enter a REPL interface with many of the ethers utilities already exposed.
 
 _subsection: Help
 
 _code: @lang<text>
-Usage:
+用法:
    ethers [ COMMAND ] [ ARGS ] [ OPTIONS ]
 
-COMMANDS (default: sandbox)
-   sandbox                    Run a REPL VM environment with ethers
-   init FILENAME              Create a new JSON wallet
-      [ --force ]                Overwrite any existing files
+指令:(默认: sandbox)
+   sandbox                    运行一个带有ethers的REPL VM环境
+   init FILENAME              创建一个新的JSON钱包
+      [ --force ]             覆盖任何现有文件
    fund TARGET                Fund TARGET with testnet ether
-   info [ TARGET ... ]        Dump info for accounts, addresses and ENS names
-   send TARGET ETHER          Send ETHER ether to TARGET form accounts[0]
-      [ --allow-zero ]           Allow sending to the address zero
-      [ --data DATA ]            Include data in the transaction
-   sweep TARGET               Send all ether from accounts[0] to TARGET
-   sign-message MESSAGE       Sign a MESSAGE with accounts[0]
-      [ --hex ]                  The message content is hex encoded
-   eval CODE                  Run CODE in a VM with ethers
-   run FILENAME               Run FILENAME in a VM with ethers
-   wait HASH                  Wait for a transaction HASH to be mined
+   info [ TARGET ... ]        到处账户、地址和ENS名称
+   send TARGET ETHER          从账户accounts[0]向目标TARGET发送ether
+      [ --allow-zero ]           允许发送到零地址
+      [ --data DATA ]            在交易中包含数据DATA
+   sweep TARGET               从账户accounts[0]向目标TARGET发送所有ether
+   sign-message MESSAGE       用账户accounts[0]签署信息
+      [ --hex ]                  消息内容是十六进制编码
+   eval CODE                  在一个有ethers的虚拟环境运行代码
+   run FILENAME               在一个有ethers的虚拟环境运行文件
+   wait HASH                  等待交易哈希完成
    wrap-ether VALUE           Deposit VALUE into Wrapped Ether (WETH)
-   unwrap-ether VALUE         Withdraw VALUE from Wrapped Ether (WETH)
+   unwrap-ether VALUE         从Wrapped Ether (WETH)赎回VALUE
    send-token TOKEN ADDRESS VALUE
                               Send VALUE tokens (at TOKEN) to ADDRESS
-   compile FILENAME           Compiles a Solidity contract
+   compile FILENAME           编译Solidity合约
       [ --no-optimize ]          Do not optimize the compiled output
-      [ --warnings ]             Error on any warning
-   deploy FILENAME            Compile and deploy a Solidity contract
+      [ --warnings ]             警告错误
+   deploy FILENAME            编译并部署Solidity合约
       [ --no-optimize ]          Do not optimize the compiled output
-      [ --contract NAME ]        Specify the contract to deploy
+      [ --contract NAME ]        指定要部署的合约
 
-ACCOUNT OPTIONS
-  --account FILENAME          Load from a file (JSON, RAW or mnemonic)
-  --account RAW_KEY           Use a private key (insecure *)
-  --account 'MNEMONIC'        Use a mnemonic (insecure *)
-  --account -                 Use secure entry for a raw key or mnemonic
-  --account-void ADDRESS      Use an address as a void signer
-  --account-void ENS_NAME     Add the resolved address as a void signer
-  --account-rpc ADDRESS       Add the address from a JSON-RPC provider
-  --account-rpc INDEX         Add the index from a JSON-RPC provider
-  --mnemonic-password         Prompt for a password for mnemonics
+账户选项
+  --account FILENAME          从(JSON, RAW or mnemonic)文件加载
+  --account RAW_KEY           使用私钥(insecure *)
+  --account 'MNEMONIC'        使用助记词(insecure *)
+  --account -                 对原始密钥或者助记词使用安全入口
+  --account-void ADDRESS      使用地址作为无效签名者
+  --account-void ENS_NAME     使用解析地址添加为无效签名者
+  --account-rpc ADDRESS       从JSON-RPC provider程序添加地址
+  --account-rpc INDEX         从JSON-RPC provider程序添加索引
+  --mnemonic-password         提示输入助记密码
   --xxx-mnemonic-password     Prompt for a (experimental) hard password
 
-PROVIDER OPTIONS (default: all + homestead)
-  --alchemy                   Include Alchemy
-  --etherscan                 Include Etherscan
-  --infura                    Include INFURA
-  --nodesmith                 Include nodesmith
-  --rpc URL                   Include a custom JSON-RPC
-  --offline                   Dump signed transactions (no send)
-  --network NETWORK           Network to connect to (default: homestead)
+PROVIDER 选项 (默认: all + homestead)
+  --alchemy                   包含Alchemy
+  --etherscan                 包含Etherscan
+  --infura                    包含INFURA
+  --nodesmith                 包含nodesmith
+  --rpc URL                   包含一个自定义的JSON-RPC
+  --offline                   转储已签署的交易(不发送)
+  --network NETWORK           要连接的网络(默认: homestead)
 
-TRANSACTION OPTIONS (default: query network)
-  --gasPrice GWEI             Default gas price for transactions(in wei)
-  --gasLimit GAS              Default gas limit for transactions
-  --nonce NONCE               Initial nonce for the first transaction
-  --yes                       Always accept Signing and Sending
+交易选项 (默认: query network)
+  --gasPrice GWEI             交易的默认gas限额(以wei为单位)
+  --gasLimit GAS              交易的默认gas限额
+  --nonce NONCE               第一笔交易的初始nonce
+  --yes                       始终接受签名和发送
 
 OTHER OPTIONS
   --wait                      Wait until transactions are mined
-  --debug                     Show stack traces for errors
-  --help                      Show this usage and exit
-  --version                   Show this version and exit
+  --debug                     显示错误的堆栈跟踪
+  --help                      显示此用法并退出
+  --version                   显示此版本并退出
 
-(*) By including mnemonics or private keys on the command line they are
-    possibly readable by other users on your system and may get stored in
-    your bash history file. This is NOT recommended.
+(*)  因为在命令行中包含助记符或私钥，在你系统上的其他用户可能可以读取它们，并可能存储在bash历史文件中。不推荐这样做。
 
-_subsection: Examples
+_subsection: 示例
 
-_code: Creating New Wallets @lang<shell> @<cliex-init>
+_code: 创建新的选项 @lang<shell> @<cliex-init>
 
 /home/ethers> ethers init wallet.json
-Creating a new JSON Wallet - wallet.json
-Keep this password and file SAFE!! If lost or forgotten
-it CANNOT be recovered, by ANYone, EVER.
-Choose a password: ******
-Confirm password: ******
-Encrypting... 100%
-New account address: 0x485bcC23ae2E5038ec7ec9b8DCB2A6A6291cC003
+创建新的json钱包 - wallet.json
+保持密码和文件安全！如果丢失或者遗失，任何人都不能恢复
+选择密码: ******
+确认密码: ******
+加密中... 100%
+新的账户地址: 0x485bcC23ae2E5038ec7ec9b8DCB2A6A6291cC003
 Saved:               wallet.json
 
 
-# If you are planning to try out the Ropsten testnet...
+# 如果你打算尝试试用Ropsten 测试网...
 /home/ethers> ethers --network ropsten fund 0x485bcC23ae2E5038ec7ec9b8DCB2A6A6291cC003
-Transaction Hash: 0x8dc55b8f8dc8076acded97f9e3ed7d6162460c0221e2769806006b6d7d1156e0
+交易哈希: 0x8dc55b8f8dc8076acded97f9e3ed7d6162460c0221e2769806006b6d7d1156e0
 
 
-_code: Sending Ether and Tokens  @<cliex-send> @lang<shell>
+_code: 发送 Ether and Tokens  @<cliex-send> @lang<shell>
 
-# Sending ether
+# 发送 ether
 /home/ricmoo> ethers --account wallet.json send ricmoo.firefly.eth 0.123
-Password (wallet.json): ******
-Decrypting... 100%
+密码 (wallet.json): ******
+加密... 100%
 Transaction:
   To:         0x8ba1f109551bD432803012645Ac136ddd64DBA72
   From:       0xaB7C8803962c0f2F5BBBe3FA8bf41cd82AA1923C
@@ -118,9 +112,7 @@ Response:
 
 
 # Sending a token (SAI)
-# NOTE: the contract address could be used instead but
-#       popular token contract addresses are also managed
-#       by ethers
+# NOTE: 合同地址也可以使用，但常用的token合同地址也由以太坊管理
 /home/ricmoo> ethers --account wallet.json send-token sai.tokens.ethers.eth ricmoo.firefly.eth 1.0
 Sending Tokens:
   To:              0x8ba1f109551bD432803012645Ac136ddd64DBA72
@@ -143,7 +135,7 @@ Response:
   Hash:  0xd609ecb7e3b5e8d36fd781dffceede3975ece6774b6322ea56cf1e4d0a17e3a1
 
 
-_code: Signing Messages  @<cliex-signing> @lang<shell>
+_code: 签名信息  @<cliex-signing> @lang<shell>
 
 /home/ethers> ethers --account wallet.json sign-message 'Hello World'
 Password (wallet.json): ******
@@ -163,23 +155,21 @@ Signature
 
 _heading: Scripting  @<cliex-scripting>
 
-The ``eval`` command can be used to execute simple one-line scripts from
-the command line to be passed into other commands or stored in script
-environment variables.
+``eval``命令可用于从命令行执行简单的单行脚本，这些脚本将传递给其他命令或存储在脚本环境变量中。
 
-_code: Get the formatted balance of an account  @lang<shell>
+_code: 获取一个账户的格式化余额  @lang<shell>
 /home/ethers> ethers --network ropsten \
                --account wallet.json \
                eval \
                'accounts[0].getBalance().then(b => formatEther(b))'
 3.141592653589793238
 
-_code: Get the current block number  @lang<shell>
+_code: 获取当前区块数  @lang<shell>
 /home/ethers> ethers --network rinkeby \
                eval "provider.getBlockNumber()"
 5761009
 
-_code: Convert a Solidity signature to JSON  @lang<shell>
+_code: 将Solidity签名转换为JSON  @lang<shell>
 /home/ethers> ethers eval 'utils.Fragment.from(
                "function balanceOf(address) view returns (uint)"
               ).format("json")' | json_pp
@@ -207,35 +197,30 @@ _code: Compute a topic hash  @lang<shell>
 /home/ricmoo> ethers eval 'id("Transfer(address,address,uint256")'
 0xd99659a21de82e379975ce8df556f939a4ccb95e92144f38bb0dd35730ffcdd5
 
-_code: Create a random mnemonic  @lang<shell>
+_code: 随机创建一个助记符  @lang<shell>
 /home/ricmoo> ethers eval 'Wallet.createRandom().mnemonic'
 useful pond inch knock ritual matrix giggle attend dilemma convince coach amazing
 
 
-_heading: Using Mnemonics (with a password)  @<cliex-mnemonicpassword>
+_heading: 使用助记符（带密码）  @<cliex-mnemonicpassword>
 
-All mnemonic phrases have a password, but the default is to use the empty
-string (i.e. ``""``) as the password. If you have a password on your
-mnemonic, the ``-\-mnemonic-password`` will prompt for the password to
-use to decrypt the account.
+所有助记符都有一个密码,但默认是使用空字符串(i.e. ``""``)作为密码。如果你的助记符有密码,``-\-mnemonic-password``将会提示你输入密码以解密该账户。
+
 
 _code: @lang<shell>
 
 /home/ricmoo> ethers --account mnemonic.txt --mnemonic-password
-Password (mnemonic): ******
-network: homestead (chainId: 1)
+密码 (助记符): ******
+网络: homestead (chainId: 1)
 homestead> accounts[0].getAddress()
 <Promise id=0 resolved>
 '0x6d3F723EC1B73141AA4aC248c3ab34A5a1DAD776'
 homestead>
 
 
-_heading: Using Mnemonics (with experimental memory-hard passwords)  @<cliex-mnemonicpassword-xxx>
+_heading: 使用助记符 (with experimental memory-hard passwords)  @<cliex-mnemonicpassword-xxx>
 
-The ``-\-xxx-mnemonic-password`` is similar to the ``-\-mnemonic-password`` options,
-which uses a password to decrypt the account for a mnemonic, however it passes
-the password through the [scrypt](link-wiki-scrypt)
-//password-based key derivation function// first, which is intentionally slow and makes
+``-\-xxx-mnemonic-password``类似于``-\-mnemonic-password``选项,它使用密码对助记符的帐户进行解密, 然而它首先通过[scrypt](link-wiki-scrypt)//基于密码的密钥派生函数//传递密码，which is intentionally slow and makes
 a brute-force attack far more difficult.
 
 _code: @lang<shell>
@@ -250,5 +235,5 @@ homestead> accounts[0].getAddress()
 homestead>
 
 _warning: Note
-This is still an experimental feature (hence the ``xxx``).
+这仍然是一个实验性的功能(hence the ``xxx``).
 

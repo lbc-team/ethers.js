@@ -1,6 +1,6 @@
-_section: Transactions @<cookbook--transactions>
+_section: 交易 @<cookbook--transactions>
 
-_subsection: Compute the raw transaction @<cookbook--compute-raw-transaction>
+_subsection: 计算原始交易 @<cookbook--compute-raw-transaction>
 
 _code: @lang<javascript>
 
@@ -10,14 +10,14 @@ function getRawTransaction(tx) {
     return accum;
   }
 
-  // Extract the relevant parts of the transaction and signature
+  // 提取交易和签名的相关部分
   const txFields = "accessList chainId data gasPrice gasLimit maxFeePerGas maxPriorityFeePerGas nonce to type value".split(" ");
   const sigFields = "v r s".split(" ");
 
-  // Seriailze the signed transaction
+  // 对已签名的交易进行验证
   const raw = utils.serializeTransaction(txFields.reduce(addKey, { }), sigFields.reduce(addKey, { }));
 
-  // Double check things went well
+  // 再次检查一切是否正确能够顺利运行
   if (utils.keccak256(raw) !== tx.hash) { throw new Error("serializing failed!"); }
 
   return raw;
