@@ -5,6 +5,7 @@ packages/*/lib._esm
 .package_node_modules/
 obsolete/
 .DS_Store
+package-lock.json
 .tmp/
 dist/types/shims/
 shims/*.d.ts

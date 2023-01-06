@@ -39,7 +39,7 @@
     "test-node": "mocha --no-colors --reporter ./packages/tests/reporter ./packages/tests/lib/test-*.js",
     "test-react": "npm run _test-dist && pushd misc/ReactNativeTestApp && ./run-tests.sh && popd",
     "test": "npm run build-all && npm run test-node",
-    "build-docs": "flatworm docs.wrm docs --force",
+    "build-docs": "flatworm docs.wrm docs --skip-eval",
     "serve-docs": "node ./misc/admin/lib/cmds/serve-docs.js",
     "upload-docs": " node ./misc/admin/lib/cmds/upload-docs.js",
     "spell-check": "node ./misc/admin/lib/cmds/spell-check.js",

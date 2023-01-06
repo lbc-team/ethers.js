@@ -208,7 +208,7 @@ module.exports = {
 
   socialImage: "social.jpg",
 
-  prefix: "/v5",
+  prefix: "/ethers_v5",
 
   link: "https:/\/docs.ethers.io",
   copyright: "The content of this site is licensed under the [Creative Commons License](https:/\/choosealicense.com/licenses/cc-by-4.0/). Generated on &$now;.",
