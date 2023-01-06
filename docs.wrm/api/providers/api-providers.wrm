@@ -25,11 +25,16 @@ _note: 注意: 默认的 API keys
 
 _definition: **支持的网络**
 
-- Homestead (Mainnet)
-- Ropsten (proof-of-work testnet)
-- Rinkeby (proof-of-authority testnet)
-- G&ouml;rli (clique testnet)
-- Kovan (proof-of-authority testnet)
+- homestead - Homestead (Mainnet)
+- goerli - Görli (clique testnet)
+- sepolia - Sepolia (proof-of-authority testnet)
+- arbitrum - Arbitrum Optimistic L2
+- arbitrum-goerli - Arbitrum Optimistic L2 testnet
+- matic - Polgon mainnet
+- maticmum - Polgon testnet
+- optimism - Optimism Optimistic L2
+- optimism-goerli - Optimism Optimistic L2 testnet
+
 
 _code: Etherscan 例子 @lang<javascript>
 
@@ -40,10 +45,10 @@ _code: Etherscan 例子 @lang<javascript>
 provider = new EtherscanProvider();
 
 // 连接 rinkeby 测试网(以下这两种方式是等价的)
-provider = new EtherscanProvider("rinkeby");
-provider = new EtherscanProvider(4);
+provider = new EtherscanProvider("goerli");
+provider = new EtherscanProvider(5);
 
-network = ethers.providers.getNetwork("rinkeby");
+network = ethers.providers.getNetwork("goerli");
 //_hide: delete network._defaultProvider;
 //_log: network
 
@@ -84,11 +89,15 @@ _note: 注意: 默认的 API keys
 
 _definition: **支持的网络**
 
-- Homestead (Mainnet)
-- Ropsten (proof-of-work testnet)
-- Rinkeby (proof-of-authority testnet)
-- G&ouml;rli (clique testnet)
-- Kovan (proof-of-authority testnet)
+- homestead - Homestead (Mainnet)
+- goerli - Görli (clique testnet)
+- sepolia - Sepolia (proof-of-authority testnet)
+- arbitrum - Arbitrum Optimistic L2
+- arbitrum-goerli - Arbitrum Optimistic L2 testnet
+- matic - Polgon mainnet
+- maticmum - Polgon testnet
+- optimism - Optimism Optimistic L2
+- optimism-goerli - Optimism Optimistic L2 testnet
 
 _code: INFURA 例子 @lang<javascript>
 
@@ -99,9 +108,9 @@ _code: INFURA 例子 @lang<javascript>
 // 连接到主网 (homestead)
 provider = new InfuraProvider();
 
-// 连接到 ropsten 测试网
+// 连接到 goerli 测试网
 // (see EtherscanProvider above for other network examples)
-provider = new InfuraProvider("ropsten");
+provider = new InfuraProvider("goerli");
 
 // 使用一个Project ID连接到主网(以下这两种方式是等价的)
 provider = new InfuraProvider(null, projectId);
@@ -134,11 +143,15 @@ _note: 注意: 默认的 API keys
 
 _definition: **支持的网络**
 
-- Homestead (Mainnet)
-- Ropsten (proof-of-work testnet)
-- Rinkeby (proof-of-authority testnet)
-- G&ouml;rli (clique testnet)
-- Kovan (proof-of-authority testnet)
+- homestead - Homestead (Mainnet)
+- goerli - Görli (clique testnet)
+- sepolia - Sepolia (proof-of-authority testnet)
+- arbitrum - Arbitrum Optimistic L2
+- arbitrum-goerli - Arbitrum Optimistic L2 testnet
+- matic - Polgon mainnet
+- maticmum - Polgon testnet
+- optimism - Optimism Optimistic L2
+- optimism-goerli - Optimism Optimistic L2 testnet
 
 _code: Alchemy Examples @lang<javascript>
 
@@ -148,9 +161,9 @@ _code: Alchemy Examples @lang<javascript>
 // 连接到主网(homestead)
 provider = new AlchemyProvider();
 
-// 连接到 ropsten 测试网
+// 连接到 goerli 测试网
 // (see EtherscanProvider above for other network examples)
-provider = new AlchemyProvider("ropsten");
+provider = new AlchemyProvider("goerli");
 
 // 使用 apiKey 连接到主网(以下这两种方式是等价的)
 provider = new AlchemyProvider(null, apiKey);

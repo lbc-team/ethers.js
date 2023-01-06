@@ -133,7 +133,7 @@ function codeContextify(context) {
     context.hexlify = ethers.utils.hexlify;
     context.hexValue = ethers.utils.hexValue;
     context.Wallet = ethers.Wallet;
-    context.provider = new ethers.providers.InfuraProvider("mainnet", "49a0efa3aaee4fd99797bfa94d8ce2f1");
+    context.provider = new ethers.providers.AlchemyProvider(null, "...");
 
     // We use a local dev node for some signing examples, but want to
     // resolve ENS names against mainnet; super hacky but makes the
