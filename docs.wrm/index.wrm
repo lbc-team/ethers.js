@@ -1,9 +1,12 @@
-_section: ethers.js中文文档 @<documentation>
+_section: ethers.js 中文文档 @<documentation>
 
 _subsection: ethers.js介绍 @<preamble>
 
 ethers.js库旨在为以太坊区块链及其生态系统提供一个小而完整的 JavaScript API 库，它最初是与
 [ethers.io](link-ethersio) 一起使用，现在已经扩展为更通用的库。
+
+ethers.js 中文文档由登链社区组织翻译， Git 代码库在 https:\/\/github.com/lbc-team/ethers.js ，欢迎大家提交 PR 一起贡献。
+
 
 _subsection: 包含功能 @<features>
 
@@ -18,7 +21,7 @@ _subsection: 包含功能 @<features>
 - **ENS 名称** 是"一等公民"; 它们可以在任何可以使用以太坊地址的地方使用
 - 库**非常小** (压缩~88kb; 未压缩～284kb)
 - 功能**完整** 满足所有的以太坊相关需求
-- 文档全面：[中文文档](link-ethers-docs)及[英文文档](link-ethers-docs)
+- 文档全面：[中文文档](https://learnblockchain.cn/ethers_v5/) 及[英文文档](link-ethers-docs)
 - 维护和新增的大量**测试用例**
 - 已经支持 **TypeScript** ，附带定义文件和完整的TypeScript源文件
 - 宽松的** MIT 协议许可 ** (包括所有依赖）; 完全开源可以随意使用
@@ -46,5 +49,5 @@ _subsection: 旧文档 @<documentation--legacy>
 
 本版本（v5.4）将保持更新，可通过以下链接到旧版本的文档。
 
-- [version 4.0](link-legacy-docs4)
+- [version 4.0](link-legacy-docs4) ，及[4.0 中文版](https://learnblockchain.cn/docs/ethers.js/)
 - [version 3.0](link-legacy-docs3)

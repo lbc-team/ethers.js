@@ -4,9 +4,9 @@ _section: gas @<gas>
 
 _subsection: gas price @<gas-price>
 
-gas price是被用来出价的，表明你愿意支付的金额(每执行单位)，来使得你的交易被处理。
+gas price是被用来出价的，表明你每执行单位愿意支付的金额，来使得你的交易被处理。
 
 
 
-_subsection: 燃料限制 @<gas-limit>
+_subsection: Gas Limit @<gas-limit>
 

@@ -8,7 +8,7 @@ _section: 安全 @<security>
 
 _subsection: 侧信道攻击
 
-当所使用的算法中正交的某些内容被用来了解更多关于安全或私人信息时，就可能会发生[侧信道攻击](link-wiki-side-channel-attack) 。
+当所使用的算法中正交的某些内容被用来了解更多关于安全或私人信息时，就可能会发生[侧信道攻击（Side-Channel Attacks）](link-wiki-side-channel-attack) 。
 
 
 

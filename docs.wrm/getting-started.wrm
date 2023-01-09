@@ -139,9 +139,9 @@ const tx = signer.sendTransaction({
 
 _subsection: 合约 @<getting-started--contracts>
 
-合约是基于以太坊区块链中程序代码的抽象。
+合约(Contract)是以太坊区块链中程序代码的抽象。
 
-[合约](Contract)对象使得链上的合约可以简单地作为一个普通的JavaScript对象, 通过映射的方法来编码和解码数据。
+[合约](Contract) (Contract) 对象使得链上的合约可以简单地作为一个普通的JavaScript对象, 通过映射的方法来编码和解码数据。
 
 如果你熟悉数据库, 你会发现这与//对象关系映射器// (ORM)是相似的。
 
@@ -151,7 +151,7 @@ _subsection: 合约 @<getting-started--contracts>
 
 尽管链上的合约有许多可用的方法，但是你可以安全地忽略你认为不需要或者不使用的方法，这样合约里面的ABI就是一个较小的子集。
 
-ABI通常来自于Solidity或Vyper编译器，但是你可以在代码中使用可读的ABI，如下例所示：
+ABI通常来自于Solidity或Vyper编译器，但是你可以在代码中使用人类可读的ABI格式（Human-Readable），如下例所示：
 
 _code: 连接 DAI 合约 @lang<javascript>
 
