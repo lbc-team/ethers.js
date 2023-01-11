@@ -1,4 +1,4 @@
-_section: ABI Formats @<abi-formats>
+_section: ABI 格式 @<abi-formats>
 
 有几种格式可以用来为智能合约指定ABI，它将向底层库指定存在哪些方法、事件和错误，
 以便库可以处理网络上接受的和发送出去的数据的编码和解码。

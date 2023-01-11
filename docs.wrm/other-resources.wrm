@@ -2,14 +2,16 @@ _section: 其他资源
 
 在互联网上有很多文档可以帮助您入门，学习更多或者涵盖高级主题。这里有一些资源可以查看。
 
-_subsection: Ethereum Overview
+_subsection: Ethereum 相关
 
 - 官方[以太坊开发人员文档](link-other-ethereum-dev-docs)
-- The [Solidity文档](link-solidity),智能合约的defactor语言，以及以太坊一些核心概念的资源。
+- [Solidity 英文文档](link-solidity), [Solidity 中文文档](https://learnblockchain.cn/docs/solidity/),  智能合约的开发语言，以及以太坊一些核心概念的资源。
+- [Foundry 文档](https://learnblockchain.cn/docs/foundry/i18n/zh/) 智能合约的开发工具链
+- [Hardhat 文档](https://learnblockchain.cn/docs/hardhat/getting-started/) 一个编译、部署、测试和调试以太坊应用的开发环境
 
-_subsection: Tutorials
+_subsection: 相关教程
 
 我不管理或维护这些教程，但我遇到过它们。
 如果一个链接已经失效或过时了，请[让我知道](link-mail)，我会更新它
 
-- [Alchemy - How to Mint an NFT](https://docs.alchemy.com/alchemy/tutorials/how-to-create-an-nft/how-to-mint-an-nft-with-ethers)
+- [Alchemy - 如何铸造 NFT ](https://docs.alchemy.com/alchemy/tutorials/how-to-create-an-nft/how-to-mint-an-nft-with-ethers)
